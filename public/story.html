@@ -2627,9 +2627,50 @@ function renderAnswer(raw, container){
   const { direct_answer, sections = [], mode } = parsed;
   const parts = [];
 
-  // Direct answer — main prose block
+  // Auto-extract ranked list from direct_answer → bar chart
+  // Matches: "1. Org Name — 29,700 beneficiaries (...)" or bullet variants
+  function extractRankedList(text) {
+    if(!text) return null;
+    const lineRe = /^(?:\d+\.|-|•)\s+(.+?)\s+[—–-]\s+([\d,]+)\s+(\w+)/gm;
+    const rows = [];
+    let m;
+    while((m = lineRe.exec(text)) !== null) {
+      const num = parseInt(m[2].replace(/,/g,''), 10);
+      if(!isNaN(num)) rows.push({ label: m[1].trim(), value: num, unit: m[3] });
+    }
+    return rows.length >= 3 ? rows : null;
+  }
+
+  // Direct answer — main prose block, strip ranked list if we will chart it
+  const rankedRows = sections.length === 0 ? extractRankedList(direct_answer) : null;
   if(direct_answer){
-    parts.push(`<div class="ra-lead">${mdToHtml(direct_answer)}</div>`);
+    // If we extracted a chart, show a shorter prose intro instead of the full list
+    let prose = direct_answer;
+    if(rankedRows) {
+      // Keep only the first sentence / non-list lines
+      prose = direct_answer.split('
+').filter(l => !/^(\d+\.|[-•])/.test(l.trim())).join('
+').trim();
+      if(!prose) prose = `Showing ${rankedRows.length} organizations ranked by ${rankedRows[0]?.unit || 'value'}`;
+    }
+    parts.push(`<div class="ra-lead">${mdToHtml(prose)}</div>`);
+  }
+
+  // Auto bar chart from ranked list in direct_answer
+  if(rankedRows) {
+    const unit = rankedRows[0]?.unit || '';
+    const maxVal = Math.max(...rankedRows.map(r => r.value));
+    let chartHtml = `<div class="ra-sec-title">By organization</div><div class="ra-chart">`;
+    rankedRows.forEach(r => {
+      const pct = maxVal > 0 ? (r.value / maxVal * 100).toFixed(1) : 0;
+      chartHtml += `<div class="ra-bar-row">
+        <div class="ra-bar-label" title="${escapeHtml(r.label)}">${escapeHtml(r.label)}</div>
+        <div class="ra-bar-track"><div class="ra-bar-fill" style="width:${pct}%"></div></div>
+        <div class="ra-bar-val">${r.value.toLocaleString()}</div>
+      </div>`;
+    });
+    chartHtml += `</div>`;
+    parts.push(`<div class="ra-section">${chartHtml}</div>`);
   }
 
   // Sections
