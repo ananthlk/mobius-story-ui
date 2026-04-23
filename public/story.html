@@ -1565,7 +1565,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 // ═══════════════════════════════════════════════════════════════
 // Skill API (roster/story endpoints) lives on 8010.
 // Chat API (mobius-chat /chat, /chat/stream) lives on 8000.
-const API      = (window.location.port === '8010' || window.location.port === '') ? '' : 'http://localhost:8010';
+const API      = 'http://localhost:8011';  // skills API
 const CHAT_API = (() => {
   // In prod both APIs share the same origin via reverse proxy — use relative paths.
   // Locally: skill on 8010, mobius-chat on 8009.
