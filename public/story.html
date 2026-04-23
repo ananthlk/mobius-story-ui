@@ -57,6 +57,14 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 
 /* SLIDE LAYOUT: COVER */
 .ly-cover{display:grid;grid-template-columns:1fr 1fr;height:100%}
+/* ── Exec summary fly-in lines ── */
+.exec-line{display:flex;align-items:flex-start;gap:20px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06);opacity:0;transform:translateY(28px);transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1)}
+.exec-line:last-child{border-bottom:none}
+.exec-line.visible{opacity:1;transform:translateY(0)}
+.exec-num{font-family:var(--serif);font-size:clamp(28px,3.2vw,44px);font-weight:700;color:var(--teal2);line-height:1;flex-shrink:0;width:52px;text-align:right;padding-top:2px}
+.exec-body{flex:1}
+.exec-headline{font-size:clamp(14px,1.35vw,18px);font-weight:600;color:#f8f7f4;line-height:1.3;margin-bottom:4px}
+.exec-detail{font-size:clamp(12px,1.05vw,14px);color:rgba(255,255,255,.5);font-weight:300;line-height:1.55}
 .cover-l{background:var(--ink);padding:60px 40px 60px 8vw;display:flex;flex-direction:column;justify-content:flex-end}
 .cover-r{background:var(--coral);padding:60px 8vw 60px 40px;display:flex;flex-direction:column;justify-content:center;position:relative}
 .cover-r::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(0,0,0,.04) 40px,rgba(0,0,0,.04) 41px)}
@@ -432,6 +440,20 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
             <div style="font-family:var(--serif);font-size:clamp(72px,11vw,130px);color:#fff;font-weight:700;line-height:.95;margin-bottom:14px;letter-spacing:-.02em" id="cover-big-stat">—</div>
             <div style="font-size:16px;color:rgba(255,255,255,.85);font-weight:300;line-height:1.5;max-width:320px" id="cover-big-sub">in market growth BHPF members did not capture</div>
           </div>
+        </div>
+      </div>
+
+      <!-- ── Slide: Executive Summary ─────────────────────── -->
+      <div class="slide" data-id="exec-summary" style="background:var(--ink);display:flex;flex-direction:column;height:100%;overflow:hidden;position:relative">
+        <div style="padding:40px 56px 24px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div class="eyebrow" style="color:var(--teal2);margin-bottom:6px">Executive Summary</div>
+          <h1 class="s-title light" style="font-size:clamp(22px,2.4vw,34px);margin-bottom:0;color:#f8f7f4">The case for transformation</h1>
+        </div>
+        <div id="exec-lines-wrap" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 56px 40px;gap:0">
+          <!-- Each line injected by JS with staggered fly-in -->
+        </div>
+        <div style="padding:16px 56px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;font-family:var(--mono);color:rgba(255,255,255,.3);letter-spacing:.06em">
+          CMS DOGE 2019–2024 · FL Medicaid BH · Mobius analysis
         </div>
       </div>
 
@@ -1577,6 +1599,7 @@ const SLIDE_ID = 'ch2_left_behind';
 
 const SLIDES = [
   {id: 'cover',             title: 'The Market Built Around Them'},
+  {id: 'exec-summary',      title: 'Executive Summary'},
   {id: 'methodology',       title: 'How to read this analysis'},
   {id: 'capabilities',      title: 'Platform capabilities'},
   {id: 'act1-break',        title: 'Act I — The evidence'},
@@ -1694,6 +1717,11 @@ function goTo(idx){
   if(SLIDES[currentIdx]?.id === 'methodology'){
     setTimeout(()=>{ startMethParade(); }, 200);
   }
+  // exec summary fly-in hook
+  if(SLIDES[currentIdx]?.id === 'exec-summary'){
+    _resetExecLines();
+    setTimeout(()=>{ _animateExecLines(); }, 150);
+  }
   // capabilities demo slide hook
   if(SLIDES[currentIdx]?.id === 'capabilities'){
     setTimeout(()=>{ startDemoChat(); }, 300);
@@ -1809,7 +1837,7 @@ function renderCover(fp){
     statEl.textContent = `$${missedM}M`;
   } else {
     // Data arrived before animation finished (fast network) — run animation
-    const duration = 1600;
+    const duration = 3200;
     const fps      = 60;
     const steps    = Math.round(duration / (1000 / fps));
     let frame      = 0;
@@ -2648,9 +2676,7 @@ function renderAnswer(raw, container){
     let prose = direct_answer;
     if(rankedRows) {
       // Keep only the first sentence / non-list lines
-      prose = direct_answer.split('
-').filter(l => !/^(\d+\.|[-•])/.test(l.trim())).join('
-').trim();
+      prose = direct_answer.split('\n').filter(l => !/^(\d+\.|[-•])/.test(l.trim())).join('\n').trim();
       if(!prose) prose = `Showing ${rankedRows.length} organizations ranked by ${rankedRows[0]?.unit || 'value'}`;
     }
     parts.push(`<div class="ra-lead">${mdToHtml(prose)}</div>`);
@@ -3618,7 +3644,7 @@ goTo(0);
   const statEl = document.getElementById('cover-big-stat');
   if(!statEl) return;
   const target  = 249;   // known value; renderCover will correct after data loads
-  const duration = 1600;
+  const duration = 3200;
   const fps      = 60;
   const steps    = Math.round(duration / (1000 / fps));
   let frame = 0;
@@ -3636,6 +3662,77 @@ goTo(0);
     }
   }, 1000 / fps);
 })();
+
+// ═══════════════════════════════════════════════════════════════
+// EXECUTIVE SUMMARY SLIDE
+// ═══════════════════════════════════════════════════════════════
+const EXEC_LINES = [
+  {
+    num: '01',
+    headline: 'CMHCs are the backbone of Medicaid behavioral health care',
+    detail: 'Florida\'s 25 BHPF community mental health centers carry the highest-acuity patients — crisis, ACT, residential — that no other provider class will touch. In 2019 they served 564K Medicaid BH beneficiaries, 16% of the entire FL market.'
+  },
+  {
+    num: '02',
+    headline: 'The market moved on them — and the data proves it',
+    detail: 'From 2019–2024, BHPF\'s market share dropped 9 points as 200+ new entrants captured outpatient volume at lower overhead. Revenue per beneficiary fell 27% below the FL market average. $249M in growth went elsewhere.'
+  },
+  {
+    num: '03',
+    headline: 'Technology never reached them — by design',
+    detail: 'EHR vendors built for large health systems. Billing tools assumed commercial payers. Analytics platforms required data science teams CMHCs don\'t have. The operational gap widened as complexity compounded.'
+  },
+  {
+    num: '04',
+    headline: 'Mobius is the solution built specifically for this',
+    detail: 'A platform purpose-built for Medicaid BH operators: real-time financial intelligence, org benchmarking, AI-assisted workflows, and shared infrastructure that gives CMHCs health-system capabilities at community org cost.'
+  },
+  {
+    num: '05',
+    headline: 'The financial case is substantial',
+    detail: 'Recovering half the lost market share and closing the rate gap to market median represents $125M+ in recoverable revenue across BHPF membership — achievable through better contracting, billing accuracy, and service-line optimization.'
+  },
+  {
+    num: '06',
+    headline: 'An 18-month transformation roadmap',
+    detail: 'Phase 1: financial baseline + quick wins (months 1–6). Phase 2: org-level benchmarking + workflow automation (months 7–12). Phase 3: cross-BHPF shared services + market repositioning (months 13–18).'
+  },
+  {
+    num: '07',
+    headline: 'The long arc: transforming how BH care is delivered',
+    detail: 'When CMHCs perform, Medicaid BH outcomes improve system-wide. This is not just a financial story — it\'s the infrastructure for sustainable, high-quality behavioral health care for Medicaid and uninsured populations at scale.'
+  },
+];
+
+function _buildExecLines(){
+  const wrap = document.getElementById('exec-lines-wrap');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  EXEC_LINES.forEach(line => {
+    const el = document.createElement('div');
+    el.className = 'exec-line';
+    el.innerHTML = `<div class="exec-num">${escapeHtml(line.num)}</div>` +
+      `<div class="exec-body">` +
+      `<div class="exec-headline">${escapeHtml(line.headline)}</div>` +
+      `<div class="exec-detail">${escapeHtml(line.detail)}</div>` +
+      `</div>`;
+    wrap.appendChild(el);
+  });
+}
+
+function _resetExecLines(){
+  _buildExecLines();
+}
+
+function _animateExecLines(){
+  const lines = document.querySelectorAll('#exec-lines-wrap .exec-line');
+  lines.forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), i * 120);
+  });
+}
+
+// Build on page load so the DOM is ready (animation fires on goTo)
+_buildExecLines();
 
 // ═══════════════════════════════════════════════════════════════
 // ANIMATION NARRATIVE CALLOUTS
