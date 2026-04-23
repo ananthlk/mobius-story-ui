@@ -1569,7 +1569,7 @@ const API      = 'http://localhost:8011';  // skills API
 const CHAT_API = (() => {
   // In prod both APIs share the same origin via reverse proxy — use relative paths.
   // Locally: skill on 8010, mobius-chat on 8009.
-  if(window.location.port === '8010') return 'http://localhost:8009';
+  if(['8010','8011','8020'].includes(window.location.port)) return 'http://localhost:8009';
   if(window.location.port === '8009') return '';
   return ''; // prod / same-origin reverse proxy
 })();
