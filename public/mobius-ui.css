@@ -1,0 +1,970 @@
+/**
+ * ═══════════════════════════════════════════════════════════════
+ *  Mobius UI — Component Library
+ *  v1.0 · 2026
+ *
+ *  Usage:
+ *    <link rel="stylesheet" href="mobius-tokens.css" />
+ *    <link rel="stylesheet" href="mobius-ui.css" />
+ *
+ *  All components use the `mbx-` prefix.
+ *  Requires mobius-tokens.css to be loaded first for CSS variables.
+ *
+ *  Table of contents
+ *  ─────────────────
+ *  1.  Reset & Base
+ *  2.  Logo
+ *  3.  Header / Nav
+ *  4.  Typography
+ *  5.  Buttons
+ *  6.  Badges & Tags
+ *  7.  Chips (filter toggles)
+ *  8.  Form controls (input, select, textarea)
+ *  9.  Cards
+ * 10.  Tables
+ * 11.  Tooltip
+ * 12.  Signal dot (status indicator)
+ * 13.  Distribution bar (data viz)
+ * 14.  Scrollbar polish
+ * 15.  Utility helpers
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+
+/* ── 1. Reset & Base ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--mobius-font-sans, "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  background: var(--mobius-bg-primary);
+  color: var(--mobius-text-primary);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Page shell — full-height flex column used by most Mobius pages */
+.mbx-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Scrollable body region below the header */
+.mbx-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+/* ── 2. Logo ────────────────────────────────────────────────── */
+/*
+ * Usage:
+ *   <span class="mbx-logo-wrap">
+ *     <svg class="mbx-logo" viewBox="0 0 100 100" aria-hidden="true">
+ *       <defs>
+ *         <linearGradient id="mlg" x1="0%" y1="50%" x2="100%" y2="50%">
+ *           <stop offset="0%"   stop-color="#5c6b7a"/>
+ *           <stop offset="22%"  stop-color="#8b9aaa"/>
+ *           <stop offset="50%"  stop-color="#c8d4de"/>
+ *           <stop offset="78%"  stop-color="#8b9aaa"/>
+ *           <stop offset="100%" stop-color="#5c6b7a"/>
+ *         </linearGradient>
+ *       </defs>
+ *       <path d="M 50 50 C 50 22 22 22 22 50 C 22 78 50 78 50 50 C 50 78 78 78 78 50 C 78 22 50 22 50 50"
+ *             stroke="url(#mlg)" stroke-width="4.5" fill="none"
+ *             stroke-linecap="round" stroke-linejoin="round"/>
+ *     </svg>
+ *     <span class="mbx-brand-name">Mobius</span>
+ *   </span>
+ */
+.mbx-logo {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.mbx-logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mbx-brand-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--mobius-text-primary);
+}
+
+
+/* ── 3. Header / Nav ────────────────────────────────────────── */
+/*
+ * Usage:
+ *   <header class="mbx-header">
+ *     <div class="mbx-header-left">
+ *       <a href="/" class="mbx-logo-wrap">..logo.. <span class="mbx-brand-name">Mobius</span></a>
+ *       <nav class="mbx-breadcrumb">
+ *         <span class="mbx-bc-sep">·</span>
+ *         <a class="mbx-bc-item" href="#">Credentialing</a>
+ *         <span class="mbx-bc-sep">·</span>
+ *         <span class="mbx-bc-item mbx-bc-current">Roster</span>
+ *       </nav>
+ *     </div>
+ *     <div class="mbx-header-meta">Last updated Apr 1</div>
+ *     <div class="mbx-header-right">
+ *       [actions]
+ *     </div>
+ *   </header>
+ */
+.mbx-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 48px;
+  padding: 0 1.25rem;
+  background: var(--mobius-bg-card, #fff);
+  border-bottom: 1px solid var(--mobius-border);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.mbx-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.mbx-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.mbx-header-spacer { flex: 1; }
+
+.mbx-header-meta {
+  font-size: 0.72rem;
+  color: var(--mobius-text-muted);
+  white-space: nowrap;
+}
+
+/* Breadcrumb */
+.mbx-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mbx-bc-sep {
+  color: var(--mobius-border-medium);
+  font-size: 0.85rem;
+}
+
+.mbx-bc-item {
+  font-size: 0.82rem;
+  color: var(--mobius-text-secondary);
+  text-decoration: none;
+}
+
+.mbx-bc-item:hover { color: var(--mobius-text-primary); }
+
+.mbx-bc-current {
+  color: var(--mobius-text-primary);
+  font-weight: 500;
+}
+
+/* Org pill — e.g. "David Lawrence Center" */
+.mbx-org-pill {
+  font-size: 0.72rem;
+  font-weight: 500;
+  background: var(--mobius-bg-tertiary);
+  border: 1px solid var(--mobius-border);
+  border-radius: var(--mobius-radius-full);
+  padding: 0.1rem 0.6rem;
+  color: var(--mobius-text-secondary);
+  white-space: nowrap;
+}
+
+
+/* ── 4. Typography ──────────────────────────────────────────── */
+.mbx-page-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--mobius-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.mbx-section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mobius-text-muted);
+}
+
+.mbx-label {
+  font-size: 0.72rem;
+  color: var(--mobius-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mbx-mono {
+  font-family: var(--mobius-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 0.8em;
+}
+
+.mbx-muted   { color: var(--mobius-text-muted); }
+.mbx-success { color: var(--mobius-success); }
+.mbx-warning { color: var(--mobius-warning); }
+.mbx-error   { color: var(--mobius-error); }
+
+
+/* ── 5. Buttons ─────────────────────────────────────────────── */
+/*
+ * Usage:
+ *   <button class="mbx-btn mbx-btn-primary">Save</button>
+ *   <button class="mbx-btn mbx-btn-secondary mbx-btn-sm">Export</button>
+ *   <button class="mbx-btn mbx-btn-ghost">Cancel</button>
+ *   <button class="mbx-btn mbx-btn-danger">Delete</button>
+ */
+.mbx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--mobius-radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.mbx-btn:focus-visible {
+  outline: 2px solid var(--mobius-accent);
+  outline-offset: 2px;
+}
+
+.mbx-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Sizes */
+.mbx-btn-xs  { font-size: 0.7rem;  padding: 0.18rem 0.5rem; }
+.mbx-btn-sm  { font-size: 0.75rem; padding: 0.26rem 0.6rem; }
+.mbx-btn-lg  { font-size: 0.9rem;  padding: 0.55rem 1.1rem; }
+
+/* Variants */
+.mbx-btn-primary {
+  background: var(--mobius-accent);
+  color: #fff;
+  border-color: var(--mobius-accent);
+}
+.mbx-btn-primary:hover {
+  background: var(--mobius-accent-hover);
+  border-color: var(--mobius-accent-hover);
+}
+
+.mbx-btn-secondary {
+  background: var(--mobius-bg-card, #fff);
+  color: var(--mobius-text-primary);
+  border-color: var(--mobius-border-medium);
+}
+.mbx-btn-secondary:hover {
+  background: var(--mobius-bg-tertiary);
+}
+
+.mbx-btn-ghost {
+  background: transparent;
+  color: var(--mobius-text-secondary);
+  border-color: transparent;
+}
+.mbx-btn-ghost:hover {
+  background: var(--mobius-bg-tertiary);
+  color: var(--mobius-text-primary);
+}
+
+.mbx-btn-danger {
+  background: var(--mobius-bg-card, #fff);
+  color: var(--mobius-error);
+  border-color: #fca5a5;
+}
+.mbx-btn-danger:hover {
+  background: #fff1f2;
+}
+
+.mbx-btn-link {
+  background: transparent;
+  color: var(--mobius-accent);
+  border-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+.mbx-btn-link:hover { text-decoration: underline; }
+
+/* Icon-only button */
+.mbx-btn-icon {
+  padding: 0.35rem;
+  border-radius: var(--mobius-radius-sm);
+}
+
+
+/* ── 6. Badges & Tags ───────────────────────────────────────── */
+/*
+ * Usage:
+ *   <span class="mbx-badge mbx-badge-success">Clear</span>
+ *   <span class="mbx-badge mbx-badge-error">Issue</span>
+ */
+.mbx-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--mobius-radius-full);
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.mbx-badge-success  { background: #dcfce7; color: #15803d; }
+.mbx-badge-error    { background: #fee2e2; color: #b91c1c; }
+.mbx-badge-warning  { background: #fef9c3; color: #92400e; }
+.mbx-badge-neutral  { background: var(--mobius-bg-tertiary); color: var(--mobius-text-muted); }
+.mbx-badge-info     { background: #dbeafe; color: #1d4ed8; }
+.mbx-badge-active   { background: #dcfce7; color: #15803d; }
+.mbx-badge-inactive { background: #fee2e2; color: #b91c1c; }
+.mbx-badge-pending  { background: var(--mobius-bg-tertiary); color: var(--mobius-text-muted); }
+
+/* Slightly larger badge variant */
+.mbx-badge-md {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+}
+
+
+/* ── 7. Chips (filter toggles) ──────────────────────────────── */
+/*
+ * Usage:
+ *   <button class="mbx-chip mbx-chip-active">All sites</button>
+ *   <button class="mbx-chip">Naples Main</button>
+ */
+.mbx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 450;
+  padding: 0.22rem 0.7rem;
+  border-radius: var(--mobius-radius-full);
+  border: 1px solid var(--mobius-border-medium);
+  background: var(--mobius-bg-card, #fff);
+  color: var(--mobius-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.1s;
+}
+
+.mbx-chip:hover,
+.mbx-chip.mbx-chip-active,
+.mbx-chip[aria-selected="true"] {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.mbx-chip-danger:hover,
+.mbx-chip-danger.mbx-chip-active {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
+.mbx-chip-success:hover,
+.mbx-chip-success.mbx-chip-active {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #15803d;
+}
+
+
+/* ── 8. Form Controls ───────────────────────────────────────── */
+/*
+ * Usage:
+ *   <input class="mbx-input" placeholder="Search providers…" />
+ *   <select class="mbx-select">...</select>
+ */
+.mbx-input,
+.mbx-select,
+.mbx-textarea {
+  font-family: inherit;
+  font-size: 0.82rem;
+  color: var(--mobius-text-primary);
+  background: var(--mobius-bg-card, #fff);
+  border: 1px solid var(--mobius-border-medium);
+  border-radius: var(--mobius-radius-sm);
+  padding: 0.35rem 0.7rem;
+  outline: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+  width: 100%;
+}
+
+.mbx-input:focus,
+.mbx-select:focus,
+.mbx-textarea:focus {
+  border-color: var(--mobius-accent);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.mbx-input::placeholder { color: var(--mobius-text-muted); }
+
+.mbx-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  padding-right: 2rem;
+}
+
+/* Compact form controls */
+.mbx-input-sm, .mbx-select-sm {
+  font-size: 0.75rem;
+  padding: 0.22rem 0.55rem;
+}
+
+.mbx-select-sm {
+  padding-right: 1.8rem;
+}
+
+/* Filter label + control group */
+.mbx-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.mbx-filter-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mobius-text-muted);
+}
+
+/* Filter bar row */
+.mbx-filter-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+/* "More filters" disclosure */
+.mbx-filter-toggle {
+  font-size: 0.75rem;
+  color: var(--mobius-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+  align-self: flex-end;
+  margin-bottom: 1px;
+}
+.mbx-filter-toggle:hover { text-decoration: underline; }
+
+.mbx-filter-extra {
+  display: none;
+  align-items: flex-end;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.mbx-filter-extra.mbx-open { display: flex; }
+
+
+/* ── 9. Cards ───────────────────────────────────────────────── */
+.mbx-card {
+  background: var(--mobius-bg-card, #fff);
+  border: 1px solid var(--mobius-border);
+  border-radius: var(--mobius-radius-base);
+  padding: 1rem 1.1rem;
+}
+
+.mbx-card-sm { padding: 0.65rem 0.85rem; }
+.mbx-card-lg { padding: 1.25rem 1.5rem; }
+
+.mbx-card-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--mobius-text-primary);
+  margin-bottom: 0.65rem;
+}
+
+.mbx-card-section-head {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--mobius-text-muted);
+  margin-bottom: 0.6rem;
+}
+
+/* Issue / alert card variant */
+.mbx-card-error {
+  background: #fff8f8;
+  border-color: #fecaca;
+}
+
+.mbx-card-success {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.mbx-card-warning {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+/* Sidebar item / row pattern */
+.mbx-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.85rem;
+  border-bottom: 1px solid var(--mobius-border);
+  cursor: pointer;
+  transition: background 0.1s;
+  border-left: 3px solid transparent;
+}
+.mbx-row:last-child { border-bottom: none; }
+.mbx-row:hover { background: var(--mobius-bg-tertiary); }
+.mbx-row.mbx-row-active {
+  background: #eff6ff;
+  border-left-color: var(--mobius-accent);
+}
+
+
+/* ── 10. Tables ─────────────────────────────────────────────── */
+/*
+ * Usage:
+ *   <div class="mbx-table-wrap">
+ *     <table class="mbx-table">...</table>
+ *   </div>
+ */
+.mbx-table-wrap {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.mbx-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.mbx-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.4rem 0.9rem;
+  background: var(--mobius-bg-tertiary);
+  border-bottom: 1px solid var(--mobius-border-medium);
+  text-align: left;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mobius-text-muted);
+  white-space: nowrap;
+  cursor: default;
+}
+
+.mbx-table thead th.mbx-sortable { cursor: pointer; }
+.mbx-table thead th.mbx-sortable:hover { color: var(--mobius-text-primary); }
+
+.mbx-table tbody tr {
+  border-bottom: 1px solid var(--mobius-border);
+}
+
+.mbx-table tbody tr:last-child { border-bottom: none; }
+.mbx-table tbody tr:hover { background: var(--mobius-bg-hover); }
+
+.mbx-table td {
+  padding: 0.42rem 0.9rem;
+  vertical-align: middle;
+  color: var(--mobius-text-primary);
+}
+
+.mbx-td-muted  { color: var(--mobius-text-muted); font-size: 0.78rem; }
+.mbx-td-mono   { font-family: var(--mobius-font-mono); font-size: 0.75rem; color: var(--mobius-text-muted); }
+.mbx-td-strong { font-weight: 600; }
+
+
+/* ── 11. Tooltip ────────────────────────────────────────────── */
+/*
+ * Usage:
+ *   <span class="mbx-tooltip-wrap">
+ *     <button>Hover me</button>
+ *     <div class="mbx-tooltip">Tooltip content here</div>
+ *   </span>
+ *
+ * Position variants: mbx-tooltip-right (default), mbx-tooltip-top, mbx-tooltip-bottom
+ */
+.mbx-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mbx-tooltip {
+  display: none;
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  background: var(--mobius-text-primary);
+  color: #fff;
+  border-radius: var(--mobius-radius-sm);
+  padding: 0.5rem 0.7rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  width: max-content;
+  max-width: 260px;
+  pointer-events: none;
+  box-shadow: var(--mobius-shadow-md);
+  white-space: normal;
+}
+
+.mbx-tooltip-wrap:hover .mbx-tooltip,
+.mbx-tooltip-wrap:focus-within .mbx-tooltip {
+  display: block;
+}
+
+/* Top variant */
+.mbx-tooltip-top .mbx-tooltip {
+  left: 50%;
+  top: auto;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+}
+
+/* Bottom variant */
+.mbx-tooltip-bottom .mbx-tooltip {
+  left: 50%;
+  top: calc(100% + 8px);
+  bottom: auto;
+  transform: translateX(-50%);
+}
+
+/* Inline info icon that triggers tooltip */
+.mbx-info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--mobius-bg-tertiary);
+  border: 1px solid var(--mobius-border-medium);
+  color: var(--mobius-text-muted);
+  font-size: 0.55rem;
+  font-weight: 700;
+  cursor: help;
+  flex-shrink: 0;
+}
+
+
+/* ── 12. Signal dot ─────────────────────────────────────────── */
+/*
+ * Status indicator with optional tooltip.
+ * Usage:
+ *   <span class="mbx-signal-wrap">
+ *     <span class="mbx-signal mbx-signal-success"></span>
+ *     <div class="mbx-tooltip">12 codes with reliable benchmarks</div>
+ *   </span>
+ */
+.mbx-signal-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mbx-signal {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.mbx-signal-success {
+  background: var(--mobius-success);
+  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4);
+  animation: mbx-pulse-green 2s infinite;
+}
+
+.mbx-signal-warning {
+  background: var(--mobius-warning);
+  box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+  animation: mbx-pulse-amber 2s infinite;
+}
+
+.mbx-signal-error {
+  background: var(--mobius-error);
+  box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+}
+
+.mbx-signal-neutral { background: var(--mobius-border-medium); }
+
+/* Stop animation on resolved state */
+.mbx-signal-resolved { animation: none !important; }
+
+@keyframes mbx-pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45); }
+  70%  { box-shadow: 0 0 0 5px rgba(22, 163, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+@keyframes mbx-pulse-amber {
+  0%   { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45); }
+  70%  { box-shadow: 0 0 0 5px rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+
+/* ── 13. Distribution bar (data visualization) ──────────────── */
+/*
+ * IQR band + P50 marker on a track.
+ * Usage:
+ *   <div class="mbx-dist">
+ *     <div class="mbx-dist-track">
+ *       <div class="mbx-dist-iqr mbx-dist-blue" style="left:25%;width:30%"></div>
+ *       <div class="mbx-dist-p50 mbx-dist-blue" style="left:42%"></div>
+ *     </div>
+ *     <div class="mbx-dist-labels">
+ *       <span>P25: $42</span>
+ *       <span class="mbx-dist-median">Median: $68</span>
+ *       <span>P75: $94</span>
+ *     </div>
+ *   </div>
+ */
+.mbx-dist {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.mbx-dist-track {
+  position: relative;
+  height: 16px;
+  background: var(--mobius-bg-tertiary);
+  border-radius: 3px;
+  overflow: visible;
+}
+
+.mbx-dist-track-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  color: var(--mobius-text-muted);
+}
+
+/* IQR band */
+.mbx-dist-iqr {
+  position: absolute;
+  top: 2px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
+/* P50 marker */
+.mbx-dist-p50 {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 16px;
+  border-radius: 1px;
+}
+
+/* Color variants — map to data semantics */
+.mbx-dist-success { background: var(--mobius-success); }
+.mbx-dist-warning { background: var(--mobius-warning); }
+.mbx-dist-error   { background: var(--mobius-error); }
+.mbx-dist-neutral { background: var(--mobius-border-medium); }
+.mbx-dist-blue    { background: var(--mobius-accent); }
+
+/* P50 gets full opacity */
+.mbx-dist-p50 { opacity: 1 !important; }
+
+/* Labels row */
+.mbx-dist-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  color: var(--mobius-text-muted);
+  font-family: var(--mobius-font-mono);
+}
+
+.mbx-dist-median {
+  font-weight: 700;
+  color: var(--mobius-text-primary);
+  font-size: 0.68rem;
+}
+
+
+/* ── 14. Scrollbar polish ───────────────────────────────────── */
+.mbx-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--mobius-border-medium) transparent;
+}
+
+.mbx-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.mbx-scroll::-webkit-scrollbar-track { background: transparent; }
+.mbx-scroll::-webkit-scrollbar-thumb {
+  background: var(--mobius-border-medium);
+  border-radius: 99px;
+}
+.mbx-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--mobius-text-muted);
+}
+
+
+/* ── 15. Utility helpers ────────────────────────────────────── */
+.mbx-sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+.mbx-divider {
+  height: 1px;
+  background: var(--mobius-border);
+  margin: 0;
+}
+
+.mbx-divider-v {
+  width: 1px;
+  align-self: stretch;
+  background: var(--mobius-border);
+}
+
+.mbx-spacer { flex: 1; }
+
+/* Stat/KPI number display */
+.mbx-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.2rem 0.75rem;
+  border-radius: var(--mobius-radius-sm);
+  border: 1px solid var(--mobius-border);
+  background: var(--mobius-bg-card, #fff);
+  cursor: default;
+  min-width: 52px;
+}
+
+.mbx-stat-val {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.mbx-stat-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mobius-text-muted);
+}
+
+.mbx-stat-val-success { color: var(--mobius-success); }
+.mbx-stat-val-error   { color: var(--mobius-error); }
+.mbx-stat-val-warning { color: var(--mobius-warning); }
+.mbx-stat-val-muted   { color: var(--mobius-text-muted); }
+
+.mbx-stat.mbx-stat-active {
+  border-color: var(--mobius-accent);
+  background: #eff6ff;
+}
+
+/* Empty state */
+.mbx-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: var(--mobius-text-muted);
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.mbx-empty-icon { font-size: 1.75rem; opacity: 0.3; }
+.mbx-empty-text { font-size: 0.85rem; }
+.mbx-empty-sub  { font-size: 0.75rem; color: var(--mobius-text-muted); }
+
+/* Loading spinner */
+.mbx-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--mobius-border-medium);
+  border-top-color: var(--mobius-accent);
+  border-radius: 50%;
+  animation: mbx-spin 0.65s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes mbx-spin { to { transform: rotate(360deg); } }
+
+/* Avatar / initials circle */
+.mbx-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.mbx-avatar-lg {
+  width: 48px;
+  height: 48px;
+  font-size: 1rem;
+}
+
+.mbx-avatar-error   { background: #fee2e2; color: #b91c1c; }
+.mbx-avatar-success { background: #dcfce7; color: #15803d; }
+.mbx-avatar-warning { background: #fef9c3; color: #92400e; }
+.mbx-avatar-neutral { background: var(--mobius-bg-tertiary); color: var(--mobius-text-muted); }

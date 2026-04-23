@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Providr — Provider Credential Hub</title>
+<style>
+:root {
+  --bg: #fafbfc;
+  --bg-card: #ffffff;
+  --bg-hover: #f1f5f9;
+  --border: #e2e8f0;
+  --border-med: #d1d5db;
+  --text: #1a1d21;
+  --text-2: #374151;
+  --text-3: #64748b;
+  --accent: #3b82f6;
+  --accent-h: #2563eb;
+  --success: #16a34a;
+  --warn: #f59e0b;
+  --error: #dc2626;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --font: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── Layout ── */
+.page { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+
+/* ── Header ── */
+.hd { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.logo { font-size: 1.25rem; font-weight: 700; color: var(--accent); letter-spacing: -0.3px; }
+.logo sup { font-size: 0.6rem; font-weight: 600; color: var(--text-3); vertical-align: top; margin-top: 0.25rem; }
+.back-link { font-size: 0.8rem; color: var(--text-3); text-decoration: none; margin-left: auto; }
+.back-link:hover { color: var(--accent); }
+
+/* ── Org selector ── */
+.org-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.org-bar label { font-size: 0.75rem; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.org-search { flex: 1; border: 1px solid var(--border-med); border-radius: 6px; padding: 0.4rem 0.65rem; font-size: 0.875rem; font-family: var(--font); outline: none; color: var(--text); background: var(--bg); transition: border-color 0.12s; }
+.org-search:focus { border-color: var(--accent); }
+.org-badge { display: inline-flex; align-items: center; gap: 0.35rem; background: #dbeafe; color: #1d4ed8; border-radius: 99px; padding: 0.2rem 0.6rem; font-size: 0.72rem; font-weight: 600; }
+.btn { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font); font-size: 0.8rem; font-weight: 500; padding: 0.36rem 0.75rem; border-radius: 6px; border: 1px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.12s; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-h); }
+.btn-ghost { background: none; color: var(--text-3); border-color: var(--border-med); }
+.btn-ghost:hover { background: var(--bg-hover); }
+
+/* ── 4-card grid (2×2) ── */
+.skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+@media(max-width: 640px) { .skill-grid { grid-template-columns: 1fr; } }
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 0.5rem;
+  text-decoration: none; color: var(--text);
+  transition: box-shadow 0.15s, border-color 0.15s, transform 0.12s;
+  cursor: pointer;
+}
+.skill-card:hover { box-shadow: var(--shadow-md); border-color: var(--accent); transform: translateY(-1px); }
+.skill-card .icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
+.skill-card .label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+.skill-card .title { font-size: 1rem; font-weight: 600; color: var(--text); }
+.skill-card .desc { font-size: 0.78rem; color: var(--text-3); line-height: 1.45; flex: 1; }
+.skill-card .stat-row { display: flex; gap: 0.5rem; margin-top: auto; padding-top: 0.75rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.stat { font-size: 0.7rem; }
+.stat .n { font-weight: 700; color: var(--text); }
+.stat .k { color: var(--text-3); }
+.pill { display: inline-flex; align-items: center; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.1rem 0.4rem; border-radius: 99px; }
+.pill-ok   { background: #dcfce7; color: #15803d; }
+.pill-blue { background: #dbeafe; color: #1d4ed8; }
+.pill-warn { background: #fef9c3; color: #92400e; }
+.pill-err  { background: #fee2e2; color: #b91c1c; }
+.pill-dim  { background: #f1f5f9; color: #64748b; }
+
+/* ── Recent runs section ── */
+.section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+.section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3); }
+.run-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.run-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  text-decoration: none; color: var(--text);
+  transition: background 0.1s;
+}
+.run-row:hover { background: var(--bg-hover); }
+.run-row .rn { font-size: 0.875rem; font-weight: 600; flex: 1; }
+.run-row .rm { font-size: 0.72rem; color: var(--text-3); }
+.run-row .rt { font-size: 0.72rem; color: var(--text-3); margin-left: auto; }
+.empty { padding: 2rem; text-align: center; color: var(--text-3); font-size: 0.875rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); }
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Compliance banner ── */
+.compliance-bar {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem; color: #92400e;
+}
+.compliance-bar a { color: var(--accent); text-decoration: underline; }
+.compliance-bar.ok { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
+.compliance-bar.hide { display: none; }
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- Header -->
+  <div class="hd">
+    <div class="logo">Providr <sup>SKILL</sup></div>
+    <a class="back-link" href="http://localhost:3000">← Main Dashboard</a>
+  </div>
+
+  <!-- Org selector -->
+  <div class="org-bar">
+    <label>Organization</label>
+    <input class="org-search" id="orgSearch" type="text" placeholder="Search org name…" autocomplete="off">
+    <button class="btn btn-ghost" id="clearOrg" style="display:none" onclick="clearOrg()">✕ Clear</button>
+    <span class="org-badge" id="selectedBadge" style="display:none"></span>
+  </div>
+
+  <!-- Compliance alert banner -->
+  <div class="compliance-bar hide" id="complianceBanner">
+    <span>⚠️</span>
+    <span id="complianceBannerText">Loading compliance status…</span>
+  </div>
+
+  <!-- 3-skill grid -->
+  <div class="skill-grid">
+    <!-- Skill A: Org Details -->
+    <a class="skill-card" id="cardOrg" href="org.html" onclick="return navWithOrg('org.html')">
+      <div class="icon">🏢</div>
+      <div class="label">Skill A</div>
+      <div class="title">Org Details</div>
+      <div class="desc">NPIs, practice locations, and organization-level flags sourced from NPPES, PML, and credentialing runs.</div>
+      <div class="stat-row" id="orgStats">
+        <span class="stat"><span class="n" id="npiCount">—</span> <span class="k">NPIs</span></span>
+        <span class="stat"><span class="n" id="locCount">—</span> <span class="k">locations</span></span>
+      </div>
+    </a>
+
+    <!-- Skill B: Roster -->
+    <a class="skill-card" id="cardRoster" href="roster.html" onclick="return navWithOrg('roster.html')">
+      <div class="icon">👥</div>
+      <div class="label">Skill B</div>
+      <div class="title">Roster</div>
+      <div class="desc">Active and termed clinicians. Profiles loaded from NPPES, PML enrollment and Medicaid billing history.</div>
+      <div class="stat-row" id="rosterStats">
+        <span class="stat"><span class="n" id="activeCount">—</span> <span class="k">active</span></span>
+        <span class="stat"><span class="n" id="termedCount">—</span> <span class="k">termed</span></span>
+        <span id="pmlGapBadge" style="display:none"></span>
+      </div>
+    </a>
+
+    <!-- Skill C: Credentialing Runs -->
+    <a class="skill-card" href="http://localhost:8000/pipeline" target="_blank">
+      <div class="icon">🔍</div>
+      <div class="label">Skill C</div>
+      <div class="title">Credentialing Pipeline</div>
+      <div class="desc">Run all credentialing checks. Agentic mode proposes org and roster updates; autonomous compliance risk detection.</div>
+      <div class="stat-row" id="runStats">
+        <span class="stat"><span class="n" id="runCount">—</span> <span class="k">runs</span></span>
+        <span id="lastRunBadge"></span>
+      </div>
+    </a>
+
+    <!-- Skill D: Org Intelligence -->
+    <a class="skill-card" id="cardIntel" href="org.html" onclick="return navWithOrg('org.html')">
+      <div class="icon">🧠</div>
+      <div class="label">Skill D</div>
+      <div class="title">Org Intelligence</div>
+      <div class="desc">Deep org profile: 990 financials, M&amp;A signals, competitive positioning, LLM synthesis, and full evidence trail.</div>
+      <div class="stat-row" id="intelStats">
+        <span class="stat"><span class="n" id="intelHealth">—</span> <span class="k">health</span></span>
+        <span class="stat"><span class="n" id="intelSources">—</span> <span class="k">sources</span></span>
+        <span id="intelBadge" style="display:none"></span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Recent runs -->
+  <div>
+    <div class="section-head">
+      <span class="section-title">Recent credentialing runs</span>
+      <a href="http://localhost:8000/pipeline" target="_blank" class="btn btn-ghost" style="font-size:0.72rem;padding:0.2rem 0.5rem">Open Pipeline →</a>
+    </div>
+    <div class="run-list" id="runList">
+      <div class="empty"><span class="spinner"></span> Loading runs…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CHAT_SRV = 'http://localhost:8000';
+const SKILL_SRV = 'http://localhost:8011';
+const INTEL_SRV = 'http://localhost:8012';
+
+let _orgSlug = null;
+let _orgName = null;
+
+// ── Org from URL ──────────────────────────────────────────────────────────
+function _orgSlugify(name) {
+  return name.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48);
+}
+
+function initOrg() {
+  const p = new URLSearchParams(location.search);
+  const name = p.get('org');
+  if (name) selectOrg(name, _orgSlugify(name));
+  loadRuns();
+}
+
+function selectOrg(name, slug) {
+  _orgName = name;
+  _orgSlug = slug || _orgSlugify(name);
+  document.getElementById('orgSearch').value = name;
+  document.getElementById('selectedBadge').textContent = name;
+  document.getElementById('selectedBadge').style.display = '';
+  document.getElementById('clearOrg').style.display = '';
+  loadOrgStats();
+  loadRosterStats();
+  loadIntelStats();
+  loadComplianceSummary();
+}
+
+function clearOrg() {
+  _orgName = null; _orgSlug = null;
+  document.getElementById('orgSearch').value = '';
+  document.getElementById('selectedBadge').style.display = 'none';
+  document.getElementById('clearOrg').style.display = 'none';
+  document.getElementById('complianceBanner').className = 'compliance-bar hide';
+  resetStats();
+}
+
+function resetStats() {
+  ['npiCount','locCount','activeCount','termedCount','intelHealth','intelSources'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.textContent = '—';
+  });
+  document.getElementById('pmlGapBadge').style.display = 'none';
+  document.getElementById('intelBadge').style.display = 'none';
+}
+
+function navWithOrg(page) {
+  if (_orgName) {
+    location.href = `${page}?org=${encodeURIComponent(_orgName)}`;
+    return false;
+  }
+  return true;
+}
+
+// ── Org search ─────────────────────────────────────────────────────────────
+let _searchTimer = null;
+document.getElementById('orgSearch').addEventListener('input', function() {
+  clearTimeout(_searchTimer);
+  const q = this.value.trim();
+  if (!q) { clearOrg(); return; }
+  _searchTimer = setTimeout(() => searchOrgs(q), 300);
+});
+
+async function searchOrgs(q) {
+  try {
+    const r = await fetch(`${SKILL_SRV}/org/`);
+    if (!r.ok) return;
+    const d = await r.json();
+    const orgs = (d.orgs || []).filter(o =>
+      (o.org_name || '').toLowerCase().includes(q.toLowerCase())
+    );
+    if (orgs.length === 1) {
+      selectOrg(orgs[0].org_name, orgs[0].org_slug);
+    } else if (orgs.length > 1) {
+      showOrgPicker(orgs);
+    }
+  } catch(e) {}
+}
+
+function showOrgPicker(orgs) {
+  // Simple: select first match if exact
+  const q = document.getElementById('orgSearch').value.trim().toLowerCase();
+  const exact = orgs.find(o => (o.org_name || '').toLowerCase() === q);
+  if (exact) selectOrg(exact.org_name, exact.org_slug);
+}
+
+// ── Load org stats ─────────────────────────────────────────────────────────
+async function loadOrgStats() {
+  if (!_orgSlug) return;
+  try {
+    const r = await fetch(`${SKILL_SRV}/org/${encodeURIComponent(_orgSlug)}`);
+    if (!r.ok) return;
+    const d = await r.json();
+    const npis = (d.confirmed_npis || []).filter(n => !n.removed_at && !n.tombstoned);
+    const locs = (d.locations || []).filter(l => l.active !== false);
+    document.getElementById('npiCount').textContent = npis.length;
+    document.getElementById('locCount').textContent = locs.length;
+  } catch(e) {}
+}
+
+// ── Load org intelligence stats ────────────────────────────────────────────
+async function loadIntelStats() {
+  if (!_orgSlug) return;
+  try {
+    const r = await fetch(`${SKILL_SRV}/org/${encodeURIComponent(_orgSlug)}`);
+    if (!r.ok) return;
+    const d = await r.json();
+    const intel = d.intelligence || {};
+    const ps    = intel.profile_summary || {};
+    const srcs  = (intel.sources || []).length;
+    const health = ps.financial_health;
+    const traj   = ps.growth_trajectory;
+
+    if (health) {
+      document.getElementById('intelHealth').textContent = health;
+      const healthColors = { strong:'pill-ok', stable:'pill-blue', pressured:'pill-warn', distressed:'pill-err' };
+      const cls = healthColors[health] || 'pill-dim';
+      document.getElementById('intelHealth').innerHTML =
+        `<span class="pill ${cls}" style="font-size:0.65rem">${health}</span>`;
+    }
+    if (srcs > 0) document.getElementById('intelSources').textContent = srcs;
+
+    if (traj && traj !== 'unknown') {
+      const arrow = { expanding:'↑', contracting:'↓', stable:'→' }[traj] || '';
+      const b = document.getElementById('intelBadge');
+      b.innerHTML = `<span class="pill pill-dim">${traj} ${arrow}</span>`;
+      b.style.display = '';
+    }
+    // Show a "Profile ready" indicator on the card if intelligence exists
+    if (health || srcs > 0) {
+      const card = document.getElementById('cardIntel');
+      if (card) card.style.borderColor = 'var(--success)';
+    }
+  } catch(e) {}
+}
+
+// ── Load roster stats ──────────────────────────────────────────────────────
+async function loadRosterStats() {
+  if (!_orgName) return;
+  try {
+    const r = await fetch(`${SKILL_SRV}/roster/truth/${encodeURIComponent(_orgName)}?limit=500`);
+    if (!r.ok) return;
+    const d = await r.json();
+    const providers = d.providers || [];
+    const active = providers.filter(p => (p.status || 'active') === 'active').length;
+    const termed = providers.filter(p => (p.status || '') === 'termed').length;
+    const pmlGaps = providers.filter(p => p.nppes_snapshot && p.nppes_snapshot.pml_gap).length;
+    document.getElementById('activeCount').textContent = active;
+    document.getElementById('termedCount').textContent = termed;
+    if (pmlGaps > 0) {
+      const b = document.getElementById('pmlGapBadge');
+      b.innerHTML = `<span class="pill pill-err">${pmlGaps} PML gap${pmlGaps > 1 ? 's' : ''}</span>`;
+      b.style.display = '';
+    }
+  } catch(e) {}
+}
+
+// ── Compliance summary ─────────────────────────────────────────────────────
+async function loadComplianceSummary() {
+  if (!_orgName) return;
+  const banner = document.getElementById('complianceBanner');
+  const txt = document.getElementById('complianceBannerText');
+  try {
+    const r = await fetch(`${SKILL_SRV}/compliance/${encodeURIComponent(_orgName)}/summary`);
+    if (!r.ok) { banner.className = 'compliance-bar hide'; return; }
+    const d = await r.json();
+    const open = d.open_findings || 0;
+    if (open === 0) {
+      banner.className = 'compliance-bar ok';
+      txt.textContent = '✓ No open compliance findings.';
+    } else {
+      banner.className = 'compliance-bar';
+      txt.innerHTML = `⚠️ ${open} open compliance finding${open > 1 ? 's' : ''} — <a href="http://localhost:8000/pipeline" target="_blank">Review in Pipeline →</a>`;
+    }
+  } catch(e) { banner.className = 'compliance-bar hide'; }
+}
+
+// ── Recent runs ────────────────────────────────────────────────────────────
+async function loadRuns() {
+  try {
+    const r = await fetch(`${CHAT_SRV}/chat/credentialing-runs`);
+    const d = await r.json();
+    const runs = (Array.isArray(d) ? d : d.runs || []).slice(0, 8);
+    document.getElementById('runCount').textContent = runs.length;
+    const list = document.getElementById('runList');
+    if (!runs.length) {
+      list.innerHTML = '<div class="empty">No runs yet. <a href="http://localhost:8000/pipeline" style="color:var(--accent)">Start one →</a></div>';
+      return;
+    }
+    const normPhase = p => {
+      const s = (p || '').toLowerCase();
+      if (s === 'complete' || s === 'done') return 'done';
+      if (s === 'running' || s === 'in_progress') return 'running';
+      if (s === 'failed' || s === 'error') return 'failed';
+      if (s === 'stopped' || s === 'cancelled') return 'stopped';
+      return 'pending'; // awaiting_validation, pending, etc.
+    };
+    const phaseIcon = p => ({'done':'✅','running':'🔄','failed':'❌','stopped':'⛔','pending':'⏳'})[normPhase(p)] || '⏳';
+    const phaseLabel = p => ({'done':'Done','running':'Running','failed':'Failed','stopped':'Stopped','pending':'Pending'})[normPhase(p)] || normPhase(p);
+    const phasePill = p => { const n = normPhase(p); return n === 'done' ? 'pill-ok' : n === 'failed' ? 'pill-err' : n === 'running' ? 'pill-blue' : 'pill-dim'; };
+    list.innerHTML = runs.map(rn => `
+      <a class="run-row" href="run.html?run_id=${rn.run_id}">
+        <span>${phaseIcon(rn.phase)}</span>
+        <span class="rn">${rn.org_name || '—'}</span>
+        <span class="rm">${rn.mode || 'copilot'}</span>
+        <span class="pill ${phasePill(rn.phase)}">${phaseLabel(rn.phase)}</span>
+        <span class="rt">${rn.run_id ? rn.run_id.slice(0,8) : ''}</span>
+      </a>
+    `).join('');
+    // Badge for last run
+    const last = runs[0];
+    if (last) {
+      const b = document.getElementById('lastRunBadge');
+      b.innerHTML = `<span class="pill ${phasePill(last.phase)}">${phaseLabel(last.phase)}</span>`;
+    }
+  } catch(e) {
+    document.getElementById('runList').innerHTML = '<div class="empty">Could not load runs. Is the chat server running?</div>';
+  }
+}
+
+initOrg();
+</script>
+</body>
+</html>

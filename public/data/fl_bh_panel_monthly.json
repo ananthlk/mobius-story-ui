@@ -1,0 +1,4412 @@
+[
+  {
+    "period_month": "2019-01",
+    "provider_type": "APRN",
+    "clinician_count": 1246,
+    "total_benes": 115495,
+    "panel_size": 92.7
+  },
+  {
+    "period_month": "2019-01",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 271,
+    "panel_size": 45.2
+  },
+  {
+    "period_month": "2019-01",
+    "provider_type": "Counselor",
+    "clinician_count": 581,
+    "total_benes": 60296,
+    "panel_size": 103.8
+  },
+  {
+    "period_month": "2019-01",
+    "provider_type": "MFT",
+    "clinician_count": 39,
+    "total_benes": 5018,
+    "panel_size": 128.7
+  },
+  {
+    "period_month": "2019-01",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 691,
+    "total_benes": 78433,
+    "panel_size": 113.5
+  },
+  {
+    "period_month": "2019-01",
+    "provider_type": "Psychologist",
+    "clinician_count": 139,
+    "total_benes": 9039,
+    "panel_size": 65.0
+  },
+  {
+    "period_month": "2019-01",
+    "provider_type": "Residential",
+    "clinician_count": 683,
+    "total_benes": 155540,
+    "panel_size": 227.7
+  },
+  {
+    "period_month": "2019-01",
+    "provider_type": "Social Worker",
+    "clinician_count": 588,
+    "total_benes": 45001,
+    "panel_size": 76.5
+  },
+  {
+    "period_month": "2019-02",
+    "provider_type": "APRN",
+    "clinician_count": 1502,
+    "total_benes": 130730,
+    "panel_size": 87.0
+  },
+  {
+    "period_month": "2019-02",
+    "provider_type": "CMHC",
+    "clinician_count": 4,
+    "total_benes": 274,
+    "panel_size": 68.5
+  },
+  {
+    "period_month": "2019-02",
+    "provider_type": "Counselor",
+    "clinician_count": 722,
+    "total_benes": 79061,
+    "panel_size": 109.5
+  },
+  {
+    "period_month": "2019-02",
+    "provider_type": "MFT",
+    "clinician_count": 40,
+    "total_benes": 5595,
+    "panel_size": 139.9
+  },
+  {
+    "period_month": "2019-02",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 780,
+    "total_benes": 88648,
+    "panel_size": 113.7
+  },
+  {
+    "period_month": "2019-02",
+    "provider_type": "Psychologist",
+    "clinician_count": 164,
+    "total_benes": 9849,
+    "panel_size": 60.1
+  },
+  {
+    "period_month": "2019-02",
+    "provider_type": "Residential",
+    "clinician_count": 787,
+    "total_benes": 175655,
+    "panel_size": 223.2
+  },
+  {
+    "period_month": "2019-02",
+    "provider_type": "Social Worker",
+    "clinician_count": 644,
+    "total_benes": 51060,
+    "panel_size": 79.3
+  },
+  {
+    "period_month": "2019-03",
+    "provider_type": "APRN",
+    "clinician_count": 1545,
+    "total_benes": 128244,
+    "panel_size": 83.0
+  },
+  {
+    "period_month": "2019-03",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 289,
+    "panel_size": 48.2
+  },
+  {
+    "period_month": "2019-03",
+    "provider_type": "Counselor",
+    "clinician_count": 757,
+    "total_benes": 81979,
+    "panel_size": 108.3
+  },
+  {
+    "period_month": "2019-03",
+    "provider_type": "MFT",
+    "clinician_count": 41,
+    "total_benes": 5965,
+    "panel_size": 145.5
+  },
+  {
+    "period_month": "2019-03",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 807,
+    "total_benes": 91567,
+    "panel_size": 113.5
+  },
+  {
+    "period_month": "2019-03",
+    "provider_type": "Psychologist",
+    "clinician_count": 156,
+    "total_benes": 9766,
+    "panel_size": 62.6
+  },
+  {
+    "period_month": "2019-03",
+    "provider_type": "Residential",
+    "clinician_count": 785,
+    "total_benes": 171250,
+    "panel_size": 218.2
+  },
+  {
+    "period_month": "2019-03",
+    "provider_type": "Social Worker",
+    "clinician_count": 654,
+    "total_benes": 52580,
+    "panel_size": 80.4
+  },
+  {
+    "period_month": "2019-04",
+    "provider_type": "APRN",
+    "clinician_count": 1607,
+    "total_benes": 137434,
+    "panel_size": 85.5
+  },
+  {
+    "period_month": "2019-04",
+    "provider_type": "CMHC",
+    "clinician_count": 5,
+    "total_benes": 391,
+    "panel_size": 78.2
+  },
+  {
+    "period_month": "2019-04",
+    "provider_type": "Counselor",
+    "clinician_count": 779,
+    "total_benes": 86682,
+    "panel_size": 111.3
+  },
+  {
+    "period_month": "2019-04",
+    "provider_type": "MFT",
+    "clinician_count": 38,
+    "total_benes": 6141,
+    "panel_size": 161.6
+  },
+  {
+    "period_month": "2019-04",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 818,
+    "total_benes": 97934,
+    "panel_size": 119.7
+  },
+  {
+    "period_month": "2019-04",
+    "provider_type": "Psychologist",
+    "clinician_count": 168,
+    "total_benes": 10412,
+    "panel_size": 62.0
+  },
+  {
+    "period_month": "2019-04",
+    "provider_type": "Residential",
+    "clinician_count": 802,
+    "total_benes": 178136,
+    "panel_size": 222.1
+  },
+  {
+    "period_month": "2019-04",
+    "provider_type": "Social Worker",
+    "clinician_count": 661,
+    "total_benes": 54760,
+    "panel_size": 82.8
+  },
+  {
+    "period_month": "2019-05",
+    "provider_type": "APRN",
+    "clinician_count": 1601,
+    "total_benes": 133268,
+    "panel_size": 83.2
+  },
+  {
+    "period_month": "2019-05",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 366,
+    "panel_size": 52.3
+  },
+  {
+    "period_month": "2019-05",
+    "provider_type": "Counselor",
+    "clinician_count": 766,
+    "total_benes": 85137,
+    "panel_size": 111.1
+  },
+  {
+    "period_month": "2019-05",
+    "provider_type": "MFT",
+    "clinician_count": 36,
+    "total_benes": 5663,
+    "panel_size": 157.3
+  },
+  {
+    "period_month": "2019-05",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 820,
+    "total_benes": 95673,
+    "panel_size": 116.7
+  },
+  {
+    "period_month": "2019-05",
+    "provider_type": "Psychologist",
+    "clinician_count": 173,
+    "total_benes": 10453,
+    "panel_size": 60.4
+  },
+  {
+    "period_month": "2019-05",
+    "provider_type": "Residential",
+    "clinician_count": 797,
+    "total_benes": 165708,
+    "panel_size": 207.9
+  },
+  {
+    "period_month": "2019-05",
+    "provider_type": "Social Worker",
+    "clinician_count": 671,
+    "total_benes": 54401,
+    "panel_size": 81.1
+  },
+  {
+    "period_month": "2019-06",
+    "provider_type": "APRN",
+    "clinician_count": 1553,
+    "total_benes": 120203,
+    "panel_size": 77.4
+  },
+  {
+    "period_month": "2019-06",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 280,
+    "panel_size": 40.0
+  },
+  {
+    "period_month": "2019-06",
+    "provider_type": "Counselor",
+    "clinician_count": 738,
+    "total_benes": 78312,
+    "panel_size": 106.1
+  },
+  {
+    "period_month": "2019-06",
+    "provider_type": "MFT",
+    "clinician_count": 36,
+    "total_benes": 5027,
+    "panel_size": 139.6
+  },
+  {
+    "period_month": "2019-06",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 786,
+    "total_benes": 84204,
+    "panel_size": 107.1
+  },
+  {
+    "period_month": "2019-06",
+    "provider_type": "Psychologist",
+    "clinician_count": 155,
+    "total_benes": 9314,
+    "panel_size": 60.1
+  },
+  {
+    "period_month": "2019-06",
+    "provider_type": "Residential",
+    "clinician_count": 692,
+    "total_benes": 103098,
+    "panel_size": 149.0
+  },
+  {
+    "period_month": "2019-06",
+    "provider_type": "Social Worker",
+    "clinician_count": 657,
+    "total_benes": 49900,
+    "panel_size": 76.0
+  },
+  {
+    "period_month": "2019-07",
+    "provider_type": "APRN",
+    "clinician_count": 1648,
+    "total_benes": 139443,
+    "panel_size": 84.6
+  },
+  {
+    "period_month": "2019-07",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 384,
+    "panel_size": 54.9
+  },
+  {
+    "period_month": "2019-07",
+    "provider_type": "Counselor",
+    "clinician_count": 755,
+    "total_benes": 81754,
+    "panel_size": 108.3
+  },
+  {
+    "period_month": "2019-07",
+    "provider_type": "MFT",
+    "clinician_count": 35,
+    "total_benes": 5172,
+    "panel_size": 147.8
+  },
+  {
+    "period_month": "2019-07",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 833,
+    "total_benes": 92128,
+    "panel_size": 110.6
+  },
+  {
+    "period_month": "2019-07",
+    "provider_type": "Psychologist",
+    "clinician_count": 168,
+    "total_benes": 9649,
+    "panel_size": 57.4
+  },
+  {
+    "period_month": "2019-07",
+    "provider_type": "Residential",
+    "clinician_count": 688,
+    "total_benes": 103181,
+    "panel_size": 150.0
+  },
+  {
+    "period_month": "2019-07",
+    "provider_type": "Social Worker",
+    "clinician_count": 656,
+    "total_benes": 51446,
+    "panel_size": 78.4
+  },
+  {
+    "period_month": "2019-08",
+    "provider_type": "APRN",
+    "clinician_count": 1727,
+    "total_benes": 153929,
+    "panel_size": 89.1
+  },
+  {
+    "period_month": "2019-08",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 331,
+    "panel_size": 47.3
+  },
+  {
+    "period_month": "2019-08",
+    "provider_type": "Counselor",
+    "clinician_count": 750,
+    "total_benes": 84926,
+    "panel_size": 113.2
+  },
+  {
+    "period_month": "2019-08",
+    "provider_type": "MFT",
+    "clinician_count": 36,
+    "total_benes": 5215,
+    "panel_size": 144.9
+  },
+  {
+    "period_month": "2019-08",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 830,
+    "total_benes": 96886,
+    "panel_size": 116.7
+  },
+  {
+    "period_month": "2019-08",
+    "provider_type": "Psychologist",
+    "clinician_count": 170,
+    "total_benes": 10067,
+    "panel_size": 59.2
+  },
+  {
+    "period_month": "2019-08",
+    "provider_type": "Residential",
+    "clinician_count": 792,
+    "total_benes": 155945,
+    "panel_size": 196.9
+  },
+  {
+    "period_month": "2019-08",
+    "provider_type": "Social Worker",
+    "clinician_count": 670,
+    "total_benes": 52397,
+    "panel_size": 78.2
+  },
+  {
+    "period_month": "2019-09",
+    "provider_type": "APRN",
+    "clinician_count": 1691,
+    "total_benes": 136341,
+    "panel_size": 80.6
+  },
+  {
+    "period_month": "2019-09",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 344,
+    "panel_size": 57.3
+  },
+  {
+    "period_month": "2019-09",
+    "provider_type": "Counselor",
+    "clinician_count": 735,
+    "total_benes": 82175,
+    "panel_size": 111.8
+  },
+  {
+    "period_month": "2019-09",
+    "provider_type": "MFT",
+    "clinician_count": 40,
+    "total_benes": 5040,
+    "panel_size": 126.0
+  },
+  {
+    "period_month": "2019-09",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 816,
+    "total_benes": 91501,
+    "panel_size": 112.1
+  },
+  {
+    "period_month": "2019-09",
+    "provider_type": "Psychologist",
+    "clinician_count": 168,
+    "total_benes": 11468,
+    "panel_size": 68.3
+  },
+  {
+    "period_month": "2019-09",
+    "provider_type": "Residential",
+    "clinician_count": 804,
+    "total_benes": 173258,
+    "panel_size": 215.5
+  },
+  {
+    "period_month": "2019-09",
+    "provider_type": "Social Worker",
+    "clinician_count": 661,
+    "total_benes": 51728,
+    "panel_size": 78.3
+  },
+  {
+    "period_month": "2019-10",
+    "provider_type": "APRN",
+    "clinician_count": 1801,
+    "total_benes": 162602,
+    "panel_size": 90.3
+  },
+  {
+    "period_month": "2019-10",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 559,
+    "panel_size": 93.2
+  },
+  {
+    "period_month": "2019-10",
+    "provider_type": "Counselor",
+    "clinician_count": 790,
+    "total_benes": 92411,
+    "panel_size": 117.0
+  },
+  {
+    "period_month": "2019-10",
+    "provider_type": "MFT",
+    "clinician_count": 42,
+    "total_benes": 4157,
+    "panel_size": 99.0
+  },
+  {
+    "period_month": "2019-10",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 856,
+    "total_benes": 99309,
+    "panel_size": 116.0
+  },
+  {
+    "period_month": "2019-10",
+    "provider_type": "Psychologist",
+    "clinician_count": 174,
+    "total_benes": 13410,
+    "panel_size": 77.1
+  },
+  {
+    "period_month": "2019-10",
+    "provider_type": "Residential",
+    "clinician_count": 818,
+    "total_benes": 175870,
+    "panel_size": 215.0
+  },
+  {
+    "period_month": "2019-10",
+    "provider_type": "Social Worker",
+    "clinician_count": 677,
+    "total_benes": 56263,
+    "panel_size": 83.1
+  },
+  {
+    "period_month": "2019-11",
+    "provider_type": "APRN",
+    "clinician_count": 1685,
+    "total_benes": 136884,
+    "panel_size": 81.2
+  },
+  {
+    "period_month": "2019-11",
+    "provider_type": "CMHC",
+    "clinician_count": 4,
+    "total_benes": 435,
+    "panel_size": 108.8
+  },
+  {
+    "period_month": "2019-11",
+    "provider_type": "Counselor",
+    "clinician_count": 773,
+    "total_benes": 86378,
+    "panel_size": 111.7
+  },
+  {
+    "period_month": "2019-11",
+    "provider_type": "MFT",
+    "clinician_count": 40,
+    "total_benes": 3366,
+    "panel_size": 84.2
+  },
+  {
+    "period_month": "2019-11",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 791,
+    "total_benes": 86661,
+    "panel_size": 109.6
+  },
+  {
+    "period_month": "2019-11",
+    "provider_type": "Psychologist",
+    "clinician_count": 164,
+    "total_benes": 11301,
+    "panel_size": 68.9
+  },
+  {
+    "period_month": "2019-11",
+    "provider_type": "Residential",
+    "clinician_count": 810,
+    "total_benes": 167802,
+    "panel_size": 207.2
+  },
+  {
+    "period_month": "2019-11",
+    "provider_type": "Social Worker",
+    "clinician_count": 653,
+    "total_benes": 52562,
+    "panel_size": 80.5
+  },
+  {
+    "period_month": "2019-12",
+    "provider_type": "APRN",
+    "clinician_count": 1685,
+    "total_benes": 134939,
+    "panel_size": 80.1
+  },
+  {
+    "period_month": "2019-12",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 384,
+    "panel_size": 64.0
+  },
+  {
+    "period_month": "2019-12",
+    "provider_type": "Counselor",
+    "clinician_count": 730,
+    "total_benes": 80132,
+    "panel_size": 109.8
+  },
+  {
+    "period_month": "2019-12",
+    "provider_type": "MFT",
+    "clinician_count": 39,
+    "total_benes": 3368,
+    "panel_size": 86.4
+  },
+  {
+    "period_month": "2019-12",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 787,
+    "total_benes": 84508,
+    "panel_size": 107.4
+  },
+  {
+    "period_month": "2019-12",
+    "provider_type": "Psychologist",
+    "clinician_count": 169,
+    "total_benes": 10900,
+    "panel_size": 64.5
+  },
+  {
+    "period_month": "2019-12",
+    "provider_type": "Residential",
+    "clinician_count": 808,
+    "total_benes": 159156,
+    "panel_size": 197.0
+  },
+  {
+    "period_month": "2019-12",
+    "provider_type": "Social Worker",
+    "clinician_count": 626,
+    "total_benes": 50737,
+    "panel_size": 81.0
+  },
+  {
+    "period_month": "2020-01",
+    "provider_type": "APRN",
+    "clinician_count": 1781,
+    "total_benes": 162320,
+    "panel_size": 91.1
+  },
+  {
+    "period_month": "2020-01",
+    "provider_type": "CMHC",
+    "clinician_count": 4,
+    "total_benes": 369,
+    "panel_size": 92.2
+  },
+  {
+    "period_month": "2020-01",
+    "provider_type": "Counselor",
+    "clinician_count": 786,
+    "total_benes": 89546,
+    "panel_size": 113.9
+  },
+  {
+    "period_month": "2020-01",
+    "provider_type": "MFT",
+    "clinician_count": 39,
+    "total_benes": 3813,
+    "panel_size": 97.8
+  },
+  {
+    "period_month": "2020-01",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 834,
+    "total_benes": 101908,
+    "panel_size": 122.2
+  },
+  {
+    "period_month": "2020-01",
+    "provider_type": "Psychologist",
+    "clinician_count": 182,
+    "total_benes": 12001,
+    "panel_size": 65.9
+  },
+  {
+    "period_month": "2020-01",
+    "provider_type": "Residential",
+    "clinician_count": 803,
+    "total_benes": 171282,
+    "panel_size": 213.3
+  },
+  {
+    "period_month": "2020-01",
+    "provider_type": "Social Worker",
+    "clinician_count": 673,
+    "total_benes": 55358,
+    "panel_size": 82.3
+  },
+  {
+    "period_month": "2020-02",
+    "provider_type": "APRN",
+    "clinician_count": 1716,
+    "total_benes": 158291,
+    "panel_size": 92.2
+  },
+  {
+    "period_month": "2020-02",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 402,
+    "panel_size": 50.2
+  },
+  {
+    "period_month": "2020-02",
+    "provider_type": "Counselor",
+    "clinician_count": 788,
+    "total_benes": 87564,
+    "panel_size": 111.1
+  },
+  {
+    "period_month": "2020-02",
+    "provider_type": "MFT",
+    "clinician_count": 38,
+    "total_benes": 3711,
+    "panel_size": 97.7
+  },
+  {
+    "period_month": "2020-02",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 801,
+    "total_benes": 96170,
+    "panel_size": 120.1
+  },
+  {
+    "period_month": "2020-02",
+    "provider_type": "Psychologist",
+    "clinician_count": 175,
+    "total_benes": 12576,
+    "panel_size": 71.9
+  },
+  {
+    "period_month": "2020-02",
+    "provider_type": "Residential",
+    "clinician_count": 796,
+    "total_benes": 167084,
+    "panel_size": 209.9
+  },
+  {
+    "period_month": "2020-02",
+    "provider_type": "Social Worker",
+    "clinician_count": 661,
+    "total_benes": 53546,
+    "panel_size": 81.0
+  },
+  {
+    "period_month": "2020-03",
+    "provider_type": "APRN",
+    "clinician_count": 1634,
+    "total_benes": 134689,
+    "panel_size": 82.4
+  },
+  {
+    "period_month": "2020-03",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 344,
+    "panel_size": 57.3
+  },
+  {
+    "period_month": "2020-03",
+    "provider_type": "Counselor",
+    "clinician_count": 753,
+    "total_benes": 82789,
+    "panel_size": 109.9
+  },
+  {
+    "period_month": "2020-03",
+    "provider_type": "MFT",
+    "clinician_count": 36,
+    "total_benes": 3230,
+    "panel_size": 89.7
+  },
+  {
+    "period_month": "2020-03",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 763,
+    "total_benes": 87564,
+    "panel_size": 114.8
+  },
+  {
+    "period_month": "2020-03",
+    "provider_type": "Psychologist",
+    "clinician_count": 164,
+    "total_benes": 11024,
+    "panel_size": 67.2
+  },
+  {
+    "period_month": "2020-03",
+    "provider_type": "Residential",
+    "clinician_count": 795,
+    "total_benes": 148980,
+    "panel_size": 187.4
+  },
+  {
+    "period_month": "2020-03",
+    "provider_type": "Social Worker",
+    "clinician_count": 633,
+    "total_benes": 54063,
+    "panel_size": 85.4
+  },
+  {
+    "period_month": "2020-04",
+    "provider_type": "APRN",
+    "clinician_count": 1397,
+    "total_benes": 102893,
+    "panel_size": 73.7
+  },
+  {
+    "period_month": "2020-04",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 267,
+    "panel_size": 44.5
+  },
+  {
+    "period_month": "2020-04",
+    "provider_type": "Counselor",
+    "clinician_count": 691,
+    "total_benes": 74498,
+    "panel_size": 107.8
+  },
+  {
+    "period_month": "2020-04",
+    "provider_type": "MFT",
+    "clinician_count": 36,
+    "total_benes": 3112,
+    "panel_size": 86.4
+  },
+  {
+    "period_month": "2020-04",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 723,
+    "total_benes": 79468,
+    "panel_size": 109.9
+  },
+  {
+    "period_month": "2020-04",
+    "provider_type": "Psychologist",
+    "clinician_count": 157,
+    "total_benes": 9059,
+    "panel_size": 57.7
+  },
+  {
+    "period_month": "2020-04",
+    "provider_type": "Residential",
+    "clinician_count": 700,
+    "total_benes": 97370,
+    "panel_size": 139.1
+  },
+  {
+    "period_month": "2020-04",
+    "provider_type": "Social Worker",
+    "clinician_count": 605,
+    "total_benes": 51160,
+    "panel_size": 84.6
+  },
+  {
+    "period_month": "2020-05",
+    "provider_type": "APRN",
+    "clinician_count": 1527,
+    "total_benes": 111419,
+    "panel_size": 73.0
+  },
+  {
+    "period_month": "2020-05",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 319,
+    "panel_size": 45.6
+  },
+  {
+    "period_month": "2020-05",
+    "provider_type": "Counselor",
+    "clinician_count": 721,
+    "total_benes": 73824,
+    "panel_size": 102.4
+  },
+  {
+    "period_month": "2020-05",
+    "provider_type": "MFT",
+    "clinician_count": 37,
+    "total_benes": 3493,
+    "panel_size": 94.4
+  },
+  {
+    "period_month": "2020-05",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 760,
+    "total_benes": 81413,
+    "panel_size": 107.1
+  },
+  {
+    "period_month": "2020-05",
+    "provider_type": "Psychologist",
+    "clinician_count": 163,
+    "total_benes": 9848,
+    "panel_size": 60.4
+  },
+  {
+    "period_month": "2020-05",
+    "provider_type": "Residential",
+    "clinician_count": 701,
+    "total_benes": 98850,
+    "panel_size": 141.0
+  },
+  {
+    "period_month": "2020-05",
+    "provider_type": "Social Worker",
+    "clinician_count": 606,
+    "total_benes": 51811,
+    "panel_size": 85.5
+  },
+  {
+    "period_month": "2020-06",
+    "provider_type": "APRN",
+    "clinician_count": 1761,
+    "total_benes": 149393,
+    "panel_size": 84.8
+  },
+  {
+    "period_month": "2020-06",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 358,
+    "panel_size": 44.8
+  },
+  {
+    "period_month": "2020-06",
+    "provider_type": "Counselor",
+    "clinician_count": 749,
+    "total_benes": 78910,
+    "panel_size": 105.4
+  },
+  {
+    "period_month": "2020-06",
+    "provider_type": "MFT",
+    "clinician_count": 41,
+    "total_benes": 4070,
+    "panel_size": 99.3
+  },
+  {
+    "period_month": "2020-06",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 824,
+    "total_benes": 90536,
+    "panel_size": 109.9
+  },
+  {
+    "period_month": "2020-06",
+    "provider_type": "Psychologist",
+    "clinician_count": 172,
+    "total_benes": 10524,
+    "panel_size": 61.2
+  },
+  {
+    "period_month": "2020-06",
+    "provider_type": "Residential",
+    "clinician_count": 642,
+    "total_benes": 93340,
+    "panel_size": 145.4
+  },
+  {
+    "period_month": "2020-06",
+    "provider_type": "Social Worker",
+    "clinician_count": 642,
+    "total_benes": 55055,
+    "panel_size": 85.8
+  },
+  {
+    "period_month": "2020-07",
+    "provider_type": "APRN",
+    "clinician_count": 1805,
+    "total_benes": 150778,
+    "panel_size": 83.5
+  },
+  {
+    "period_month": "2020-07",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 431,
+    "panel_size": 47.9
+  },
+  {
+    "period_month": "2020-07",
+    "provider_type": "Counselor",
+    "clinician_count": 740,
+    "total_benes": 80459,
+    "panel_size": 108.7
+  },
+  {
+    "period_month": "2020-07",
+    "provider_type": "MFT",
+    "clinician_count": 39,
+    "total_benes": 4734,
+    "panel_size": 121.4
+  },
+  {
+    "period_month": "2020-07",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 823,
+    "total_benes": 86136,
+    "panel_size": 104.7
+  },
+  {
+    "period_month": "2020-07",
+    "provider_type": "Psychologist",
+    "clinician_count": 169,
+    "total_benes": 9977,
+    "panel_size": 59.0
+  },
+  {
+    "period_month": "2020-07",
+    "provider_type": "Residential",
+    "clinician_count": 648,
+    "total_benes": 91466,
+    "panel_size": 141.2
+  },
+  {
+    "period_month": "2020-07",
+    "provider_type": "Social Worker",
+    "clinician_count": 630,
+    "total_benes": 54671,
+    "panel_size": 86.8
+  },
+  {
+    "period_month": "2020-08",
+    "provider_type": "APRN",
+    "clinician_count": 1823,
+    "total_benes": 159383,
+    "panel_size": 87.4
+  },
+  {
+    "period_month": "2020-08",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 453,
+    "panel_size": 50.3
+  },
+  {
+    "period_month": "2020-08",
+    "provider_type": "Counselor",
+    "clinician_count": 735,
+    "total_benes": 80976,
+    "panel_size": 110.2
+  },
+  {
+    "period_month": "2020-08",
+    "provider_type": "MFT",
+    "clinician_count": 41,
+    "total_benes": 4006,
+    "panel_size": 97.7
+  },
+  {
+    "period_month": "2020-08",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 793,
+    "total_benes": 84770,
+    "panel_size": 106.9
+  },
+  {
+    "period_month": "2020-08",
+    "provider_type": "Psychologist",
+    "clinician_count": 161,
+    "total_benes": 10798,
+    "panel_size": 67.1
+  },
+  {
+    "period_month": "2020-08",
+    "provider_type": "Residential",
+    "clinician_count": 735,
+    "total_benes": 115309,
+    "panel_size": 156.9
+  },
+  {
+    "period_month": "2020-08",
+    "provider_type": "Social Worker",
+    "clinician_count": 623,
+    "total_benes": 53912,
+    "panel_size": 86.5
+  },
+  {
+    "period_month": "2020-09",
+    "provider_type": "APRN",
+    "clinician_count": 1816,
+    "total_benes": 165505,
+    "panel_size": 91.1
+  },
+  {
+    "period_month": "2020-09",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 435,
+    "panel_size": 43.5
+  },
+  {
+    "period_month": "2020-09",
+    "provider_type": "Counselor",
+    "clinician_count": 757,
+    "total_benes": 85856,
+    "panel_size": 113.4
+  },
+  {
+    "period_month": "2020-09",
+    "provider_type": "MFT",
+    "clinician_count": 39,
+    "total_benes": 3986,
+    "panel_size": 102.2
+  },
+  {
+    "period_month": "2020-09",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 814,
+    "total_benes": 89854,
+    "panel_size": 110.4
+  },
+  {
+    "period_month": "2020-09",
+    "provider_type": "Psychologist",
+    "clinician_count": 158,
+    "total_benes": 11772,
+    "panel_size": 74.5
+  },
+  {
+    "period_month": "2020-09",
+    "provider_type": "Residential",
+    "clinician_count": 795,
+    "total_benes": 155363,
+    "panel_size": 195.4
+  },
+  {
+    "period_month": "2020-09",
+    "provider_type": "Social Worker",
+    "clinician_count": 624,
+    "total_benes": 56187,
+    "panel_size": 90.0
+  },
+  {
+    "period_month": "2020-10",
+    "provider_type": "APRN",
+    "clinician_count": 1889,
+    "total_benes": 183285,
+    "panel_size": 97.0
+  },
+  {
+    "period_month": "2020-10",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 423,
+    "panel_size": 47.0
+  },
+  {
+    "period_month": "2020-10",
+    "provider_type": "Counselor",
+    "clinician_count": 791,
+    "total_benes": 94466,
+    "panel_size": 119.4
+  },
+  {
+    "period_month": "2020-10",
+    "provider_type": "MFT",
+    "clinician_count": 41,
+    "total_benes": 4582,
+    "panel_size": 111.8
+  },
+  {
+    "period_month": "2020-10",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 872,
+    "total_benes": 98372,
+    "panel_size": 112.8
+  },
+  {
+    "period_month": "2020-10",
+    "provider_type": "Psychologist",
+    "clinician_count": 175,
+    "total_benes": 12340,
+    "panel_size": 70.5
+  },
+  {
+    "period_month": "2020-10",
+    "provider_type": "Residential",
+    "clinician_count": 802,
+    "total_benes": 171567,
+    "panel_size": 213.9
+  },
+  {
+    "period_month": "2020-10",
+    "provider_type": "Social Worker",
+    "clinician_count": 670,
+    "total_benes": 61068,
+    "panel_size": 91.1
+  },
+  {
+    "period_month": "2020-11",
+    "provider_type": "APRN",
+    "clinician_count": 1763,
+    "total_benes": 155357,
+    "panel_size": 88.1
+  },
+  {
+    "period_month": "2020-11",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 372,
+    "panel_size": 41.3
+  },
+  {
+    "period_month": "2020-11",
+    "provider_type": "Counselor",
+    "clinician_count": 784,
+    "total_benes": 89986,
+    "panel_size": 114.8
+  },
+  {
+    "period_month": "2020-11",
+    "provider_type": "MFT",
+    "clinician_count": 39,
+    "total_benes": 4811,
+    "panel_size": 123.4
+  },
+  {
+    "period_month": "2020-11",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 795,
+    "total_benes": 88926,
+    "panel_size": 111.9
+  },
+  {
+    "period_month": "2020-11",
+    "provider_type": "Psychologist",
+    "clinician_count": 147,
+    "total_benes": 11201,
+    "panel_size": 76.2
+  },
+  {
+    "period_month": "2020-11",
+    "provider_type": "Residential",
+    "clinician_count": 786,
+    "total_benes": 161580,
+    "panel_size": 205.6
+  },
+  {
+    "period_month": "2020-11",
+    "provider_type": "Social Worker",
+    "clinician_count": 639,
+    "total_benes": 58235,
+    "panel_size": 91.1
+  },
+  {
+    "period_month": "2020-12",
+    "provider_type": "APRN",
+    "clinician_count": 1814,
+    "total_benes": 167348,
+    "panel_size": 92.3
+  },
+  {
+    "period_month": "2020-12",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 328,
+    "panel_size": 46.9
+  },
+  {
+    "period_month": "2020-12",
+    "provider_type": "Counselor",
+    "clinician_count": 798,
+    "total_benes": 92200,
+    "panel_size": 115.5
+  },
+  {
+    "period_month": "2020-12",
+    "provider_type": "MFT",
+    "clinician_count": 41,
+    "total_benes": 5194,
+    "panel_size": 126.7
+  },
+  {
+    "period_month": "2020-12",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 797,
+    "total_benes": 90860,
+    "panel_size": 114.0
+  },
+  {
+    "period_month": "2020-12",
+    "provider_type": "Psychologist",
+    "clinician_count": 161,
+    "total_benes": 11535,
+    "panel_size": 71.6
+  },
+  {
+    "period_month": "2020-12",
+    "provider_type": "Residential",
+    "clinician_count": 795,
+    "total_benes": 160206,
+    "panel_size": 201.5
+  },
+  {
+    "period_month": "2020-12",
+    "provider_type": "Social Worker",
+    "clinician_count": 641,
+    "total_benes": 58110,
+    "panel_size": 90.7
+  },
+  {
+    "period_month": "2021-01",
+    "provider_type": "APRN",
+    "clinician_count": 1770,
+    "total_benes": 173854,
+    "panel_size": 98.2
+  },
+  {
+    "period_month": "2021-01",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 355,
+    "panel_size": 44.4
+  },
+  {
+    "period_month": "2021-01",
+    "provider_type": "Counselor",
+    "clinician_count": 793,
+    "total_benes": 93667,
+    "panel_size": 118.1
+  },
+  {
+    "period_month": "2021-01",
+    "provider_type": "MFT",
+    "clinician_count": 46,
+    "total_benes": 5509,
+    "panel_size": 119.8
+  },
+  {
+    "period_month": "2021-01",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 783,
+    "total_benes": 86669,
+    "panel_size": 110.7
+  },
+  {
+    "period_month": "2021-01",
+    "provider_type": "Psychologist",
+    "clinician_count": 160,
+    "total_benes": 11606,
+    "panel_size": 72.5
+  },
+  {
+    "period_month": "2021-01",
+    "provider_type": "Residential",
+    "clinician_count": 790,
+    "total_benes": 165603,
+    "panel_size": 209.6
+  },
+  {
+    "period_month": "2021-01",
+    "provider_type": "Social Worker",
+    "clinician_count": 640,
+    "total_benes": 57828,
+    "panel_size": 90.4
+  },
+  {
+    "period_month": "2021-02",
+    "provider_type": "APRN",
+    "clinician_count": 1731,
+    "total_benes": 162648,
+    "panel_size": 94.0
+  },
+  {
+    "period_month": "2021-02",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 429,
+    "panel_size": 61.3
+  },
+  {
+    "period_month": "2021-02",
+    "provider_type": "Counselor",
+    "clinician_count": 815,
+    "total_benes": 97972,
+    "panel_size": 120.2
+  },
+  {
+    "period_month": "2021-02",
+    "provider_type": "MFT",
+    "clinician_count": 45,
+    "total_benes": 5607,
+    "panel_size": 124.6
+  },
+  {
+    "period_month": "2021-02",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 781,
+    "total_benes": 89097,
+    "panel_size": 114.1
+  },
+  {
+    "period_month": "2021-02",
+    "provider_type": "Psychologist",
+    "clinician_count": 165,
+    "total_benes": 12538,
+    "panel_size": 76.0
+  },
+  {
+    "period_month": "2021-02",
+    "provider_type": "Residential",
+    "clinician_count": 787,
+    "total_benes": 169418,
+    "panel_size": 215.3
+  },
+  {
+    "period_month": "2021-02",
+    "provider_type": "Social Worker",
+    "clinician_count": 649,
+    "total_benes": 59548,
+    "panel_size": 91.8
+  },
+  {
+    "period_month": "2021-03",
+    "provider_type": "APRN",
+    "clinician_count": 1870,
+    "total_benes": 187464,
+    "panel_size": 100.2
+  },
+  {
+    "period_month": "2021-03",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 390,
+    "panel_size": 55.7
+  },
+  {
+    "period_month": "2021-03",
+    "provider_type": "Counselor",
+    "clinician_count": 828,
+    "total_benes": 99601,
+    "panel_size": 120.3
+  },
+  {
+    "period_month": "2021-03",
+    "provider_type": "MFT",
+    "clinician_count": 46,
+    "total_benes": 6008,
+    "panel_size": 130.6
+  },
+  {
+    "period_month": "2021-03",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 831,
+    "total_benes": 97950,
+    "panel_size": 117.9
+  },
+  {
+    "period_month": "2021-03",
+    "provider_type": "Psychologist",
+    "clinician_count": 178,
+    "total_benes": 13329,
+    "panel_size": 74.9
+  },
+  {
+    "period_month": "2021-03",
+    "provider_type": "Residential",
+    "clinician_count": 793,
+    "total_benes": 173264,
+    "panel_size": 218.5
+  },
+  {
+    "period_month": "2021-03",
+    "provider_type": "Social Worker",
+    "clinician_count": 679,
+    "total_benes": 61978,
+    "panel_size": 91.3
+  },
+  {
+    "period_month": "2021-04",
+    "provider_type": "APRN",
+    "clinician_count": 1888,
+    "total_benes": 203358,
+    "panel_size": 107.7
+  },
+  {
+    "period_month": "2021-04",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 451,
+    "panel_size": 56.4
+  },
+  {
+    "period_month": "2021-04",
+    "provider_type": "Counselor",
+    "clinician_count": 807,
+    "total_benes": 96774,
+    "panel_size": 119.9
+  },
+  {
+    "period_month": "2021-04",
+    "provider_type": "MFT",
+    "clinician_count": 49,
+    "total_benes": 6509,
+    "panel_size": 132.8
+  },
+  {
+    "period_month": "2021-04",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 835,
+    "total_benes": 93341,
+    "panel_size": 111.8
+  },
+  {
+    "period_month": "2021-04",
+    "provider_type": "Psychologist",
+    "clinician_count": 176,
+    "total_benes": 12953,
+    "panel_size": 73.6
+  },
+  {
+    "period_month": "2021-04",
+    "provider_type": "Residential",
+    "clinician_count": 795,
+    "total_benes": 172698,
+    "panel_size": 217.2
+  },
+  {
+    "period_month": "2021-04",
+    "provider_type": "Social Worker",
+    "clinician_count": 662,
+    "total_benes": 60108,
+    "panel_size": 90.8
+  },
+  {
+    "period_month": "2021-05",
+    "provider_type": "APRN",
+    "clinician_count": 1807,
+    "total_benes": 183556,
+    "panel_size": 101.6
+  },
+  {
+    "period_month": "2021-05",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 431,
+    "panel_size": 71.8
+  },
+  {
+    "period_month": "2021-05",
+    "provider_type": "Counselor",
+    "clinician_count": 787,
+    "total_benes": 90475,
+    "panel_size": 115.0
+  },
+  {
+    "period_month": "2021-05",
+    "provider_type": "MFT",
+    "clinician_count": 43,
+    "total_benes": 5949,
+    "panel_size": 138.3
+  },
+  {
+    "period_month": "2021-05",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 825,
+    "total_benes": 89236,
+    "panel_size": 108.2
+  },
+  {
+    "period_month": "2021-05",
+    "provider_type": "Psychologist",
+    "clinician_count": 153,
+    "total_benes": 11479,
+    "panel_size": 75.0
+  },
+  {
+    "period_month": "2021-05",
+    "provider_type": "Residential",
+    "clinician_count": 774,
+    "total_benes": 159090,
+    "panel_size": 205.5
+  },
+  {
+    "period_month": "2021-05",
+    "provider_type": "Social Worker",
+    "clinician_count": 640,
+    "total_benes": 55955,
+    "panel_size": 87.4
+  },
+  {
+    "period_month": "2021-06",
+    "provider_type": "APRN",
+    "clinician_count": 1828,
+    "total_benes": 184595,
+    "panel_size": 101.0
+  },
+  {
+    "period_month": "2021-06",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 404,
+    "panel_size": 50.5
+  },
+  {
+    "period_month": "2021-06",
+    "provider_type": "Counselor",
+    "clinician_count": 822,
+    "total_benes": 97546,
+    "panel_size": 118.7
+  },
+  {
+    "period_month": "2021-06",
+    "provider_type": "MFT",
+    "clinician_count": 42,
+    "total_benes": 6132,
+    "panel_size": 146.0
+  },
+  {
+    "period_month": "2021-06",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 831,
+    "total_benes": 96766,
+    "panel_size": 116.4
+  },
+  {
+    "period_month": "2021-06",
+    "provider_type": "Psychologist",
+    "clinician_count": 163,
+    "total_benes": 12506,
+    "panel_size": 76.7
+  },
+  {
+    "period_month": "2021-06",
+    "provider_type": "Residential",
+    "clinician_count": 715,
+    "total_benes": 113437,
+    "panel_size": 158.7
+  },
+  {
+    "period_month": "2021-06",
+    "provider_type": "Social Worker",
+    "clinician_count": 652,
+    "total_benes": 57347,
+    "panel_size": 88.0
+  },
+  {
+    "period_month": "2021-07",
+    "provider_type": "APRN",
+    "clinician_count": 1826,
+    "total_benes": 185262,
+    "panel_size": 101.5
+  },
+  {
+    "period_month": "2021-07",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 382,
+    "panel_size": 38.2
+  },
+  {
+    "period_month": "2021-07",
+    "provider_type": "Counselor",
+    "clinician_count": 791,
+    "total_benes": 86737,
+    "panel_size": 109.7
+  },
+  {
+    "period_month": "2021-07",
+    "provider_type": "MFT",
+    "clinician_count": 42,
+    "total_benes": 4678,
+    "panel_size": 111.4
+  },
+  {
+    "period_month": "2021-07",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 806,
+    "total_benes": 91602,
+    "panel_size": 113.7
+  },
+  {
+    "period_month": "2021-07",
+    "provider_type": "Psychologist",
+    "clinician_count": 159,
+    "total_benes": 10617,
+    "panel_size": 66.8
+  },
+  {
+    "period_month": "2021-07",
+    "provider_type": "Residential",
+    "clinician_count": 667,
+    "total_benes": 97827,
+    "panel_size": 146.7
+  },
+  {
+    "period_month": "2021-07",
+    "provider_type": "Social Worker",
+    "clinician_count": 612,
+    "total_benes": 48707,
+    "panel_size": 79.6
+  },
+  {
+    "period_month": "2021-08",
+    "provider_type": "APRN",
+    "clinician_count": 1958,
+    "total_benes": 216376,
+    "panel_size": 110.5
+  },
+  {
+    "period_month": "2021-08",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 331,
+    "panel_size": 36.8
+  },
+  {
+    "period_month": "2021-08",
+    "provider_type": "Counselor",
+    "clinician_count": 779,
+    "total_benes": 81035,
+    "panel_size": 104.0
+  },
+  {
+    "period_month": "2021-08",
+    "provider_type": "MFT",
+    "clinician_count": 45,
+    "total_benes": 3929,
+    "panel_size": 87.3
+  },
+  {
+    "period_month": "2021-08",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 828,
+    "total_benes": 95850,
+    "panel_size": 115.8
+  },
+  {
+    "period_month": "2021-08",
+    "provider_type": "Psychologist",
+    "clinician_count": 153,
+    "total_benes": 10742,
+    "panel_size": 70.2
+  },
+  {
+    "period_month": "2021-08",
+    "provider_type": "Residential",
+    "clinician_count": 772,
+    "total_benes": 162399,
+    "panel_size": 210.4
+  },
+  {
+    "period_month": "2021-08",
+    "provider_type": "Social Worker",
+    "clinician_count": 606,
+    "total_benes": 44795,
+    "panel_size": 73.9
+  },
+  {
+    "period_month": "2021-09",
+    "provider_type": "APRN",
+    "clinician_count": 1889,
+    "total_benes": 203575,
+    "panel_size": 107.8
+  },
+  {
+    "period_month": "2021-09",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 360,
+    "panel_size": 40.0
+  },
+  {
+    "period_month": "2021-09",
+    "provider_type": "Counselor",
+    "clinician_count": 742,
+    "total_benes": 79881,
+    "panel_size": 107.7
+  },
+  {
+    "period_month": "2021-09",
+    "provider_type": "MFT",
+    "clinician_count": 43,
+    "total_benes": 3702,
+    "panel_size": 86.1
+  },
+  {
+    "period_month": "2021-09",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 809,
+    "total_benes": 94915,
+    "panel_size": 117.3
+  },
+  {
+    "period_month": "2021-09",
+    "provider_type": "Psychologist",
+    "clinician_count": 157,
+    "total_benes": 11079,
+    "panel_size": 70.6
+  },
+  {
+    "period_month": "2021-09",
+    "provider_type": "Residential",
+    "clinician_count": 788,
+    "total_benes": 174463,
+    "panel_size": 221.4
+  },
+  {
+    "period_month": "2021-09",
+    "provider_type": "Social Worker",
+    "clinician_count": 585,
+    "total_benes": 42307,
+    "panel_size": 72.3
+  },
+  {
+    "period_month": "2021-10",
+    "provider_type": "APRN",
+    "clinician_count": 1868,
+    "total_benes": 204204,
+    "panel_size": 109.3
+  },
+  {
+    "period_month": "2021-10",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 587,
+    "panel_size": 65.2
+  },
+  {
+    "period_month": "2021-10",
+    "provider_type": "Counselor",
+    "clinician_count": 764,
+    "total_benes": 84124,
+    "panel_size": 110.1
+  },
+  {
+    "period_month": "2021-10",
+    "provider_type": "MFT",
+    "clinician_count": 41,
+    "total_benes": 3683,
+    "panel_size": 89.8
+  },
+  {
+    "period_month": "2021-10",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 822,
+    "total_benes": 96304,
+    "panel_size": 117.2
+  },
+  {
+    "period_month": "2021-10",
+    "provider_type": "Psychologist",
+    "clinician_count": 157,
+    "total_benes": 11101,
+    "panel_size": 70.7
+  },
+  {
+    "period_month": "2021-10",
+    "provider_type": "Residential",
+    "clinician_count": 791,
+    "total_benes": 175128,
+    "panel_size": 221.4
+  },
+  {
+    "period_month": "2021-10",
+    "provider_type": "Social Worker",
+    "clinician_count": 585,
+    "total_benes": 44448,
+    "panel_size": 76.0
+  },
+  {
+    "period_month": "2021-11",
+    "provider_type": "APRN",
+    "clinician_count": 1834,
+    "total_benes": 197163,
+    "panel_size": 107.5
+  },
+  {
+    "period_month": "2021-11",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 320,
+    "panel_size": 40.0
+  },
+  {
+    "period_month": "2021-11",
+    "provider_type": "Counselor",
+    "clinician_count": 761,
+    "total_benes": 80964,
+    "panel_size": 106.4
+  },
+  {
+    "period_month": "2021-11",
+    "provider_type": "MFT",
+    "clinician_count": 40,
+    "total_benes": 3262,
+    "panel_size": 81.5
+  },
+  {
+    "period_month": "2021-11",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 784,
+    "total_benes": 92308,
+    "panel_size": 117.7
+  },
+  {
+    "period_month": "2021-11",
+    "provider_type": "Psychologist",
+    "clinician_count": 153,
+    "total_benes": 10978,
+    "panel_size": 71.8
+  },
+  {
+    "period_month": "2021-11",
+    "provider_type": "Residential",
+    "clinician_count": 785,
+    "total_benes": 178282,
+    "panel_size": 227.1
+  },
+  {
+    "period_month": "2021-11",
+    "provider_type": "Social Worker",
+    "clinician_count": 589,
+    "total_benes": 44681,
+    "panel_size": 75.9
+  },
+  {
+    "period_month": "2021-12",
+    "provider_type": "APRN",
+    "clinician_count": 1856,
+    "total_benes": 203597,
+    "panel_size": 109.7
+  },
+  {
+    "period_month": "2021-12",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 737,
+    "panel_size": 92.1
+  },
+  {
+    "period_month": "2021-12",
+    "provider_type": "Counselor",
+    "clinician_count": 725,
+    "total_benes": 76556,
+    "panel_size": 105.6
+  },
+  {
+    "period_month": "2021-12",
+    "provider_type": "MFT",
+    "clinician_count": 37,
+    "total_benes": 3181,
+    "panel_size": 86.0
+  },
+  {
+    "period_month": "2021-12",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 790,
+    "total_benes": 88862,
+    "panel_size": 112.5
+  },
+  {
+    "period_month": "2021-12",
+    "provider_type": "Psychologist",
+    "clinician_count": 145,
+    "total_benes": 10198,
+    "panel_size": 70.3
+  },
+  {
+    "period_month": "2021-12",
+    "provider_type": "Residential",
+    "clinician_count": 773,
+    "total_benes": 168306,
+    "panel_size": 217.7
+  },
+  {
+    "period_month": "2021-12",
+    "provider_type": "Social Worker",
+    "clinician_count": 549,
+    "total_benes": 41413,
+    "panel_size": 75.4
+  },
+  {
+    "period_month": "2022-01",
+    "provider_type": "APRN",
+    "clinician_count": 1895,
+    "total_benes": 224667,
+    "panel_size": 118.6
+  },
+  {
+    "period_month": "2022-01",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 572,
+    "panel_size": 71.5
+  },
+  {
+    "period_month": "2022-01",
+    "provider_type": "Counselor",
+    "clinician_count": 728,
+    "total_benes": 79437,
+    "panel_size": 109.1
+  },
+  {
+    "period_month": "2022-01",
+    "provider_type": "MFT",
+    "clinician_count": 38,
+    "total_benes": 3099,
+    "panel_size": 81.6
+  },
+  {
+    "period_month": "2022-01",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 770,
+    "total_benes": 90212,
+    "panel_size": 117.2
+  },
+  {
+    "period_month": "2022-01",
+    "provider_type": "Psychologist",
+    "clinician_count": 157,
+    "total_benes": 11029,
+    "panel_size": 70.2
+  },
+  {
+    "period_month": "2022-01",
+    "provider_type": "Residential",
+    "clinician_count": 774,
+    "total_benes": 174814,
+    "panel_size": 225.9
+  },
+  {
+    "period_month": "2022-01",
+    "provider_type": "Social Worker",
+    "clinician_count": 572,
+    "total_benes": 40769,
+    "panel_size": 71.3
+  },
+  {
+    "period_month": "2022-02",
+    "provider_type": "APRN",
+    "clinician_count": 1820,
+    "total_benes": 195383,
+    "panel_size": 107.4
+  },
+  {
+    "period_month": "2022-02",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 828,
+    "panel_size": 82.8
+  },
+  {
+    "period_month": "2022-02",
+    "provider_type": "Counselor",
+    "clinician_count": 760,
+    "total_benes": 82830,
+    "panel_size": 109.0
+  },
+  {
+    "period_month": "2022-02",
+    "provider_type": "MFT",
+    "clinician_count": 37,
+    "total_benes": 2968,
+    "panel_size": 80.2
+  },
+  {
+    "period_month": "2022-02",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 768,
+    "total_benes": 89075,
+    "panel_size": 116.0
+  },
+  {
+    "period_month": "2022-02",
+    "provider_type": "Psychologist",
+    "clinician_count": 155,
+    "total_benes": 10828,
+    "panel_size": 69.9
+  },
+  {
+    "period_month": "2022-02",
+    "provider_type": "Residential",
+    "clinician_count": 797,
+    "total_benes": 175696,
+    "panel_size": 220.4
+  },
+  {
+    "period_month": "2022-02",
+    "provider_type": "Social Worker",
+    "clinician_count": 549,
+    "total_benes": 37750,
+    "panel_size": 68.8
+  },
+  {
+    "period_month": "2022-03",
+    "provider_type": "APRN",
+    "clinician_count": 1957,
+    "total_benes": 216900,
+    "panel_size": 110.8
+  },
+  {
+    "period_month": "2022-03",
+    "provider_type": "CMHC",
+    "clinician_count": 11,
+    "total_benes": 911,
+    "panel_size": 82.8
+  },
+  {
+    "period_month": "2022-03",
+    "provider_type": "Counselor",
+    "clinician_count": 776,
+    "total_benes": 86754,
+    "panel_size": 111.8
+  },
+  {
+    "period_month": "2022-03",
+    "provider_type": "MFT",
+    "clinician_count": 36,
+    "total_benes": 3184,
+    "panel_size": 88.4
+  },
+  {
+    "period_month": "2022-03",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 820,
+    "total_benes": 98745,
+    "panel_size": 120.4
+  },
+  {
+    "period_month": "2022-03",
+    "provider_type": "Psychologist",
+    "clinician_count": 172,
+    "total_benes": 13059,
+    "panel_size": 75.9
+  },
+  {
+    "period_month": "2022-03",
+    "provider_type": "Residential",
+    "clinician_count": 826,
+    "total_benes": 186942,
+    "panel_size": 226.3
+  },
+  {
+    "period_month": "2022-03",
+    "provider_type": "Social Worker",
+    "clinician_count": 577,
+    "total_benes": 41109,
+    "panel_size": 71.2
+  },
+  {
+    "period_month": "2022-04",
+    "provider_type": "APRN",
+    "clinician_count": 1904,
+    "total_benes": 189921,
+    "panel_size": 99.7
+  },
+  {
+    "period_month": "2022-04",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 937,
+    "panel_size": 117.1
+  },
+  {
+    "period_month": "2022-04",
+    "provider_type": "Counselor",
+    "clinician_count": 732,
+    "total_benes": 81087,
+    "panel_size": 110.8
+  },
+  {
+    "period_month": "2022-04",
+    "provider_type": "MFT",
+    "clinician_count": 31,
+    "total_benes": 3063,
+    "panel_size": 98.8
+  },
+  {
+    "period_month": "2022-04",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 793,
+    "total_benes": 90373,
+    "panel_size": 114.0
+  },
+  {
+    "period_month": "2022-04",
+    "provider_type": "Psychologist",
+    "clinician_count": 160,
+    "total_benes": 11987,
+    "panel_size": 74.9
+  },
+  {
+    "period_month": "2022-04",
+    "provider_type": "Residential",
+    "clinician_count": 814,
+    "total_benes": 191065,
+    "panel_size": 234.7
+  },
+  {
+    "period_month": "2022-04",
+    "provider_type": "Social Worker",
+    "clinician_count": 572,
+    "total_benes": 39080,
+    "panel_size": 68.3
+  },
+  {
+    "period_month": "2022-05",
+    "provider_type": "APRN",
+    "clinician_count": 1919,
+    "total_benes": 187725,
+    "panel_size": 97.8
+  },
+  {
+    "period_month": "2022-05",
+    "provider_type": "CMHC",
+    "clinician_count": 11,
+    "total_benes": 846,
+    "panel_size": 76.9
+  },
+  {
+    "period_month": "2022-05",
+    "provider_type": "Counselor",
+    "clinician_count": 739,
+    "total_benes": 77622,
+    "panel_size": 105.0
+  },
+  {
+    "period_month": "2022-05",
+    "provider_type": "MFT",
+    "clinician_count": 34,
+    "total_benes": 2968,
+    "panel_size": 87.3
+  },
+  {
+    "period_month": "2022-05",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 803,
+    "total_benes": 91799,
+    "panel_size": 114.3
+  },
+  {
+    "period_month": "2022-05",
+    "provider_type": "Psychologist",
+    "clinician_count": 158,
+    "total_benes": 11942,
+    "panel_size": 75.6
+  },
+  {
+    "period_month": "2022-05",
+    "provider_type": "Residential",
+    "clinician_count": 802,
+    "total_benes": 175605,
+    "panel_size": 219.0
+  },
+  {
+    "period_month": "2022-05",
+    "provider_type": "Social Worker",
+    "clinician_count": 565,
+    "total_benes": 38473,
+    "panel_size": 68.1
+  },
+  {
+    "period_month": "2022-06",
+    "provider_type": "APRN",
+    "clinician_count": 1867,
+    "total_benes": 192389,
+    "panel_size": 103.0
+  },
+  {
+    "period_month": "2022-06",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 729,
+    "panel_size": 81.0
+  },
+  {
+    "period_month": "2022-06",
+    "provider_type": "Counselor",
+    "clinician_count": 732,
+    "total_benes": 74738,
+    "panel_size": 102.1
+  },
+  {
+    "period_month": "2022-06",
+    "provider_type": "MFT",
+    "clinician_count": 34,
+    "total_benes": 3083,
+    "panel_size": 90.7
+  },
+  {
+    "period_month": "2022-06",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 781,
+    "total_benes": 91933,
+    "panel_size": 117.7
+  },
+  {
+    "period_month": "2022-06",
+    "provider_type": "Psychologist",
+    "clinician_count": 149,
+    "total_benes": 11737,
+    "panel_size": 78.8
+  },
+  {
+    "period_month": "2022-06",
+    "provider_type": "Residential",
+    "clinician_count": 689,
+    "total_benes": 115269,
+    "panel_size": 167.3
+  },
+  {
+    "period_month": "2022-06",
+    "provider_type": "Social Worker",
+    "clinician_count": 558,
+    "total_benes": 38846,
+    "panel_size": 69.6
+  },
+  {
+    "period_month": "2022-07",
+    "provider_type": "APRN",
+    "clinician_count": 1677,
+    "total_benes": 160480,
+    "panel_size": 95.7
+  },
+  {
+    "period_month": "2022-07",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 616,
+    "panel_size": 102.7
+  },
+  {
+    "period_month": "2022-07",
+    "provider_type": "Counselor",
+    "clinician_count": 663,
+    "total_benes": 63813,
+    "panel_size": 96.2
+  },
+  {
+    "period_month": "2022-07",
+    "provider_type": "MFT",
+    "clinician_count": 30,
+    "total_benes": 2216,
+    "panel_size": 73.9
+  },
+  {
+    "period_month": "2022-07",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 706,
+    "total_benes": 73793,
+    "panel_size": 104.5
+  },
+  {
+    "period_month": "2022-07",
+    "provider_type": "Psychologist",
+    "clinician_count": 134,
+    "total_benes": 9429,
+    "panel_size": 70.4
+  },
+  {
+    "period_month": "2022-07",
+    "provider_type": "Residential",
+    "clinician_count": 650,
+    "total_benes": 93473,
+    "panel_size": 143.8
+  },
+  {
+    "period_month": "2022-07",
+    "provider_type": "Social Worker",
+    "clinician_count": 499,
+    "total_benes": 31533,
+    "panel_size": 63.2
+  },
+  {
+    "period_month": "2022-08",
+    "provider_type": "APRN",
+    "clinician_count": 1874,
+    "total_benes": 196173,
+    "panel_size": 104.7
+  },
+  {
+    "period_month": "2022-08",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 658,
+    "panel_size": 73.1
+  },
+  {
+    "period_month": "2022-08",
+    "provider_type": "Counselor",
+    "clinician_count": 661,
+    "total_benes": 65417,
+    "panel_size": 99.0
+  },
+  {
+    "period_month": "2022-08",
+    "provider_type": "MFT",
+    "clinician_count": 32,
+    "total_benes": 2599,
+    "panel_size": 81.2
+  },
+  {
+    "period_month": "2022-08",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 762,
+    "total_benes": 83355,
+    "panel_size": 109.4
+  },
+  {
+    "period_month": "2022-08",
+    "provider_type": "Psychologist",
+    "clinician_count": 154,
+    "total_benes": 11002,
+    "panel_size": 71.4
+  },
+  {
+    "period_month": "2022-08",
+    "provider_type": "Residential",
+    "clinician_count": 752,
+    "total_benes": 143040,
+    "panel_size": 190.2
+  },
+  {
+    "period_month": "2022-08",
+    "provider_type": "Social Worker",
+    "clinician_count": 513,
+    "total_benes": 32300,
+    "panel_size": 63.0
+  },
+  {
+    "period_month": "2022-09",
+    "provider_type": "APRN",
+    "clinician_count": 1812,
+    "total_benes": 171499,
+    "panel_size": 94.6
+  },
+  {
+    "period_month": "2022-09",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 650,
+    "panel_size": 65.0
+  },
+  {
+    "period_month": "2022-09",
+    "provider_type": "Counselor",
+    "clinician_count": 683,
+    "total_benes": 68317,
+    "panel_size": 100.0
+  },
+  {
+    "period_month": "2022-09",
+    "provider_type": "MFT",
+    "clinician_count": 34,
+    "total_benes": 2683,
+    "panel_size": 78.9
+  },
+  {
+    "period_month": "2022-09",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 720,
+    "total_benes": 78365,
+    "panel_size": 108.8
+  },
+  {
+    "period_month": "2022-09",
+    "provider_type": "Psychologist",
+    "clinician_count": 144,
+    "total_benes": 10208,
+    "panel_size": 70.9
+  },
+  {
+    "period_month": "2022-09",
+    "provider_type": "Residential",
+    "clinician_count": 767,
+    "total_benes": 170061,
+    "panel_size": 221.7
+  },
+  {
+    "period_month": "2022-09",
+    "provider_type": "Social Worker",
+    "clinician_count": 512,
+    "total_benes": 35324,
+    "panel_size": 69.0
+  },
+  {
+    "period_month": "2022-10",
+    "provider_type": "APRN",
+    "clinician_count": 1918,
+    "total_benes": 214244,
+    "panel_size": 111.7
+  },
+  {
+    "period_month": "2022-10",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 682,
+    "panel_size": 68.2
+  },
+  {
+    "period_month": "2022-10",
+    "provider_type": "Counselor",
+    "clinician_count": 698,
+    "total_benes": 77250,
+    "panel_size": 110.7
+  },
+  {
+    "period_month": "2022-10",
+    "provider_type": "MFT",
+    "clinician_count": 35,
+    "total_benes": 2824,
+    "panel_size": 80.7
+  },
+  {
+    "period_month": "2022-10",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 755,
+    "total_benes": 87652,
+    "panel_size": 116.1
+  },
+  {
+    "period_month": "2022-10",
+    "provider_type": "Psychologist",
+    "clinician_count": 156,
+    "total_benes": 11578,
+    "panel_size": 74.2
+  },
+  {
+    "period_month": "2022-10",
+    "provider_type": "Residential",
+    "clinician_count": 774,
+    "total_benes": 174386,
+    "panel_size": 225.3
+  },
+  {
+    "period_month": "2022-10",
+    "provider_type": "Social Worker",
+    "clinician_count": 517,
+    "total_benes": 36717,
+    "panel_size": 71.0
+  },
+  {
+    "period_month": "2022-11",
+    "provider_type": "APRN",
+    "clinician_count": 1939,
+    "total_benes": 207894,
+    "panel_size": 107.2
+  },
+  {
+    "period_month": "2022-11",
+    "provider_type": "CMHC",
+    "clinician_count": 12,
+    "total_benes": 715,
+    "panel_size": 59.6
+  },
+  {
+    "period_month": "2022-11",
+    "provider_type": "Counselor",
+    "clinician_count": 715,
+    "total_benes": 79701,
+    "panel_size": 111.5
+  },
+  {
+    "period_month": "2022-11",
+    "provider_type": "MFT",
+    "clinician_count": 36,
+    "total_benes": 2998,
+    "panel_size": 83.3
+  },
+  {
+    "period_month": "2022-11",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 740,
+    "total_benes": 87791,
+    "panel_size": 118.6
+  },
+  {
+    "period_month": "2022-11",
+    "provider_type": "Psychologist",
+    "clinician_count": 153,
+    "total_benes": 11225,
+    "panel_size": 73.4
+  },
+  {
+    "period_month": "2022-11",
+    "provider_type": "Residential",
+    "clinician_count": 762,
+    "total_benes": 170484,
+    "panel_size": 223.7
+  },
+  {
+    "period_month": "2022-11",
+    "provider_type": "Social Worker",
+    "clinician_count": 501,
+    "total_benes": 35500,
+    "panel_size": 70.9
+  },
+  {
+    "period_month": "2022-12",
+    "provider_type": "APRN",
+    "clinician_count": 1935,
+    "total_benes": 206783,
+    "panel_size": 106.9
+  },
+  {
+    "period_month": "2022-12",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 484,
+    "panel_size": 53.8
+  },
+  {
+    "period_month": "2022-12",
+    "provider_type": "Counselor",
+    "clinician_count": 710,
+    "total_benes": 79562,
+    "panel_size": 112.1
+  },
+  {
+    "period_month": "2022-12",
+    "provider_type": "MFT",
+    "clinician_count": 40,
+    "total_benes": 3072,
+    "panel_size": 76.8
+  },
+  {
+    "period_month": "2022-12",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 761,
+    "total_benes": 87136,
+    "panel_size": 114.5
+  },
+  {
+    "period_month": "2022-12",
+    "provider_type": "Psychologist",
+    "clinician_count": 166,
+    "total_benes": 10559,
+    "panel_size": 63.6
+  },
+  {
+    "period_month": "2022-12",
+    "provider_type": "Residential",
+    "clinician_count": 778,
+    "total_benes": 166608,
+    "panel_size": 214.1
+  },
+  {
+    "period_month": "2022-12",
+    "provider_type": "Social Worker",
+    "clinician_count": 492,
+    "total_benes": 35181,
+    "panel_size": 71.5
+  },
+  {
+    "period_month": "2023-01",
+    "provider_type": "APRN",
+    "clinician_count": 2025,
+    "total_benes": 234689,
+    "panel_size": 115.9
+  },
+  {
+    "period_month": "2023-01",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 575,
+    "panel_size": 57.5
+  },
+  {
+    "period_month": "2023-01",
+    "provider_type": "Counselor",
+    "clinician_count": 731,
+    "total_benes": 87546,
+    "panel_size": 119.8
+  },
+  {
+    "period_month": "2023-01",
+    "provider_type": "MFT",
+    "clinician_count": 40,
+    "total_benes": 3532,
+    "panel_size": 88.3
+  },
+  {
+    "period_month": "2023-01",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 799,
+    "total_benes": 98254,
+    "panel_size": 123.0
+  },
+  {
+    "period_month": "2023-01",
+    "provider_type": "Psychologist",
+    "clinician_count": 161,
+    "total_benes": 12652,
+    "panel_size": 78.6
+  },
+  {
+    "period_month": "2023-01",
+    "provider_type": "Residential",
+    "clinician_count": 785,
+    "total_benes": 181504,
+    "panel_size": 231.2
+  },
+  {
+    "period_month": "2023-01",
+    "provider_type": "Social Worker",
+    "clinician_count": 509,
+    "total_benes": 39532,
+    "panel_size": 77.7
+  },
+  {
+    "period_month": "2023-02",
+    "provider_type": "APRN",
+    "clinician_count": 1995,
+    "total_benes": 227939,
+    "panel_size": 114.3
+  },
+  {
+    "period_month": "2023-02",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 630,
+    "panel_size": 63.0
+  },
+  {
+    "period_month": "2023-02",
+    "provider_type": "Counselor",
+    "clinician_count": 734,
+    "total_benes": 84977,
+    "panel_size": 115.8
+  },
+  {
+    "period_month": "2023-02",
+    "provider_type": "MFT",
+    "clinician_count": 43,
+    "total_benes": 3630,
+    "panel_size": 84.4
+  },
+  {
+    "period_month": "2023-02",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 795,
+    "total_benes": 97389,
+    "panel_size": 122.5
+  },
+  {
+    "period_month": "2023-02",
+    "provider_type": "Psychologist",
+    "clinician_count": 164,
+    "total_benes": 12295,
+    "panel_size": 75.0
+  },
+  {
+    "period_month": "2023-02",
+    "provider_type": "Residential",
+    "clinician_count": 781,
+    "total_benes": 187908,
+    "panel_size": 240.6
+  },
+  {
+    "period_month": "2023-02",
+    "provider_type": "Social Worker",
+    "clinician_count": 501,
+    "total_benes": 39433,
+    "panel_size": 78.7
+  },
+  {
+    "period_month": "2023-03",
+    "provider_type": "APRN",
+    "clinician_count": 2116,
+    "total_benes": 252079,
+    "panel_size": 119.1
+  },
+  {
+    "period_month": "2023-03",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 674,
+    "panel_size": 67.4
+  },
+  {
+    "period_month": "2023-03",
+    "provider_type": "Counselor",
+    "clinician_count": 727,
+    "total_benes": 89535,
+    "panel_size": 123.2
+  },
+  {
+    "period_month": "2023-03",
+    "provider_type": "MFT",
+    "clinician_count": 40,
+    "total_benes": 3788,
+    "panel_size": 94.7
+  },
+  {
+    "period_month": "2023-03",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 818,
+    "total_benes": 108003,
+    "panel_size": 132.0
+  },
+  {
+    "period_month": "2023-03",
+    "provider_type": "Psychologist",
+    "clinician_count": 173,
+    "total_benes": 13761,
+    "panel_size": 79.5
+  },
+  {
+    "period_month": "2023-03",
+    "provider_type": "Residential",
+    "clinician_count": 796,
+    "total_benes": 185194,
+    "panel_size": 232.7
+  },
+  {
+    "period_month": "2023-03",
+    "provider_type": "Social Worker",
+    "clinician_count": 525,
+    "total_benes": 42698,
+    "panel_size": 81.3
+  },
+  {
+    "period_month": "2023-04",
+    "provider_type": "APRN",
+    "clinician_count": 2183,
+    "total_benes": 245182,
+    "panel_size": 112.3
+  },
+  {
+    "period_month": "2023-04",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 704,
+    "panel_size": 70.4
+  },
+  {
+    "period_month": "2023-04",
+    "provider_type": "Counselor",
+    "clinician_count": 729,
+    "total_benes": 83328,
+    "panel_size": 114.3
+  },
+  {
+    "period_month": "2023-04",
+    "provider_type": "MFT",
+    "clinician_count": 44,
+    "total_benes": 3459,
+    "panel_size": 78.6
+  },
+  {
+    "period_month": "2023-04",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 827,
+    "total_benes": 104917,
+    "panel_size": 126.9
+  },
+  {
+    "period_month": "2023-04",
+    "provider_type": "Psychologist",
+    "clinician_count": 187,
+    "total_benes": 13312,
+    "panel_size": 71.2
+  },
+  {
+    "period_month": "2023-04",
+    "provider_type": "Residential",
+    "clinician_count": 801,
+    "total_benes": 207423,
+    "panel_size": 259.0
+  },
+  {
+    "period_month": "2023-04",
+    "provider_type": "Social Worker",
+    "clinician_count": 522,
+    "total_benes": 41817,
+    "panel_size": 80.1
+  },
+  {
+    "period_month": "2023-05",
+    "provider_type": "APRN",
+    "clinician_count": 2208,
+    "total_benes": 258594,
+    "panel_size": 117.1
+  },
+  {
+    "period_month": "2023-05",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 648,
+    "panel_size": 64.8
+  },
+  {
+    "period_month": "2023-05",
+    "provider_type": "Counselor",
+    "clinician_count": 729,
+    "total_benes": 83999,
+    "panel_size": 115.2
+  },
+  {
+    "period_month": "2023-05",
+    "provider_type": "MFT",
+    "clinician_count": 44,
+    "total_benes": 3798,
+    "panel_size": 86.3
+  },
+  {
+    "period_month": "2023-05",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 842,
+    "total_benes": 111534,
+    "panel_size": 132.5
+  },
+  {
+    "period_month": "2023-05",
+    "provider_type": "Psychologist",
+    "clinician_count": 179,
+    "total_benes": 13628,
+    "panel_size": 76.1
+  },
+  {
+    "period_month": "2023-05",
+    "provider_type": "Residential",
+    "clinician_count": 793,
+    "total_benes": 196142,
+    "panel_size": 247.3
+  },
+  {
+    "period_month": "2023-05",
+    "provider_type": "Social Worker",
+    "clinician_count": 535,
+    "total_benes": 42938,
+    "panel_size": 80.3
+  },
+  {
+    "period_month": "2023-06",
+    "provider_type": "APRN",
+    "clinician_count": 2094,
+    "total_benes": 225003,
+    "panel_size": 107.5
+  },
+  {
+    "period_month": "2023-06",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 440,
+    "panel_size": 55.0
+  },
+  {
+    "period_month": "2023-06",
+    "provider_type": "Counselor",
+    "clinician_count": 685,
+    "total_benes": 78369,
+    "panel_size": 114.4
+  },
+  {
+    "period_month": "2023-06",
+    "provider_type": "MFT",
+    "clinician_count": 44,
+    "total_benes": 3868,
+    "panel_size": 87.9
+  },
+  {
+    "period_month": "2023-06",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 793,
+    "total_benes": 102059,
+    "panel_size": 128.7
+  },
+  {
+    "period_month": "2023-06",
+    "provider_type": "Psychologist",
+    "clinician_count": 177,
+    "total_benes": 12854,
+    "panel_size": 72.6
+  },
+  {
+    "period_month": "2023-06",
+    "provider_type": "Residential",
+    "clinician_count": 684,
+    "total_benes": 119571,
+    "panel_size": 174.8
+  },
+  {
+    "period_month": "2023-06",
+    "provider_type": "Social Worker",
+    "clinician_count": 510,
+    "total_benes": 40533,
+    "panel_size": 79.5
+  },
+  {
+    "period_month": "2023-07",
+    "provider_type": "APRN",
+    "clinician_count": 1996,
+    "total_benes": 204426,
+    "panel_size": 102.4
+  },
+  {
+    "period_month": "2023-07",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 384,
+    "panel_size": 48.0
+  },
+  {
+    "period_month": "2023-07",
+    "provider_type": "Counselor",
+    "clinician_count": 648,
+    "total_benes": 77372,
+    "panel_size": 119.4
+  },
+  {
+    "period_month": "2023-07",
+    "provider_type": "MFT",
+    "clinician_count": 46,
+    "total_benes": 3740,
+    "panel_size": 81.3
+  },
+  {
+    "period_month": "2023-07",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 761,
+    "total_benes": 92679,
+    "panel_size": 121.8
+  },
+  {
+    "period_month": "2023-07",
+    "provider_type": "Psychologist",
+    "clinician_count": 159,
+    "total_benes": 11284,
+    "panel_size": 71.0
+  },
+  {
+    "period_month": "2023-07",
+    "provider_type": "Residential",
+    "clinician_count": 649,
+    "total_benes": 112680,
+    "panel_size": 173.6
+  },
+  {
+    "period_month": "2023-07",
+    "provider_type": "Social Worker",
+    "clinician_count": 495,
+    "total_benes": 39075,
+    "panel_size": 78.9
+  },
+  {
+    "period_month": "2023-08",
+    "provider_type": "APRN",
+    "clinician_count": 2136,
+    "total_benes": 246762,
+    "panel_size": 115.5
+  },
+  {
+    "period_month": "2023-08",
+    "provider_type": "CMHC",
+    "clinician_count": 9,
+    "total_benes": 480,
+    "panel_size": 53.3
+  },
+  {
+    "period_month": "2023-08",
+    "provider_type": "Counselor",
+    "clinician_count": 670,
+    "total_benes": 80036,
+    "panel_size": 119.5
+  },
+  {
+    "period_month": "2023-08",
+    "provider_type": "MFT",
+    "clinician_count": 43,
+    "total_benes": 3838,
+    "panel_size": 89.3
+  },
+  {
+    "period_month": "2023-08",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 784,
+    "total_benes": 101327,
+    "panel_size": 129.2
+  },
+  {
+    "period_month": "2023-08",
+    "provider_type": "Psychologist",
+    "clinician_count": 164,
+    "total_benes": 12159,
+    "panel_size": 74.1
+  },
+  {
+    "period_month": "2023-08",
+    "provider_type": "Residential",
+    "clinician_count": 768,
+    "total_benes": 164235,
+    "panel_size": 213.8
+  },
+  {
+    "period_month": "2023-08",
+    "provider_type": "Social Worker",
+    "clinician_count": 506,
+    "total_benes": 41125,
+    "panel_size": 81.3
+  },
+  {
+    "period_month": "2023-09",
+    "provider_type": "APRN",
+    "clinician_count": 2079,
+    "total_benes": 231253,
+    "panel_size": 111.2
+  },
+  {
+    "period_month": "2023-09",
+    "provider_type": "CMHC",
+    "clinician_count": 10,
+    "total_benes": 727,
+    "panel_size": 72.7
+  },
+  {
+    "period_month": "2023-09",
+    "provider_type": "Counselor",
+    "clinician_count": 652,
+    "total_benes": 73115,
+    "panel_size": 112.1
+  },
+  {
+    "period_month": "2023-09",
+    "provider_type": "MFT",
+    "clinician_count": 44,
+    "total_benes": 3654,
+    "panel_size": 83.0
+  },
+  {
+    "period_month": "2023-09",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 745,
+    "total_benes": 93618,
+    "panel_size": 125.7
+  },
+  {
+    "period_month": "2023-09",
+    "provider_type": "Psychologist",
+    "clinician_count": 158,
+    "total_benes": 11478,
+    "panel_size": 72.6
+  },
+  {
+    "period_month": "2023-09",
+    "provider_type": "Residential",
+    "clinician_count": 771,
+    "total_benes": 189195,
+    "panel_size": 245.4
+  },
+  {
+    "period_month": "2023-09",
+    "provider_type": "Social Worker",
+    "clinician_count": 466,
+    "total_benes": 40816,
+    "panel_size": 87.6
+  },
+  {
+    "period_month": "2023-10",
+    "provider_type": "APRN",
+    "clinician_count": 2131,
+    "total_benes": 250921,
+    "panel_size": 117.7
+  },
+  {
+    "period_month": "2023-10",
+    "provider_type": "CMHC",
+    "clinician_count": 8,
+    "total_benes": 375,
+    "panel_size": 46.9
+  },
+  {
+    "period_month": "2023-10",
+    "provider_type": "Counselor",
+    "clinician_count": 660,
+    "total_benes": 76245,
+    "panel_size": 115.5
+  },
+  {
+    "period_month": "2023-10",
+    "provider_type": "MFT",
+    "clinician_count": 45,
+    "total_benes": 4022,
+    "panel_size": 89.4
+  },
+  {
+    "period_month": "2023-10",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 761,
+    "total_benes": 95881,
+    "panel_size": 126.0
+  },
+  {
+    "period_month": "2023-10",
+    "provider_type": "Psychologist",
+    "clinician_count": 171,
+    "total_benes": 12670,
+    "panel_size": 74.1
+  },
+  {
+    "period_month": "2023-10",
+    "provider_type": "Residential",
+    "clinician_count": 773,
+    "total_benes": 198227,
+    "panel_size": 256.4
+  },
+  {
+    "period_month": "2023-10",
+    "provider_type": "Social Worker",
+    "clinician_count": 494,
+    "total_benes": 42595,
+    "panel_size": 86.2
+  },
+  {
+    "period_month": "2023-11",
+    "provider_type": "APRN",
+    "clinician_count": 2064,
+    "total_benes": 220530,
+    "panel_size": 106.8
+  },
+  {
+    "period_month": "2023-11",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 333,
+    "panel_size": 47.6
+  },
+  {
+    "period_month": "2023-11",
+    "provider_type": "Counselor",
+    "clinician_count": 639,
+    "total_benes": 73672,
+    "panel_size": 115.3
+  },
+  {
+    "period_month": "2023-11",
+    "provider_type": "MFT",
+    "clinician_count": 48,
+    "total_benes": 3882,
+    "panel_size": 80.9
+  },
+  {
+    "period_month": "2023-11",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 712,
+    "total_benes": 87073,
+    "panel_size": 122.3
+  },
+  {
+    "period_month": "2023-11",
+    "provider_type": "Psychologist",
+    "clinician_count": 167,
+    "total_benes": 11966,
+    "panel_size": 71.7
+  },
+  {
+    "period_month": "2023-11",
+    "provider_type": "Residential",
+    "clinician_count": 779,
+    "total_benes": 185498,
+    "panel_size": 238.1
+  },
+  {
+    "period_month": "2023-11",
+    "provider_type": "Social Worker",
+    "clinician_count": 471,
+    "total_benes": 40008,
+    "panel_size": 84.9
+  },
+  {
+    "period_month": "2023-12",
+    "provider_type": "APRN",
+    "clinician_count": 1929,
+    "total_benes": 189494,
+    "panel_size": 98.2
+  },
+  {
+    "period_month": "2023-12",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 419,
+    "panel_size": 59.9
+  },
+  {
+    "period_month": "2023-12",
+    "provider_type": "Counselor",
+    "clinician_count": 605,
+    "total_benes": 70381,
+    "panel_size": 116.3
+  },
+  {
+    "period_month": "2023-12",
+    "provider_type": "MFT",
+    "clinician_count": 45,
+    "total_benes": 3766,
+    "panel_size": 83.7
+  },
+  {
+    "period_month": "2023-12",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 650,
+    "total_benes": 77539,
+    "panel_size": 119.3
+  },
+  {
+    "period_month": "2023-12",
+    "provider_type": "Psychologist",
+    "clinician_count": 155,
+    "total_benes": 10122,
+    "panel_size": 65.3
+  },
+  {
+    "period_month": "2023-12",
+    "provider_type": "Residential",
+    "clinician_count": 777,
+    "total_benes": 176627,
+    "panel_size": 227.3
+  },
+  {
+    "period_month": "2023-12",
+    "provider_type": "Social Worker",
+    "clinician_count": 453,
+    "total_benes": 36128,
+    "panel_size": 79.8
+  },
+  {
+    "period_month": "2024-01",
+    "provider_type": "APRN",
+    "clinician_count": 1999,
+    "total_benes": 202914,
+    "panel_size": 101.5
+  },
+  {
+    "period_month": "2024-01",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 373,
+    "panel_size": 62.2
+  },
+  {
+    "period_month": "2024-01",
+    "provider_type": "Counselor",
+    "clinician_count": 599,
+    "total_benes": 73568,
+    "panel_size": 122.8
+  },
+  {
+    "period_month": "2024-01",
+    "provider_type": "MFT",
+    "clinician_count": 40,
+    "total_benes": 3834,
+    "panel_size": 95.8
+  },
+  {
+    "period_month": "2024-01",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 678,
+    "total_benes": 86312,
+    "panel_size": 127.3
+  },
+  {
+    "period_month": "2024-01",
+    "provider_type": "Psychologist",
+    "clinician_count": 140,
+    "total_benes": 11399,
+    "panel_size": 81.4
+  },
+  {
+    "period_month": "2024-01",
+    "provider_type": "Residential",
+    "clinician_count": 776,
+    "total_benes": 191007,
+    "panel_size": 246.1
+  },
+  {
+    "period_month": "2024-01",
+    "provider_type": "Social Worker",
+    "clinician_count": 453,
+    "total_benes": 37693,
+    "panel_size": 83.2
+  },
+  {
+    "period_month": "2024-02",
+    "provider_type": "APRN",
+    "clinician_count": 1897,
+    "total_benes": 195660,
+    "panel_size": 103.1
+  },
+  {
+    "period_month": "2024-02",
+    "provider_type": "CMHC",
+    "clinician_count": 5,
+    "total_benes": 317,
+    "panel_size": 63.4
+  },
+  {
+    "period_month": "2024-02",
+    "provider_type": "Counselor",
+    "clinician_count": 604,
+    "total_benes": 70167,
+    "panel_size": 116.2
+  },
+  {
+    "period_month": "2024-02",
+    "provider_type": "MFT",
+    "clinician_count": 45,
+    "total_benes": 3764,
+    "panel_size": 83.6
+  },
+  {
+    "period_month": "2024-02",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 647,
+    "total_benes": 82297,
+    "panel_size": 127.2
+  },
+  {
+    "period_month": "2024-02",
+    "provider_type": "Psychologist",
+    "clinician_count": 144,
+    "total_benes": 11292,
+    "panel_size": 78.4
+  },
+  {
+    "period_month": "2024-02",
+    "provider_type": "Residential",
+    "clinician_count": 783,
+    "total_benes": 198631,
+    "panel_size": 253.7
+  },
+  {
+    "period_month": "2024-02",
+    "provider_type": "Social Worker",
+    "clinician_count": 464,
+    "total_benes": 38345,
+    "panel_size": 82.6
+  },
+  {
+    "period_month": "2024-03",
+    "provider_type": "APRN",
+    "clinician_count": 1856,
+    "total_benes": 179901,
+    "panel_size": 96.9
+  },
+  {
+    "period_month": "2024-03",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 327,
+    "panel_size": 46.7
+  },
+  {
+    "period_month": "2024-03",
+    "provider_type": "Counselor",
+    "clinician_count": 613,
+    "total_benes": 69077,
+    "panel_size": 112.7
+  },
+  {
+    "period_month": "2024-03",
+    "provider_type": "MFT",
+    "clinician_count": 39,
+    "total_benes": 3714,
+    "panel_size": 95.2
+  },
+  {
+    "period_month": "2024-03",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 625,
+    "total_benes": 77552,
+    "panel_size": 124.1
+  },
+  {
+    "period_month": "2024-03",
+    "provider_type": "Psychologist",
+    "clinician_count": 144,
+    "total_benes": 10736,
+    "panel_size": 74.6
+  },
+  {
+    "period_month": "2024-03",
+    "provider_type": "Residential",
+    "clinician_count": 777,
+    "total_benes": 191847,
+    "panel_size": 246.9
+  },
+  {
+    "period_month": "2024-03",
+    "provider_type": "Social Worker",
+    "clinician_count": 462,
+    "total_benes": 38442,
+    "panel_size": 83.2
+  },
+  {
+    "period_month": "2024-04",
+    "provider_type": "APRN",
+    "clinician_count": 1939,
+    "total_benes": 195849,
+    "panel_size": 101.0
+  },
+  {
+    "period_month": "2024-04",
+    "provider_type": "CMHC",
+    "clinician_count": 5,
+    "total_benes": 263,
+    "panel_size": 52.6
+  },
+  {
+    "period_month": "2024-04",
+    "provider_type": "Counselor",
+    "clinician_count": 626,
+    "total_benes": 68970,
+    "panel_size": 110.2
+  },
+  {
+    "period_month": "2024-04",
+    "provider_type": "MFT",
+    "clinician_count": 39,
+    "total_benes": 3467,
+    "panel_size": 88.9
+  },
+  {
+    "period_month": "2024-04",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 642,
+    "total_benes": 79180,
+    "panel_size": 123.3
+  },
+  {
+    "period_month": "2024-04",
+    "provider_type": "Psychologist",
+    "clinician_count": 138,
+    "total_benes": 10315,
+    "panel_size": 74.7
+  },
+  {
+    "period_month": "2024-04",
+    "provider_type": "Residential",
+    "clinician_count": 771,
+    "total_benes": 195837,
+    "panel_size": 254.0
+  },
+  {
+    "period_month": "2024-04",
+    "provider_type": "Social Worker",
+    "clinician_count": 468,
+    "total_benes": 40487,
+    "panel_size": 86.5
+  },
+  {
+    "period_month": "2024-05",
+    "provider_type": "APRN",
+    "clinician_count": 1858,
+    "total_benes": 188830,
+    "panel_size": 101.6
+  },
+  {
+    "period_month": "2024-05",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 283,
+    "panel_size": 47.2
+  },
+  {
+    "period_month": "2024-05",
+    "provider_type": "Counselor",
+    "clinician_count": 615,
+    "total_benes": 66733,
+    "panel_size": 108.5
+  },
+  {
+    "period_month": "2024-05",
+    "provider_type": "MFT",
+    "clinician_count": 36,
+    "total_benes": 3761,
+    "panel_size": 104.5
+  },
+  {
+    "period_month": "2024-05",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 638,
+    "total_benes": 74354,
+    "panel_size": 116.5
+  },
+  {
+    "period_month": "2024-05",
+    "provider_type": "Psychologist",
+    "clinician_count": 135,
+    "total_benes": 9727,
+    "panel_size": 72.1
+  },
+  {
+    "period_month": "2024-05",
+    "provider_type": "Residential",
+    "clinician_count": 744,
+    "total_benes": 173063,
+    "panel_size": 232.6
+  },
+  {
+    "period_month": "2024-05",
+    "provider_type": "Social Worker",
+    "clinician_count": 462,
+    "total_benes": 37760,
+    "panel_size": 81.7
+  },
+  {
+    "period_month": "2024-06",
+    "provider_type": "APRN",
+    "clinician_count": 1746,
+    "total_benes": 161414,
+    "panel_size": 92.4
+  },
+  {
+    "period_month": "2024-06",
+    "provider_type": "CMHC",
+    "clinician_count": 5,
+    "total_benes": 330,
+    "panel_size": 66.0
+  },
+  {
+    "period_month": "2024-06",
+    "provider_type": "Counselor",
+    "clinician_count": 573,
+    "total_benes": 60477,
+    "panel_size": 105.5
+  },
+  {
+    "period_month": "2024-06",
+    "provider_type": "MFT",
+    "clinician_count": 37,
+    "total_benes": 3454,
+    "panel_size": 93.4
+  },
+  {
+    "period_month": "2024-06",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 561,
+    "total_benes": 64663,
+    "panel_size": 115.3
+  },
+  {
+    "period_month": "2024-06",
+    "provider_type": "Psychologist",
+    "clinician_count": 128,
+    "total_benes": 8206,
+    "panel_size": 64.1
+  },
+  {
+    "period_month": "2024-06",
+    "provider_type": "Residential",
+    "clinician_count": 633,
+    "total_benes": 122573,
+    "panel_size": 193.6
+  },
+  {
+    "period_month": "2024-06",
+    "provider_type": "Social Worker",
+    "clinician_count": 425,
+    "total_benes": 34092,
+    "panel_size": 80.2
+  },
+  {
+    "period_month": "2024-07",
+    "provider_type": "APRN",
+    "clinician_count": 1751,
+    "total_benes": 173872,
+    "panel_size": 99.3
+  },
+  {
+    "period_month": "2024-07",
+    "provider_type": "CMHC",
+    "clinician_count": 7,
+    "total_benes": 322,
+    "panel_size": 46.0
+  },
+  {
+    "period_month": "2024-07",
+    "provider_type": "Counselor",
+    "clinician_count": 579,
+    "total_benes": 63094,
+    "panel_size": 109.0
+  },
+  {
+    "period_month": "2024-07",
+    "provider_type": "MFT",
+    "clinician_count": 37,
+    "total_benes": 3612,
+    "panel_size": 97.6
+  },
+  {
+    "period_month": "2024-07",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 575,
+    "total_benes": 63270,
+    "panel_size": 110.0
+  },
+  {
+    "period_month": "2024-07",
+    "provider_type": "Psychologist",
+    "clinician_count": 124,
+    "total_benes": 8356,
+    "panel_size": 67.4
+  },
+  {
+    "period_month": "2024-07",
+    "provider_type": "Residential",
+    "clinician_count": 612,
+    "total_benes": 118457,
+    "panel_size": 193.6
+  },
+  {
+    "period_month": "2024-07",
+    "provider_type": "Social Worker",
+    "clinician_count": 435,
+    "total_benes": 34849,
+    "panel_size": 80.1
+  },
+  {
+    "period_month": "2024-08",
+    "provider_type": "APRN",
+    "clinician_count": 1813,
+    "total_benes": 181411,
+    "panel_size": 100.1
+  },
+  {
+    "period_month": "2024-08",
+    "provider_type": "CMHC",
+    "clinician_count": 5,
+    "total_benes": 284,
+    "panel_size": 56.8
+  },
+  {
+    "period_month": "2024-08",
+    "provider_type": "Counselor",
+    "clinician_count": 574,
+    "total_benes": 61544,
+    "panel_size": 107.2
+  },
+  {
+    "period_month": "2024-08",
+    "provider_type": "MFT",
+    "clinician_count": 39,
+    "total_benes": 3445,
+    "panel_size": 88.3
+  },
+  {
+    "period_month": "2024-08",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 571,
+    "total_benes": 63694,
+    "panel_size": 111.5
+  },
+  {
+    "period_month": "2024-08",
+    "provider_type": "Psychologist",
+    "clinician_count": 114,
+    "total_benes": 8309,
+    "panel_size": 72.9
+  },
+  {
+    "period_month": "2024-08",
+    "provider_type": "Residential",
+    "clinician_count": 699,
+    "total_benes": 163481,
+    "panel_size": 233.9
+  },
+  {
+    "period_month": "2024-08",
+    "provider_type": "Social Worker",
+    "clinician_count": 426,
+    "total_benes": 33325,
+    "panel_size": 78.2
+  },
+  {
+    "period_month": "2024-09",
+    "provider_type": "APRN",
+    "clinician_count": 1761,
+    "total_benes": 165635,
+    "panel_size": 94.1
+  },
+  {
+    "period_month": "2024-09",
+    "provider_type": "CMHC",
+    "clinician_count": 6,
+    "total_benes": 409,
+    "panel_size": 68.2
+  },
+  {
+    "period_month": "2024-09",
+    "provider_type": "Counselor",
+    "clinician_count": 571,
+    "total_benes": 55353,
+    "panel_size": 96.9
+  },
+  {
+    "period_month": "2024-09",
+    "provider_type": "MFT",
+    "clinician_count": 38,
+    "total_benes": 3179,
+    "panel_size": 83.7
+  },
+  {
+    "period_month": "2024-09",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 563,
+    "total_benes": 63026,
+    "panel_size": 111.9
+  },
+  {
+    "period_month": "2024-09",
+    "provider_type": "Psychologist",
+    "clinician_count": 114,
+    "total_benes": 8168,
+    "panel_size": 71.6
+  },
+  {
+    "period_month": "2024-09",
+    "provider_type": "Residential",
+    "clinician_count": 670,
+    "total_benes": 158089,
+    "panel_size": 236.0
+  },
+  {
+    "period_month": "2024-09",
+    "provider_type": "Social Worker",
+    "clinician_count": 418,
+    "total_benes": 30483,
+    "panel_size": 72.9
+  },
+  {
+    "period_month": "2024-10",
+    "provider_type": "APRN",
+    "clinician_count": 1810,
+    "total_benes": 173496,
+    "panel_size": 95.9
+  },
+  {
+    "period_month": "2024-10",
+    "provider_type": "CMHC",
+    "clinician_count": 5,
+    "total_benes": 292,
+    "panel_size": 58.4
+  },
+  {
+    "period_month": "2024-10",
+    "provider_type": "Counselor",
+    "clinician_count": 572,
+    "total_benes": 56074,
+    "panel_size": 98.0
+  },
+  {
+    "period_month": "2024-10",
+    "provider_type": "MFT",
+    "clinician_count": 36,
+    "total_benes": 3192,
+    "panel_size": 88.7
+  },
+  {
+    "period_month": "2024-10",
+    "provider_type": "Psychiatrist",
+    "clinician_count": 551,
+    "total_benes": 60151,
+    "panel_size": 109.2
+  },
+  {
+    "period_month": "2024-10",
+    "provider_type": "Psychologist",
+    "clinician_count": 113,
+    "total_benes": 7329,
+    "panel_size": 64.9
+  },
+  {
+    "period_month": "2024-10",
+    "provider_type": "Residential",
+    "clinician_count": 641,
+    "total_benes": 137296,
+    "panel_size": 214.2
+  },
+  {
+    "period_month": "2024-10",
+    "provider_type": "Social Worker",
+    "clinician_count": 402,
+    "total_benes": 29387,
+    "panel_size": 73.1
+  },
+  {
+    "period_month": "2019-01",
+    "provider_type": "All Clinicians",
+    "clinician_count": 3570,
+    "total_benes": 339110,
+    "panel_size": 95.0
+  },
+  {
+    "period_month": "2019-02",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4171,
+    "total_benes": 394918,
+    "panel_size": 94.7
+  },
+  {
+    "period_month": "2019-03",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4308,
+    "total_benes": 403791,
+    "panel_size": 93.7
+  },
+  {
+    "period_month": "2019-04",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4417,
+    "total_benes": 427729,
+    "panel_size": 96.8
+  },
+  {
+    "period_month": "2019-05",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4424,
+    "total_benes": 417814,
+    "panel_size": 94.4
+  },
+  {
+    "period_month": "2019-06",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4252,
+    "total_benes": 374031,
+    "panel_size": 88.0
+  },
+  {
+    "period_month": "2019-07",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4449,
+    "total_benes": 410224,
+    "panel_size": 92.2
+  },
+  {
+    "period_month": "2019-08",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4536,
+    "total_benes": 436231,
+    "panel_size": 96.2
+  },
+  {
+    "period_month": "2019-09",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4442,
+    "total_benes": 406440,
+    "panel_size": 91.5
+  },
+  {
+    "period_month": "2019-10",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4706,
+    "total_benes": 460873,
+    "panel_size": 97.9
+  },
+  {
+    "period_month": "2019-11",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4466,
+    "total_benes": 411224,
+    "panel_size": 92.1
+  },
+  {
+    "period_month": "2019-12",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4377,
+    "total_benes": 399768,
+    "panel_size": 91.3
+  },
+  {
+    "period_month": "2020-01",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4661,
+    "total_benes": 466360,
+    "panel_size": 100.1
+  },
+  {
+    "period_month": "2020-02",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4543,
+    "total_benes": 450440,
+    "panel_size": 99.2
+  },
+  {
+    "period_month": "2020-03",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4295,
+    "total_benes": 405500,
+    "panel_size": 94.4
+  },
+  {
+    "period_month": "2020-04",
+    "provider_type": "All Clinicians",
+    "clinician_count": 3802,
+    "total_benes": 337628,
+    "panel_size": 88.8
+  },
+  {
+    "period_month": "2020-05",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4025,
+    "total_benes": 354825,
+    "panel_size": 88.2
+  },
+  {
+    "period_month": "2020-06",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4464,
+    "total_benes": 419465,
+    "panel_size": 94.0
+  },
+  {
+    "period_month": "2020-07",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4471,
+    "total_benes": 417003,
+    "panel_size": 93.3
+  },
+  {
+    "period_month": "2020-08",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4431,
+    "total_benes": 421840,
+    "panel_size": 95.2
+  },
+  {
+    "period_month": "2020-09",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4469,
+    "total_benes": 442605,
+    "panel_size": 99.0
+  },
+  {
+    "period_month": "2020-10",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4743,
+    "total_benes": 487682,
+    "panel_size": 102.8
+  },
+  {
+    "period_month": "2020-11",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4470,
+    "total_benes": 438713,
+    "panel_size": 98.1
+  },
+  {
+    "period_month": "2020-12",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4545,
+    "total_benes": 457072,
+    "panel_size": 100.6
+  },
+  {
+    "period_month": "2021-01",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4473,
+    "total_benes": 461216,
+    "panel_size": 103.1
+  },
+  {
+    "period_month": "2021-02",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4461,
+    "total_benes": 458377,
+    "panel_size": 102.8
+  },
+  {
+    "period_month": "2021-03",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4733,
+    "total_benes": 502475,
+    "panel_size": 106.2
+  },
+  {
+    "period_month": "2021-04",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4737,
+    "total_benes": 510148,
+    "panel_size": 107.7
+  },
+  {
+    "period_month": "2021-05",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4566,
+    "total_benes": 469895,
+    "panel_size": 102.9
+  },
+  {
+    "period_month": "2021-06",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4671,
+    "total_benes": 490868,
+    "panel_size": 105.1
+  },
+  {
+    "period_month": "2021-07",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4565,
+    "total_benes": 466493,
+    "panel_size": 102.2
+  },
+  {
+    "period_month": "2021-08",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4700,
+    "total_benes": 497438,
+    "panel_size": 105.8
+  },
+  {
+    "period_month": "2021-09",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4542,
+    "total_benes": 477635,
+    "panel_size": 105.2
+  },
+  {
+    "period_month": "2021-10",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4575,
+    "total_benes": 487215,
+    "panel_size": 106.5
+  },
+  {
+    "period_month": "2021-11",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4495,
+    "total_benes": 471187,
+    "panel_size": 104.8
+  },
+  {
+    "period_month": "2021-12",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4443,
+    "total_benes": 468409,
+    "panel_size": 105.4
+  },
+  {
+    "period_month": "2022-01",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4509,
+    "total_benes": 500843,
+    "panel_size": 111.1
+  },
+  {
+    "period_month": "2022-02",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4449,
+    "total_benes": 470775,
+    "panel_size": 105.8
+  },
+  {
+    "period_month": "2022-03",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4776,
+    "total_benes": 535520,
+    "panel_size": 112.1
+  },
+  {
+    "period_month": "2022-04",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4625,
+    "total_benes": 494854,
+    "panel_size": 107.0
+  },
+  {
+    "period_month": "2022-05",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4657,
+    "total_benes": 489599,
+    "panel_size": 105.1
+  },
+  {
+    "period_month": "2022-06",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4567,
+    "total_benes": 495161,
+    "panel_size": 108.4
+  },
+  {
+    "period_month": "2022-07",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4059,
+    "total_benes": 401881,
+    "panel_size": 99.0
+  },
+  {
+    "period_month": "2022-08",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4333,
+    "total_benes": 442987,
+    "panel_size": 102.2
+  },
+  {
+    "period_month": "2022-09",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4228,
+    "total_benes": 413441,
+    "panel_size": 97.8
+  },
+  {
+    "period_month": "2022-10",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4454,
+    "total_benes": 489490,
+    "panel_size": 109.9
+  },
+  {
+    "period_month": "2022-11",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4461,
+    "total_benes": 485192,
+    "panel_size": 108.8
+  },
+  {
+    "period_month": "2022-12",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4492,
+    "total_benes": 483769,
+    "panel_size": 107.7
+  },
+  {
+    "period_month": "2023-01",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4681,
+    "total_benes": 538814,
+    "panel_size": 115.1
+  },
+  {
+    "period_month": "2023-02",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4644,
+    "total_benes": 527483,
+    "panel_size": 113.6
+  },
+  {
+    "period_month": "2023-03",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4818,
+    "total_benes": 576991,
+    "panel_size": 119.8
+  },
+  {
+    "period_month": "2023-04",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4914,
+    "total_benes": 557134,
+    "panel_size": 113.4
+  },
+  {
+    "period_month": "2023-05",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4978,
+    "total_benes": 580708,
+    "panel_size": 116.7
+  },
+  {
+    "period_month": "2023-06",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4711,
+    "total_benes": 523655,
+    "panel_size": 111.2
+  },
+  {
+    "period_month": "2023-07",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4504,
+    "total_benes": 484450,
+    "panel_size": 107.6
+  },
+  {
+    "period_month": "2023-08",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4707,
+    "total_benes": 544868,
+    "panel_size": 115.8
+  },
+  {
+    "period_month": "2023-09",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4546,
+    "total_benes": 509270,
+    "panel_size": 112.0
+  },
+  {
+    "period_month": "2023-10",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4660,
+    "total_benes": 542746,
+    "panel_size": 116.5
+  },
+  {
+    "period_month": "2023-11",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4494,
+    "total_benes": 493880,
+    "panel_size": 109.9
+  },
+  {
+    "period_month": "2023-12",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4214,
+    "total_benes": 440379,
+    "panel_size": 104.5
+  },
+  {
+    "period_month": "2024-01",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4297,
+    "total_benes": 473193,
+    "panel_size": 110.1
+  },
+  {
+    "period_month": "2024-02",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4192,
+    "total_benes": 460175,
+    "panel_size": 109.8
+  },
+  {
+    "period_month": "2024-03",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4124,
+    "total_benes": 433925,
+    "panel_size": 105.2
+  },
+  {
+    "period_month": "2024-04",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4241,
+    "total_benes": 454166,
+    "panel_size": 107.1
+  },
+  {
+    "period_month": "2024-05",
+    "provider_type": "All Clinicians",
+    "clinician_count": 4129,
+    "total_benes": 434148,
+    "panel_size": 105.1
+  },
+  {
+    "period_month": "2024-06",
+    "provider_type": "All Clinicians",
+    "clinician_count": 3822,
+    "total_benes": 378126,
+    "panel_size": 98.9
+  },
+  {
+    "period_month": "2024-07",
+    "provider_type": "All Clinicians",
+    "clinician_count": 3853,
+    "total_benes": 394414,
+    "panel_size": 102.4
+  },
+  {
+    "period_month": "2024-08",
+    "provider_type": "All Clinicians",
+    "clinician_count": 3879,
+    "total_benes": 399979,
+    "panel_size": 103.1
+  },
+  {
+    "period_month": "2024-09",
+    "provider_type": "All Clinicians",
+    "clinician_count": 3798,
+    "total_benes": 371114,
+    "panel_size": 97.7
+  },
+  {
+    "period_month": "2024-10",
+    "provider_type": "All Clinicians",
+    "clinician_count": 3820,
+    "total_benes": 373079,
+    "panel_size": 97.7
+  }
+]

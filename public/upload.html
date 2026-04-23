@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roster Upload — Providr Suite</title>
+<style>
+/* Mobius design tokens (inline copy of mobius-design/tokens.css) */
+:root {
+  --mobius-text-primary: #1a1d21;
+  --mobius-text-secondary: #374151;
+  --mobius-text-muted: #64748b;
+  --mobius-bg-primary: #fafbfc;
+  --mobius-bg-card: #ffffff;
+  --mobius-bg-tertiary: #f1f5f9;
+  --mobius-border: #e2e8f0;
+  --mobius-border-medium: #d1d5db;
+  --mobius-accent: #3b82f6;
+  --mobius-accent-hover: #2563eb;
+  --mobius-accent-text: #ffffff;
+  --mobius-success: #16a34a;
+  --mobius-error: #dc2626;
+  --mobius-warning: #f59e0b;
+  --mobius-shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --mobius-shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --mobius-font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mobius-radius: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--mobius-font-sans);
+  background: var(--mobius-bg-primary);
+  color: var(--mobius-text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+header {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+header .logo-mark {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--mobius-accent);
+  letter-spacing: -0.5px;
+}
+header .service-label {
+  font-size: 0.875rem;
+  color: var(--mobius-text-muted);
+  border-left: 1px solid var(--mobius-border);
+  padding-left: 0.75rem;
+}
+.card {
+  width: 100%;
+  max-width: 600px;
+  background: var(--mobius-bg-card);
+  border: 1px solid var(--mobius-border);
+  border-radius: var(--mobius-radius);
+  box-shadow: var(--mobius-shadow-md);
+  padding: 2rem;
+}
+.card h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.375rem;
+}
+.card .subtitle {
+  font-size: 0.875rem;
+  color: var(--mobius-text-muted);
+  margin-bottom: 1.75rem;
+}
+.field { margin-bottom: 1.25rem; }
+.field label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: var(--mobius-text-secondary);
+}
+.field input[type="text"],
+.field select {
+  width: 100%;
+  padding: 0.6rem 0.875rem;
+  border: 1px solid var(--mobius-border-medium);
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  background: #fff;
+  color: var(--mobius-text-primary);
+  transition: border-color 0.15s;
+  outline: none;
+}
+.field input[type="text"]:focus,
+.field select:focus {
+  border-color: var(--mobius-accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+/* Drop zone */
+.drop-zone {
+  border: 2px dashed var(--mobius-border-medium);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+.drop-zone.dragover {
+  border-color: var(--mobius-accent);
+  background: rgba(59, 130, 246, 0.04);
+}
+.drop-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.drop-zone .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.drop-zone .label {
+  font-size: 0.9375rem;
+  color: var(--mobius-text-secondary);
+}
+.drop-zone .hint {
+  font-size: 0.8125rem;
+  color: var(--mobius-text-muted);
+  margin-top: 0.25rem;
+}
+.file-preview {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--mobius-bg-tertiary);
+  border-radius: 6px;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+}
+.file-preview .fname { font-weight: 500; }
+.file-preview .fsize { color: var(--mobius-text-muted); }
+.file-preview .remove {
+  margin-left: auto;
+  cursor: pointer;
+  color: var(--mobius-error);
+  font-weight: 600;
+  background: none; border: none; font-size: 1rem;
+}
+
+/* Checkbox */
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 1.5rem;
+}
+.checkbox-field input[type="checkbox"] { width: 1rem; height: 1rem; accent-color: var(--mobius-accent); }
+.checkbox-field label { font-size: 0.9375rem; cursor: pointer; }
+
+/* Submit button */
+.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--mobius-accent);
+  color: var(--mobius-accent-text);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.btn-primary:hover:not(:disabled) { background: var(--mobius-accent-hover); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner {
+  display: none;
+  width: 1rem; height: 1rem;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Alert */
+.alert {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+.alert.error { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+.alert.success { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+</style>
+</head>
+<body>
+<header>
+  <span class="logo-mark">Providr</span>
+  <span class="service-label">Check Your Provider List</span>
+</header>
+
+<div class="card">
+  <h1>Upload Provider Roster</h1>
+  <p class="subtitle">Upload your provider list and we'll verify each provider is active and correctly enrolled.</p>
+
+  <div id="alert" class="alert"></div>
+
+  <form id="uploadForm" novalidate>
+    <!-- File upload -->
+    <div class="field">
+      <label>Roster file</label>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" required>
+        <div class="icon">📄</div>
+        <div class="label">Drag and drop your file here, or <strong>browse</strong></div>
+        <div class="hint">Accepts .csv, .xlsx, .xls — max 10 MB</div>
+      </div>
+      <div class="file-preview" id="filePreview">
+        <span>📎</span>
+        <span class="fname" id="previewName"></span>
+        <span class="fsize" id="previewSize"></span>
+        <button type="button" class="remove" id="removeFile" title="Remove">✕</button>
+      </div>
+    </div>
+
+    <!-- File purpose -->
+    <div class="field">
+      <label for="filePurpose">What is this file for?</label>
+      <select id="filePurpose" name="file_purpose">
+        <option value="roster_reconciliation" selected>Provider list check</option>
+        <option value="credentialing_update">Credentialing update</option>
+        <option value="network_verification">Network verification</option>
+      </select>
+    </div>
+
+    <!-- Organization name -->
+    <div class="field">
+      <label for="orgName">Organization name <span style="color:var(--mobius-error)">*</span></label>
+      <input type="text" id="orgName" name="org_name" placeholder="e.g., David Lawrence Center" required>
+    </div>
+
+    <!-- Auto-reconcile -->
+    <div class="checkbox-field">
+      <input type="checkbox" id="autoReconcile" name="auto_reconcile" checked>
+      <label for="autoReconcile">Run verification automatically after upload</label>
+    </div>
+
+    <button type="submit" class="btn-primary" id="submitBtn" disabled>
+      <span class="spinner" id="spinner"></span>
+      <span id="btnLabel">Upload Roster</span>
+    </button>
+
+    <p style="font-size:0.8125rem;color:var(--mobius-text-muted);margin-top:1rem;text-align:center;">After uploading, we'll check each provider and show you the results in about 2 minutes.</p>
+  </form>
+</div>
+
+<script>
+const API_BASE = window.location.origin;
+const form = document.getElementById('uploadForm');
+const fileInput = document.getElementById('fileInput');
+const dropZone = document.getElementById('dropZone');
+const filePreview = document.getElementById('filePreview');
+const previewName = document.getElementById('previewName');
+const previewSize = document.getElementById('previewSize');
+const submitBtn = document.getElementById('submitBtn');
+const spinner = document.getElementById('spinner');
+const btnLabel = document.getElementById('btnLabel');
+const alert = document.getElementById('alert');
+const orgName = document.getElementById('orgName');
+
+function formatBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
+  return (b/(1024*1024)).toFixed(1) + ' MB';
+}
+
+function showFile(file) {
+  previewName.textContent = file.name;
+  previewSize.textContent = formatBytes(file.size);
+  filePreview.style.display = 'flex';
+  checkReady();
+}
+
+function clearFile() {
+  fileInput.value = '';
+  filePreview.style.display = 'none';
+  checkReady();
+}
+
+function checkReady() {
+  submitBtn.disabled = !(fileInput.files && fileInput.files.length > 0 && orgName.value.trim());
+}
+
+function showAlert(msg, type) {
+  alert.textContent = msg;
+  alert.className = 'alert ' + type;
+  alert.style.display = 'block';
+}
+
+fileInput.addEventListener('change', () => {
+  if (fileInput.files.length) showFile(fileInput.files[0]);
+});
+document.getElementById('removeFile').addEventListener('click', clearFile);
+orgName.addEventListener('input', checkReady);
+
+// Drag-and-drop
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  const dt = e.dataTransfer;
+  if (dt.files.length) {
+    const transfer = new DataTransfer();
+    transfer.items.add(dt.files[0]);
+    fileInput.files = transfer.files;
+    showFile(dt.files[0]);
+  }
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  alert.style.display = 'none';
+  if (!fileInput.files.length) return showAlert('Please select a file.', 'error');
+  if (!orgName.value.trim()) return showAlert('Organization name is required.', 'error');
+
+  const fd = new FormData();
+  fd.append('file', fileInput.files[0]);
+  fd.append('org_name', orgName.value.trim());
+  fd.append('file_purpose', document.getElementById('filePurpose').value);
+  fd.append('auto_reconcile', document.getElementById('autoReconcile').checked ? 'true' : 'false');
+
+  submitBtn.disabled = true;
+  spinner.style.display = 'inline-block';
+  btnLabel.textContent = 'Uploading…';
+
+  try {
+    const res = await fetch(API_BASE + '/roster/upload', { method: 'POST', body: fd });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Upload failed');
+
+    const uploadId = data.upload_id;
+    if (document.getElementById('autoReconcile').checked) {
+      window.location.href = `/roster-ui/progress.html?upload_id=${uploadId}&org=${encodeURIComponent(data.organization)}&file=${encodeURIComponent(data.filename)}`;
+    } else {
+      showAlert(`Uploaded successfully (ID: ${uploadId}). Click "Start Verification" when ready.`, 'success');
+      btnLabel.textContent = 'Start Verification';
+      submitBtn.disabled = false;
+      spinner.style.display = 'none';
+      form.onsubmit = async (ev) => {
+        ev.preventDefault();
+        const r = await fetch(API_BASE + '/roster/reconcile/' + uploadId, { method: 'POST' });
+        if (r.ok) {
+          window.location.href = `/roster-ui/progress.html?upload_id=${uploadId}&org=${encodeURIComponent(data.organization)}&file=${encodeURIComponent(data.filename)}`;
+        }
+      };
+    }
+  } catch (err) {
+    showAlert(err.message, 'error');
+    submitBtn.disabled = false;
+    spinner.style.display = 'none';
+    btnLabel.textContent = 'Upload Roster';
+  }
+});
+</script>
+</body>
+</html>

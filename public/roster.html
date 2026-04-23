@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roster — Providr</title>
+<style>
+:root {
+  --bg: #fafbfc; --bg-card: #ffffff; --bg-hover: #f1f5f9; --bg-input: #f8fafc;
+  --border: #e2e8f0; --border-med: #d1d5db;
+  --text: #1a1d21; --text-2: #374151; --text-3: #64748b;
+  --accent: #3b82f6; --accent-h: #2563eb;
+  --success: #16a34a; --warn: #f59e0b; --error: #dc2626;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06); --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --font: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+.page { max-width: 1000px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
+
+/* ── Header ── */
+.hd { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.logo { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+.hd-title { font-size: 1rem; font-weight: 600; }
+.hd-sep { color: var(--border-med); }
+.back { font-size: 0.8rem; color: var(--text-3); text-decoration: none; }
+.back:hover { color: var(--accent); }
+
+/* ── Buttons ── */
+.btn { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font); font-size: 0.8rem; font-weight: 500; padding: 0.38rem 0.75rem; border-radius: 6px; border: 1px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.12s; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-h); }
+.btn-ghost { background: none; color: var(--text-3); border-color: var(--border-med); }
+.btn-ghost:hover { background: var(--bg-hover); }
+.btn-sm { font-size: 0.72rem; padding: 0.22rem 0.5rem; }
+
+/* ── Top bar (org + filters) ── */
+.top-bar {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+  margin-bottom: 1rem; box-shadow: var(--shadow);
+}
+.top-bar label { font-size: 0.72rem; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.top-input { border: 1px solid var(--border-med); border-radius: 6px; padding: 0.38rem 0.65rem; font-size: 0.875rem; font-family: var(--font); outline: none; color: var(--text); background: var(--bg-input); }
+.top-input:focus { border-color: var(--accent); }
+.sep { color: var(--border-med); }
+
+/* ── Tab bar ── */
+.tabs { display: flex; gap: 0; margin-bottom: 1rem; border-bottom: 2px solid var(--border); }
+.tab { font-size: 0.8rem; font-weight: 600; padding: 0.5rem 1rem; cursor: pointer; color: var(--text-3); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.12s; display: flex; align-items: center; gap: 0.4rem; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-count { background: var(--bg-hover); border-radius: 99px; padding: 0.05rem 0.4rem; font-size: 0.65rem; }
+.tab.active .tab-count { background: #dbeafe; color: #1e40af; }
+
+/* ── Provider table ── */
+.provider-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.provider-table th { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); padding: 0.5rem 0.75rem; border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; }
+.provider-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; vertical-align: middle; }
+.provider-table tr:last-child td { border-bottom: none; }
+.provider-table tr:hover td { background: var(--bg-hover); }
+.provider-table .wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.prov-name { font-weight: 600; color: var(--text); }
+.prov-npi { font-family: monospace; font-size: 0.78rem; color: var(--text-3); }
+.prov-spec { font-size: 0.75rem; color: var(--text-3); max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Badges ── */
+.pill { display: inline-flex; align-items: center; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 0.1rem 0.38rem; border-radius: 99px; white-space: nowrap; }
+.pill-ok   { background: #dcfce7; color: #15803d; }
+.pill-warn { background: #fef9c3; color: #92400e; }
+.pill-err  { background: #fee2e2; color: #b91c1c; }
+.pill-dim  { background: #f1f5f9; color: #64748b; }
+.pill-blue { background: #dbeafe; color: #1e40af; }
+.tasks-row { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+
+/* ── Detail drawer ── */
+.drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 100; display: none; }
+.drawer { position: fixed; right: 0; top: 0; bottom: 0; width: min(480px, 100vw); background: var(--bg-card); border-left: 1px solid var(--border); box-shadow: -4px 0 24px rgba(0,0,0,0.12); z-index: 101; overflow-y: auto; padding: 1.5rem; display: none; }
+.drawer.open { display: block; }
+.drawer-overlay.open { display: block; }
+.drawer-head { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1.25rem; }
+.drawer-name { font-size: 1rem; font-weight: 700; flex: 1; }
+.drawer-close { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: var(--text-3); padding: 0.1rem; }
+.drawer-close:hover { color: var(--text); }
+.drawer-section { margin-bottom: 1rem; }
+.drawer-section-title { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3); margin-bottom: 0.5rem; }
+.drawer-field { display: flex; gap: 0.5rem; padding: 0.35rem 0; border-bottom: 1px solid var(--border); font-size: 0.8rem; align-items: flex-start; }
+.drawer-field .k { color: var(--text-3); min-width: 120px; }
+.drawer-field .v { color: var(--text); font-weight: 500; flex: 1; word-break: break-all; }
+.task-item { padding: 0.4rem 0.5rem; border-radius: 6px; background: var(--bg-hover); font-size: 0.78rem; margin-bottom: 0.35rem; }
+.task-item .tk { font-weight: 600; color: var(--text); }
+.task-item .tm { font-size: 0.7rem; color: var(--text-3); }
+.task-item.err { border-left: 3px solid var(--error); }
+.task-item.warn { border-left: 3px solid var(--warn); }
+.task-item.ok { border-left: 3px solid var(--success); }
+
+/* ── Add provider form ── */
+.add-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; margin-top: 1rem; box-shadow: var(--shadow); }
+.add-section-title { font-size: 0.75rem; font-weight: 700; color: var(--text-2); margin-bottom: 0.75rem; }
+.add-form { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: flex-end; }
+.add-form label { font-size: 0.68rem; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: 0.2rem; }
+.add-form input { border: 1px solid var(--border-med); border-radius: 6px; padding: 0.38rem 0.6rem; font-size: 0.83rem; font-family: var(--font); background: var(--bg-input); color: var(--text); outline: none; }
+.add-form input:focus { border-color: var(--accent); }
+.field { display: flex; flex-direction: column; }
+
+/* ── Misc ── */
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty-state { text-align: center; padding: 3rem; color: var(--text-3); font-size: 0.875rem; }
+.loading-state { text-align: center; padding: 3rem; color: var(--text-3); }
+.toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: #fff; padding: 0.65rem 1rem; border-radius: 8px; font-size: 0.83rem; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 999; }
+.toast.show { opacity: 1; }
+.filter-input { border: 1px solid var(--border-med); border-radius: 6px; padding: 0.35rem 0.6rem; font-size: 0.8rem; font-family: var(--font); outline: none; color: var(--text); }
+.filter-input:focus { border-color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- Header -->
+  <div class="hd">
+    <span class="logo">Providr</span>
+    <span class="hd-sep">/</span>
+    <a class="back" href="index.html">Hub</a>
+    <span class="hd-sep">/</span>
+    <span class="hd-title">Roster</span>
+    <span style="margin-left:auto;display:flex;gap:0.5rem;align-items:center">
+      <input class="filter-input" id="filterInput" placeholder="Filter by name or NPI…" oninput="applyFilter()" style="width:200px">
+    </span>
+  </div>
+
+  <!-- Top bar: org + add provider toggle -->
+  <div class="top-bar">
+    <label>Org</label>
+    <input class="top-input" id="orgInput" type="text" placeholder="Organization name…" style="flex:1;max-width:320px"
+      onkeydown="if(event.key==='Enter') loadRoster(this.value.trim())">
+    <button class="btn btn-primary" onclick="loadRoster(document.getElementById('orgInput').value.trim())">Load</button>
+    <span class="sep">|</span>
+    <button class="btn btn-ghost btn-sm" onclick="toggleAddForm()">+ Add Provider</button>
+    <a class="btn btn-ghost btn-sm" href="upload.html">Upload Roster</a>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" id="tabActive" onclick="switchTab('active')">
+      Active <span class="tab-count" id="countActive">0</span>
+    </div>
+    <div class="tab" id="tabTermed" onclick="switchTab('termed')">
+      Termed / Inactive <span class="tab-count" id="countTermed">0</span>
+    </div>
+    <div class="tab" id="tabFlagged" onclick="switchTab('flagged')">
+      ⚠ Flagged <span class="tab-count" id="countFlagged">0</span>
+    </div>
+  </div>
+
+  <!-- Provider table -->
+  <div id="tableArea">
+    <div class="loading-state" id="loadingState">Enter an organization name and press <strong>Load</strong>.</div>
+  </div>
+
+  <!-- Add provider form (hidden by default) -->
+  <div class="add-section" id="addSection" style="display:none">
+    <div class="add-section-title">Add Provider to Roster</div>
+    <div class="add-form">
+      <div class="field">
+        <label>Provider Name *</label>
+        <input id="newName" type="text" placeholder="Full name" style="width:200px">
+      </div>
+      <div class="field">
+        <label>Roster NPI *</label>
+        <input id="newNpi" type="text" placeholder="10-digit NPI" maxlength="10" style="width:130px">
+      </div>
+      <div class="field">
+        <label>Specialty</label>
+        <input id="newSpec" type="text" placeholder="e.g. LCSW" style="width:140px">
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <input id="newStatus" type="text" value="active" style="width:90px">
+      </div>
+      <button class="btn btn-primary" onclick="addProvider()">Add</button>
+      <button class="btn btn-ghost" onclick="toggleAddForm()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Detail drawer -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-name" id="drawerName">—</div>
+      <div style="font-size:0.75rem;color:var(--text-3);margin-top:0.2rem" id="drawerNpi">—</div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div id="drawerContent"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SKILL_SRV = 'http://localhost:8011';
+
+let _orgName = null;
+let _allProviders = [];
+let _currentTab = 'active';
+let _filter = '';
+
+function toast(msg, isErr) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.background = isErr ? 'var(--error)' : '#1a1d21';
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+(function init() {
+  const p = new URLSearchParams(location.search);
+  const org = p.get('org');
+  if (org) {
+    document.getElementById('orgInput').value = org;
+    loadRoster(org);
+  }
+})();
+
+function switchTab(tab) {
+  _currentTab = tab;
+  ['active','termed','flagged'].forEach(t => {
+    document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('active', t === tab);
+  });
+  renderTable();
+}
+
+function applyFilter() {
+  _filter = document.getElementById('filterInput').value.trim().toLowerCase();
+  renderTable();
+}
+
+function toggleAddForm() {
+  const s = document.getElementById('addSection');
+  s.style.display = s.style.display === 'none' ? '' : 'none';
+}
+
+// ── Load roster ────────────────────────────────────────────────────────────
+async function loadRoster(name) {
+  if (!name) { toast('Enter an org name', true); return; }
+  _orgName = name;
+  document.getElementById('loadingState').innerHTML = '<span class="spinner"></span> Loading roster…';
+  document.getElementById('loadingState').style.display = '';
+  document.getElementById('tableArea').innerHTML = '<div class="loading-state" id="loadingState"><span class="spinner"></span> Loading roster…</div>';
+
+  try {
+    const r = await fetch(`${SKILL_SRV}/roster/truth/${encodeURIComponent(name)}?limit=500`);
+    if (!r.ok) throw new Error(`${r.status}`);
+    const d = await r.json();
+    _allProviders = d.providers || [];
+    updateCounts();
+    renderTable();
+  } catch(e) {
+    document.getElementById('tableArea').innerHTML = `<div class="empty-state" style="color:var(--error)">Failed to load roster: ${e.message}</div>`;
+  }
+}
+
+function updateCounts() {
+  const active = _allProviders.filter(p => (p.status || 'active') !== 'termed').length;
+  const termed = _allProviders.filter(p => p.status === 'termed').length;
+  const flagged = _allProviders.filter(p => hasFlag(p)).length;
+  document.getElementById('countActive').textContent = active;
+  document.getElementById('countTermed').textContent = termed;
+  document.getElementById('countFlagged').textContent = flagged;
+}
+
+function hasFlag(p) {
+  const snap = p.nppes_snapshot || {};
+  if (snap.pml_gap) return true;
+  const tasks = p.open_tasks || [];
+  return tasks.some(t => t.severity === 'error' || t.severity === 'warning');
+}
+
+function renderTable() {
+  let providers = _allProviders;
+
+  // Tab filter
+  if (_currentTab === 'active') providers = providers.filter(p => (p.status || 'active') !== 'termed');
+  else if (_currentTab === 'termed') providers = providers.filter(p => p.status === 'termed');
+  else if (_currentTab === 'flagged') providers = providers.filter(p => hasFlag(p));
+
+  // Text filter
+  if (_filter) {
+    providers = providers.filter(p =>
+      (p.provider_name || '').toLowerCase().includes(_filter) ||
+      (p.npi_roster || '').includes(_filter) ||
+      (p.npi_validated || '').includes(_filter) ||
+      (p.specialty || '').toLowerCase().includes(_filter)
+    );
+  }
+
+  if (!providers.length) {
+    document.getElementById('tableArea').innerHTML = '<div class="empty-state">No providers match this filter.</div>';
+    return;
+  }
+
+  document.getElementById('tableArea').innerHTML = `
+    <div class="wrap">
+      <table class="provider-table">
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>NPI (roster)</th>
+            <th>NPI (validated)</th>
+            <th>Specialty</th>
+            <th>PML</th>
+            <th>NPPES</th>
+            <th>Tasks</th>
+          </tr>
+        </thead>
+        <tbody id="providerBody"></tbody>
+      </table>
+    </div>
+  `;
+
+  const nppesStatus = (p) => {
+    const s = ((p.nppes_snapshot || {}).nppes_status || '').toUpperCase();
+    if (s === 'A') return '<span class="pill pill-ok">Active</span>';
+    if (s === 'D') return '<span class="pill pill-err">Deactivated</span>';
+    if (s === 'I') return '<span class="pill pill-warn">Inactive</span>';
+    return '<span class="pill pill-dim">—</span>';
+  };
+
+  const pmlStatus = (p) => {
+    const snap = p.nppes_snapshot || {};
+    if (snap.pml_gap) return '<span class="pill pill-err">Gap</span>';
+    if (snap.pml_enrolled === true) return '<span class="pill pill-ok">Enrolled</span>';
+    return '<span class="pill pill-dim">—</span>';
+  };
+
+  const taskBadges = (p) => {
+    const tasks = p.open_tasks || [];
+    if (!tasks.length) return '—';
+    const errs = tasks.filter(t => t.severity === 'error').length;
+    const warns = tasks.filter(t => t.severity === 'warning').length;
+    const infos = tasks.filter(t => t.severity === 'info').length;
+    const parts = [];
+    if (errs) parts.push(`<span class="pill pill-err">${errs} err</span>`);
+    if (warns) parts.push(`<span class="pill pill-warn">${warns} warn</span>`);
+    if (infos) parts.push(`<span class="pill pill-dim">${infos} info</span>`);
+    return `<div class="tasks-row">${parts.join('')}</div>`;
+  };
+
+  const tbody = document.getElementById('providerBody');
+  tbody.innerHTML = providers.map((p, i) => `
+    <tr style="cursor:pointer" onclick="openDrawer(${i})">
+      <td>
+        <div class="prov-name">${p.provider_name || '—'}</div>
+        <div style="font-size:0.68rem;color:var(--text-3);margin-top:0.15rem">${p.provider_key || ''}</div>
+      </td>
+      <td><span class="prov-npi">${p.npi_roster || '—'}</span></td>
+      <td><span class="prov-npi">${p.npi_validated || '—'}</span></td>
+      <td><span class="prov-spec" title="${p.specialty || ''}">${p.specialty || '—'}</span></td>
+      <td>${pmlStatus(p)}</td>
+      <td>${nppesStatus(p)}</td>
+      <td>${taskBadges(p)}</td>
+    </tr>
+  `).join('');
+
+  // Store filtered for drawer indexing
+  window._filteredProviders = providers;
+}
+
+// ── Provider detail drawer ─────────────────────────────────────────────────
+function openDrawer(idx) {
+  const p = (window._filteredProviders || [])[idx];
+  if (!p) return;
+  document.getElementById('drawerName').textContent = p.provider_name || '—';
+  document.getElementById('drawerNpi').textContent = `NPI: ${p.npi_validated || p.npi_roster || '—'}`;
+
+  const snap = p.nppes_snapshot || {};
+  const tasks = p.open_tasks || [];
+
+  let html = '';
+
+  // Core fields
+  html += `<div class="drawer-section">
+    <div class="drawer-section-title">Profile</div>
+    ${field('Roster NPI', p.npi_roster)}
+    ${field('Validated NPI', p.npi_validated)}
+    ${field('Specialty', p.specialty)}
+    ${field('Match confidence', p.match_confidence != null ? (p.match_confidence * 100).toFixed(0) + '%' : '—')}
+    ${field('Decision', p.decision)}
+    ${field('Status', p.status || 'active')}
+    ${field('Validated at', p.validated_at ? p.validated_at.slice(0,10) : '—')}
+    ${field('Address', [p.address_line1, p.city, p.state_cd, p.zip_code].filter(Boolean).join(', ') || '—')}
+  </div>`;
+
+  // NPPES snapshot
+  if (Object.keys(snap).length) {
+    html += `<div class="drawer-section">
+      <div class="drawer-section-title">NPPES Snapshot</div>
+      ${field('NPPES Status', snap.nppes_status || '—')}
+      ${field('PML Gap', snap.pml_gap ? '⚠ Yes' : 'No')}
+      ${field('PML Enrolled', snap.pml_enrolled != null ? String(snap.pml_enrolled) : '—')}
+      ${field('Provider Type', snap.provider_type || '—')}
+    </div>`;
+  }
+
+  // Tasks
+  if (tasks.length) {
+    html += `<div class="drawer-section">
+      <div class="drawer-section-title">Open Tasks (${tasks.length})</div>
+      ${tasks.map(t => `
+        <div class="task-item ${t.severity === 'error' ? 'err' : t.severity === 'warning' ? 'warn' : 'ok'}">
+          <div class="tk">${t.dim || t.label || t.type || 'Task'}</div>
+          <div class="tm">${t.message || t.detail || ''}</div>
+        </div>
+      `).join('')}
+    </div>`;
+  }
+
+  // AI summary
+  if (p.ai_summary) {
+    html += `<div class="drawer-section">
+      <div class="drawer-section-title">AI Summary</div>
+      <div style="font-size:0.8rem;color:var(--text-2);line-height:1.5">${p.ai_summary}</div>
+    </div>`;
+  }
+
+  document.getElementById('drawerContent').innerHTML = html;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+}
+
+function field(label, val) {
+  return `<div class="drawer-field"><span class="k">${label}</span><span class="v">${val || '—'}</span></div>`;
+}
+
+// ── Add provider ───────────────────────────────────────────────────────────
+async function addProvider() {
+  if (!_orgName) { toast('Load an org first', true); return; }
+  const name = document.getElementById('newName').value.trim();
+  const npi = document.getElementById('newNpi').value.trim();
+  const spec = document.getElementById('newSpec').value.trim();
+  const status = document.getElementById('newStatus').value.trim() || 'active';
+  if (!name || !npi) { toast('Name and NPI are required', true); return; }
+  if (npi.length !== 10 || !/^\d+$/.test(npi)) { toast('NPI must be 10 digits', true); return; }
+
+  try {
+    const r = await fetch(`${SKILL_SRV}/roster/truth/${encodeURIComponent(_orgName)}/provider`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        provider_name: name, npi_roster: npi, specialty: spec || null,
+        decision: 'user_verified', status,
+      })
+    });
+    if (!r.ok) { toast(`Error: ${(await r.json()).detail || 'Failed'}`, true); return; }
+    toast(`${name} added to roster`);
+    document.getElementById('newName').value = '';
+    document.getElementById('newNpi').value = '';
+    document.getElementById('newSpec').value = '';
+    toggleAddForm();
+    loadRoster(_orgName);
+  } catch(e) { toast(`Failed: ${e.message}`, true); }
+}
+</script>
+</body>
+</html>

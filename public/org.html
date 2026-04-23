@@ -1,0 +1,2862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Org Profile — Mobius</title>
+<link rel="stylesheet" href="mobius-tokens.css" />
+<link rel="stylesheet" href="mobius-ui.css" />
+<style>
+/* ── Token bridge ──────────────────────────────────────────────── */
+:root {
+  --m-text:       var(--mobius-text-primary,    #1a1d21);
+  --m-text-sec:   var(--mobius-text-secondary,  #374151);
+  --m-text-muted: var(--mobius-text-muted,      #64748b);
+  --m-bg:         var(--mobius-bg-primary,      #fafbfc);
+  --m-bg-card:    var(--mobius-bg-card,         #ffffff);
+  --m-bg-hover:   var(--mobius-bg-hover,        #f9fafb);
+  --m-bg-tert:    var(--mobius-bg-tertiary,     #f1f5f9);
+  --m-border:     var(--mobius-border,          #e2e8f0);
+  --m-border-med: var(--mobius-border-medium,   #d1d5db);
+  --m-accent:     var(--mobius-accent,          #3b82f6);
+  --m-accent-bg:  #eff6ff;
+  --m-success:    var(--mobius-success,         #16a34a);
+  --m-success-bg: #f0fdf4;
+  --m-warning:    var(--mobius-warning,         #f59e0b);
+  --m-warning-bg: #fffbeb;
+  --m-error:      var(--mobius-error,           #dc2626);
+  --m-error-bg:   #fef2f2;
+  --m-shadow-sm:  var(--mobius-shadow-sm,       0 1px 2px rgba(0,0,0,.04));
+  --m-font:       var(--mobius-font-sans,       "DM Sans", -apple-system, system-ui, sans-serif);
+  --m-mono:       var(--mobius-font-mono,       "JetBrains Mono", ui-monospace, monospace);
+  --lp-width: 256px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--m-font); color: var(--m-text); background: var(--m-bg);
+  height: 100vh; overflow: hidden; display: flex; flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+.hdr {
+  display: flex; align-items: center; gap: 0.45rem;
+  height: 46px; padding: 0 1rem; flex-shrink: 0;
+  background: var(--m-bg-card); border-bottom: 1px solid var(--m-border); z-index: 20;
+}
+.hdr-logo { display: flex; align-items: center; gap: 0.35rem; font-weight: 700; font-size: 0.88rem; color: var(--m-text); text-decoration: none; }
+.hdr-logo svg { width: 20px; height: 20px; }
+.hdr-sep { color: var(--m-border-med); }
+.hdr-crumb { font-size: 0.78rem; color: var(--m-text-muted); text-decoration: none; }
+.hdr-crumb:hover { color: var(--m-text); }
+.hdr-page { font-size: 0.78rem; color: var(--m-text-sec); font-weight: 500; }
+.hdr-spacer { flex: 1; }
+.hdr-org-pill {
+  font-size: 0.7rem; font-weight: 500; color: var(--m-text-sec);
+  background: var(--m-bg-tert); border: 1px solid var(--m-border);
+  border-radius: 99px; padding: 0.12rem 0.6rem; display: none;
+}
+.hdr-org-pill.show { display: inline-flex; align-items: center; gap: 0.3rem; }
+
+/* ── App body ────────────────────────────────────────────────────── */
+.app-body { flex: 1; display: flex; overflow: hidden; position: relative; }
+
+/* ── Left panel ──────────────────────────────────────────────────── */
+.lp {
+  width: var(--lp-width); flex-shrink: 0;
+  display: flex; flex-direction: column;
+  border-right: 1px solid var(--m-border);
+  background: var(--m-bg-card);
+  overflow: hidden;
+  transition: width 0.2s ease;
+  position: relative;
+}
+.lp.collapsed { width: 0; border-right: none; }
+
+/* Search area (input mode) */
+.lp-search {
+  padding: 0.65rem 0.85rem 0.6rem; border-bottom: 1px solid var(--m-border); flex-shrink: 0;
+}
+.lp-search-row { display: flex; gap: 0.35rem; align-items: center; }
+.lp-input {
+  flex: 1; min-width: 0;
+  border: 1.5px solid var(--m-border-med); border-radius: 6px;
+  padding: 0.4rem 0.6rem; font-size: 0.8rem; font-family: var(--m-font);
+  color: var(--m-text); background: var(--m-bg); outline: none;
+  transition: border-color 0.12s;
+}
+.lp-input:focus { border-color: var(--m-accent); }
+.lp-input::placeholder { color: var(--m-text-muted); }
+.lp-meta { margin-top: 0.3rem; display: flex; align-items: center; gap: 0.3rem; font-size: 0.63rem; color: var(--m-text-muted); }
+.lp-meta-sep { color: var(--m-border); }
+
+/* Locked org card (shown once org is loaded) */
+.lp-org-card {
+  padding: 0.7rem 0.85rem 0.65rem; border-bottom: 1px solid var(--m-border); flex-shrink: 0;
+}
+.lp-org-row { display: flex; align-items: center; gap: 0.42rem; }
+.lp-org-icon { color: var(--m-text-muted); flex-shrink: 0; }
+.lp-org-name {
+  flex: 1; min-width: 0;
+  font-size: 0.84rem; font-weight: 700; color: var(--m-text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.3;
+}
+.lp-org-edit {
+  background: none; border: none; cursor: pointer; padding: 2px 4px;
+  color: var(--m-text-muted); font-size: 0.78rem; border-radius: 4px; flex-shrink: 0;
+  transition: background 0.1s, color 0.1s; line-height: 1;
+}
+.lp-org-edit:hover { background: var(--m-bg-tert); color: var(--m-text); }
+.lp-org-meta { margin-top: 0.25rem; font-size: 0.62rem; color: var(--m-text-muted); }
+.lp-org-acts { display: flex; gap: 0.3rem; margin-top: 0.5rem; }
+.lp-org-acts .btn { font-size: 0.67rem; padding: 0.25rem 0.6rem; flex: 1; justify-content: center; }
+
+/* Existing-profile banner (shown when typing matches a stored org) */
+.lp-existing-banner {
+  margin-top: 0.45rem;
+  padding: 0.48rem 0.55rem;
+  background: var(--m-accent-bg);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 6px;
+}
+.lp-existing-top {
+  display: flex; align-items: baseline; gap: 0.35rem;
+  margin-bottom: 0.38rem;
+}
+.lp-existing-ico { font-size: 0.68rem; flex-shrink: 0; }
+.lp-existing-nm  { font-size: 0.72rem; font-weight: 600; color: var(--m-text); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lp-existing-dt  { font-size: 0.63rem; color: var(--m-text-muted); flex-shrink: 0; }
+.lp-existing-acts { display: flex; gap: 0.3rem; }
+.lp-existing-acts .btn { font-size: 0.67rem; padding: 0.22rem 0.55rem; }
+
+/* Scrollable category list */
+.lp-body { flex: 1; overflow-y: auto; }
+.lp-body::-webkit-scrollbar { width: 4px; }
+.lp-body::-webkit-scrollbar-thumb { background: var(--m-border-med); border-radius: 99px; }
+
+/* Category sections */
+.cat { border-bottom: 1px solid var(--m-border); }
+.cat-head {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 0.85rem; cursor: pointer;
+  user-select: none; transition: background 0.1s;
+}
+.cat-head:hover { background: var(--m-bg-tert); }
+.cat-chevron { color: var(--m-text-muted); font-size: 0.65rem; transition: transform 0.15s; margin-left: auto; flex-shrink: 0; }
+.cat.open .cat-chevron { transform: rotate(90deg); }
+.cat-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--m-text-muted); }
+.cat-count { font-size: 0.62rem; background: #dbeafe; color: #1e40af; border-radius: 99px; padding: 0.05rem 0.35rem; font-weight: 700; }
+.cat-body { display: none; }
+.cat.open .cat-body { display: block; }
+
+/* List items */
+.li {
+  display: flex; align-items: center; gap: 0.45rem;
+  padding: 0.45rem 0.85rem 0.45rem 0.75rem;
+  cursor: pointer; transition: background 0.1s;
+  border-left: 2px solid transparent;
+}
+.li:hover { background: var(--m-bg-hover); }
+.li.selected { background: var(--m-accent-bg); border-left-color: var(--m-accent); }
+.li-check { width: 14px; height: 14px; accent-color: var(--m-accent); flex-shrink: 0; cursor: pointer; }
+.li-main { flex: 1; min-width: 0; }
+.li-primary { font-size: 0.78rem; font-weight: 600; color: var(--m-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.li-secondary { font-size: 0.68rem; color: var(--m-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.li-badge { font-size: 0.57rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; padding: 0.07rem 0.3rem; border-radius: 99px; flex-shrink: 0; }
+.lb-stored { background: #dcfce7; color: #15803d; }
+.lb-new    { background: #dbeafe; color: #1e40af; }
+.lb-manual { background: #f3e8ff; color: #7c3aed; }
+
+/* Add-item rows */
+.li-add {
+  display: flex; align-items: center; gap: 0.35rem;
+  padding: 0.38rem 0.85rem; cursor: pointer;
+  font-size: 0.72rem; color: var(--m-accent); transition: background 0.1s;
+}
+.li-add:hover { background: var(--m-accent-bg); }
+
+/* Panel CTA footer */
+.lp-footer {
+  padding: 0.65rem 0.85rem; border-top: 1px solid var(--m-border);
+  flex-shrink: 0; background: var(--m-bg-card);
+  display: flex; flex-direction: column; gap: 0.35rem;
+}
+
+/* Collapse toggle — flex sibling between .lp and .rp (never clipped) */
+.lp-toggle {
+  flex-shrink: 0; align-self: center;
+  width: 13px; height: 40px;
+  background: var(--m-bg-card); border: 1px solid var(--m-border);
+  border-left: none; border-radius: 0 4px 4px 0;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 0.55rem; color: var(--m-text-muted); z-index: 10;
+  transition: background 0.1s, color 0.1s;
+}
+.lp-toggle.collapsed {
+  border-left: 1px solid var(--m-border); border-right: none; border-radius: 4px 0 0 4px;
+}
+.lp-toggle:hover { background: var(--m-bg-tert); color: var(--m-text); }
+
+/* ── Right panel ─────────────────────────────────────────────────── */
+.rp { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+.rp::-webkit-scrollbar { width: 5px; }
+.rp::-webkit-scrollbar-thumb { background: var(--m-border-med); border-radius: 99px; }
+
+/* Empty / welcome state */
+.rp-empty {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.6rem; padding: 2rem; text-align: center;
+}
+.rp-empty-icon { color: var(--m-border-med); }
+.rp-empty-title { font-size: 0.9rem; font-weight: 600; color: var(--m-text-muted); }
+.rp-empty-sub { font-size: 0.78rem; color: var(--m-text-muted); max-width: 280px; line-height: 1.55; }
+
+/* ── Source / Evidence Badges ─────────────────────────────────── */
+.src-badge {
+  display: inline-flex; align-items: center;
+  padding: 1px 5px; border-radius: 3px;
+  font-size: 0.67rem; font-weight: 700; line-height: 1.5; white-space: nowrap;
+}
+.src-nppes      { background: #dbeafe; color: #1e40af; }
+.src-pml        { background: #d1fae5; color: #065f46; }
+.src-sunbiz     { background: #dcfce7; color: #14532d; }
+.src-sunbiz-related { background: #dcfce7; color: #14532d; }
+.src-propublica { background: #ede9fe; color: #5b21b6; }
+.src-google     { background: #f3f4f6; color: #6b7280; }
+.src-merger, .src-ma { background: #fef3c7; color: #92400e; }
+.src-expanded   { background: #e0f2fe; color: #075985; }
+.src-primary    { background: #c7d2fe; color: #3730a3; }
+.src-hint       { background: #f3f4f6; color: #6b7280; }
+.src-run, .src-credentialing-run, .src-org-intelligence { background: #f3f4f6; color: #6b7280; }
+/* Auto-excluded items (cascade from deselected alias/location) */
+.li.auto-excl   { opacity: 0.35; }
+.li.auto-excl .li-check { cursor: not-allowed; }
+/* Confidence tier badges */
+.conf-badge {
+  display: inline-flex; align-items: center;
+  padding: 1px 5px; border-radius: 3px;
+  font-size: 0.63rem; font-weight: 700; line-height: 1.5; white-space: nowrap; letter-spacing: .02em;
+}
+.conf-high   { background: #dcfce7; color: #15803d; }
+.conf-medium { background: #fef9c3; color: #a16207; }
+.conf-low    { background: #fee2e2; color: #b91c1c; }
+/* Low-confidence alias items start dimmed but remain interactable */
+.li.conf-low-item { opacity: 0.55; }
+.li.conf-low-item:hover { opacity: 0.9; }
+
+/* ── Intelligence Profile Card ─────────────────────────────────── */
+#rpProfile { flex: 1; overflow-y: auto; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 0; }
+.rp-prof-header { padding-bottom: 0.85rem; border-bottom: 1px solid var(--m-border); margin-bottom: 0.9rem; }
+.rp-prof-title-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.rp-prof-icon { font-size: 1rem; color: var(--m-accent); }
+.rp-prof-title { font-size: 1.05rem; font-weight: 700; color: var(--m-text); }
+.rp-prof-badge {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: .03em;
+  padding: 0.18em 0.6em; border-radius: 99px; text-transform: uppercase;
+}
+.rp-prof-badge.health-strong    { background: #d1fae5; color: #065f46; }
+.rp-prof-badge.health-stable    { background: #dbeafe; color: #1e40af; }
+.rp-prof-badge.health-pressured { background: #fef3c7; color: #92400e; }
+.rp-prof-badge.health-distressed{ background: #fee2e2; color: #991b1b; }
+.rp-prof-badge.health-unknown   { background: var(--m-bg-muted); color: var(--m-text-muted); }
+.rp-prof-badge.traj-expanding   { background: #d1fae5; color: #065f46; }
+.rp-prof-badge.traj-stable      { background: #e0e7ff; color: #3730a3; }
+.rp-prof-badge.traj-contracting { background: #fee2e2; color: #991b1b; }
+.rp-prof-badge.traj-unknown     { background: var(--m-bg-muted); color: var(--m-text-muted); }
+.rp-prof-meta { font-size: 0.72rem; color: var(--m-text-muted); margin-top: 0.35rem; }
+.rp-prof-section { margin-bottom: 1rem; }
+.rp-prof-section-title { font-size: 0.72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--m-text-muted); margin-bottom: 0.45rem; }
+.rp-prof-narrative { font-size: 0.84rem; line-height: 1.65; color: var(--m-text); }
+.rp-prof-facts { margin: 0; padding-left: 1.1rem; }
+.rp-prof-facts li { font-size: 0.8rem; line-height: 1.5; color: var(--m-text); margin-bottom: 0.2rem; }
+.rp-prof-signals { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+.rp-prof-signal-col {}
+.rp-prof-signal-list { margin: 0; padding-left: 1rem; }
+.rp-prof-signal-list li { font-size: 0.78rem; line-height: 1.5; margin-bottom: 0.2rem; color: var(--m-text); }
+.rp-prof-signal-risk li::marker { color: #dc2626; }
+.rp-prof-signal-mkt  li::marker { color: #059669; }
+.rp-prof-sources-toggle { cursor: pointer; display: flex; align-items: center; gap: 0.4rem; user-select: none; }
+.rp-prof-sources-toggle:hover { color: var(--m-text); }
+.rp-prof-source-count { font-weight: 400; opacity: .7; }
+.rp-prof-sources-arrow { font-size: 0.7rem; transition: transform .15s; }
+.rp-prof-sources-grid { display: grid; gap: 0.4rem; margin-top: 0.5rem; }
+.rp-prof-src {
+  display: flex; align-items: flex-start; gap: 0.45rem;
+  padding: 0.4rem 0.5rem; border-radius: 6px;
+  background: var(--m-bg-muted); border: 1px solid var(--m-border);
+  font-size: 0.76rem; line-height: 1.4;
+}
+.rp-prof-src-ico { font-size: 0.9rem; flex-shrink: 0; margin-top: 0.05rem; }
+.rp-prof-src-body { flex: 1; min-width: 0; }
+.rp-prof-src-title { font-weight: 500; color: var(--m-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rp-prof-src-title a { color: var(--m-accent); text-decoration: none; }
+.rp-prof-src-title a:hover { text-decoration: underline; }
+.rp-prof-src-meta { font-size: 0.7rem; color: var(--m-text-muted); margin-top: 0.05rem; }
+
+/* Detail card */
+.detail-card {
+  margin: 1rem; background: var(--m-bg-card);
+  border: 1px solid var(--m-border); border-radius: 10px; overflow: hidden;
+}
+.dc-hero {
+  padding: 1.1rem 1.25rem 0.9rem;
+  border-bottom: 1px solid var(--m-border);
+  background: var(--m-bg);
+}
+.dc-npi-num { font-family: var(--m-mono); font-size: 1.15rem; font-weight: 700; color: var(--m-text); letter-spacing: 0.04em; }
+.dc-name { font-size: 0.88rem; font-weight: 600; color: var(--m-text); margin-top: 0.2rem; }
+.dc-subtitle { font-size: 0.75rem; color: var(--m-text-muted); margin-top: 0.12rem; }
+.dc-hero-badges { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.6rem; }
+
+/* Detail sections */
+.ds { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--m-border); }
+.ds:last-child { border-bottom: none; }
+.ds-title {
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--m-text-muted); margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.35rem;
+}
+.ds-title svg { width: 11px; height: 11px; flex-shrink: 0; }
+.ds-rows { display: flex; flex-direction: column; gap: 0.38rem; }
+.ds-row { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.8rem; }
+.ds-label { color: var(--m-text-muted); min-width: 90px; flex-shrink: 0; font-size: 0.75rem; }
+.ds-value { color: var(--m-text-sec); flex: 1; }
+.ds-value strong { color: var(--m-text); font-weight: 600; }
+
+/* Confidence visual */
+.conf-row { display: flex; align-items: center; gap: 0.5rem; }
+.conf-dots { display: flex; gap: 3px; }
+.conf-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--m-border); }
+.conf-dot.filled.high   { background: var(--m-success); }
+.conf-dot.filled.medium { background: var(--m-warning); }
+.conf-dot.filled.low    { background: var(--m-error); }
+.conf-pct { font-size: 0.8rem; font-weight: 700; }
+.conf-pct.high   { color: var(--m-success); }
+.conf-pct.medium { color: var(--m-warning); }
+.conf-pct.low    { color: var(--m-error); }
+
+/* Narrative sentence in How we found this */
+.ds-narrative {
+  font-size: 0.8rem; color: var(--m-text-sec); line-height: 1.6;
+  margin-bottom: 0.7rem; padding: 0.55rem 0.65rem;
+  background: var(--m-bg-tert); border-radius: 6px;
+  border-left: 3px solid var(--m-accent);
+}
+
+/* Status indicator */
+.status-indicator { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.sd-green { background: var(--m-success); }
+.sd-red   { background: var(--m-error); }
+.sd-grey  { background: var(--m-border-med); }
+
+/* Decision actions (in detail card footer) */
+.dc-actions {
+  padding: 0.85rem 1.25rem; display: flex; align-items: center; gap: 0.5rem;
+  background: var(--m-bg-tert); border-top: 1px solid var(--m-border);
+}
+.dc-actions-note { font-size: 0.72rem; color: var(--m-text-muted); flex: 1; }
+
+/* Alias list in detail panel */
+.alias-list-detail { display: flex; flex-direction: column; gap: 0.35rem; }
+.alias-row-detail { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.5rem; background: var(--m-bg-hover); border-radius: 6px; }
+.alias-row-text { flex: 1; font-size: 0.8rem; color: var(--m-text-sec); }
+.alias-remove { background: none; border: none; color: var(--m-text-muted); cursor: pointer; font-size: 1rem; line-height: 1; padding: 0 0.1rem; transition: color 0.1s; }
+.alias-remove:hover { color: var(--m-error); }
+.alias-add-row { display: flex; gap: 0.4rem; align-items: center; margin-top: 0.55rem; }
+
+/* ── Inline add forms (in left panel) ──────────────────────────── */
+.lp-add-form { padding: 0.55rem 0.85rem; background: var(--m-bg-hover); border-top: 1px solid var(--m-border); display: none; }
+.lp-add-form.open { display: block; }
+.lp-field { display: flex; flex-direction: column; gap: 0.15rem; margin-bottom: 0.4rem; }
+.lp-field label { font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--m-text-muted); }
+.lp-field input, .lp-field select {
+  border: 1px solid var(--m-border-med); border-radius: 5px;
+  padding: 0.32rem 0.5rem; font-size: 0.78rem; font-family: var(--m-font);
+  background: var(--m-bg-card); color: var(--m-text); outline: none; width: 100%;
+}
+.lp-field input:focus, .lp-field select:focus { border-color: var(--m-accent); }
+.lp-form-row { display: flex; gap: 0.35rem; }
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+.btn { display: inline-flex; align-items: center; gap: 0.28rem; font-family: var(--m-font); font-size: 0.78rem; font-weight: 500; padding: 0.36rem 0.75rem; border-radius: 6px; border: 1px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.12s; }
+.btn:disabled { opacity: 0.42; cursor: not-allowed; pointer-events: none; }
+.btn-primary { background: var(--m-accent); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #2563eb; }
+.btn-ghost   { background: none; color: var(--m-text-sec); border-color: var(--m-border-med); }
+.btn-ghost:hover:not(:disabled) { background: var(--m-bg-tert); color: var(--m-text); }
+.btn-success { background: var(--m-success); color: #fff; }
+.btn-success:hover:not(:disabled) { background: #15803d; }
+.btn-danger  { background: none; color: var(--m-error); border-color: #fca5a5; }
+.btn-danger:hover:not(:disabled)  { background: var(--m-error-bg); }
+.btn-sm { font-size: 0.7rem; padding: 0.2rem 0.48rem; }
+.btn-full { width: 100%; justify-content: center; }
+.btn-icon { padding: 0.3rem; border-radius: 5px; }
+
+/* ── Pills ───────────────────────────────────────────────────────── */
+.pill { display: inline-flex; align-items: center; font-size: 0.59rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 0.09rem 0.33rem; border-radius: 99px; white-space: nowrap; }
+.p-ok   { background: #dcfce7; color: #15803d; }
+.p-warn { background: #fef9c3; color: #92400e; }
+.p-err  { background: #fee2e2; color: #b91c1c; }
+.p-dim  { background: var(--m-bg-tert); color: var(--m-text-muted); }
+.p-blue { background: #dbeafe; color: #1e40af; }
+.p-purple { background: #f3e8ff; color: #7c3aed; }
+
+/* ── Bottom chrome (always visible, unified step tracker + live log) ── */
+.bc {
+  flex-shrink: 0; display: flex; flex-direction: column;
+  background: var(--m-bg-card);
+  border-top: 1.5px solid var(--m-border);
+  box-shadow: 0 -2px 10px rgba(0,0,0,.05);
+  z-index: 10;
+}
+
+/* Expandable log — slides up above the bar */
+.bc-log {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.22s cubic-bezier(.4,0,.2,1);
+  border-bottom: 0 solid var(--m-border);
+}
+.bc.expanded .bc-log {
+  max-height: 200px; overflow-y: auto;
+  border-bottom-width: 1px;
+}
+.bc-log::-webkit-scrollbar { width: 4px; }
+.bc-log::-webkit-scrollbar-thumb { background: var(--m-border); border-radius: 99px; }
+.bc-log-inner {
+  padding: 0.55rem 1.25rem 0.65rem;
+  display: flex; flex-direction: column; gap: 0.22rem;
+  background: #f8fafc;
+}
+.ab-log-item {
+  display: flex; align-items: flex-start; gap: 0.42rem;
+  font-size: 0.695rem; color: var(--m-text-muted); line-height: 1.55;
+}
+.ab-log-item.active  { color: var(--m-text-sec); }
+.ab-log-item.running { color: var(--m-accent); }
+.ab-log-item .ab-log-ico { flex-shrink: 0; display: flex; align-items: center; margin-top: 0.13rem; }
+
+/* Always-visible 44px bar */
+.bc-bar {
+  height: 44px; flex-shrink: 0;
+  display: flex; align-items: center;
+  padding: 0 1.1rem;
+}
+
+/* Stepper */
+.bc-steps { display: flex; align-items: center; flex-shrink: 0; }
+.ab-step  { display: flex; align-items: center; }
+.ab-dot-wrap { display: flex; align-items: center; gap: 0.38rem; padding: 0 0.5rem; }
+.ab-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid var(--m-border-med); background: transparent;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.ab-dot.active {
+  background: var(--m-accent); border-color: var(--m-accent);
+  width: 10px; height: 10px;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+}
+.ab-dot.done { background: var(--m-success); border-color: var(--m-success); }
+.ab-label { font-size: 0.69rem; color: var(--m-text-muted); white-space: nowrap; transition: color 0.2s; }
+.ab-label.active { color: var(--m-accent); font-weight: 600; }
+.ab-label.done   { color: var(--m-success); }
+.ab-connector { width: 24px; height: 1.5px; background: var(--m-border); flex-shrink: 0; transition: background 0.2s; }
+.ab-connector.done { background: var(--m-success); }
+
+/* Vertical separator between steps and status stream */
+.bc-sep { width: 1px; height: 20px; background: var(--m-border); margin: 0 1rem; flex-shrink: 0; }
+
+/* Live status area */
+.bc-status { flex: 1; display: flex; align-items: center; gap: 0.45rem; min-width: 0; overflow: hidden; }
+.bc-ico    { width: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.bc-stream { flex: 1; display: flex; align-items: center; gap: 0.3rem; overflow: hidden; min-width: 0; }
+.bc-idle   { font-size: 0.7rem; color: var(--m-text-muted); opacity: 0.55; white-space: nowrap; }
+.ab-emit     { display: flex; align-items: center; gap: 0.18rem; font-size: 0.69rem; color: var(--m-text-muted); white-space: nowrap; opacity: 0.45; }
+.ab-emit.latest { opacity: 1; color: var(--m-text-sec); font-weight: 500; }
+.ab-emit-sep { color: var(--m-border-med); font-size: 0.6rem; flex-shrink: 0; }
+
+/* Log toggle button */
+.bc-toggle {
+  flex-shrink: 0; margin-left: 0.75rem;
+  display: flex; align-items: center; gap: 0.28rem;
+  background: none; border: 1px solid var(--m-border); border-radius: 5px;
+  padding: 0 0.48rem; height: 22px; cursor: pointer;
+  font-size: 0.62rem; color: var(--m-text-muted);
+  transition: all 0.12s; user-select: none;
+}
+.bc-toggle:hover { background: var(--m-bg-tert); border-color: var(--m-border-med); color: var(--m-text); }
+.bc-toggle-count {
+  font-size: 0.6rem; font-weight: 700;
+  background: var(--m-bg-tert); border-radius: 99px;
+  padding: 0.04rem 0.3rem; color: var(--m-text-muted);
+  display: none;
+}
+.bc-toggle-count.show { display: inline; }
+
+/* ── Misc ───────────────────────────────────────────────────────── */
+.spinner { display: inline-block; width: 13px; height: 13px; border: 2px solid var(--m-border); border-top-color: var(--m-accent); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+.spinner-sm { width: 10px; height: 10px; border-width: 1.5px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.toast { position: fixed; bottom: 56px; right: 1.25rem; background: var(--m-text); color: #fff; padding: 0.6rem 0.9rem; border-radius: 7px; font-size: 0.8rem; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 999; max-width: 300px; box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+.toast.show { opacity: 1; }
+.empty-msg { text-align: center; padding: 1rem; color: var(--m-text-muted); font-size: 0.77rem; }
+</style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────── -->
+<header class="hdr">
+  <a class="hdr-logo" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M12 12c-2-2.5-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.5 6-4z"/>
+      <path d="M12 12c2 2.5 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.5-6 4z"/>
+    </svg>
+    Mobius
+  </a>
+  <span class="hdr-sep">/</span>
+  <a class="hdr-crumb" href="index.html">Hub</a>
+  <span class="hdr-sep">/</span>
+  <span class="hdr-page">Org Profile</span>
+  <span class="hdr-spacer"></span>
+  <span class="hdr-org-pill" id="hdrOrgPill">
+    <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="12" height="8" rx="1"/><path d="M5 6V4a3 3 0 0 1 6 0v2"/></svg>
+    <span id="hdrOrgName">—</span>
+  </span>
+</header>
+
+<!-- ── App body ─────────────────────────────────────────────────── -->
+<div class="app-body">
+
+  <!-- Left panel -->
+  <aside class="lp" id="lp">
+
+    <!-- Locked org card — shown once an org is loaded/discovered -->
+    <div class="lp-org-card" id="lpOrgCard" style="display:none">
+      <div class="lp-org-row">
+        <svg class="lp-org-icon" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="14" height="11" rx="1.5"/><path d="M5 15V9h6v6"/><path d="M5 4V2.5A1.5 1.5 0 0 1 6.5 1h3A1.5 1.5 0 0 1 11 2.5V4"/></svg>
+        <span class="lp-org-name" id="lpOrgCardName">—</span>
+        <button class="lp-org-edit" onclick="showOrgInput()" title="Change organisation">✎</button>
+      </div>
+      <div class="lp-org-meta" id="lpOrgMeta"></div>
+      <div class="lp-org-acts" id="lpOrgActs">
+        <button class="btn btn-ghost" onclick="loadExisting(S.orgName, S.orgSlug)" id="lpOrgLoadBtn">↓ Load stored</button>
+        <button class="btn btn-primary" onclick="discoverNew(true)" id="lpOrgDiscoverBtn">
+          <span class="spinner spinner-sm" id="discoverSpinner" style="display:none"></span>
+          ✦ Discover
+        </button>
+      </div>
+    </div>
+
+    <!-- Input row — shown on fresh load or when editing org name -->
+    <div class="lp-search" id="lpSearchArea">
+      <div class="lp-search-row">
+        <input class="lp-input" id="orgNameInput" type="text" placeholder="Organization name…"
+          autocomplete="off" oninput="onOrgNameInput()" onkeydown="if(event.key==='Enter') discoverNew(true)">
+        <button class="btn btn-primary btn-sm" onclick="discoverNew(true)" id="discoverBtn">
+          Discover
+        </button>
+      </div>
+      <!-- Existing-profile banner — shown automatically when input matches a stored org -->
+      <div class="lp-existing-banner" id="lpExistingBanner" style="display:none">
+        <div class="lp-existing-top">
+          <span class="lp-existing-ico">📋</span>
+          <span class="lp-existing-nm" id="lpExistingName"></span>
+          <span class="lp-existing-dt" id="lpExistingDate"></span>
+        </div>
+        <div class="lp-existing-acts">
+          <button class="btn btn-primary" onclick="restoreStored()">Load stored</button>
+          <button class="btn btn-ghost" onclick="discoverNew(true)">Re-discover ✦</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrollable category list -->
+    <div class="lp-body">
+
+      <!-- Known names (Aliases) — review first -->
+      <div class="cat open" id="catAlias2">
+        <div class="cat-head" onclick="toggleCat('catAlias2')">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="12" height="8" rx="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+          <span class="cat-title">Names</span>
+          <span class="cat-count" id="aliasCount2">0</span>
+          <span class="cat-chevron">▶</span>
+        </div>
+        <div class="cat-body">
+          <div id="aliasListNew"></div>
+        </div>
+      </div>
+
+      <!-- Sites (Locations) — step 3 -->
+      <div class="cat open" id="catLoc">
+        <div class="cat-head" onclick="toggleCat('catLoc')">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2a4 4 0 0 1 4 4c0 3-4 8-4 8S4 9 4 6a4 4 0 0 1 4-4z"/><circle cx="8" cy="6" r="1.2"/></svg>
+          <span class="cat-title">Sites</span>
+          <span class="cat-count" id="locCount">0</span>
+          <span class="cat-chevron">▶</span>
+        </div>
+        <div class="cat-body">
+          <div id="locList"></div>
+          <div class="li-add" id="locAddBtn" onclick="toggleAddForm('addLocForm')" style="display:none">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+            Add manually
+          </div>
+          <div class="lp-add-form" id="addLocForm">
+            <div class="lp-field"><label>Address *</label><input id="manualAddr" placeholder="Street address"></div>
+            <div class="lp-form-row">
+              <div class="lp-field" style="flex:2"><label>City *</label><input id="manualCity" placeholder="City"></div>
+              <div class="lp-field" style="flex:1"><label>State</label><input id="manualState" value="FL" maxlength="2"></div>
+              <div class="lp-field" style="flex:1.5"><label>ZIP</label><input id="manualZip" placeholder="00000" maxlength="10"></div>
+            </div>
+            <div style="display:flex;gap:0.35rem;margin-top:0.25rem">
+              <button class="btn btn-primary btn-sm" onclick="addManualLoc()">Add</button>
+              <button class="btn btn-ghost btn-sm" onclick="toggleAddForm('addLocForm')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Providers (NPIs) — step 4 -->
+      <div class="cat open" id="catNpi">
+        <div class="cat-head" onclick="toggleCat('catNpi')">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="2.5"/><path d="M2.5 13.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+          <span class="cat-title">Providers</span>
+          <span class="cat-count" id="npiCount">0</span>
+          <span class="cat-chevron">▶</span>
+        </div>
+        <div class="cat-body">
+          <div id="npiList"></div>
+          <div class="li-add" id="npiAddBtn" onclick="toggleAddForm('addNpiForm')" style="display:none">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+            Add manually
+          </div>
+          <div class="lp-add-form" id="addNpiForm">
+            <div class="lp-field"><label>NPI (10 digits)</label>
+              <input id="manualNpi" type="text" placeholder="0000000000" maxlength="10"
+                onkeydown="if(event.key==='Enter') addManualNpi()">
+            </div>
+            <div class="lp-form-row">
+              <div class="lp-field" style="flex:1"><label>Type</label>
+                <select id="manualNpiType"><option value="billing">Billing</option><option value="servicing">Servicing</option><option value="group">Group</option></select>
+              </div>
+            </div>
+            <div class="lp-field"><label>Label (optional)</label>
+              <input id="manualNpiLabel" type="text" placeholder="e.g. Main billing">
+            </div>
+            <div style="display:flex;gap:0.35rem;margin-top:0.25rem">
+              <button class="btn btn-primary btn-sm" onclick="addManualNpi()">Add</button>
+              <button class="btn btn-ghost btn-sm" onclick="toggleAddForm('addNpiForm')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Known names (Aliases — legacy/saved-view) -->
+      <div class="cat" id="catAlias" style="display:none">
+        <div class="cat-head" onclick="toggleCat('catAlias')">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M3 5l3-3 3 3M13 11l-3 3-3-3"/></svg>
+          <span class="cat-title">Known names</span>
+          <span class="cat-count" id="aliasCount">0</span>
+          <span class="cat-chevron">▶</span>
+        </div>
+        <div class="cat-body">
+          <div id="aliasList"></div>
+          <div class="li-add" onclick="selectAlias()">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+            Manage aliases →
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /lp-body -->
+
+    <!-- Footer CTA -->
+    <div class="lp-footer" id="lpFooter" style="display:none">
+      <!-- Secondary action (saved mode only) -->
+      <button class="btn btn-ghost btn-full" id="lpCtaBtn2" onclick="lpCta2()" style="display:none">
+        <span id="lpCtaLabel2"></span>
+      </button>
+      <!-- Primary action -->
+      <button class="btn btn-primary btn-full" id="lpCtaBtn" onclick="lpCta()">
+        <span class="spinner spinner-sm" id="lpCtaSpinner" style="display:none"></span>
+        <span id="lpCtaLabel">Save to Profile</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- Collapse toggle — sibling of .lp so it's never clipped by overflow:hidden -->
+  <button class="lp-toggle" id="lpToggle" onclick="togglePanel()" title="Collapse panel">‹</button>
+
+  <!-- Right panel -->
+  <main class="rp" id="rp">
+    <div class="rp-empty" id="rpEmpty">
+      <div class="rp-empty-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+      </div>
+      <div class="rp-empty-title">Select an item to see details</div>
+      <div class="rp-empty-sub">Click any provider, site, or known name in the left panel to see where it came from and decide whether to include it.</div>
+    </div>
+    <div id="rpDetail" style="display:none"></div>
+
+    <!-- Intelligence Profile Card — shown after agentic discovery -->
+    <div id="rpProfile" style="display:none">
+      <div class="rp-prof-header">
+        <div class="rp-prof-title-row">
+          <span class="rp-prof-icon">✦</span>
+          <span class="rp-prof-title" id="rpProfTitle"></span>
+          <span class="rp-prof-badge" id="rpProfHealth"></span>
+          <span class="rp-prof-badge rp-prof-traj" id="rpProfTraj"></span>
+        </div>
+        <div class="rp-prof-meta" id="rpProfMeta"></div>
+      </div>
+
+      <!-- Narrative -->
+      <div class="rp-prof-section">
+        <div class="rp-prof-narrative" id="rpProfNarrative"></div>
+      </div>
+
+      <!-- Key Facts -->
+      <div class="rp-prof-section" id="rpProfFactsSection" style="display:none">
+        <div class="rp-prof-section-title">Key facts</div>
+        <ul class="rp-prof-facts" id="rpProfFacts"></ul>
+      </div>
+
+      <!-- Signals row -->
+      <div class="rp-prof-signals" id="rpProfSignals" style="display:none">
+        <div class="rp-prof-signal-col" id="rpProfRisks" style="display:none">
+          <div class="rp-prof-section-title">Risk signals</div>
+          <ul class="rp-prof-signal-list rp-prof-signal-risk" id="rpProfRiskList"></ul>
+        </div>
+        <div class="rp-prof-signal-col" id="rpProfMarket" style="display:none">
+          <div class="rp-prof-section-title">Market signals</div>
+          <ul class="rp-prof-signal-list rp-prof-signal-mkt" id="rpProfMarketList"></ul>
+        </div>
+      </div>
+
+      <!-- Supporting sources — collapsible -->
+      <div class="rp-prof-section" id="rpProfSourcesSection" style="display:none">
+        <div class="rp-prof-section-title rp-prof-sources-toggle" onclick="toggleProfileSources()">
+          Supporting sources <span id="rpProfSourceCount"></span>
+          <span class="rp-prof-sources-arrow" id="rpProfSourcesArrow">▸</span>
+        </div>
+        <div id="rpProfSourcesList" style="display:none">
+          <div class="rp-prof-sources-grid" id="rpProfSourcesGrid"></div>
+        </div>
+      </div>
+
+      <!-- Full report link -->
+      <div class="rp-prof-section" id="rpProfReportSection" style="display:none; margin-top: .5rem;">
+        <a id="rpProfReportLink" href="#" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;background:var(--m-accent,#2563eb);color:#fff;border-radius:6px;font-size:.85rem;font-weight:600;text-decoration:none;">
+          📄 View Full Report
+        </a>
+      </div>
+    </div><!-- /rpProfile -->
+
+  </main>
+
+</div><!-- /app-body -->
+
+<!-- ── Bottom chrome (always visible) ───────────────────────────── -->
+<div class="bc" id="abTicker">
+
+  <!-- Expandable run log — slides up above the bar -->
+  <div class="bc-log">
+    <div class="bc-log-inner" id="abTickerLog"></div>
+  </div>
+
+  <!-- Always-visible 44px bar -->
+  <div class="bc-bar">
+
+    <!-- Stepper -->
+    <div class="bc-steps">
+      <div class="ab-step">
+        <div class="ab-dot-wrap">
+          <div class="ab-dot" id="abDot1"></div>
+          <span class="ab-label" id="abLbl1">Discover</span>
+        </div>
+      </div>
+      <div class="ab-connector" id="abConn1"></div>
+      <div class="ab-step">
+        <div class="ab-dot-wrap">
+          <div class="ab-dot" id="abDot2"></div>
+          <span class="ab-label" id="abLbl2">Names</span>
+        </div>
+      </div>
+      <div class="ab-connector" id="abConn2"></div>
+      <div class="ab-step">
+        <div class="ab-dot-wrap">
+          <div class="ab-dot" id="abDot3"></div>
+          <span class="ab-label" id="abLbl3">Sites</span>
+        </div>
+      </div>
+      <div class="ab-connector" id="abConn3"></div>
+      <div class="ab-step">
+        <div class="ab-dot-wrap">
+          <div class="ab-dot" id="abDot4"></div>
+          <span class="ab-label" id="abLbl4">Providers</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Separator -->
+    <div class="bc-sep"></div>
+
+    <!-- Live status stream -->
+    <div class="bc-status">
+      <span class="bc-ico" id="abTickerIco"></span>
+      <div class="bc-stream" id="abTickerHistory">
+        <span class="bc-idle">Ready — enter an org name to begin</span>
+      </div>
+    </div>
+
+    <!-- Log expand toggle -->
+    <button class="bc-toggle" id="abTickerToggle" onclick="toggleTicker()" title="Show run log">
+      <span class="bc-toggle-count" id="bcToggleCount"></span>
+      <span id="bcToggleArrow">▴</span>
+    </button>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Config ────────────────────────────────────────────────────────────────────
+const SKILL     = window.location.port === '8011' ? '' : 'http://localhost:8011';
+const ORG_INTEL = 'http://localhost:8012';   // org-intelligence service
+
+// ── Source translations ───────────────────────────────────────────────────────
+const NPI_SRC_LABELS = {
+  nppes: 'Federal registry', nppes_org: 'Federal registry', org_nppes: 'Federal registry',
+  pml: 'Medicaid records', pml_org: 'Medicaid records', org_pml: 'Medicaid records',
+  credentialing_run: 'Previous run', manual: 'Manually added', user_entry: 'Manually added',
+  existing: 'Stored profile', stored: 'Stored profile',
+};
+const LOC_SRC_LABELS = {
+  org_nppes: 'Federal registry (org)', nppes_org: 'Federal registry (org)',
+  org_pml: 'Medicaid records (org)', pml_org: 'Medicaid records (org)',
+  servicing_nppes: 'Provider address (federal)', servicing_pml: 'Provider address (Medicaid)',
+  user_entry: 'Manually added', manual: 'Manually added',
+  stored: 'Stored profile', registry: 'Federal registry',
+};
+const MATCH_TYPE_LABELS = {
+  exact: 'Exact name match', primary: 'Primary name match',
+  partial: 'Partial name match', fuzzy: 'Fuzzy / similar name',
+  alias: 'Matched via alias', npi_direct: 'Direct NPI lookup',
+};
+const npiSrc  = s => NPI_SRC_LABELS[s]  || (s || '');
+const locSrc  = s => LOC_SRC_LABELS[s]  || (s || '');
+const matchTy = s => MATCH_TYPE_LABELS[s] || (s || '');
+
+function friendlyMsg(m) {
+  // Coerce to string — m could be an Error object, array, or plain object
+  const s = (m == null) ? '' : (typeof m === 'string' ? m : (m instanceof Error ? m.message : JSON.stringify(m)));
+  return s.replace(/NPPES/gi,'federal registry').replace(/\bPML\b/gi,'Medicaid records')
+    .replace(/credentialing[_ ]run/gi,'previous run').replace(/\bnpi[s]?\b/gi,'provider ID');
+}
+
+function _extractDetail(body, fallback) {
+  const d = body && body.detail;
+  if (!d) return String(fallback);
+  if (typeof d === 'string') return d;
+  if (Array.isArray(d)) return d.map(e => e.msg || e.message || JSON.stringify(e)).join('; ');
+  return JSON.stringify(d);
+}
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function slugify(n) {
+  return (n||'').toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/^-+|-+$/g,'').slice(0,48);
+}
+
+// ── Source-badge helpers ───────────────────────────────────────────────────────
+const _SRC_LABELS = {
+  nppes: 'NPPES', pml: 'PML', sunbiz_related: 'SunBiz', sunbiz: 'SunBiz',
+  hint: 'Hint', google: 'Google', primary: 'Primary', expanded: 'Expanded',
+  propublica: '990', merger: 'M&A', ma: 'M&A',
+  credentialing_run: 'Prior run', org_intelligence: 'Intel',
+};
+function _srcBadge(source) {
+  const raw = (source || 'nppes').toLowerCase().replace(/_/g,'-');
+  const cssKey = raw.replace('sunbiz-related','sunbiz').replace('credentialing-run','run').replace('org-intelligence','run');
+  const label  = _SRC_LABELS[source] || _SRC_LABELS[raw.replace(/-/g,'_')] || source;
+  return `<span class="src-badge src-${cssKey}">${escHtml(label)}</span>`;
+}
+function _srcBadges(sources) {
+  return (sources||[]).slice(0,3).map(_srcBadge).join(' ');
+}
+
+// ── Entity graph — links aliases → NPIs → locations ─────────────────────────
+function _buildEntityGraph(intelResult) {
+  const npisByEntity = {};   // entity_name → [npi]
+  const locsByNpi    = {};   // npi → [location_id]
+  const npisByLoc    = {};   // location_id → [npi]
+  for (const n of (intelResult.npis || [])) {
+    const e = (n.found_via_entity || intelResult.org_name || '').trim();
+    (npisByEntity[e] = npisByEntity[e] || []).push(n.npi);
+  }
+  for (const l of (intelResult.locations || [])) {
+    const npi = l.npi || '';
+    if (npi) {
+      (locsByNpi[npi]           = locsByNpi[npi]           || []).push(l.location_id);
+      (npisByLoc[l.location_id] = npisByLoc[l.location_id] || []).push(npi);
+    }
+  }
+  return { npisByEntity, locsByNpi, npisByLoc };
+}
+
+function _storedOverrides() {
+  return (S.profile?.org_identifiers?.user_overrides) || {};
+}
+
+function _buildAliasItems(intelResult) {
+  const { npisByEntity, locsByNpi } = S.entityGraph;
+  const items = [];
+  const seen  = new Set();
+
+  const _addItem = (name, sources, isPrimary) => {
+    const key = (name||'').trim().toLowerCase();
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    const npi_keys = npisByEntity[name] || npisByEntity[name.trim()] || [];
+    const loc_keys = [...new Set(npi_keys.flatMap(n => locsByNpi[n] || []))];
+    items.push({ name: name.trim(), sources, npi_keys, loc_keys, is_primary: isPrimary, included: true });
+  };
+
+  // Use structured alias_items from backend if available (richer provenance)
+  if ((intelResult.alias_items || []).length) {
+    for (const ai of intelResult.alias_items) {
+      const key = (ai.name||'').trim().toLowerCase();
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      // ai.npi_keys=[] is falsy-equivalent for cascade — fall back to entity graph
+      const npi_keys = (ai.npi_keys && ai.npi_keys.length) ? ai.npi_keys : (npisByEntity[ai.name] || npisByEntity[(ai.name||'').trim()] || []);
+      const loc_keys = [...new Set(npi_keys.flatMap(n => locsByNpi[n] || []))];
+      // Respect confidence-driven include_by_default — low-confidence items start unchecked
+      const _aliasOvr = (_storedOverrides().aliases || {});
+      const ov = _aliasOvr[(ai.name||'').trim().toLowerCase()];
+      const included = ai.is_primary ? true : (ov ? (ov === 'included') : (ai.include_by_default !== undefined ? !!ai.include_by_default : true));
+      items.push({ ...ai, npi_keys, loc_keys, included, user_override: ov || null });
+    }
+  } else {
+    // Fallback: build from expanded_entities + aliases
+    _addItem(intelResult.org_name, ['primary'], true);
+    for (const e of (intelResult.expanded_entities || [])) _addItem(e, ['expanded'], false);
+    for (const a of (intelResult.aliases || []))           _addItem(a, ['nppes'],    false);
+  }
+  return items;
+}
+
+// ── Cascade exclusion logic ────────────────────────────────────────────────────
+function _cascadeFromAliases() {
+  // Collect NPIs claimed by at least one INCLUDED alias (using backend npi_keys)
+  // A NPI survives if any included alias claims it.
+  // npi_keys-less aliases (pure name aliases) don't cascade.
+  const allClaimedNpis = new Set(S.aliasItems.flatMap(a => a.npi_keys || []));
+  const survivingNpis  = new Set(
+    S.aliasItems.filter(a => a.included).flatMap(a => a.npi_keys || [])
+  );
+
+  for (const n of S.npiCandidates) {
+    const isClaimed = allClaimedNpis.has(n.npi);
+    n.auto_excl = isClaimed ? !survivingNpis.has(n.npi) : false;
+    if (n.auto_excl) n.checked = false; else n.checked = true;
+  }
+
+  // Surviving locations: their source NPI must survive
+  if (!S.entityGraph) return;
+  const { locsByNpi } = S.entityGraph;
+  const survivingLocs = new Set([...survivingNpis].flatMap(npi => locsByNpi[npi] || []));
+  const allLocsByNpi  = new Set(Object.values(locsByNpi).flat());
+  for (const l of S.locCandidates) {
+    const isClaimed = allLocsByNpi.has(l.location_id);
+    l.auto_excl = (isClaimed && !!l.npi) ? !survivingLocs.has(l.location_id) : false;
+    if (l.auto_excl) l.checked = false; else l.checked = true;
+  }
+}
+
+function _cascadeFromLocations() {
+  if (!S.entityGraph) return;
+  const { npisByLoc } = S.entityGraph;
+  // Which NPIs have at least one selected location?
+  const selectedLocIds = new Set(S.locCandidates.filter(l => l.checked && !l.auto_excl).map(l => l.location_id));
+  const npisWithLoc    = new Set([...selectedLocIds].flatMap(lid => npisByLoc[lid] || []));
+  for (const n of S.npiCandidates) {
+    if (n.source === 'existing') continue;
+    // Only cascade NPIs that have location linkage in the graph
+    const npiInLocGraph = Object.values(npisByLoc).some(ns => ns.includes(n.npi));
+    n.auto_excl = npiInLocGraph ? !npisWithLoc.has(n.npi) : false;
+    if (n.auto_excl) n.checked = false;
+  }
+}
+
+function _cascadeFromNpis() {
+  // Reverse cascade: at npi_review step, deselecting an NPI dims locations
+  // that are exclusively linked to deselected NPIs.
+  if (!S.entityGraph) return;
+  const { locsByNpi } = S.entityGraph;
+  const selectedNpis = new Set(
+    [...S.npiCandidates, ...S.manualNpis]
+      .filter(n => n.checked && !n.auto_excl)
+      .map(n => n.npi)
+  );
+  // All locations that have ANY NPI linkage in the graph
+  const allLinkedLocs = new Set(Object.values(locsByNpi).flat());
+  // Locations surviving = linked to at least one selected NPI
+  const survivingLocs = new Set([...selectedNpis].flatMap(npi => locsByNpi[npi] || []));
+  for (const l of S.locCandidates) {
+    const isLinked = allLinkedLocs.has(l.location_id);
+    l.auto_excl = isLinked ? !survivingLocs.has(l.location_id) : false;
+    if (l.auto_excl) l.checked = false;
+  }
+}
+
+// ── Names (alias) review — step 2 ────────────────────────────────────────────
+function showAliasReview(intelResult) {
+  S._intelResult  = intelResult;
+  S.entityGraph   = _buildEntityGraph(intelResult);
+  S.aliasItems    = _buildAliasItems(intelResult);
+  // NPIs with match_score < 0.60 start unchecked (low registry confidence).
+  // Cascade will also dim those exclusively claimed by a low-confidence alias.
+  const _ovr = _storedOverrides();
+  const _npiOvr = _ovr.npis || {};
+  const _locOvr = _ovr.locations || {};
+  S.npiCandidates = (intelResult.npis || []).map(n => {
+    const ov = _npiOvr[String(n.npi).trim()];
+    return { ...n, checked: ov ? (ov === 'included') : (n.match_score == null || n.match_score >= 0.60), auto_excl: false, user_override: ov || null };
+  });
+  // geo_outlier locations start unchecked — they're outside the primary cluster
+  S.locCandidates = (intelResult.locations || []).map(l => {
+    const ov = _locOvr[l.location_id];
+    return { ...l, checked: ov ? (ov === 'included') : !l.geo_outlier, auto_excl: false, user_override: ov || null };
+  });
+  S.manualNpis    = []; S.manualLocs = [];
+  S._intelLocs    = null;  // consumed
+  S.mode          = 'alias_review';
+  // Ensure Names category is visible (may have been hidden in saved mode)
+  document.getElementById('catAlias2').style.display = '';
+  // Apply confidence-driven cascade immediately — low-confidence aliases have
+  // included=false so their exclusive NPIs and locations are dimmed from the start.
+  _cascadeFromAliases();
+  setStep(2);
+  renderAliasListNew(); renderNpiList(); renderLocList(); updateCta();
+  showProfile(intelResult);
+}
+
+function toggleAliasInclude(i) {
+  if (S.aliasItems[i].is_primary) return;  // primary org always included
+  S.aliasItems[i].included = !S.aliasItems[i].included;
+  S.aliasItems[i].user_override = S.aliasItems[i].included ? 'included' : 'excluded';
+  _cascadeFromAliases();
+  renderAliasListNew(); renderNpiList(); renderLocList(); updateCta();
+}
+
+function confirmAliases() {
+  // Prune auto-excluded (unless manually re-checked)
+  S.npiCandidates = S.npiCandidates.filter(n => !n.auto_excl);
+  S.locCandidates = S.locCandidates.filter(l => !l.auto_excl);
+  // Reset auto_excl flags for the next cascade step
+  S.npiCandidates.forEach(n => { n.auto_excl = false; });
+  S.locCandidates.forEach(l => { l.auto_excl = false; });
+  S.mode = 'loc_review';
+  setStep(3);
+  renderLocList(); renderNpiList(); renderAliasListNew(); updateCta();
+  const allLocs = S.locCandidates;
+  if (allLocs.length) selectLoc(0);
+  else showEmpty('No sites found — add manually if needed.');
+}
+
+function confirmLocations() {
+  _cascadeFromLocations();
+  S.npiCandidates = S.npiCandidates.filter(n => !n.auto_excl);
+  S.npiCandidates.forEach(n => { n.auto_excl = false; if (!n.user_override) n.checked = true; });
+  S.mode = 'npi_review';
+  setStep(4);
+  renderNpiList(); renderLocList(); renderAliasListNew(); updateCta();
+  if (S.npiCandidates.length) selectNpi(0);
+}
+
+function renderAliasListNew() {
+  const items = S.aliasItems;
+  const el    = document.getElementById('aliasListNew');
+  if (!el) return;
+  document.getElementById('aliasCount2').textContent = items.length;
+  if (!items.length) {
+    el.innerHTML = '<div class="empty-msg">No names found yet</div>';
+    return;
+  }
+  // Pre-compute which NPIs are "unique" to each item (not shared by any other included item)
+  // An item with 0 unique NPIs has no cascade effect when unchecked.
+  const allOtherNpis = (excludeIdx) => {
+    const s = new Set();
+    items.forEach((a, j) => { if (j !== excludeIdx && a.included) (a.npi_keys || []).forEach(n => s.add(n)); });
+    return s;
+  };
+
+  const showCheck = S.mode === 'alias_review';
+  el.innerHTML = items.map((item, i) => {
+    const isExcluded = !item.included;
+    // Cascade dim (not checked) OR low-confidence dim (checked but low conf)
+    const tier = item.confidence_tier || null;
+    const excl = isExcluded ? ' auto-excl' : '';
+    const confDim = (!isExcluded && tier === 'low') ? ' conf-low-item' : '';
+    // Unique NPIs = ones not claimed by any other currently-included alias
+    const otherNpis  = allOtherNpis(i);
+    const uniqueNpis = (item.npi_keys || []).filter(n => !otherNpis.has(n));
+    const hasUnique  = uniqueNpis.length > 0;
+
+    let checkTitle = item.is_primary ? 'Primary org — always included'
+                   : !item.npi_keys?.length ? 'Alias name only — no NPIs linked directly'
+                   : hasUnique ? `Unchecking will cascade ${uniqueNpis.length} unique NPI(s) → sites`
+                   : 'All NPIs shared with other included names — unchecking has no cascade effect';
+    // Confidence-aware checkbox title
+    if (tier && !item.is_primary) {
+      const reason = item.reasoning_summary ? ` — ${item.reasoning_summary}` : '';
+      checkTitle = `Confidence: ${tier} (${item.confidence ?? '?'}/100)${reason}`;
+    }
+    const checkHtml = showCheck
+      ? `<input type="checkbox" class="li-check" ${item.included ? 'checked' : ''} ${item.is_primary ? 'disabled' : ''} title="${escHtml(checkTitle)}" onclick="event.stopPropagation();toggleAliasInclude(${i})">`
+      : '';
+    const srcHtml = _srcBadges(item.sources);
+    const counts = [];
+    if (item.npi_keys && item.npi_keys.length) {
+      if (hasUnique && !item.is_primary) {
+        counts.push(`<span style="color:var(--m-accent)">${uniqueNpis.length} unique NPI${uniqueNpis.length!==1?'s':''}</span>`);
+      } else if (!item.is_primary && item.npi_keys.length) {
+        counts.push(`<span style="color:var(--m-text-muted)">${item.npi_keys.length} shared NPI${item.npi_keys.length!==1?'s':''}</span>`);
+      } else {
+        counts.push(`${item.npi_keys.length} NPI${item.npi_keys.length!==1?'s':''}`);
+      }
+    }
+    if (item.loc_keys && item.loc_keys.length) counts.push(`${item.loc_keys.length} site${item.loc_keys.length!==1?'s':''}`);
+    const countHtml = counts.length ? `<span style="font-size:.7rem;margin-left:2px">${counts.join(' · ')}</span>` : '';
+    // Confidence badge (shown only when tier is present and item is not primary)
+    const confBadgeHtml = (tier && !item.is_primary)
+      ? `<span class="conf-badge conf-${tier}" title="${escHtml(item.reasoning_summary || tier)}">${tier}</span>`
+      : '';
+    const ovrBadgeHtml = (item.user_override && !item.is_primary)
+      ? (item.user_override === 'excluded'
+          ? `<span class="conf-badge" style="background:#fef2f2;color:#dc2626" title="Previously dismissed">dismissed</span>`
+          : `<span class="conf-badge" style="background:#eff6ff;color:#3b82f6" title="Previously confirmed">confirmed</span>`)
+      : '';
+    return `<div class="li${excl}${confDim}" onclick="showAliasDetail(${i})">
+      ${checkHtml}
+      <div class="li-main" style="min-width:0">
+        <div class="li-primary" style="font-size:.8rem">${escHtml(item.name)}</div>
+        <div class="li-secondary" style="display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-top:2px">
+          ${srcHtml}${confBadgeHtml}${ovrBadgeHtml}${countHtml}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showAliasDetail(i) {
+  const item = S.aliasItems[i];
+  if (!item) return;
+  S.selectedType = 'alias_item'; S.selectedIdx = i;
+  renderAliasListNew();
+  const el = document.getElementById('rpDetail');
+  document.getElementById('rpEmpty').style.display   = 'none';
+  document.getElementById('rpProfile').style.display = 'none';
+  el.style.display = '';
+  const tier = item.confidence_tier;
+  // NPI evidence breakdown: separate org vs individual NPIs
+  const npiEvidence = item.npi_evidence || [];
+  const orgNpis = npiEvidence.filter(e => e.is_org);
+  const indNpis = npiEvidence.filter(e => !e.is_org && e.entity_type === '1');
+  const unkNpis = npiEvidence.filter(e => !e.is_org && e.entity_type !== '1');
+  const npiEvidHtml = npiEvidence.length ? `
+    <div style="font-size:.7rem;color:var(--m-text-muted);margin-top:.35rem">
+      <div style="font-weight:700;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.04em">Shared NPI evidence</div>
+      ${orgNpis.map(e=>`<div style="color:#15803d">● ${e.npi} — organisational NPI (strong: same legal entity)</div>`).join('')}
+      ${indNpis.map(e=>`<div style="color:#d97706">● ${e.npi} — individual provider NPI (weak: may just work at both orgs)</div>`).join('')}
+      ${unkNpis.map(e=>`<div style="color:var(--m-text-muted)">● ${e.npi} — unknown type</div>`).join('')}
+    </div>` : '';
+  // Web mentions
+  const webMentions = item.web_mentions || [];
+  const webHtml = webMentions.length ? `
+    <div style="font-size:.7rem;margin-top:.5rem">
+      <div style="font-weight:700;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.04em;color:var(--m-text-muted)">Web / news mentions</div>
+      ${webMentions.map(m=>`<div style="color:var(--m-text-sec);margin-bottom:.2rem;line-height:1.4">→ ${escHtml(m)}</div>`).join('')}
+    </div>` : `<div style="font-size:.7rem;color:var(--m-text-muted);margin-top:.35rem">No web or news mentions found linking this name to the primary org.</div>`;
+
+  const confSectionHtml = (tier && !item.is_primary) ? `
+    <div style="margin:.85rem 0;padding:.65rem .8rem;background:${tier==='high'?'#f0fdf4':tier==='medium'?'#fefce8':'#fef2f2'};border-radius:6px;border:1px solid ${tier==='high'?'#bbf7d0':tier==='medium'?'#fde68a':'#fecaca'}">
+      <div style="display:flex;align-items:center;gap:.45rem;margin-bottom:.35rem">
+        <span class="conf-badge conf-${tier}">${tier.charAt(0).toUpperCase()+tier.slice(1)} confidence</span>
+        <span style="font-size:.78rem;font-weight:700;color:var(--m-text)">${item.confidence ?? '?'}/100</span>
+      </div>
+      <div style="font-size:.78rem;color:var(--m-text-sec);margin-bottom:.4rem">${escHtml(item.reasoning_summary || '')}</div>
+      ${(item.confidence_reasons||[]).length ? `
+        <div style="font-size:.7rem;color:var(--m-text-muted)">${item.confidence_reasons.map(r=>`<div>• ${escHtml(r)}</div>`).join('')}</div>` : ''}
+      ${npiEvidHtml}
+      ${webHtml}
+    </div>` : '';
+
+  el.innerHTML = `
+    <div style="padding:1.25rem 1.5rem">
+      <div style="font-size:1rem;font-weight:700;margin-bottom:.5rem">${escHtml(item.name)}</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.75rem">${_srcBadges(item.sources)}</div>
+      ${confSectionHtml}
+      ${item.npi_keys && item.npi_keys.length ? `
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--m-text-muted);margin-bottom:.35rem">NPIs via this name (${item.npi_keys.length})</div>
+        <div style="font-family:var(--m-mono);font-size:.78rem;line-height:1.8;color:var(--m-text)">${item.npi_keys.map(n => escHtml(n)).join('<br>')}</div>` : ''}
+      ${item.loc_keys && item.loc_keys.length ? `
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--m-text-muted);margin:.75rem 0 .35rem">Sites via this name (${item.loc_keys.length})</div>
+        <div style="font-size:.78rem;color:var(--m-text-muted)">${item.loc_keys.map(l => escHtml(l)).join('<br>')}</div>` : ''}
+    </div>`;
+}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let S = {
+  orgName: '', orgSlug: '', profile: null,
+  // idle | restoring | searching | npi_review | loc_review | saved
+  mode: 'idle',
+  npiCandidates: [],             // discovered NPIs
+  manualNpis:    [],             // existing (source=existing) + manually added
+  locCandidates: [],             // discovered locations
+  manualLocs:    [],             // existing + manually added
+  confirmedNpis: [],             // post-step-2 confirm
+  selectedType:  null,           // 'npi' | 'loc' | 'alias'
+  selectedIdx:   null,           // index into combined array
+  _foundProfile: null,           // cached profile from debounce check
+  _agenticMode: false,           // true when discovery was launched with deep/agentic flag
+  _intelResult: null,            // full org-intelligence result (agentic path)
+  _intelLocs: null,              // pre-fetched locations from org-intelligence
+  // ── Evidence / Names review (new) ──
+  aliasItems:  [],               // [{name, sources[], npi_keys[], is_primary, included}]
+  entityGraph: null,             // {npisByEntity, locsByNpi, npisByLoc}
+};
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+(function init() {
+  setStep(1);
+  renderLeftCounts();
+  const org = new URLSearchParams(location.search).get('org');
+  const autoMode = new URLSearchParams(location.search).get('discover'); // 'agentic' | '1' | absent
+  if (org) {
+    document.getElementById('orgNameInput').value = org;
+    S.orgName = org;
+    if (autoMode === 'agentic' || autoMode === '1') {
+      _showOrgCard(org, 'Starting discovery…');
+      setTimeout(() => discoverNew(true), 200);
+    } else {
+      _showOrgCard(org, 'Loading…');
+      loadExisting(org);
+    }
+  }
+})();
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function toast(msg, isErr) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.background = isErr ? 'var(--m-error)' : '#1a1d21';
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3200);
+}
+
+// ── Activity bar ──────────────────────────────────────────────────────────────
+function setStep(n) {
+  [1,2,3,4].forEach(i => {
+    const d = document.getElementById('abDot' + i);
+    const l = document.getElementById('abLbl' + i);
+    d.className = 'ab-dot' + (i < n ? ' done' : i === n ? ' active' : '');
+    l.className = 'ab-label' + (i < n ? ' done' : i === n ? ' active' : '');
+  });
+  [1,2,3].forEach(i => {
+    const c = document.getElementById('abConn' + i);
+    c.className = 'ab-connector' + (i < n ? ' done' : '');
+  });
+}
+
+// ── Panel collapse ────────────────────────────────────────────────────────────
+function togglePanel() {
+  const lp = document.getElementById('lp');
+  const tg = document.getElementById('lpToggle');
+  const isCollapsed = lp.classList.contains('collapsed');
+  lp.classList.toggle('collapsed');
+  tg.classList.toggle('collapsed');
+  tg.textContent = isCollapsed ? '‹' : '›';
+  tg.title = isCollapsed ? 'Collapse panel' : 'Expand panel';
+}
+
+// ── Category accordion ────────────────────────────────────────────────────────
+function toggleCat(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function toggleAddForm(id) {
+  const f = document.getElementById(id);
+  f.classList.toggle('open');
+  if (f.classList.contains('open')) f.querySelector('input')?.focus();
+}
+
+// ── Left panel rendering ──────────────────────────────────────────────────────
+function renderLeftCounts() {
+  const allNpis = [...S.npiCandidates, ...S.manualNpis];
+  const allLocs = [...S.locCandidates, ...S.manualLocs];
+  const aliases = (S.profile?.org_name_aliases) || [];
+  document.getElementById('npiCount').textContent   = allNpis.length;
+  document.getElementById('locCount').textContent   = allLocs.length;
+  document.getElementById('aliasCount').textContent = aliases.length;
+}
+
+function renderNpiList() {
+  const all  = [...S.npiCandidates, ...S.manualNpis];
+  const list = document.getElementById('npiList');
+  document.getElementById('npiCount').textContent = all.length;
+  document.getElementById('npiAddBtn').style.display = S.mode !== 'idle' ? '' : 'none';
+
+  if (!all.length) {
+    list.innerHTML = '<div class="empty-msg">No providers yet</div>';
+    return;
+  }
+
+  list.innerHTML = all.map((r, i) => {
+    const isSelected = S.selectedType === 'npi' && S.selectedIdx === i;
+    const regName = r.legal_name || r.name || r.label || '';
+    const showCheck = S.mode === 'npi_review' || S.mode === 'loc_review' || S.mode === 'alias_review';
+    const checkHtml = showCheck
+      ? `<input type="checkbox" class="li-check" ${r.checked ? 'checked' : ''} onclick="event.stopPropagation();toggleNpiCheck(${i})">`
+      : '';
+    const autoExclCls = r.auto_excl ? ' auto-excl' : (!r.checked ? ' conf-low-item' : '');
+    // Source badge
+    const srcBadge = _srcBadge(r.source || 'nppes');
+    // Low match-score badge (< 60% — show when score is available)
+    const score = r.match_score != null ? Math.round(r.match_score * 100) : null;
+    const lowBadge = (score != null && score < 60)
+      ? `<span class="conf-badge conf-low" title="${score}% registry match — verify this NPI belongs to this organisation">${score}%</span>`
+      : '';
+    // Entity type badge (org vs individual)
+    const etBadge = r.entity_type == 2 || r.entity_type === '2'
+      ? `<span class="conf-badge conf-high" title="Organisational NPI (entity_type=2)">org</span>`
+      : (r.entity_type == 1 || r.entity_type === '1'
+        ? `<span class="conf-badge" style="background:#f1f5f9;color:#64748b" title="Individual provider NPI (entity_type=1)">ind</span>`
+        : '');
+    const ovrBadge = r.user_override
+      ? (r.user_override === 'excluded'
+          ? `<span class="conf-badge" style="background:#fef2f2;color:#dc2626" title="You dismissed this in a previous session — override active">dismissed</span>`
+          : `<span class="conf-badge" style="background:#eff6ff;color:#3b82f6" title="You confirmed this in a previous session — override active">confirmed</span>`)
+      : '';
+    return `<div class="li${isSelected ? ' selected' : ''}${autoExclCls}" onclick="selectNpi(${i})">
+      ${checkHtml}
+      <div class="li-main" style="min-width:0">
+        <div class="li-primary" style="font-family:var(--m-mono);font-size:0.75rem">${escHtml(r.npi || '—')}</div>
+        <div style="font-size:.7rem;color:var(--m-text-sec);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px">${escHtml(regName.length > 30 ? regName.substring(0,29)+'…' : regName)}</div>
+        <div class="li-secondary" style="display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-top:2px">${srcBadge}${etBadge}${lowBadge}${ovrBadge}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderLocList() {
+  const all  = [...S.locCandidates, ...S.manualLocs];
+  const list = document.getElementById('locList');
+  document.getElementById('locCount').textContent = all.length;
+  document.getElementById('locAddBtn').style.display = S.mode !== 'idle' ? '' : 'none';
+
+  if (!all.length) {
+    list.innerHTML = S.mode === 'npi_review'
+      ? '<div class="empty-msg">Confirm providers first</div>'
+      : '<div class="empty-msg">No sites yet</div>';
+    return;
+  }
+
+  list.innerHTML = all.map((l, i) => {
+    const isSelected = S.selectedType === 'loc' && S.selectedIdx === i;
+    const addr  = l.address_line1 || l.site_address || l.city || l.site_city || '—';
+    const sub   = [l.city || l.site_city, l.state_cd || l.site_state].filter(Boolean).join(', ');
+    const showCheck = S.mode === 'loc_review' || S.mode === 'alias_review';
+    // geo_outlier → start unchecked, show dim + warning badge
+    const isOutlier = !!l.geo_outlier;
+    const checkHtml = showCheck
+      ? `<input type="checkbox" class="li-check" ${l.checked ? 'checked' : ''} onclick="event.stopPropagation();toggleLocCheck(${i})">`
+      : '';
+    const autoExclCls = l.auto_excl ? ' auto-excl' : (!l.checked ? ' conf-low-item' : '');
+    const srcBadge = _srcBadge(l.source || 'nppes');
+    const npiLabel = l.npi
+      ? `<span style="font-size:.67rem;color:var(--m-text-muted);font-family:var(--m-mono)">${escHtml(l.npi.substring(0,12))}</span>`
+      : '';
+    const outlierBadge = isOutlier
+      ? `<span class="conf-badge conf-low" title="Outside primary geographic cluster — verify this is a real practice site">outlier</span>`
+      : '';
+    const ovrBadge = l.user_override
+      ? (l.user_override === 'excluded'
+          ? `<span class="conf-badge" style="background:#fef2f2;color:#dc2626" title="You dismissed this site in a previous session">dismissed</span>`
+          : `<span class="conf-badge" style="background:#eff6ff;color:#3b82f6" title="You confirmed this site in a previous session">confirmed</span>`)
+      : '';
+    return `<div class="li${isSelected ? ' selected' : ''}${autoExclCls}" onclick="selectLoc(${i})">
+      ${checkHtml}
+      <div class="li-main" style="min-width:0">
+        <div class="li-primary">${escHtml(addr)}</div>
+        <div class="li-secondary" style="display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-top:2px">${srcBadge}${outlierBadge}${ovrBadge}${npiLabel}<span style="font-size:.7rem;color:var(--m-text-muted)">${escHtml(sub)}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderAliasList() {
+  const aliases = (S.profile?.org_name_aliases) || [];
+  const list = document.getElementById('aliasList');
+  document.getElementById('aliasCount').textContent = aliases.length;
+  const sel = S.selectedType === 'alias';
+  list.innerHTML = aliases.length
+    ? aliases.map(a => `
+        <div class="li${sel ? ' selected' : ''}" onclick="selectAlias()">
+          <div class="li-main"><div class="li-primary">${escHtml(a)}</div></div>
+        </div>`).join('')
+    : '<div class="empty-msg">No aliases yet</div>';
+}
+
+// ── CTA footer ────────────────────────────────────────────────────────────────
+function updateCta() {
+  const footer = document.getElementById('lpFooter');
+  const label  = document.getElementById('lpCtaLabel');
+  if (S.mode === 'alias_review') {
+    footer.style.display = '';
+    document.getElementById('lpCtaBtn2').style.display = 'none';
+    const inc = S.aliasItems.filter(a => a.included).length;
+    label.textContent = inc ? `Confirm ${inc} name${inc !== 1 ? 's' : ''} →` : 'Include at least one name';
+    document.getElementById('lpCtaBtn').disabled = !inc;
+    document.getElementById('lpCtaBtn').className = 'btn btn-primary btn-full';
+  } else if (S.mode === 'loc_review') {
+    footer.style.display = '';
+    document.getElementById('lpCtaBtn2').style.display = 'none';
+    const sel = [...S.locCandidates, ...S.manualLocs].filter(l => l.checked && !l.auto_excl).length;
+    label.textContent = sel ? `Confirm ${sel} site${sel !== 1 ? 's' : ''} →` : 'Select sites first';
+    document.getElementById('lpCtaBtn').disabled = !sel;
+    document.getElementById('lpCtaBtn').className = 'btn btn-primary btn-full';
+  } else if (S.mode === 'npi_review') {
+    footer.style.display = '';
+    document.getElementById('lpCtaBtn2').style.display = 'none';
+    const sel = [...S.npiCandidates, ...S.manualNpis].filter(r => r.checked && !r.auto_excl).length;
+    label.textContent = sel ? `Save ${sel} provider${sel !== 1 ? 's' : ''} to profile` : 'Select providers first';
+    document.getElementById('lpCtaBtn').disabled = sel === 0;
+    document.getElementById('lpCtaBtn').className = 'btn btn-success btn-full';
+  } else if (S.mode === 'save_confirm') {
+    // Save confirmation: Back + Save in footer, preview in right panel
+    footer.style.display = '';
+    document.getElementById('lpCtaBtn2').style.display = '';
+    const sc = S._saveConfirmCounts || { npis: 0, locs: 0 };
+    label.textContent = `Save ${sc.npis} provider${sc.npis !== 1 ? 's' : ''} · ${sc.locs} site${sc.locs !== 1 ? 's' : ''} →`;
+    document.getElementById('lpCtaBtn').disabled = false;
+    document.getElementById('lpCtaBtn').className = 'btn btn-success btn-full';
+    document.getElementById('lpCtaLabel2').textContent = '← Back';
+    document.getElementById('lpCtaBtn2').style.display = '';
+  } else if (S.mode === 'saved') {
+    // Actions live in the org card header — footer not needed
+    footer.style.display = 'none';
+    document.getElementById('lpCtaBtn2').style.display = 'none';
+  } else {
+    footer.style.display = 'none';
+    document.getElementById('lpCtaBtn2').style.display = 'none';
+  }
+}
+
+function lpCta() {
+  if      (S.mode === 'alias_review')  confirmAliases();
+  else if (S.mode === 'loc_review')    confirmLocations();
+  else if (S.mode === 'npi_review')    showSaveConfirmation();
+  else if (S.mode === 'save_confirm')  saveOrg();
+  else if (S.mode === 'saved')        updateExisting();   // re-discover (agentic)
+}
+
+function lpCta2() {
+  if (S.mode === 'save_confirm') { S.mode = 'npi_review'; renderDetail(); updateCta(); }
+  else if (S.mode === 'saved') loadExisting(S.orgName, S.orgSlug);
+}
+
+// ── Org card helpers ─────────────────────────────────────────────────────────
+function _showOrgCard(name, meta) {
+  document.getElementById('lpOrgCardName').textContent = name || '—';
+  const metaEl = document.getElementById('lpOrgMeta');
+  if (metaEl) metaEl.textContent = meta || '';
+  document.getElementById('lpOrgCard').style.display  = '';
+  document.getElementById('lpSearchArea').style.display = 'none';
+}
+
+function showOrgInput() {
+  // Switch left panel back to the text input (e.g. user wants to change org)
+  document.getElementById('lpOrgCard').style.display    = 'none';
+  document.getElementById('lpSearchArea').style.display = '';
+  document.getElementById('orgNameInput').focus();
+}
+
+// ── Bottom chrome — progress functions ───────────────────────────────────────
+let _tickerEmits = [];
+let _tickerExpanded = false;
+
+function _bcLogEl()  { return document.getElementById('abTickerLog'); }
+function _bcIcoEl()  { return document.getElementById('abTickerIco'); }
+function _bcStreamEl(){ return document.getElementById('abTickerHistory'); }
+function _bcCountEl(){ return document.getElementById('bcToggleCount'); }
+function _bcArrowEl(){ return document.getElementById('bcToggleArrow'); }
+
+function _updateToggle() {
+  const n = _tickerEmits.length;
+  const countEl = _bcCountEl();
+  if (n > 0) {
+    countEl.textContent = n;
+    countEl.classList.add('show');
+  } else {
+    countEl.classList.remove('show');
+  }
+  _bcArrowEl().textContent = _tickerExpanded ? '▾' : '▴';
+  document.getElementById('abTickerToggle').title = _tickerExpanded ? 'Collapse log' : `Expand log (${n} step${n !== 1 ? 's' : ''})`;
+}
+
+function toggleTicker() {
+  _tickerExpanded = !_tickerExpanded;
+  document.getElementById('abTicker').classList.toggle('expanded', _tickerExpanded);
+  _updateToggle();
+  if (_tickerExpanded) {
+    const logScroll = _bcLogEl().parentElement;
+    logScroll.scrollTop = logScroll.scrollHeight;
+  }
+}
+
+function openProgress(_title) {
+  _tickerEmits = [];
+  if (_tickerExpanded) { _tickerExpanded = false; document.getElementById('abTicker').classList.remove('expanded'); }
+  _bcIcoEl().innerHTML = '<span class="spinner spinner-sm"></span>';
+  _bcStreamEl().innerHTML = '';
+  _bcLogEl().innerHTML = '';
+  _updateToggle();
+}
+
+function closeProgress() {
+  _bcIcoEl().innerHTML = '';
+  // Show a faint checkmark for 2s then restore idle hint
+  setTimeout(() => {
+    if (!_tickerExpanded && _tickerEmits.length > 0) {
+      // Leave the completed breadcrumbs visible — don't clear
+    }
+    const hasRun = _tickerEmits.some(e => e.state === 'err');
+    const ico = hasRun
+      ? `<span style="color:var(--m-error);font-size:0.75rem">✗</span>`
+      : _tickerEmits.length
+        ? `<span style="color:var(--m-success);font-size:0.75rem">✓</span>`
+        : '';
+    _bcIcoEl().innerHTML = ico;
+    setTimeout(() => { _bcIcoEl().innerHTML = ''; }, 2500);
+  }, 300);
+}
+
+function addProgressStep(msg, state) {
+  const friendly = friendlyMsg(msg);
+
+  // ── Log panel ──
+  const log = _bcLogEl();                        // bc-log-inner (items appended here)
+  const logScroll = log.parentElement;           // bc-log (overflow-y: auto)
+  if (state !== 'run') log.querySelectorAll('.ab-log-item.running').forEach(el => el.remove());
+  const icoHtml = state === 'ok'
+    ? `<span style="color:var(--m-success);font-size:0.72rem;line-height:1">✓</span>`
+    : state === 'err'
+    ? `<span style="color:var(--m-error);font-size:0.72rem;line-height:1">✗</span>`
+    : `<span class="spinner spinner-sm" style="width:8px;height:8px;border-width:1.5px;flex-shrink:0"></span>`;
+  const item = document.createElement('div');
+  item.className = 'ab-log-item active' + (state === 'run' ? ' running' : '');
+  item.innerHTML = `<span class="ab-log-ico">${icoHtml}</span><span>${escHtml(friendly)}</span>`;
+  log.appendChild(item);
+  logScroll.scrollTop = logScroll.scrollHeight;
+
+  // ── Stream bar (breadcrumbs — last 5 completed, plus running hint) ──
+  if (state !== 'run') _tickerEmits.push({ msg: friendly, state });
+  _updateToggle();
+
+  const stream = _bcStreamEl();
+  const visible = _tickerEmits.slice(-5);
+  let html = visible.map((e, i) => {
+    const isLatest = (i === visible.length - 1) && state !== 'run';
+    const ico = e.state === 'ok'
+      ? `<span style="color:var(--m-success)">✓</span>`
+      : e.state === 'err' ? `<span style="color:var(--m-error)">✗</span>` : '';
+    return (i > 0 ? '<span class="ab-emit-sep">·</span>' : '')
+      + `<span class="ab-emit${isLatest ? ' latest' : ''}">${ico ? ico + ' ' : ''}${escHtml(e.msg)}</span>`;
+  }).join('');
+  if (state === 'run') {
+    html += (html ? '<span class="ab-emit-sep">·</span>' : '')
+      + `<span class="ab-emit latest"><span class="spinner spinner-sm" style="width:8px;height:8px;border-width:1.5px"></span>&thinsp;${escHtml(friendly)}</span>`;
+  }
+  stream.innerHTML = html || '<span class="bc-idle">Running…</span>';
+  _bcIcoEl().innerHTML = state === 'run' ? '<span class="spinner spinner-sm"></span>' : '';
+}
+
+// ── STEP 1a: Restore stored ───────────────────────────────────────────────────
+async function restoreStored() {
+  const name = document.getElementById('orgNameInput').value.trim();
+  if (!name) { toast('Enter an organization name', true); return; }
+  const d = S._foundProfile;
+  if (d) {
+    openProgress('Loading stored profile…');
+    addProgressStep(`Restored ${(d.confirmed_npis||[]).filter(n=>!n.removed_at&&!n.tombstoned).length} providers · ${(d.locations||[]).filter(l=>l.is_active!==false&&l.active!==false).length} sites`, 'ok');
+    closeProgress();
+    showSavedView(d);
+    return;
+  }
+  // Fallback: fetch fresh
+  openProgress('Loading stored profile…');
+  addProgressStep('Fetching from database…', 'run');
+  try {
+    const r = await fetch(`${SKILL}/org/${encodeURIComponent(slugify(name))}`);
+    if (r.status === 404) {
+      addProgressStep('No stored profile — use Discover to create one', 'err');
+      closeProgress(); return;
+    }
+    if (!r.ok) throw new Error(await r.text());
+    const profile = await r.json();
+    addProgressStep(`Restored ${(profile.confirmed_npis||[]).filter(n=>!n.removed_at&&!n.tombstoned).length} providers · ${(profile.locations||[]).filter(l=>l.is_active!==false).length} sites`, 'ok');
+    closeProgress();
+    showSavedView(profile);
+  } catch(e) {
+    addProgressStep('Load failed: ' + e.message, 'err');
+    closeProgress();
+  }
+}
+
+// ── STEP 1b: Full agentic discovery ──────────────────────────────────────────
+// agentic=false  → standard NPI+PML registry search
+// agentic=true   → deep: Google, web scrape, M&A detection, strategy-module context
+async function discoverNew(agentic) {
+  // Accept name from either the input field or the locked org card
+  const inputEl = document.getElementById('orgNameInput');
+  const name = (inputEl.value || S.orgName || '').trim();
+  if (!name) { toast('Enter an organization name', true); return; }
+  inputEl.value = name;
+  S.orgName = name; S.orgSlug = slugify(name);
+  S.npiCandidates = []; S.manualNpis = [];
+  S.locCandidates = []; S.manualLocs = [];
+  S.confirmedNpis = []; S.profile = null;
+  S.selectedType = null; S.selectedIdx = null;
+  S._agenticMode = !!agentic;
+  S._intelResult = null; S._intelLocs = null;
+  S.aliasItems   = []; S.entityGraph = null;
+  // Show locked org card immediately so the panel is stable during discovery
+  _showOrgCard(name, 'Discovering…');
+  // Clear profile card on fresh discovery
+  document.getElementById('rpProfile').style.display = 'none';
+  document.getElementById('rpEmpty').style.display   = '';
+
+  setStep(1);
+  S.mode = 'searching';
+  hideBanner();
+  document.getElementById('abLbl1').textContent = 'Discover';
+  const _m = document.getElementById('lpMeta');
+  if (_m) _m.style.display = 'none';
+  const progressTitle = agentic ? `Deep discovery for "${name}"…` : `Discovering "${name}"…`;
+  openProgress(progressTitle);
+  if (agentic) {
+    addProgressStep('Starting deep discovery — registry, 990s, M&A, web…', 'run');
+  } else {
+    addProgressStep('Checking federal registry…', 'run');
+  }
+  renderAliasListNew(); renderNpiList(); renderLocList(); renderAliasList(); updateCta();
+  showEmpty();
+
+  // Disable discover button(s) and show spinner while running
+  const btn = document.getElementById('lpOrgDiscoverBtn') || document.getElementById('discoverBtn');
+  const sp  = document.getElementById('discoverSpinner');
+  if (btn) btn.disabled = true;
+  if (sp)  sp.style.display = '';
+
+  await _preloadExisting(name);
+
+  if (agentic) {
+    // ── Agentic path: use org-intelligence full profile stream ────────────────
+    // Phases: identity → locations → intelligence (with iterative expansion)
+    // intelResult is hoisted so the catch can distinguish "pipeline failed" vs
+    // "pipeline succeeded but post-processing threw" — only the former falls back.
+    let intelResult = null;
+    try {
+      const resp = await fetch(`${ORG_INTEL}/profile/stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ org_name: name, state: 'FL', depth: 'full' }),
+      });
+      if (!resp.ok) throw new Error(_extractDetail(await resp.json().catch(()=>({})), resp.status));
+      const reader = resp.body.getReader();
+      const dec = new TextDecoder();
+      let buf = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        const lines = buf.split('\n'); buf = lines.pop();
+        for (const line of lines) {
+          if (!line.startsWith('data:')) continue;
+          const raw = line.slice(5).trim();
+          if (raw === '[DONE]') break;
+          try {
+            const evt = JSON.parse(raw);
+            if (evt.type === 'progress') {
+              const icon = evt.level === 'ok' ? '✓' : evt.level === 'warn' ? '⚠' : '→';
+              addProgressStep(`${icon} ${evt.msg}`, evt.level === 'ok' ? 'ok' : 'run');
+            }
+            // Decision cards arrive mid-stream (before the final result).
+            // They carry structured per-entity confidence assessments that the
+            // strategy process can consume, and we show a brief progress line.
+            if (evt.type === 'decision' && evt.decision_type === 'confidence') {
+              const c = evt.card;
+              if (!c.is_primary) {
+                const badge = c.confidence_tier === 'high' ? '✓' : c.confidence_tier === 'medium' ? '~' : '✗';
+                const lvl   = c.confidence_tier === 'high' ? 'ok' : 'run';
+                addProgressStep(`${badge} ${c.entity_name}: ${c.confidence_tier} (${c.confidence}) — ${(c.reasoning_summary||'').slice(0,60)}`, lvl);
+              }
+            }
+            if (evt.type === 'result') intelResult = evt.data;
+            if (evt.type === 'error') throw new Error(evt.msg);
+          } catch(parseErr) {
+            // Re-throw real errors (SSE error events); swallow only JSON SyntaxErrors on partial lines
+            if (!(parseErr instanceof SyntaxError)) throw parseErr;
+          }
+        }
+      }
+      if (!intelResult) throw new Error('No result received from org-intelligence');
+    } catch(e) {
+      if (!intelResult) {
+        // Pipeline call itself failed — fall back to standard credentialing search
+        addProgressStep(`Intel unavailable (${e.message}) — falling back to registry…`, 'run');
+        S._agenticMode = false;
+        await _discoverStandard(name, btn, sp);
+        if (btn) btn.disabled = false; if (sp) sp.style.display = 'none';
+        return;
+      }
+      // intelResult was already received — error occurred after; log but don't fall back
+      console.warn('[discoverNew] post-result error (non-fatal):', e);
+    }
+    // ── Pipeline succeeded — process result OUTSIDE try/catch ─────────────────
+    // Keeping showAliasReview here means a JS error in it won't trigger the
+    // _discoverStandard fallback and wipe everything.
+    if (intelResult) {
+      const cnt = (intelResult.npis || []).length;
+      addProgressStep(`Found ${cnt} provider${cnt !== 1 ? 's' : ''} · ${(intelResult.locations||[]).length} site(s) · ${(intelResult.alias_items||intelResult.expanded_entities||[]).length} names`, 'ok');
+      const ps = intelResult.profile_summary || {};
+      if (ps.financial_health && ps.financial_health !== 'unknown') {
+        addProgressStep(`Health: ${ps.financial_health}  ·  Trajectory: ${ps.growth_trajectory || '?'}`, 'ok');
+      }
+      if ((intelResult.sources || []).length) {
+        addProgressStep(`${intelResult.sources.length} source(s) assembled`, 'ok');
+      }
+      closeProgress();
+      // New flow: go to Names review (step 2) first
+      showAliasReview(intelResult);
+    }
+    if (btn) btn.disabled = false; if (sp) sp.style.display = 'none';
+    return;
+  }
+
+  // ── Standard path: credentialing /search/org-names/stream ────────────────
+  await _discoverStandard(name, btn, sp);
+}
+
+async function _discoverStandard(name, btn, sp) {
+  const searchBody = {
+    name, state: 'FL', include_edit_envelope: true,
+    search_mode: 'agentic',
+    credentialing_resolution: 'autopilot',
+  };
+  try {
+    const resp = await fetch(`${SKILL}/search/org-names/stream`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(searchBody),
+    });
+    if (!resp.ok) throw new Error(_extractDetail(await resp.json().catch(()=>({})), resp.status));
+    const reader = resp.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '', finalPayload = null;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n'); buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data:')) continue;
+        try {
+          const evt = JSON.parse(line.slice(5).trim());
+          if (evt.event === 'progress') addProgressStep(evt.message, 'ok');
+          if (evt.event === 'complete') finalPayload = evt.payload;
+          if (evt.event === 'error') throw new Error(evt.message);
+        } catch(e) {}
+      }
+    }
+    if (!finalPayload) {
+      const r2 = await fetch(`${SKILL}/search/org-names`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(searchBody),
+      });
+      finalPayload = await r2.json();
+    }
+    const cnt = (finalPayload.results || []).length;
+    addProgressStep(`Found ${cnt} provider record${cnt !== 1 ? 's' : ''}`, 'ok');
+    closeProgress();
+    showNpiReview(finalPayload);
+  } catch(e) {
+    addProgressStep(e.message || 'Search failed', 'err');
+    closeProgress();
+    toast('Search failed: ' + (e.message || 'unknown'), true);
+  } finally {
+    if (btn) btn.disabled = false;
+    if (sp) sp.style.display = 'none';
+  }
+}
+
+// ── Standard fallback: NPI review (skip Names step — goes direct to step 4) ──
+function showNpiReview(payload) {
+  const existingSet = new Set(S.manualNpis.map(n => (n.npi||'').trim()));
+  S.npiCandidates = (payload.results || [])
+    .filter(r => !existingSet.has((r.npi||'').trim()))
+    .map(r => {
+      const ov = ((_storedOverrides().npis) || {})[String(r.npi||'').trim()];
+      return { ...r, checked: ov ? (ov === 'included') : ((r.match_score||0) >= 0.7 || r.match_type === 'exact' || r.match_type === 'primary'), source: 'discovered', auto_excl: false, user_override: ov || null };
+    });
+
+  S.mode = 'npi_review';
+  setStep(4);   // standard fallback jumps to step 4 (no alias/loc data)
+  setHdrOrg(S.orgName);
+  renderNpiList(); renderLocList(); updateCta();
+
+  // Auto-select first item for detail view
+  const allNpis = [...S.npiCandidates, ...S.manualNpis];
+  if (allNpis.length) selectNpi(0);
+  else showEmpty('No providers found. Add one manually using the + button.');
+}
+
+// ── STEP 3: Find sites ────────────────────────────────────────────────────────
+async function confirmNpis() {
+  const selected = [...S.npiCandidates, ...S.manualNpis].filter(r => r.checked);
+  if (!selected.length) { toast('Select at least one provider', true); return; }
+  S.confirmedNpis = selected;
+  setStep(3);
+
+  document.getElementById('lpCtaLabel').textContent = 'Finding sites…';
+  document.getElementById('lpCtaBtn').disabled = true;
+  document.getElementById('lpCtaSpinner').style.display = '';
+
+  // ── Fast path: intel already fetched locations ────────────────────────────
+  if (S._intelLocs && S._intelLocs.length) {
+    const existingAddrSet = new Set(
+      S.manualLocs.filter(l => l.source === 'existing')
+        .map(l => (l.address_line1 || l.site_address || '').toLowerCase().trim())
+        .filter(Boolean)
+    );
+    S.locCandidates = S._intelLocs
+      .filter(l => !existingAddrSet.has((l.address_line1 || l.site_address || '').toLowerCase().trim()))
+      .map(l => ({ ...l, checked: l.checked !== false, source: l.source || 'intel' }));
+    addProgressStep(`Loaded ${S.locCandidates.length} site${S.locCandidates.length !== 1 ? 's' : ''} from deep discovery`, 'ok');
+    S._intelLocs = null;   // consumed
+    S.mode = 'loc_review';
+    setStep(3);
+    renderLocList(); updateCta();
+    const allLocs = [...S.locCandidates, ...S.manualLocs];
+    if (allLocs.length) selectLoc(0);
+    else showEmpty('No sites found. Add one manually.');
+    document.getElementById('lpCtaSpinner').style.display = 'none';
+    return;
+  }
+
+  // ── Standard path: call /find-locations ──────────────────────────────────
+  openProgress('Finding sites…');
+  addProgressStep('Looking up practice sites…', 'run');
+
+  const npis = selected.map(r => String(r.npi || r.npi_roster || '').trim()).filter(Boolean);
+  const isAgentic = S._agenticMode || false;
+  try {
+    const r = await fetch(`${SKILL}/find-locations`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        org_npis: npis, org_name: S.orgName, state: 'FL',
+        search_mode: isAgentic ? 'agentic' : 'copilot',
+        credentialing_resolution: 'copilot',
+        ...(isAgentic ? { include_web_enrichment: true } : {}),
+      }),
+    });
+    if (!r.ok) throw new Error(_extractDetail(await r.json().catch(()=>({})), r.status));
+    const d = await r.json();
+    const existingAddrSet = new Set(
+      S.manualLocs.filter(l => l.source === 'existing').map(l => (l.address_line1 || l.site_address||'').toLowerCase().trim()).filter(Boolean)
+    );
+    S.locCandidates = (d.locations || [])
+      .filter(l => !existingAddrSet.has((l.address_line1 || l.site_address||'').toLowerCase().trim()))
+      .map(l => ({ ...l, checked: l.active !== false, source: l.site_source || 'registry' }));
+    addProgressStep(`Found ${S.locCandidates.length} site${S.locCandidates.length !== 1 ? 's' : ''}`, 'ok');
+    closeProgress();
+    S.mode = 'loc_review';
+    setStep(3);
+    renderLocList(); updateCta();
+    const allLocs = [...S.locCandidates, ...S.manualLocs];
+    if (allLocs.length) selectLoc(0);
+    else showEmpty('No sites found. Add one manually.');
+  } catch(e) {
+    addProgressStep('Site lookup failed: ' + e.message, 'err');
+    closeProgress();
+    toast('Site lookup failed: ' + e.message, true);
+    S.mode = 'loc_review';
+    setStep(3);
+    renderLocList(); updateCta();
+  } finally {
+    document.getElementById('lpCtaSpinner').style.display = 'none';
+  }
+}
+
+// ── Intelligence Profile Card ─────────────────────────────────────────────────
+
+const _SOURCE_ICONS = {
+  nppes: '🏥', pml: '📋', sunbiz: '🏛️', ahca: '🔍',
+  propublica: '💰', '990': '📄', news: '📰', web: '🌐',
+};
+const _HEALTH_LABELS = { strong:'Strong', stable:'Stable', pressured:'Pressured', distressed:'Distressed', unknown:'—' };
+const _TRAJ_LABELS   = { expanding:'Expanding', stable:'Stable', contracting:'Contracting', unknown:'—' };
+
+function showProfile(intelResult) {
+  if (!intelResult) return;
+  const ps = intelResult.profile_summary || {};
+  if (!ps.narrative && !(intelResult.financials || {}).ein) return;
+
+  const el = document.getElementById('rpProfile');
+  document.getElementById('rpEmpty').style.display  = 'none';
+  document.getElementById('rpDetail').style.display = 'none';
+  el.style.display = 'flex';
+
+  // Header
+  document.getElementById('rpProfTitle').textContent = intelResult.org_name || S.orgName || '';
+  const health = (ps.financial_health || 'unknown').toLowerCase();
+  const traj   = (ps.growth_trajectory || 'unknown').toLowerCase();
+  const healthEl = document.getElementById('rpProfHealth');
+  healthEl.textContent  = _HEALTH_LABELS[health] || health;
+  healthEl.className    = `rp-prof-badge health-${health}`;
+  const trajEl = document.getElementById('rpProfTraj');
+  trajEl.textContent = _TRAJ_LABELS[traj] || traj;
+  trajEl.className   = `rp-prof-badge traj-${traj}`;
+
+  // Meta: EIN + duration
+  const ein = (intelResult.financials || {}).ein;
+  const dur = intelResult.duration_s;
+  const metaParts = [];
+  if (ein) metaParts.push(`EIN ${ein}`);
+  if (intelResult.phases_run) metaParts.push(`Phases: ${intelResult.phases_run.join(' → ')}`);
+  if (dur) metaParts.push(`${dur}s`);
+  document.getElementById('rpProfMeta').textContent = metaParts.join('  ·  ');
+
+  // Narrative
+  document.getElementById('rpProfNarrative').textContent = ps.narrative || '—';
+
+  // Key facts
+  const facts = ps.key_facts || [];
+  const factsEl = document.getElementById('rpProfFacts');
+  factsEl.innerHTML = '';
+  if (facts.length) {
+    facts.forEach(f => { const li = document.createElement('li'); li.textContent = f; factsEl.appendChild(li); });
+    document.getElementById('rpProfFactsSection').style.display = '';
+  }
+
+  // Risk & market signals
+  const risks   = ps.risk_flags || [];
+  const markets = ps.market_signals || [];
+  const riskEl  = document.getElementById('rpProfRiskList');
+  const mktEl   = document.getElementById('rpProfMarketList');
+  riskEl.innerHTML  = '';
+  mktEl.innerHTML   = '';
+  risks.forEach(r  => { const li = document.createElement('li'); li.textContent = r;  riskEl.appendChild(li); });
+  markets.forEach(m => { const li = document.createElement('li'); li.textContent = m; mktEl.appendChild(li); });
+  document.getElementById('rpProfRisks').style.display  = risks.length   ? '' : 'none';
+  document.getElementById('rpProfMarket').style.display = markets.length ? '' : 'none';
+  document.getElementById('rpProfSignals').style.display = (risks.length || markets.length) ? '' : 'none';
+
+  // Full report link
+  _setReportLink(intelResult.org_slug, true);
+
+  // Sources
+  const sources = intelResult.sources || [];
+  if (sources.length) {
+    document.getElementById('rpProfSourceCount').textContent = `(${sources.length})`;
+    const grid = document.getElementById('rpProfSourcesGrid');
+    grid.innerHTML = '';
+    sources.forEach(src => {
+      const icon  = _SOURCE_ICONS[src.type] || '📎';
+      const phase = src.phase ? `${src.phase}` : '';
+      const date  = src.date ? ` · ${src.date}` : '';
+      const titleHtml = src.url
+        ? `<a href="${src.url}" target="_blank" rel="noopener">${_esc(src.title)}</a>`
+        : `${_esc(src.title)}`;
+      grid.insertAdjacentHTML('beforeend', `
+        <div class="rp-prof-src">
+          <span class="rp-prof-src-ico">${icon}</span>
+          <div class="rp-prof-src-body">
+            <div class="rp-prof-src-title">${titleHtml}</div>
+            <div class="rp-prof-src-meta">${_esc(phase)}${date}</div>
+          </div>
+        </div>`);
+    });
+    document.getElementById('rpProfSourcesSection').style.display = '';
+  }
+}
+
+function _esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function _setReportLink(slug, show) {
+  const sec  = document.getElementById('rpProfReportSection');
+  const link = document.getElementById('rpProfReportLink');
+  if (!sec || !link) return;
+  if (slug && show) {
+    link.href = `${ORG_INTEL}/report/${slug}?format=html`;
+    sec.style.display = '';
+  } else {
+    sec.style.display = 'none';
+  }
+}
+
+function toggleProfileSources() {
+  const list  = document.getElementById('rpProfSourcesList');
+  const arrow = document.getElementById('rpProfSourcesArrow');
+  const open  = list.style.display !== 'none';
+  list.style.display  = open ? 'none' : '';
+  arrow.textContent   = open ? '▸' : '▾';
+  arrow.style.transform = '';
+}
+
+// ── Pre-save confirmation panel ───────────────────────────────────────────────
+function showSaveConfirmation() {
+  const toSaveNpis = [...S.npiCandidates, ...S.manualNpis].filter(r => r.checked && !r.auto_excl);
+  const toSaveLocs = [...S.locCandidates, ...S.manualLocs].filter(l => l.checked && !l.auto_excl);
+
+  // Compare against stored profile to surface removals and correctly label "new"
+  const storedNpis = (S.profile?.confirmed_npis || []).filter(n => !n.removed_at && !n.tombstoned);
+  const storedLocs = (S.profile?.locations || []).filter(l => l.is_active !== false);
+  const storedNpiSet = new Set(storedNpis.map(n => String(n.npi).trim()));
+  const storedLocSet = new Set(storedLocs.map(l => l.location_id || ''));
+  const saveNpiSet = new Set(toSaveNpis.map(n => String(n.npi).trim()));
+  const saveLocSet = new Set(toSaveLocs.map(l => l.location_id || l.id || ''));
+  const removedNpis = storedNpis.filter(n => !saveNpiSet.has(String(n.npi).trim()));
+  const removedLocs = storedLocs.filter(l => !saveLocSet.has(l.location_id || ''));
+
+  const npiRows = toSaveNpis.map(r => {
+    const name = escHtml(r.legal_name || r.name || '—');
+    const isNew = !storedNpiSet.has(String(r.npi).trim());
+    return `<div style="display:flex;align-items:baseline;gap:6px;padding:3px 0;border-bottom:1px solid var(--m-border)">
+      <span style="font-family:var(--m-mono);font-size:.72rem;color:var(--m-text-muted);flex-shrink:0">${escHtml(r.npi)}</span>
+      <span style="font-size:.78rem;color:var(--m-text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${name}">${name}</span>
+      ${isNew ? '<span class="conf-badge conf-high" style="flex-shrink:0">new</span>' : ''}
+    </div>`;
+  }).join('');
+
+  const locRows = toSaveLocs.map(l => {
+    const addr = escHtml([l.address_line1 || l.site_address, l.city || l.site_city, l.state_cd || l.site_state].filter(Boolean).join(', ') || '—');
+    const isNew = !storedLocSet.has(l.location_id || l.id || '');
+    return `<div style="display:flex;align-items:baseline;gap:6px;padding:3px 0;border-bottom:1px solid var(--m-border)">
+      <span style="font-size:.78rem;color:var(--m-text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${addr}">${addr}</span>
+      ${isNew ? '<span class="conf-badge conf-high" style="flex-shrink:0">new</span>' : ''}
+    </div>`;
+  }).join('');
+
+  const removedNpiHtml = removedNpis.length ? `
+    <div style="margin-top:12px">
+      <div style="font-size:.72rem;font-weight:600;color:var(--m-error);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">
+        Removing ${removedNpis.length} previously stored provider${removedNpis.length!==1?'s':''}
+      </div>
+      ${removedNpis.map(n => `<div style="font-size:.76rem;color:var(--m-text-muted);padding:2px 0">
+        <span style="font-family:var(--m-mono)">${escHtml(String(n.npi))}</span> ${escHtml(n.legal_name||n.name||'')}
+      </div>`).join('')}
+    </div>` : '';
+
+  const removedLocHtml = removedLocs.length ? `
+    <div style="margin-top:12px">
+      <div style="font-size:.72rem;font-weight:600;color:var(--m-error);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">
+        Deactivating ${removedLocs.length} previously stored site${removedLocs.length!==1?'s':''}
+      </div>
+      ${removedLocs.map(l => `<div style="font-size:.76rem;color:var(--m-text-muted);padding:2px 0">
+        ${escHtml([l.address_line1, l.city, l.state_cd].filter(Boolean).join(', ') || l.location_id || '—')}
+      </div>`).join('')}
+    </div>` : '';
+
+  const container = document.getElementById('rpDetail');
+  document.getElementById('rpEmpty').style.display = 'none';
+  container.style.display = '';
+  container.innerHTML = `
+    <div style="padding:1.5rem;max-width:640px">
+      <div style="font-size:1rem;font-weight:700;margin-bottom:4px">Confirm save to profile</div>
+      <div style="font-size:.78rem;color:var(--m-text-muted);margin-bottom:1.25rem">
+        Review what will be stored. This replaces the current profile.
+      </div>
+
+      <div style="margin-bottom:1rem">
+        <div style="font-size:.72rem;font-weight:600;color:var(--m-success);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">
+          ✓ Saving ${toSaveNpis.length} provider${toSaveNpis.length!==1?'s':''}
+        </div>
+        <div style="max-height:180px;overflow-y:auto;border:1px solid var(--m-border);border-radius:6px;padding:4px 8px">
+          ${npiRows || '<span style="font-size:.76rem;color:var(--m-text-muted)">None selected</span>'}
+        </div>
+      </div>
+
+      <div style="margin-bottom:1rem">
+        <div style="font-size:.72rem;font-weight:600;color:var(--m-success);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">
+          ✓ Saving ${toSaveLocs.length} site${toSaveLocs.length!==1?'s':''}
+        </div>
+        <div style="max-height:160px;overflow-y:auto;border:1px solid var(--m-border);border-radius:6px;padding:4px 8px">
+          ${locRows || '<span style="font-size:.76rem;color:var(--m-text-muted)">None selected</span>'}
+        </div>
+      </div>
+
+      ${removedNpiHtml}${removedLocHtml}
+    </div>`;
+
+  // Store counts for footer label, then switch mode → footer renders Save + Back
+  S._saveConfirmCounts = { npis: toSaveNpis.length, locs: toSaveLocs.length };
+  S.mode = 'save_confirm';
+  updateCta();
+}
+
+// ── Save (step 4 — NPI review CTA) ───────────────────────────────────────────
+async function saveOrg() {
+  // In the new flow: confirmed NPIs come from npi_review step (npiCandidates checked)
+  // S.confirmedNpis is kept for backward compat with standard fallback path
+  const confirmedNpis = [...S.npiCandidates, ...S.manualNpis].filter(r => r.checked && !r.auto_excl);
+  const selectedLocs  = [...S.locCandidates, ...S.manualLocs].filter(l => l.checked && !l.auto_excl);
+
+  document.getElementById('lpCtaBtn').disabled = true;
+  document.getElementById('lpCtaSpinner').style.display = '';
+
+  const npiPayload = confirmedNpis.map(r => ({
+    npi: String(r.npi || r.npi_roster || '').trim(),
+    name: r.legal_name || r.name || r.label || '',
+    entity_type: r.entity_type || '',
+    source: r.source || 'user_entry',
+    taxonomy_code: r.taxonomy_code || '',
+  })).filter(r => r.npi);
+
+  try {
+    const upsertResp = await fetch(`${SKILL}/org/upsert`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ org_name: S.orgName, confirmed_npis: npiPayload, confirmed_by: 'user', run_id: '', force_refresh: true }),
+    });
+    if (!upsertResp.ok) throw new Error(_extractDetail(await upsertResp.json().catch(()=>({})), upsertResp.status));
+    const ud = await upsertResp.json();
+    S.orgSlug = ud.org_slug || slugify(S.orgName);
+
+    if (selectedLocs.length) {
+      const locResp = await fetch(`${SKILL}/org/${encodeURIComponent(S.orgSlug)}/locations`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          locations: selectedLocs.map(l => ({
+            location_id: l.location_id || l.id || `${l.zip||''}-${l.address_line1||l.site_address||''}`.replace(/\s+/g,'-'),
+            address_line1: l.address_line1 || l.site_address || '',
+            city: l.city || l.site_city || '',
+            state_cd: l.state_cd || l.site_state || l.state || 'FL',
+            zip: l.zip || l.zip_code || l.site_zip || l.site_zip5 || '',
+            source: l.site_source || l.source || 'user_entry',
+            is_primary: !!l.is_primary,
+          })),
+          confirmed_by: 'user',
+          deactivate_missing: true,   // deactivate stored locations not in this new set
+        }),
+      });
+      if (!locResp.ok) {
+        const errBody = await locResp.json().catch(() => ({}));
+        const detail = errBody.detail;
+        const msg = Array.isArray(detail)
+          ? detail.map(e => e.msg || JSON.stringify(e)).join('; ')
+          : (detail || locResp.status);
+        throw new Error('Sites save failed: ' + msg);
+      }
+    }
+    // ── Save intelligence data if available from agentic discovery ──────────
+    // Collect explicit user override decisions (only items the user toggled)
+    const prevOvr = _storedOverrides();
+    const userOvr = {
+      npis:      { ...(prevOvr.npis || {}) },
+      locations: { ...(prevOvr.locations || {}) },
+      aliases:   { ...(prevOvr.aliases || {}) },
+    };
+    [...S.npiCandidates, ...S.manualNpis].forEach(n => {
+      if (n.user_override) userOvr.npis[String(n.npi).trim()] = n.user_override;
+    });
+    [...S.locCandidates, ...S.manualLocs].forEach(l => {
+      const lid = l.location_id || l.id || '';
+      if (l.user_override && lid) userOvr.locations[lid] = l.user_override;
+    });
+    (S.aliasItems || []).forEach(ai => {
+      if (ai.user_override) userOvr.aliases[(ai.name||'').trim().toLowerCase()] = ai.user_override;
+    });
+
+    if (S._intelResult) {
+      const intel = S._intelResult;
+      // Aliases: save name variants of the primary org only.
+      // Exclude low-confidence items (subsidiaries, expansion entities) — they're tracked
+      // via alias_items.user_override, not as canonical org name aliases.
+      const confirmedAliasNames = S.aliasItems.length
+        ? S.aliasItems
+            .filter(a => a.included && !a.is_primary && (a.confidence_tier === 'high' || a.confidence_tier === 'medium'))
+            .map(a => a.name)
+        : [];   // fallback: don't save raw intel.aliases — too broad
+      const aliases = confirmedAliasNames;
+      const orgIdent = {
+        ma_history:       intel.ma_history       || [],
+        intelligence:     {
+          ...(intel.intelligence || {}),
+          profile_summary:  intel.profile_summary  || {},
+          sources:          intel.sources          || [],
+        },
+        financials:        intel.financials        || {},
+        expanded_entities: intel.expanded_entities || [],
+        expansion_npis:    intel.expansion_npis    || [],
+        user_overrides:    userOvr,
+      };
+      // Save aliases via PATCH /org/{slug}/aliases — add confirmed, remove dismissed
+      const dismissedAliases = (S.aliasItems || [])
+        .filter(a => !a.included && !a.is_primary)
+        .map(a => a.name);
+      if (aliases.length || dismissedAliases.length) {
+        await fetch(`${SKILL}/org/${encodeURIComponent(S.orgSlug)}/aliases`, {
+          method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ add: aliases, remove: dismissedAliases }),
+        }).catch(() => {});
+      }
+      // Store intelligence JSON via org_identifiers field (until migration lands)
+      await fetch(`${SKILL}/org/upsert`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          org_name: S.orgName,
+          confirmed_npis: npiPayload,
+          confirmed_by: 'user',
+          force_refresh: false,
+          org_identifiers: orgIdent,
+        }),
+      }).catch(() => {});
+      S._intelResult = null;
+    } else {
+      // No intel result (standard fallback) — still persist user overrides via a minimal org_identifiers update
+      const prevOvr2 = _storedOverrides();
+      const userOvr2 = { npis: {...(prevOvr2.npis||{})}, locations: {...(prevOvr2.locations||{})}, aliases: {...(prevOvr2.aliases||{})} };
+      [...S.npiCandidates, ...S.manualNpis].forEach(n => { if (n.user_override) userOvr2.npis[String(n.npi).trim()] = n.user_override; });
+      [...S.locCandidates, ...S.manualLocs].forEach(l => { const lid = l.location_id||l.id||''; if (l.user_override && lid) userOvr2.locations[lid] = l.user_override; });
+      if (Object.keys(userOvr2.npis).length || Object.keys(userOvr2.locations).length) {
+        await fetch(`${SKILL}/org/upsert`, {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ org_name: S.orgName, confirmed_npis: npiPayload, confirmed_by: 'user', force_refresh: false, org_identifiers: { user_overrides: userOvr2 } }),
+        }).catch(() => {});
+      }
+    }
+
+    toast(`✓ Saved — ${npiPayload.length} provider${npiPayload.length !== 1 ? 's' : ''}, ${selectedLocs.length} site${selectedLocs.length !== 1 ? 's' : ''}`);
+    await loadExisting(S.orgName);
+  } catch(e) {
+    toast('Save failed: ' + (e.message || 'unknown'), true);
+  } finally {
+    document.getElementById('lpCtaSpinner').style.display = 'none';
+    document.getElementById('lpCtaBtn').disabled = false;
+  }
+}
+
+// ── Pre-load existing ─────────────────────────────────────────────────────────
+async function _preloadExisting(name) {
+  try {
+    const r = await fetch(`${SKILL}/org/${encodeURIComponent(slugify(name))}`);
+    if (!r.ok) return;
+    const d = await r.json();
+    S.profile = d;
+    (d.confirmed_npis || []).filter(n => !n.removed_at && !n.tombstoned).forEach(n => S.manualNpis.push({
+      npi: n.npi, npi_type: n.npi_type || 'billing',
+      legal_name: n.legal_name || n.name || '', name: n.legal_name || n.name || '',
+      entity_type: n.entity_type || '', taxonomy_code: n.taxonomy_code || '',
+      source: 'existing', checked: true, confirmed_at: n.confirmed_at,
+    }));
+    (d.locations || []).filter(l => l.is_active !== false && l.active !== false).forEach(l => S.manualLocs.push({
+      address_line1: l.address_line1 || '', city: l.city || '', state_cd: l.state_cd || 'FL',
+      zip_code: l.zip || l.zip_code || '', site_source: l.site_source || 'stored',
+      source: 'existing', checked: true, is_primary: l.is_primary || false,
+      why_listed: l.why_listed || '', confirmed_at: l.confirmed_at,
+    }));
+    if (S.manualNpis.length || S.manualLocs.length)
+      addProgressStep(`Loaded ${S.manualNpis.length} stored providers and ${S.manualLocs.length} stored sites — pre-selected`, 'ok');
+  } catch(e) {}
+}
+
+// ── Load existing org (direct DB fetch — used by URL param init and lpCta2) ───
+async function loadExisting(nameArg, slugArg) {
+  const name = nameArg || document.getElementById('orgNameInput').value.trim();
+  if (!name) { toast('Enter an organization name', true); return; }
+  document.getElementById('orgNameInput').value = name;
+  S.orgName = name;
+  // Use the explicit slug when provided (avoids re-slugifying long canonical names like
+  // "David Lawrence Center for Behavioral Health" → wrong slug)
+  S.orgSlug = slugArg || slugify(name);
+  _showOrgCard(name, 'Loading…');
+  openProgress('Loading stored profile…');
+  addProgressStep('Fetching from database…', 'run');
+  try {
+    const r = await fetch(`${SKILL}/org/${encodeURIComponent(S.orgSlug)}`);
+    if (r.status === 404) {
+      addProgressStep('No stored profile — use Discover to create one', 'err');
+      closeProgress(); showOrgInput(); return;
+    }
+    if (!r.ok) throw new Error(await r.text());
+    const d = await r.json();
+    addProgressStep(`Restored ${(d.confirmed_npis||[]).filter(n=>!n.removed_at&&!n.tombstoned).length} providers · ${(d.locations||[]).filter(l=>l.is_active!==false).length} sites`, 'ok');
+    closeProgress();
+    showSavedView(d);
+  } catch(e) {
+    addProgressStep('Load failed: ' + e.message, 'err');
+    closeProgress();
+    toast('Load failed: ' + e.message, true);
+  }
+}
+
+// ── Saved view ────────────────────────────────────────────────────────────────
+function showSavedView(d) {
+  S.profile = d;
+  S.orgName  = d.org_name || S.orgName;
+  S.orgSlug  = d.org_slug || slugify(S.orgName);
+  S.mode = 'saved';
+  S.manualNpis = (d.confirmed_npis || []).filter(n => !n.removed_at && !n.tombstoned).map(n => ({
+    ...n, source: 'existing', checked: false,
+    legal_name: n.legal_name || n.name || '', name: n.legal_name || n.name || '',
+  }));
+  S.manualLocs = (d.locations || []).filter(l => l.is_active !== false && l.active !== false).map(l => ({
+    ...l, source: 'existing', checked: false,
+    zip_code: l.zip || l.zip_code || '',
+  }));
+  S.npiCandidates = []; S.locCandidates = [];
+  // Build alias items from stored org_name_aliases, applying user_overrides.aliases
+  const _savedAliasOvr = ((d.org_identifiers || {}).user_overrides || {}).aliases || {};
+  S.aliasItems = (d.org_name_aliases || [])
+    .filter(name => {
+      const ov = _savedAliasOvr[(name||'').trim().toLowerCase()];
+      return ov !== 'excluded';  // hide dismissed aliases in saved view
+    })
+    .map(name => ({
+      name, is_primary: (name === d.org_name),
+      included: true, user_override: null,
+      sources: ['stored'], confidence_tier: 'medium',
+      npi_keys: [], loc_keys: [],
+    }));
+  setStep(4); [1,2,3,4].forEach(i => {
+    document.getElementById('abDot' + i).className = 'ab-dot done';
+    document.getElementById('abLbl' + i).className = 'ab-label done';
+    if (i <= 3) document.getElementById('abConn' + i).className = 'ab-connector done';
+  });
+  setHdrOrg(S.orgName);
+
+  // Show locked org card with dates and actions
+  const fmtDate = dt => dt ? new Date(dt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : null;
+  const savedDate = fmtDate(d.confirmed_at || d.updated_at);
+  const runDate   = fmtDate(d.last_refreshed_at);
+  _showOrgCard(S.orgName, [savedDate ? `Saved ${savedDate}` : null, runDate ? `Run ${runDate}` : null].filter(Boolean).join(' · '));
+
+  renderNpiList(); renderLocList(); renderAliasList(); renderAliasListNew(); updateCta();
+  // Show Names if aliases exist, hide legacy Known-names
+  document.getElementById('catAlias2').style.display = S.aliasItems.length ? '' : 'none';
+  const catAliasEl = document.getElementById('catAlias');
+  if (catAliasEl) catAliasEl.style.display = 'none';
+  const allNpis = [...S.manualNpis];
+  if (allNpis.length) selectNpi(0);
+  else showEmpty('Profile loaded. Select an item from the left panel.');
+
+  // Show report link if intelligence has been run
+  _setReportLink(d.org_slug, !!d.intelligence_run_at);
+}
+
+function updateExisting() {
+  // From saved view → launch full agentic re-discovery
+  S.mode = 'idle';
+  S.npiCandidates = []; S.manualNpis = [];
+  S.locCandidates = []; S.manualLocs = [];
+  S.confirmedNpis = []; S.profile = null;
+  S.selectedType = null; S.selectedIdx = null;
+  S.aliasItems   = []; S.entityGraph = null;
+  setStep(1);
+  renderAliasListNew(); renderNpiList(); renderLocList(); renderAliasList(); updateCta();
+  showEmpty();
+  discoverNew(true);  // always agentic when re-discovering from a saved profile
+}
+
+// ── Org-name input debounce — check for stored profile as user types ──────────
+let _checkTimer = null;
+function onOrgNameInput() {
+  clearTimeout(_checkTimer);
+  const name = document.getElementById('orgNameInput').value.trim();
+  if (name.length < 3) { hideBanner(); return; }
+  _checkTimer = setTimeout(() => checkExisting(name), 420);
+}
+
+async function checkExisting(name) {
+  try {
+    const r = await fetch(`${SKILL}/org/${encodeURIComponent(slugify(name))}`);
+    if (r.ok) showExistingBanner(await r.json());
+    else hideBanner();
+  } catch(e) { hideBanner(); }
+}
+
+function showExistingBanner(d) {
+  S._foundProfile = d;
+  document.getElementById('lpExistingName').textContent = d.org_name || '';
+  const dt = d.confirmed_at || d.updated_at;
+  document.getElementById('lpExistingDate').textContent = dt
+    ? 'saved ' + new Date(dt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+    : '';
+  document.getElementById('lpExistingBanner').style.display = '';
+}
+
+function hideBanner() {
+  S._foundProfile = null;
+  document.getElementById('lpExistingBanner').style.display = 'none';
+}
+
+// ── Header org pill ───────────────────────────────────────────────────────────
+function setHdrOrg(name) {
+  document.getElementById('hdrOrgName').textContent = name;
+  document.getElementById('hdrOrgPill').classList.add('show');
+}
+
+// ── Check toggles ─────────────────────────────────────────────────────────────
+function toggleNpiCheck(i) {
+  const n = i < S.npiCandidates.length ? S.npiCandidates[i] : S.manualNpis[i - S.npiCandidates.length];
+  if (n) { n.checked = !n.checked; n.user_override = n.checked ? 'included' : 'excluded'; }
+  // In npi_review: cascade exclusions back to locations
+  if (S.mode === 'npi_review') _cascadeFromNpis();
+  renderNpiList(); renderLocList(); updateCta();
+  if (S.selectedType === 'npi' && S.selectedIdx === i) renderDetail();
+}
+
+function toggleLocCheck(i) {
+  const l = i < S.locCandidates.length ? S.locCandidates[i] : S.manualLocs[i - S.locCandidates.length];
+  if (l) { l.checked = !l.checked; l.user_override = l.checked ? 'included' : 'excluded'; }
+  // In loc_review: cascade to NPI exclusions
+  if (S.mode === 'loc_review') _cascadeFromLocations();
+  renderLocList(); renderNpiList(); updateCta();
+  if (S.selectedType === 'loc' && S.selectedIdx === i) renderDetail();
+}
+
+// ── Selection ─────────────────────────────────────────────────────────────────
+function selectNpi(i) {
+  S.selectedType = 'npi'; S.selectedIdx = i;
+  renderNpiList(); renderAliasList();
+  renderDetail();
+}
+function selectLoc(i) {
+  S.selectedType = 'loc'; S.selectedIdx = i;
+  renderLocList(); renderAliasList();
+  renderDetail();
+}
+function selectAlias() {
+  S.selectedType = 'alias'; S.selectedIdx = null;
+  renderAliasList();
+  renderDetail();
+}
+
+// ── Right panel: empty state (falls back to profile card if available) ────────
+function showEmpty(msg) {
+  const profileEl = document.getElementById('rpProfile');
+  const hasProfile = profileEl && profileEl.style.display !== 'none';
+  if (hasProfile && !msg) {
+    // Profile card already showing — keep it, just hide detail
+    document.getElementById('rpDetail').style.display = 'none';
+    return;
+  }
+  document.getElementById('rpEmpty').style.display  = '';
+  document.getElementById('rpDetail').style.display = 'none';
+  if (profileEl) profileEl.style.display = 'none';
+  if (msg) document.getElementById('rpEmpty').querySelector('.rp-empty-sub').textContent = msg;
+}
+
+// ── Right panel: detail card ──────────────────────────────────────────────────
+function renderDetail() {
+  const container = document.getElementById('rpDetail');
+  document.getElementById('rpEmpty').style.display   = 'none';
+  document.getElementById('rpProfile').style.display = 'none';
+  container.style.display = '';
+
+  if (S.selectedType === 'npi') {
+    const all  = [...S.npiCandidates, ...S.manualNpis];
+    const item = all[S.selectedIdx];
+    if (!item) { showEmpty(); return; }
+    container.innerHTML = buildNpiDetail(item, S.selectedIdx);
+  } else if (S.selectedType === 'loc') {
+    const all  = [...S.locCandidates, ...S.manualLocs];
+    const item = all[S.selectedIdx];
+    if (!item) { showEmpty(); return; }
+    container.innerHTML = buildLocDetail(item, S.selectedIdx);
+  } else if (S.selectedType === 'alias') {
+    container.innerHTML = buildAliasDetail();
+  }
+}
+
+// ── Narrative helpers ─────────────────────────────────────────────────────────
+function buildNpiNarrative(r) {
+  const srcLabel  = npiSrc(r.source || '');
+  const regName   = r.legal_name || r.name || '';
+  const score     = r.match_score != null ? Math.round(r.match_score * 100) : null;
+  const mt        = matchTy(r.match_type);
+  const orgSearch = S.orgName;
+
+  if (r.source === 'credentialing_run') {
+    return `<p class="ds-narrative">This NPI appeared in a previous credentialing run for <strong>${escHtml(orgSearch)}</strong>. It was included when the org profile was last confirmed.</p>`;
+  }
+  if (!srcLabel) return '';
+
+  // "Searching for X in Registry matched this NPI registered as NAME (match type, score%)"
+  const orgPart  = orgSearch ? `Searching for <strong>${escHtml(orgSearch)}</strong>` : 'The search';
+  const srcPart  = ` in <strong>${escHtml(srcLabel)}</strong>`;
+  const namePart = regName ? ` matched this NPI registered as <strong>${escHtml(regName)}</strong>` : ` returned this NPI`;
+  const qualParts = [mt, score != null ? `${score}% confidence` : ''].filter(Boolean);
+  const qualPart  = qualParts.length ? ` (${qualParts.map(escHtml).join(', ')})` : '';
+
+  return `<p class="ds-narrative">${orgPart}${srcPart}${namePart}${qualPart}.</p>`;
+}
+
+function buildLocNarrative(l) {
+  const srcLabel = locSrc(l.source || l.site_source || '');
+  const addr     = l.address_line1 || l.site_address || '';
+  const city     = (l.city || l.site_city) ? `, ${l.city || l.site_city}` : '';
+  const orgSearch = S.orgName;
+
+  if (!srcLabel) return '';
+
+  if (l.source === 'servicing_nppes' || l.site_source === 'servicing_nppes') {
+    return `<p class="ds-narrative">This address appears in the <strong>federal registry</strong> as a practice location for one or more providers associated with <strong>${escHtml(orgSearch)}</strong>.</p>`;
+  }
+  if (l.source === 'servicing_pml' || l.site_source === 'servicing_pml') {
+    return `<p class="ds-narrative">This address appears in <strong>Medicaid records</strong> as a servicing location tied to providers enrolled under <strong>${escHtml(orgSearch)}</strong>.</p>`;
+  }
+  if (l.source === 'org_nppes' || l.site_source === 'org_nppes') {
+    return `<p class="ds-narrative">This is the <strong>primary address on file</strong> for <strong>${escHtml(orgSearch)}</strong> in the federal provider registry.</p>`;
+  }
+  if (l.source === 'org_pml' || l.site_source === 'org_pml') {
+    return `<p class="ds-narrative">This address is registered for <strong>${escHtml(orgSearch)}</strong> in <strong>Medicaid records</strong>.</p>`;
+  }
+
+  const addrStr = addr ? ` at <strong>${escHtml(addr)}${escHtml(city)}</strong>` : '';
+  return `<p class="ds-narrative">Found in <strong>${escHtml(srcLabel)}</strong>${addrStr} as a practice location for <strong>${escHtml(orgSearch)}</strong>.</p>`;
+}
+
+// ── NPI detail builder ────────────────────────────────────────────────────────
+function buildNpiDetail(r, idx) {
+  const name         = escHtml(r.legal_name || r.name || r.label || '—');
+  const npi          = escHtml(r.npi || '—');
+  const entityLabel  = ({ '1': 'Individual', '2': 'Organization', 1: 'Individual', 2: 'Organization' })[r.entity_type] || (r.entity_type ? String(r.entity_type) : '');
+  const score        = r.match_score != null ? Math.round(r.match_score * 100) : null;
+  const scoreLevel   = score == null ? '' : score >= 80 ? 'high' : score >= 55 ? 'medium' : 'low';
+  const matchLabel   = matchTy(r.match_type);
+  const srcLabel     = npiSrc(r.source || '');
+  const isDiscovered = r.source === 'discovered';
+  const isExisting   = r.source === 'existing';
+  const isManual     = r.source === 'manual';
+  const isChecked    = r.checked;
+  const showActions  = S.mode === 'npi_review' || S.mode === 'loc_review';
+
+  // Confidence dots (5 dots)
+  let confHtml = '';
+  if (score != null) {
+    const filled = Math.round(score / 20);
+    confHtml = `<div class="conf-row">
+      <div class="conf-dots">${[1,2,3,4,5].map(d => `<div class="conf-dot${d <= filled ? ` filled ${scoreLevel}` : ''}"></div>`).join('')}</div>
+      <span class="conf-pct ${scoreLevel}">${score}%</span>
+    </div>`;
+  }
+
+  // Active/inactive
+  const activePill = r.nppes_active === false
+    ? '<span class="pill p-err">Inactive</span>'
+    : isExisting || isDiscovered ? '<span class="pill p-ok">Active</span>' : '';
+
+  // Source badge
+  const srcPill = isExisting ? '<span class="pill p-ok">Stored</span>'
+    : isManual ? '<span class="pill p-purple">Manual</span>'
+    : '<span class="pill p-blue">New</span>';
+
+  // Medicaid section
+  const medicaidSection = r.pml_enrolled != null ? `
+    <div class="ds">
+      <div class="ds-title">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 7h6M5 10h4"/></svg>
+        Medicaid enrollment
+      </div>
+      <div class="ds-rows">
+        <div class="ds-row">
+          <span class="ds-label">FL Medicaid</span>
+          <span class="ds-value">
+            <div class="status-indicator">
+              <span class="status-dot ${r.pml_enrolled ? 'sd-green' : 'sd-red'}"></span>
+              ${r.pml_enrolled ? '<strong>Enrolled</strong>' : 'Not enrolled'}
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>` : '';
+
+  // Decision actions
+  let actionsHtml = '';
+  if (showActions) {
+    actionsHtml = `<div class="dc-actions">
+      <span class="dc-actions-note">
+        ${isExisting ? 'Existing — stays in your profile' : isChecked ? 'Selected for inclusion' : 'Not selected'}
+      </span>
+      ${!isExisting ? `<button class="btn ${isChecked ? 'btn-danger btn-sm' : 'btn-primary btn-sm'}" onclick="toggleNpiCheck(${idx})">
+        ${isChecked ? '✗ Skip this one' : '✓ Include'}
+      </button>` : ''}
+    </div>`;
+  } else if (isExisting) {
+    const date = r.confirmed_at ? new Date(r.confirmed_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+    actionsHtml = `<div class="dc-actions">
+      <span class="dc-actions-note">${date ? `Confirmed ${date}` : 'In profile'}</span>
+    </div>`;
+  }
+
+  return `<div class="detail-card">
+    <div class="dc-hero">
+      <div class="dc-npi-num">${npi}</div>
+      <div class="dc-name">${name}</div>
+      ${entityLabel ? `<div class="dc-subtitle">${entityLabel}</div>` : ''}
+      <div class="dc-hero-badges">${activePill}${srcPill}</div>
+    </div>
+
+    <div class="ds">
+      <div class="ds-title">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="2.5"/><path d="M2.5 13.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+        Provider information
+      </div>
+      <div class="ds-rows">
+        ${entityLabel ? `<div class="ds-row"><span class="ds-label">Entity type</span><span class="ds-value"><strong>${entityLabel}</strong></span></div>` : ''}
+        ${r.taxonomy_code ? `<div class="ds-row"><span class="ds-label">Taxonomy</span><span class="ds-value">${escHtml(r.taxonomy_code)}</span></div>` : ''}
+        ${r.practice_address ? `<div class="ds-row"><span class="ds-label">Address on file</span><span class="ds-value">${escHtml(r.practice_address)}</span></div>` : ''}
+        ${r.npi_type ? `<div class="ds-row"><span class="ds-label">NPI type</span><span class="ds-value">${escHtml(r.npi_type)}</span></div>` : ''}
+      </div>
+    </div>
+
+    ${!isManual && !isExisting ? `
+    <div class="ds">
+      <div class="ds-title">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v3M8 11v3M2 8h3M11 8h3"/><circle cx="8" cy="8" r="2"/></svg>
+        How we found this
+      </div>
+      ${buildNpiNarrative(r)}
+      <div class="ds-rows">
+        ${srcLabel ? `<div class="ds-row"><span class="ds-label">Registry</span><span class="ds-value"><strong>${escHtml(srcLabel)}</strong></span></div>` : ''}
+        ${r.legal_name || r.name ? `<div class="ds-row"><span class="ds-label">Registered as</span><span class="ds-value">${escHtml(r.legal_name || r.name)}</span></div>` : ''}
+        ${matchLabel ? `<div class="ds-row"><span class="ds-label">Match type</span><span class="ds-value">${escHtml(matchLabel)}</span></div>` : ''}
+        ${score != null ? `<div class="ds-row"><span class="ds-label">Confidence</span><span class="ds-value">${confHtml}</span></div>` : ''}
+        ${r.practice_address ? `<div class="ds-row"><span class="ds-label">Address on file</span><span class="ds-value">${escHtml(r.practice_address)}</span></div>` : ''}
+        ${r.why_listed ? `<div class="ds-row"><span class="ds-label">Why listed</span><span class="ds-value">${escHtml(r.why_listed)}</span></div>` : ''}
+      </div>
+    </div>` : ''}
+
+    ${medicaidSection}
+    ${actionsHtml}
+  </div>`;
+}
+
+// ── Location detail builder ───────────────────────────────────────────────────
+function buildLocDetail(l, idx) {
+  const addr     = escHtml(l.address_line1 || l.site_address || '—');
+  const zip      = l.zip || l.zip_code || l.site_zip || l.site_zip5 || '';
+  const cityLine = escHtml([l.city || l.site_city, l.state_cd || l.site_state, zip].filter(Boolean).join(', '));
+  const srcLabel = locSrc(l.source || l.site_source || '');
+  const isExisting = l.source === 'existing';
+  const isManual   = l.source === 'manual';
+  const isChecked  = l.checked;
+  const showActions= S.mode === 'loc_review';
+
+  let actionsHtml = '';
+  if (showActions) {
+    actionsHtml = `<div class="dc-actions">
+      <span class="dc-actions-note">${isExisting ? 'Existing — stays in your profile' : isChecked ? 'Selected for inclusion' : 'Not selected'}</span>
+      ${!isExisting ? `<button class="btn ${isChecked ? 'btn-danger btn-sm' : 'btn-primary btn-sm'}" onclick="toggleLocCheck(${idx})">
+        ${isChecked ? '✗ Skip this site' : '✓ Include'}
+      </button>` : ''}
+    </div>`;
+  } else if (isExisting) {
+    const date = l.confirmed_at ? new Date(l.confirmed_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+    actionsHtml = `<div class="dc-actions">
+      <span class="dc-actions-note">${date ? `Confirmed ${date}` : 'In profile'}</span>
+      ${l.is_primary ? '<span class="pill p-ok" style="font-size:0.65rem">Primary site</span>' : ''}
+    </div>`;
+  }
+
+  const medicaidSection = l.medicaid_enrolled != null ? `
+    <div class="ds">
+      <div class="ds-title">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 7h6M5 10h4"/></svg>
+        Medicaid enrollment
+      </div>
+      <div class="ds-rows">
+        <div class="ds-row">
+          <span class="ds-label">FL Medicaid</span>
+          <span class="ds-value">
+            <div class="status-indicator">
+              <span class="status-dot ${l.medicaid_enrolled ? 'sd-green' : 'sd-red'}"></span>
+              ${l.medicaid_enrolled ? '<strong>Enrolled</strong>' : 'Not enrolled'}
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>` : '';
+
+  // Geographic validation section
+  const isOutlier = !!l.geo_outlier;
+  const geoReason = l.geo_reason || '';
+  const geoSection = (!isManual && !isExisting) ? `
+    <div class="ds" style="border-top:1px solid var(--m-border)">
+      <div class="ds-title" style="color:${isOutlier ? 'var(--m-error)' : 'var(--m-success)'}">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="7" r="3"/><path d="M8 1v2M8 12v3M1 7h2M12 7h3"/></svg>
+        Geographic validation
+      </div>
+      <div style="margin:0 1rem .75rem;padding:.55rem .7rem;border-radius:5px;background:${isOutlier?'var(--m-error-bg)':'var(--m-success-bg)'};border:1px solid ${isOutlier?'#fecaca':'#bbf7d0'}">
+        <div style="font-size:.78rem;font-weight:600;color:${isOutlier?'var(--m-error)':'var(--m-success)'};margin-bottom:.2rem">
+          ${isOutlier ? '⚠ Outside primary cluster — verify before including' : '✓ Inside primary geographic cluster'}
+        </div>
+        ${geoReason ? `<div style="font-size:.72rem;color:var(--m-text-sec);line-height:1.4">${escHtml(geoReason)}</div>` : ''}
+      </div>
+      ${l.npi ? `<div class="ds-rows"><div class="ds-row"><span class="ds-label">Source NPI</span><span class="ds-value" style="font-family:var(--m-mono)">${escHtml(l.npi)}</span></div></div>` : ''}
+    </div>` : '';
+
+  return `<div class="detail-card">
+    <div class="dc-hero">
+      <div class="dc-name">${addr}</div>
+      <div class="dc-subtitle">${cityLine}</div>
+      <div class="dc-hero-badges">
+        ${isOutlier ? '<span class="pill p-err">Outlier</span>' : '<span class="pill p-ok">In cluster</span>'}
+        ${l.is_primary ? '<span class="pill p-blue">Primary</span>' : ''}
+        ${isExisting ? '<span class="pill p-ok">Stored</span>' : isManual ? '<span class="pill p-purple">Manual</span>' : '<span class="pill p-blue">New</span>'}
+      </div>
+    </div>
+
+    ${geoSection}
+
+    ${!isManual && !isExisting ? `
+    <div class="ds">
+      <div class="ds-title">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v3M8 11v3M2 8h3M11 8h3"/><circle cx="8" cy="8" r="2"/></svg>
+        How we found this
+      </div>
+      ${buildLocNarrative(l)}
+      <div class="ds-rows">
+        ${srcLabel ? `<div class="ds-row"><span class="ds-label">Registry</span><span class="ds-value"><strong>${escHtml(srcLabel)}</strong></span></div>` : ''}
+        ${l.provider_count ? `<div class="ds-row"><span class="ds-label">Providers here</span><span class="ds-value">${l.provider_count} in this org</span></div>` : ''}
+        ${l.why_listed ? `<div class="ds-row"><span class="ds-label">Why listed</span><span class="ds-value">${escHtml(l.why_listed)}</span></div>` : ''}
+      </div>
+    </div>` : ''}
+
+    ${medicaidSection}
+    ${actionsHtml}
+  </div>`;
+}
+
+// ── Alias detail builder ──────────────────────────────────────────────────────
+function buildAliasDetail() {
+  const aliases = (S.profile?.org_name_aliases) || [];
+  const aliasRows = aliases.length
+    ? aliases.map(a => `
+        <div class="alias-row-detail">
+          <span class="alias-row-text">${escHtml(a)}</span>
+          <button class="alias-remove" onclick="removeAlias(${JSON.stringify(a)})" title="Remove">×</button>
+        </div>`).join('')
+    : '<div class="empty-msg">No alternate names yet.</div>';
+
+  return `<div class="detail-card">
+    <div class="dc-hero">
+      <div class="dc-name">Known names &amp; aliases</div>
+      <div class="dc-subtitle">${S.orgName}</div>
+    </div>
+    <div class="ds">
+      <div class="ds-title">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M3 5l3-3 3 3M13 11l-3 3-3-3"/></svg>
+        Why aliases matter
+      </div>
+      <div style="font-size:0.78rem;color:var(--m-text-sec);line-height:1.6">
+        Organizations often appear under different names across data sources. The federal registry may use the legal name, Medicaid records may use a DBA name, and billing data may use abbreviations.
+        <br><br>
+        Adding every variation here ensures the system can match this organization's records across all sources.
+      </div>
+    </div>
+    <div class="ds">
+      <div class="ds-title">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4h12M2 8h8M2 12h10"/></svg>
+        Alternate names (${aliases.length})
+      </div>
+      <div class="alias-list-detail">${aliasRows}</div>
+      <div class="alias-add-row">
+        <input class="lp-input" id="aliasInput" type="text" placeholder="Add a known name…"
+          style="flex:1;font-size:0.8rem;padding:0.38rem 0.6rem"
+          onkeydown="if(event.key==='Enter') addAlias()">
+        <button class="btn btn-ghost btn-sm" onclick="addAlias()">+ Add</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── Alias operations ──────────────────────────────────────────────────────────
+async function addAlias() {
+  const input = document.getElementById('aliasInput');
+  const alias = (input?.value || '').trim();
+  if (!alias) { toast('Enter a name', true); return; }
+  if (!S.orgSlug) { toast('Load or save an org first', true); return; }
+  try {
+    const r = await fetch(`${SKILL}/org/${encodeURIComponent(S.orgSlug)}/aliases`, {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ add: [alias], remove: [] }),
+    });
+    if (!r.ok) throw new Error(_extractDetail(await r.json().catch(()=>({})), r.status));
+    const d = await r.json();
+    if (input) input.value = '';
+    if (S.profile) S.profile.org_name_aliases = d.org_name_aliases || [];
+    renderAliasList(); renderDetail(); updateCta();
+    toast(`✓ "${alias}" added`);
+  } catch(e) { toast('Failed: ' + (e.message || 'unknown'), true); }
+}
+
+async function removeAlias(alias) {
+  if (!S.orgSlug) return;
+  try {
+    const r = await fetch(`${SKILL}/org/${encodeURIComponent(S.orgSlug)}/aliases`, {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ add: [], remove: [alias] }),
+    });
+    if (!r.ok) throw new Error(_extractDetail(await r.json().catch(()=>({})), r.status));
+    const d = await r.json();
+    if (S.profile) S.profile.org_name_aliases = d.org_name_aliases || [];
+    renderAliasList(); renderDetail(); updateCta();
+    toast(`"${alias}" removed`);
+  } catch(e) { toast('Failed: ' + (e.message || 'unknown'), true); }
+}
+
+// ── Manual add ────────────────────────────────────────────────────────────────
+function addManualNpi() {
+  const npi   = document.getElementById('manualNpi').value.trim();
+  const type  = document.getElementById('manualNpiType').value;
+  const label = document.getElementById('manualNpiLabel').value.trim();
+  if (!npi || npi.length !== 10 || !/^\d+$/.test(npi)) { toast('NPI must be exactly 10 digits', true); return; }
+  S.manualNpis.push({ npi, npi_type: type, label, name: label, legal_name: label, source: 'manual', checked: true });
+  document.getElementById('manualNpi').value = '';
+  document.getElementById('manualNpiLabel').value = '';
+  document.getElementById('addNpiForm').classList.remove('open');
+  if (S.mode === 'idle') S.mode = 'npi_review';
+  renderNpiList(); updateCta();
+  selectNpi([...S.npiCandidates, ...S.manualNpis].length - 1);
+  toast('Provider added');
+}
+
+function addManualLoc() {
+  const addr = document.getElementById('manualAddr').value.trim();
+  const city = document.getElementById('manualCity').value.trim();
+  const st   = document.getElementById('manualState').value.trim().toUpperCase();
+  const zip  = document.getElementById('manualZip').value.trim();
+  if (!addr) { toast('Address is required', true); return; }
+  S.manualLocs.push({ address_line1: addr, city, state_cd: st, zip_code: zip, source: 'manual', site_source: 'user_entry', checked: true, is_primary: false });
+  document.getElementById('manualAddr').value = '';
+  document.getElementById('manualCity').value = '';
+  document.getElementById('manualZip').value  = '';
+  document.getElementById('addLocForm').classList.remove('open');
+  if (S.mode === 'idle' || S.mode === 'npi_review') S.mode = 'loc_review';
+  renderLocList(); updateCta();
+  selectLoc([...S.locCandidates, ...S.manualLocs].length - 1);
+  toast('Site added');
+}
+</script>
+</body>
+</html>

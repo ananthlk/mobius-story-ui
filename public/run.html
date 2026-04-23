@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credentialing Run — Providr</title>
+<style>
+:root {
+  --bg: #fafbfc; --bg-card: #ffffff; --bg-hover: #f1f5f9; --bg-input: #f8fafc;
+  --border: #e2e8f0; --border-med: #d1d5db;
+  --text: #1a1d21; --text-2: #374151; --text-3: #64748b;
+  --accent: #3b82f6; --accent-h: #2563eb;
+  --success: #16a34a; --warn: #f59e0b; --error: #dc2626;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06); --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --font: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+.page { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
+
+/* ── Header ── */
+.hd { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.logo { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+.hd-sep { color: var(--border-med); }
+.back { font-size: 0.8rem; color: var(--text-3); text-decoration: none; }
+.back:hover { color: var(--accent); }
+.hd-title { font-size: 1rem; font-weight: 600; }
+.ml-auto { margin-left: auto; }
+
+/* ── Run summary card ── */
+.run-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1rem 1.25rem; margin-bottom: 1.25rem; box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+}
+.run-org { font-size: 1.05rem; font-weight: 700; }
+.run-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-3); }
+.pill { display: inline-flex; align-items: center; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.12rem 0.45rem; border-radius: 99px; white-space: nowrap; }
+.pill-ok    { background: #dcfce7; color: #15803d; }
+.pill-warn  { background: #fef9c3; color: #92400e; }
+.pill-err   { background: #fee2e2; color: #b91c1c; }
+.pill-dim   { background: #f1f5f9; color: #64748b; }
+.pill-blue  { background: #dbeafe; color: #1e40af; }
+.pill-run   { background: #fdf4ff; color: #7c3aed; }
+
+/* ── Hard-stop alert ── */
+.hard-stop {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius);
+  padding: 0.85rem 1rem; margin-bottom: 1rem; display: flex; gap: 0.75rem; align-items: flex-start;
+}
+.hard-stop .icon { font-size: 1.1rem; flex-shrink: 0; }
+.hard-stop .body { flex: 1; }
+.hard-stop .title { font-weight: 700; font-size: 0.875rem; color: #7f1d1d; }
+.hard-stop .desc { font-size: 0.78rem; color: #991b1b; margin-top: 0.2rem; }
+.hard-stop.hide { display: none; }
+
+/* ── Stepper ── */
+.stepper { display: flex; flex-direction: column; gap: 0; margin-bottom: 1.25rem; }
+.step-row {
+  display: flex; align-items: stretch; gap: 0; position: relative;
+}
+.step-connector {
+  width: 24px; display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+}
+.step-dot {
+  width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700; flex-shrink: 0; z-index: 1;
+  border: 2px solid var(--border);
+  background: var(--bg-card); color: var(--text-3);
+  margin-top: 0.85rem;
+}
+.step-dot.done     { background: #dcfce7; border-color: #16a34a; color: #15803d; }
+.step-dot.running  { background: #dbeafe; border-color: var(--accent); color: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+.step-dot.failed   { background: #fee2e2; border-color: var(--error); color: var(--error); }
+.step-dot.skipped  { background: #f1f5f9; border-color: var(--border-med); color: var(--text-3); }
+.step-dot.pending  { background: var(--bg); border-color: var(--border); color: var(--text-3); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+.step-line { flex: 1; width: 2px; background: var(--border); margin: 0 auto; min-height: 12px; }
+.step-line.done { background: #16a34a; }
+
+.step-body {
+  flex: 1; margin-left: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+}
+.step-row:last-child .step-body { border-bottom: none; }
+.step-label { font-size: 0.875rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 0.5rem; }
+.step-label.pending { color: var(--text-3); font-weight: 500; }
+.step-summary { font-size: 0.78rem; color: var(--text-3); margin-top: 0.25rem; line-height: 1.4; }
+.step-expand { background: none; border: none; cursor: pointer; font-size: 0.72rem; color: var(--accent); margin-top: 0.3rem; padding: 0; font-family: var(--font); }
+.step-detail {
+  background: var(--bg-hover); border-radius: 6px; padding: 0.75rem; margin-top: 0.5rem;
+  font-size: 0.78rem; color: var(--text-2); display: none;
+}
+.step-detail.open { display: block; }
+.step-detail pre { font-size: 0.72rem; white-space: pre-wrap; word-break: break-all; max-height: 200px; overflow-y: auto; }
+
+/* ── Continue button ── */
+.copilot-gate {
+  background: var(--bg-card); border: 2px solid var(--accent); border-radius: var(--radius);
+  padding: 1rem 1.25rem; margin-bottom: 1.25rem; display: flex; gap: 1rem; align-items: center;
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.08);
+}
+.copilot-gate.hide { display: none; }
+.copilot-gate .gate-label { font-size: 0.875rem; font-weight: 600; flex: 1; }
+.copilot-gate .gate-step { font-size: 0.78rem; color: var(--text-3); }
+.btn { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font); font-size: 0.8rem; font-weight: 500; padding: 0.38rem 0.8rem; border-radius: 6px; border: 1px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.12s; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-h); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-ghost { background: none; color: var(--text-3); border-color: var(--border-med); }
+.btn-ghost:hover { background: var(--bg-hover); }
+
+/* ── Proposals panel (agentic proposes, user decides) ── */
+.proposals-panel {
+  background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius);
+  margin-bottom: 1.25rem; overflow: hidden;
+}
+.proposals-panel .panel-head {
+  padding: 0.75rem 1rem; border-bottom: 1px solid #fde68a; background: #fefce8;
+  display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: #78350f;
+}
+.proposals-panel .panel-body { padding: 0.75rem 1rem; }
+.proposal-item {
+  padding: 0.5rem 0.6rem; border-radius: 6px; background: var(--bg-card);
+  border: 1px solid #fde68a; margin-bottom: 0.4rem; font-size: 0.8rem;
+}
+.proposal-item .p-field { font-weight: 600; color: var(--text); }
+.proposal-item .p-val { color: var(--text-2); margin-top: 0.1rem; }
+.proposal-item .p-note { font-size: 0.7rem; color: var(--text-3); margin-top: 0.15rem; font-style: italic; }
+.proposals-panel.hide { display: none; }
+
+/* ── Compliance findings panel (agentic autonomous) ── */
+.compliance-panel {
+  background: #fff1f2; border: 1px solid #fecaca; border-radius: var(--radius);
+  margin-bottom: 1.25rem; overflow: hidden;
+}
+.compliance-panel .panel-head {
+  padding: 0.75rem 1rem; border-bottom: 1px solid #fecaca; background: #fef2f2;
+  display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: #7f1d1d;
+}
+.compliance-panel .panel-body { padding: 0.75rem 1rem; }
+.finding-item {
+  padding: 0.5rem 0.6rem; border-radius: 6px; background: var(--bg-card);
+  border-left: 3px solid var(--error); margin-bottom: 0.4rem; font-size: 0.8rem;
+}
+.finding-item .f-name { font-weight: 600; color: var(--text); }
+.finding-item .f-npi { font-family: monospace; font-size: 0.72rem; color: var(--text-3); }
+.finding-item .f-reason { color: var(--text-2); margin-top: 0.15rem; font-size: 0.78rem; }
+.compliance-panel.hide { display: none; }
+
+/* ── Empty / loading ── */
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-state { text-align: center; padding: 4rem; color: var(--text-3); font-size: 0.875rem; }
+
+/* ── Refresh bar ── */
+.refresh-bar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+.refresh-bar .auto-label { font-size: 0.72rem; color: var(--text-3); }
+.refresh-bar .dot-live { width: 7px; height: 7px; border-radius: 50%; background: var(--success); display: inline-block; animation: blink 1.5s ease-in-out infinite; }
+.refresh-bar .dot-live.paused { background: var(--text-3); animation: none; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* ── Final report button ── */
+.done-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem; padding: 1rem; background: var(--bg-card); border: 1px solid #bbf7d0; border-radius: var(--radius); }
+.done-actions.hide { display: none; }
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- Header -->
+  <div class="hd">
+    <span class="logo">Providr</span>
+    <span class="hd-sep">/</span>
+    <a class="back" href="index.html">Hub</a>
+    <span class="hd-sep">/</span>
+    <span class="hd-title">Credentialing Run</span>
+    <span class="ml-auto" style="display:flex;gap:0.5rem;align-items:center">
+      <a class="btn btn-ghost" style="font-size:0.72rem;padding:0.2rem 0.55rem" href="http://localhost:8000/pipeline" target="_blank">Open in Pipeline →</a>
+    </span>
+  </div>
+
+  <!-- Loading state -->
+  <div class="loading-state" id="loadingState">
+    <span class="spinner"></span> Loading run…
+  </div>
+
+  <!-- Run summary -->
+  <div class="run-card" id="runCard" style="display:none">
+    <div>
+      <div class="run-org" id="runOrg">—</div>
+      <div class="run-meta">
+        <span id="runMode">—</span>
+        <span id="runId" style="font-family:monospace;font-size:0.72rem"></span>
+      </div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:0.5rem;align-items:center">
+      <span id="runPhaseBadge"></span>
+    </div>
+  </div>
+
+  <!-- Hard stop alert -->
+  <div class="hard-stop hide" id="hardStop">
+    <span class="icon">🛑</span>
+    <div class="body">
+      <div class="title" id="hardStopTitle">Run Stopped</div>
+      <div class="desc" id="hardStopDesc">—</div>
+    </div>
+  </div>
+
+  <!-- Live-polling status bar -->
+  <div class="refresh-bar" id="refreshBar" style="display:none">
+    <span class="dot-live" id="liveDot"></span>
+    <span class="auto-label" id="autoLabel">Live — polling every 3s</span>
+    <button class="btn btn-ghost" style="font-size:0.72rem;padding:0.18rem 0.45rem;margin-left:auto" onclick="togglePolling()">Pause</button>
+  </div>
+
+  <!-- Copilot gate: "waiting for your review" -->
+  <div class="copilot-gate hide" id="copilotGate">
+    <div>
+      <div class="gate-label">⏸ Waiting for your review</div>
+      <div class="gate-step" id="gateStepLabel">—</div>
+    </div>
+    <button class="btn btn-primary" id="continueBtn" onclick="continueRun()">Continue →</button>
+  </div>
+
+  <!-- Done actions -->
+  <div class="done-actions hide" id="doneActions">
+    <span style="font-size:0.875rem;font-weight:600;color:var(--success);flex:1">✅ Run complete</span>
+    <a class="btn btn-primary" id="reportLink" href="#" target="_blank">View Report</a>
+    <a class="btn btn-ghost" href="org.html" id="reviewOrgLink">Review Org Details →</a>
+    <a class="btn btn-ghost" href="roster.html" id="reviewRosterLink">Review Roster →</a>
+  </div>
+
+  <!-- Proposals panel -->
+  <div class="proposals-panel hide" id="proposalsPanel">
+    <div class="panel-head">
+      💡 Proposals — Agentic suggestions for your review
+      <span style="font-size:0.68rem;font-weight:400;margin-left:0.5rem">Accept or ignore in Org / Roster surfaces</span>
+    </div>
+    <div class="panel-body" id="proposalsList"></div>
+  </div>
+
+  <!-- Compliance findings panel -->
+  <div class="compliance-panel hide" id="compliancePanel">
+    <div class="panel-head">
+      🚨 Compliance Findings — Non-rostered providers with stale registry entries
+      <span style="font-size:0.68rem;font-weight:400;margin-left:0.5rem">Autonomous detection · No user action required</span>
+    </div>
+    <div class="panel-body" id="complianceList"></div>
+  </div>
+
+  <!-- 9-step stepper -->
+  <div class="stepper" id="stepper" style="display:none"></div>
+</div>
+
+<script>
+const CHAT_SRV  = 'http://localhost:8000';
+const SKILL_SRV = 'http://localhost:8011';
+
+// Phase normalizer — handles both lowercase ('done') and uppercase ('COMPLETE', 'AWAITING_VALIDATION')
+function normPhase(p) {
+  const s = (p || '').toLowerCase();
+  if (s === 'complete' || s === 'done') return 'done';
+  if (s === 'running' || s === 'in_progress') return 'running';
+  if (s === 'failed' || s === 'error') return 'failed';
+  if (s === 'stopped' || s === 'cancelled') return 'stopped';
+  return 'pending'; // awaiting_validation, pending, etc.
+}
+function phaseLabel(p) { return {'done':'Done','running':'Running','failed':'Failed','stopped':'Stopped','pending':'Pending'}[normPhase(p)] || normPhase(p); }
+
+const STEP_PLAN = [
+  { id: 'ensure_benchmarks',          label: 'Ensure revenue metrics' },
+  { id: 'identify_org',               label: 'Establish org identity' },
+  { id: 'find_locations',             label: 'Confirm service locations' },
+  { id: 'nppes_alignment',            label: 'Confirm provider roster (NPPES)' },
+  { id: 'find_associated_providers',  label: 'Load providers & compliance risks' },
+  { id: 'pml_alignment',              label: 'Confirm Medicaid enrollment (PML)' },
+  { id: 'taxonomy_optimization',      label: 'Align billing taxonomy codes' },
+  { id: 'provider_summaries',         label: 'Generate AI credential summaries' },
+  { id: 'org_summary',                label: 'Compile credential health report' },
+];
+
+// Hard stop definitions — step_id → condition trigger text
+const HARD_STOPS = {
+  identify_org:   { test: s => (s.org_npis || []).length === 0, title: 'Zero NPIs found', desc: 'No organization NPIs were found. Update the org name or manually add NPIs in Org Details before retrying.' },
+  find_locations: { test: s => (s.locations || []).length === 0, title: 'Zero locations found', desc: 'No practice locations were confirmed. Add a location in Org Details and restart the run.' },
+  find_associated_providers: { test: s => {
+    const ar = s.active_roster || {};
+    return Object.keys(ar).length === 0 && (s.compliance_rostered_excluded || 0) === 0;
+  }, title: 'Empty active roster', desc: 'No active providers found. Upload a roster or verify roster_truth entries before continuing.' },
+};
+
+let _runId = null;
+let _runData = null;
+let _polling = false;
+let _pollTimer = null;
+let _orgName = null;
+
+// ── Init ───────────────────────────────────────────────────────────────────
+(function init() {
+  const p = new URLSearchParams(location.search);
+  _runId = p.get('run_id');
+  if (!_runId) {
+    document.getElementById('loadingState').innerHTML =
+      '<div style="color:var(--error)">No run_id in URL. <a href="index.html">Go to Hub</a></div>';
+    return;
+  }
+  document.title = `Run ${_runId.slice(0,8)} — Providr`;
+  fetchRun(true);
+})();
+
+// ── Fetch run ──────────────────────────────────────────────────────────────
+async function fetchRun(firstLoad) {
+  try {
+    const r = await fetch(`${CHAT_SRV}/chat/credentialing-runs/${_runId}?include_state=true`);
+    if (!r.ok) {
+      document.getElementById('loadingState').innerHTML =
+        `<div style="color:var(--error)">Run not found (${r.status}). <a href="http://localhost:8000/pipeline">Open Pipeline</a></div>`;
+      stopPolling();
+      return;
+    }
+    _runData = await r.json();
+    if (firstLoad) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('runCard').style.display = '';
+      document.getElementById('stepper').style.display = '';
+      document.getElementById('refreshBar').style.display = '';
+    }
+    render(_runData);
+    schedulePolling();
+  } catch(e) {
+    if (firstLoad) {
+      document.getElementById('loadingState').innerHTML =
+        `<div style="color:var(--error)">Could not load run: ${e.message}</div>`;
+    }
+  }
+}
+
+// ── Polling ────────────────────────────────────────────────────────────────
+function schedulePolling() {
+  if (_runData && ['done','failed','stopped'].includes(normPhase(_runData.phase))) {
+    stopPolling();
+    document.getElementById('liveDot').classList.add('paused');
+    document.getElementById('autoLabel').textContent = 'Run ended — not polling';
+    return;
+  }
+  if (_polling) clearTimeout(_pollTimer);
+  if (_polling === false) return; // paused
+  _pollTimer = setTimeout(() => fetchRun(false), 3000);
+}
+
+function startPolling() {
+  _polling = true;
+  schedulePolling();
+}
+
+function stopPolling() {
+  _polling = false;
+  clearTimeout(_pollTimer);
+}
+
+function togglePolling() {
+  if (_polling === false) {
+    _polling = true;
+    document.querySelector('.refresh-bar button').textContent = 'Pause';
+    document.getElementById('liveDot').classList.remove('paused');
+    document.getElementById('autoLabel').textContent = 'Live — polling every 3s';
+    schedulePolling();
+  } else {
+    stopPolling();
+    _polling = false;
+    document.querySelector('.refresh-bar button').textContent = 'Resume';
+    document.getElementById('liveDot').classList.add('paused');
+    document.getElementById('autoLabel').textContent = 'Paused';
+  }
+}
+
+// Start polling (unless already done)
+_polling = true;
+
+// ── Render ─────────────────────────────────────────────────────────────────
+function render(d) {
+  const state = d.orchestrator_state || {};
+  _orgName = d.org_name || state.org_name || '';
+
+  // Run card
+  document.getElementById('runOrg').textContent = _orgName || 'Unknown org';
+  document.getElementById('runId').textContent = `#${(_runId || '').slice(0, 8)}`;
+  const modePill = d.mode === 'autopilot'
+    ? '<span class="pill pill-run">Agentic</span>'
+    : '<span class="pill pill-blue">Copilot</span>';
+  document.getElementById('runMode').innerHTML = modePill;
+  const phaseColor = { done: 'pill-ok', running: 'pill-blue', failed: 'pill-err', stopped: 'pill-warn', pending: 'pill-dim' };
+  const np = normPhase(d.phase);
+  document.getElementById('runPhaseBadge').innerHTML =
+    `<span class="pill ${phaseColor[np] || 'pill-dim'}">${phaseLabel(d.phase)}</span>`;
+
+  // Steps
+  renderStepper(d, state);
+
+  // Hard stops
+  renderHardStops(state, d.pending_step_id);
+
+  // Copilot gate
+  renderCopilotGate(d, state);
+
+  // Done actions
+  renderDoneActions(d);
+
+  // Proposals (agentic proposes, user decides — NOT for compliance)
+  renderProposals(d, state);
+
+  // Compliance findings (autonomous)
+  renderComplianceFindings(state, d);
+}
+
+function renderStepper(d, state) {
+  const steps = state.steps || STEP_PLAN.map(s => ({ id: s.id, label: s.label, status: 'pending', result_summary: '' }));
+  const drafts = d.step_drafts || {};
+  const validatedIds = d.validated_step_ids || [];
+
+  const stepper = document.getElementById('stepper');
+  stepper.innerHTML = steps.map((s, idx) => {
+    const status = s.status || 'pending';
+    const isDone = status === 'done' || validatedIds.includes(s.id);
+    const isRunning = status === 'in_progress' || (d.pending_step_id === s.id && d.phase === 'running');
+    const isFailed = status === 'failed';
+    const isSkipped = status === 'skipped';
+    const dotClass = isDone ? 'done' : isRunning ? 'running' : isFailed ? 'failed' : isSkipped ? 'skipped' : 'pending';
+    const icon = isDone ? '✓' : isRunning ? '⟳' : isFailed ? '✕' : (idx + 1).toString();
+    const isLast = idx === steps.length - 1;
+    const summary = s.result_summary || '';
+    const stepPlan = STEP_PLAN.find(p => p.id === s.id);
+    const label = stepPlan ? stepPlan.label : s.label || s.id;
+
+    // Get draft detail
+    const draft = drafts[s.id] || {};
+    const so = draft.step_output;
+    const hasDetail = so || draft.result_summary || draft.org_npis;
+
+    return `
+      <div class="step-row">
+        <div class="step-connector">
+          <div class="step-dot ${dotClass}">${icon}</div>
+          ${!isLast ? `<div class="step-line ${isDone ? 'done' : ''}"></div>` : ''}
+        </div>
+        <div class="step-body">
+          <div class="step-label ${status === 'pending' ? 'pending' : ''}">
+            ${label}
+            ${isRunning ? '<span class="pill pill-blue" style="font-size:0.6rem">Running…</span>' : ''}
+            ${isFailed ? '<span class="pill pill-err">Failed</span>' : ''}
+            ${isSkipped ? '<span class="pill pill-dim">Skipped</span>' : ''}
+          </div>
+          ${summary ? `<div class="step-summary">${summary}</div>` : ''}
+          ${hasDetail ? `
+            <button class="step-expand" onclick="toggleDetail('detail-${s.id}')">Show details ▾</button>
+            <div class="step-detail" id="detail-${s.id}">
+              ${so && so.row_count != null ? `<div style="margin-bottom:0.35rem"><span class="pill pill-dim">${so.row_count} rows</span></div>` : ''}
+              ${so && so.markdown ? `<pre>${escHtml(so.markdown.slice(0, 600))}${so.markdown.length > 600 ? '\n…' : ''}</pre>` : ''}
+              ${draft.org_npis ? `<div style="margin-top:0.4rem"><strong>NPIs:</strong> ${draft.org_npis.join(', ')}</div>` : ''}
+            </div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleDetail(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+  el.previousElementSibling.textContent = el.classList.contains('open') ? 'Hide details ▴' : 'Show details ▾';
+}
+
+function renderHardStops(state, pendingStepId) {
+  const el = document.getElementById('hardStop');
+  if (!pendingStepId) { el.classList.add('hide'); return; }
+  const hs = HARD_STOPS[pendingStepId];
+  if (hs && hs.test(state)) {
+    document.getElementById('hardStopTitle').textContent = hs.title;
+    document.getElementById('hardStopDesc').textContent = hs.desc;
+    el.classList.remove('hide');
+  } else {
+    el.classList.add('hide');
+  }
+}
+
+function renderCopilotGate(d, state) {
+  const gate = document.getElementById('copilotGate');
+  const btn = document.getElementById('continueBtn');
+
+  // Show if: copilot mode, run is pending/paused (not running, not done)
+  const isWaiting = d.mode !== 'autopilot' && normPhase(d.phase) === 'pending' && d.pending_step_id;
+  if (!isWaiting) { gate.classList.add('hide'); return; }
+
+  // Don't show if hard-stopped
+  const hs = HARD_STOPS[d.pending_step_id];
+  const hardStopped = hs && hs.test(state);
+  if (hardStopped) { gate.classList.add('hide'); return; }
+
+  gate.classList.remove('hide');
+  const stepPlan = STEP_PLAN.find(p => p.id === d.pending_step_id);
+  document.getElementById('gateStepLabel').textContent = `Next: ${stepPlan ? stepPlan.label : d.pending_step_id}`;
+  btn.disabled = false;
+}
+
+function renderDoneActions(d) {
+  const el = document.getElementById('doneActions');
+  if (normPhase(d.phase) !== 'done') { el.classList.add('hide'); return; }
+  el.classList.remove('hide');
+  const state = d.orchestrator_state || {};
+  const reportRunId = state.report_run_id;
+  if (reportRunId) {
+    document.getElementById('reportLink').href = `${SKILL_SRV}/roster-ui/report.html?run_id=${reportRunId}`;
+  } else {
+    document.getElementById('reportLink').style.display = 'none';
+  }
+  if (_orgName) {
+    const enc = encodeURIComponent(_orgName);
+    document.getElementById('reviewOrgLink').href = `org.html?org=${enc}`;
+    document.getElementById('reviewRosterLink').href = `roster.html?org=${enc}`;
+  }
+}
+
+function renderProposals(d, state) {
+  // Proposals = agentic suggestions for org / roster fields (user must accept)
+  // We look for gate_events with type=proposal or step drafts with flagged proposals
+  const panel = document.getElementById('proposalsPanel');
+  const list  = document.getElementById('proposalsList');
+
+  const proposals = [];
+
+  // Org NPI proposals from identify_org
+  const orgNpis = state.org_npis || [];
+  if (orgNpis.length && d.mode === 'autopilot') {
+    proposals.push({
+      field: 'Organization NPIs',
+      val: orgNpis.join(', '),
+      note: 'Found via NPPES registry search. Confirm in Org Details.'
+    });
+  }
+
+  // Location proposals from find_locations
+  const locs = (state.locations || []).filter(l => l.site_source && l.site_source !== 'user_entry');
+  if (locs.length && d.mode === 'autopilot') {
+    proposals.push({
+      field: `${locs.length} location${locs.length > 1 ? 's' : ''} discovered`,
+      val: locs.slice(0, 3).map(l => [l.address_line1, l.city, l.state_cd].filter(Boolean).join(', ')).join(' | '),
+      note: 'Discovered from NPPES/PML. Review and confirm active locations in Org Details.'
+    });
+  }
+
+  // PML-flagged providers proposals
+  const pmlFlagged = (state.pml_flagged || []).slice(0, 5);
+  if (pmlFlagged.length) {
+    proposals.push({
+      field: `${pmlFlagged.length} provider${pmlFlagged.length > 1 ? 's' : ''} with PML gaps`,
+      val: pmlFlagged.map(p => p.provider_name || p.npi || p).join(', '),
+      note: 'These active roster providers have Medicaid enrollment gaps. Review in Roster.'
+    });
+  }
+
+  if (!proposals.length) { panel.classList.add('hide'); return; }
+
+  panel.classList.remove('hide');
+  list.innerHTML = proposals.map(p => `
+    <div class="proposal-item">
+      <div class="p-field">${p.field}</div>
+      <div class="p-val">${p.val || '—'}</div>
+      ${p.note ? `<div class="p-note">${p.note}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderComplianceFindings(state, d) {
+  // Compliance = autonomous: non-rostered providers with stale PML/NPPES
+  const panel = document.getElementById('compliancePanel');
+  const list  = document.getElementById('complianceList');
+
+  const candidates = (state.compliance_candidates || []).filter(c => {
+    // Only show non-rostered ones (excluded = rostered, shown in pml_flagged instead)
+    return c.is_compliant === false || c.compliance_risk === true;
+  }).slice(0, 20);
+
+  if (!candidates.length) { panel.classList.add('hide'); return; }
+
+  panel.classList.remove('hide');
+  list.innerHTML = candidates.map(c => `
+    <div class="finding-item">
+      <div class="f-name">${c.provider_name || '—'} ${c.credential_type ? `<span class="pill pill-dim">${c.credential_type}</span>` : ''}</div>
+      <div class="f-npi">NPI: ${c.npi || c.billing_npi || '—'}</div>
+      <div class="f-reason">${c.compliance_reason || c.risk_reason || 'Non-rostered provider with registry entry found'}</div>
+    </div>
+  `).join('');
+}
+
+// ── Continue (copilot) ─────────────────────────────────────────────────────
+async function continueRun() {
+  const btn = document.getElementById('continueBtn');
+  if (!_runData || !_runData.pending_step_id) return;
+  btn.disabled = true;
+  btn.textContent = 'Running…';
+  try {
+    const r = await fetch(`${CHAT_SRV}/chat/credentialing-runs/${_runId}/validate`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ step_id: _runData.pending_step_id, validated_output: {} }),
+    });
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({}));
+      alert(`Error: ${err.detail || r.status}`);
+      btn.disabled = false; btn.textContent = 'Continue →'; return;
+    }
+    _runData = await r.json();
+    render(_runData);
+    startPolling();
+  } catch(e) {
+    alert(`Failed: ${e.message}`);
+    btn.disabled = false; btn.textContent = 'Continue →';
+  }
+}
+
+// ── Utility ────────────────────────────────────────────────────────────────
+function escHtml(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FL Medicaid BH Market — Mobius</title>
+<link rel="stylesheet" href="mobius-tokens.css" />
+<link rel="stylesheet" href="mobius-ui.css" />
+<style>
+:root {
+  --m-text:        var(--mobius-text-primary, #1a1d21);
+  --m-text-sec:    var(--mobius-text-secondary, #374151);
+  --m-text-muted:  var(--mobius-text-muted, #64748b);
+  --m-bg:          var(--mobius-bg-primary, #fafbfc);
+  --m-bg-card:     var(--mobius-bg-card, #ffffff);
+  --m-bg-hover:    var(--mobius-bg-hover, #f9fafb);
+  --m-bg-tert:     var(--mobius-bg-tertiary, #f1f5f9);
+  --m-border:      var(--mobius-border, #e2e8f0);
+  --m-border-med:  var(--mobius-border-medium, #d1d5db);
+  --m-accent:      var(--mobius-accent, #3b82f6);
+  --m-accent-bg:   #eff6ff;
+  --m-success:     var(--mobius-success, #16a34a);
+  --m-success-bg:  #f0fdf4;
+  --m-warning:     var(--mobius-warning, #f59e0b);
+  --m-warning-bg:  #fffbeb;
+  --m-error:       var(--mobius-error, #dc2626);
+  --m-error-bg:    #fef2f2;
+  --m-shadow-sm:   var(--mobius-shadow-sm, 0 1px 2px rgba(0,0,0,.04));
+  --m-shadow-md:   0 4px 12px rgba(0,0,0,.06);
+  --m-font:        var(--mobius-font-sans, 'DM Sans', -apple-system, system-ui, sans-serif);
+  --m-mono:        var(--mobius-font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  --m-xs:          var(--mobius-text-xs, 0.72rem);
+  --m-sm:          var(--mobius-text-sm, 0.8125rem);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--m-font); background:var(--m-bg); color:var(--m-text); font-size:var(--m-sm); line-height:1.55; }
+
+/* ── Header ─────────────────────────────────────────────── */
+.mbx-header {
+  display:flex; align-items:center; gap:.6rem;
+  padding:.5rem 1.5rem; border-bottom:1px solid var(--m-border);
+  background:#fff; position:sticky; top:0; z-index:100;
+}
+.mbx-logo { display:flex; align-items:center; gap:.4rem; font-weight:700; font-size:.9rem; color:var(--m-text); text-decoration:none; }
+.mbx-logo svg { width:22px; height:22px; }
+.mbx-sep { color:var(--m-border-med); font-size:.85rem; }
+.mbx-page-title { font-size:.85rem; color:var(--m-text-sec); font-weight:500; }
+.mbx-spacer { flex:1; }
+.mbx-context { font-size:var(--m-xs); color:var(--m-text-muted); font-family:var(--m-mono); }
+
+/* ── Page ────────────────────────────────────────────────── */
+.page { display:flex; flex-direction:column; min-height:100vh; }
+.page-body { max-width:1120px; margin:0 auto; width:100%; padding:20px 24px 60px; }
+
+/* ── Tabs ────────────────────────────────────────────────── */
+.tab-bar { display:flex; gap:0; padding:0 24px; border-bottom:1px solid var(--m-border); background:#fff; }
+.tab {
+  padding:10px 20px; font-size:var(--m-sm); font-weight:500; color:var(--m-text-muted);
+  cursor:pointer; border-bottom:2px solid transparent; transition:all .15s; user-select:none;
+}
+.tab:hover { color:var(--m-text); }
+.tab.active { color:var(--m-accent); border-bottom-color:var(--m-accent); font-weight:600; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+/* ── Insight Banner ──────────────────────────────────────── */
+.insight-banner {
+  background:linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color:#e2e8f0; border-radius:12px; padding:24px 28px; margin-bottom:24px;
+  position:relative; overflow:hidden;
+}
+.insight-banner::after {
+  content:''; position:absolute; top:-40px; right:-30px; width:200px; height:200px;
+  background:radial-gradient(circle, rgba(99,102,241,.15) 0%, transparent 70%);
+  border-radius:50%;
+}
+.insight-title { font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:8px; }
+.insight-body { font-size:.875rem; line-height:1.65; color:#cbd5e1; max-width:800px; }
+.insight-body strong { color:#fff; font-weight:600; }
+.insight-body .hl-up { color:#34d399; font-weight:600; }
+.insight-body .hl-down { color:#f87171; font-weight:600; }
+.insight-body .hl-num { color:#93c5fd; font-weight:600; font-family:var(--m-mono); }
+
+/* ── KPI Row ─────────────────────────────────────────────── */
+.kpi-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-bottom:24px; }
+.kpi-card {
+  padding:16px 18px; background:var(--m-bg-card);
+  border:1px solid var(--m-border); border-radius:10px; box-shadow:var(--m-shadow-sm);
+}
+.kpi-label { font-size:var(--m-xs); color:var(--m-text-muted); text-transform:uppercase; letter-spacing:.4px; margin-bottom:6px; }
+.kpi-value { font-size:1.35rem; font-weight:700; color:var(--m-text); font-family:var(--m-mono); }
+.kpi-sub { font-size:var(--m-xs); color:var(--m-text-muted); margin-top:3px; }
+.kpi-delta { font-size:var(--m-xs); font-weight:600; margin-top:3px; }
+.kpi-delta.pos { color:var(--m-success); }
+.kpi-delta.neg { color:var(--m-error); }
+
+/* ── Chart Container ─────────────────────────────────────── */
+.chart-section { margin-bottom:28px; }
+.chart-wrap {
+  background:var(--m-bg-card); border:1px solid var(--m-border); border-radius:10px;
+  padding:20px; box-shadow:var(--m-shadow-sm);
+}
+.chart-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; }
+.chart-title { font-size:.95rem; font-weight:600; }
+.chart-subtitle { font-size:var(--m-xs); color:var(--m-text-muted); }
+
+/* Bar chart via CSS */
+.bar-chart { display:flex; flex-direction:column; gap:6px; }
+.bar-row { display:flex; align-items:center; gap:8px; }
+.bar-label { width:180px; font-size:var(--m-xs); text-align:right; color:var(--m-text-sec); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex-shrink:0; }
+.bar-track { flex:1; display:flex; gap:3px; align-items:center; height:22px; }
+.bar-fill { height:100%; border-radius:4px; transition:width .4s ease; min-width:2px; position:relative; }
+.bar-fill.cmhc { background:var(--m-accent); }
+.bar-fill.non { background:#cbd5e1; }
+.bar-value { font-size:var(--m-xs); font-family:var(--m-mono); color:var(--m-text-muted); white-space:nowrap; min-width:40px; }
+.bar-legend { display:flex; gap:16px; margin-top:10px; font-size:var(--m-xs); color:var(--m-text-muted); }
+.bar-legend-dot { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:4px; vertical-align:middle; }
+
+/* Grouped bar (side by side) */
+.grouped-bars { display:flex; flex-direction:column; gap:8px; }
+.grouped-row { display:flex; align-items:center; gap:8px; }
+.grouped-pair { flex:1; display:flex; flex-direction:column; gap:2px; }
+.grouped-bar-line { display:flex; align-items:center; gap:6px; height:14px; }
+.grouped-bar-fill { height:100%; border-radius:3px; min-width:2px; }
+.grouped-bar-fill.cmhc { background:var(--m-accent); }
+.grouped-bar-fill.non { background:#cbd5e1; }
+.grouped-val { font-size:0.65rem; font-family:var(--m-mono); color:var(--m-text-muted); }
+
+/* ── Refine Filters ──────────────────────────────────────── */
+.refine-toggle {
+  display:inline-flex; align-items:center; gap:4px; font-size:var(--m-xs); color:var(--m-accent);
+  cursor:pointer; font-weight:500; padding:4px 0; margin-bottom:12px; user-select:none;
+}
+.refine-toggle svg { width:14px; height:14px; transition:transform .15s; }
+.refine-toggle.open svg { transform:rotate(180deg); }
+.filter-row {
+  display:none; gap:10px; align-items:end; flex-wrap:wrap; margin-bottom:16px;
+  padding:12px 16px; background:var(--m-bg-card); border:1px solid var(--m-border);
+  border-radius:8px;
+}
+.filter-row.open { display:flex; }
+.filter-group { display:flex; flex-direction:column; gap:2px; }
+.filter-label { font-size:var(--m-xs); color:var(--m-text-muted); font-weight:500; }
+select {
+  background:#fff; color:var(--m-text); border:1px solid var(--m-border-med); border-radius:6px;
+  padding:5px 10px; font-size:var(--m-xs); font-family:inherit; cursor:pointer; min-width:140px;
+}
+select:focus { outline:none; border-color:var(--m-accent); }
+
+/* ── Collapsible Section ─────────────────────────────────── */
+.section { margin-bottom:28px; }
+.section-header {
+  display:flex; align-items:center; gap:8px; margin-bottom:10px; cursor:pointer; user-select:none;
+}
+.section-title { font-size:.95rem; font-weight:600; color:var(--m-text); }
+.section-toggle { font-size:var(--m-xs); color:var(--m-accent); font-weight:500; }
+.section-body { overflow:hidden; }
+.section-body.collapsed { display:none; }
+.section-explain { font-size:var(--m-xs); color:var(--m-text-muted); margin-bottom:10px; line-height:1.5; }
+
+/* ── Tables ──────────────────────────────────────────────── */
+.dtable { width:100%; border-collapse:collapse; font-size:var(--m-sm); }
+.dtable th {
+  text-align:left; padding:8px 10px; font-size:0.65rem; text-transform:uppercase;
+  letter-spacing:.03em; color:var(--m-text-muted); border-bottom:2px solid var(--m-border-med);
+  position:sticky; top:0; background:var(--m-bg-card); white-space:nowrap;
+}
+.dtable td { padding:7px 10px; border-bottom:1px solid var(--m-bg-tert); vertical-align:middle; }
+.dtable tr:hover { background:var(--m-bg-hover); }
+.dtable-wrap {
+  max-height:420px; overflow-y:auto; border:1px solid var(--m-border); border-radius:8px;
+  background:var(--m-bg-card);
+}
+.num { text-align:right; font-family:var(--m-mono); }
+.code-col { font-weight:600; color:var(--m-accent); white-space:nowrap; }
+
+/* Rate bar */
+.rate-bar-wrap { width:100px; height:12px; background:var(--m-bg-tert); border-radius:6px; display:inline-block; vertical-align:middle; margin-right:6px; }
+.rate-bar { height:100%; border-radius:6px; min-width:2px; }
+.rate-bar.under { background:var(--m-error); }
+.rate-bar.over { background:var(--m-success); }
+.rate-bar.neutral { background:var(--m-border-med); }
+
+/* Index badge */
+.idx { font-family:var(--m-mono); font-size:var(--m-xs); padding:2px 8px; border-radius:10px; white-space:nowrap; font-weight:500; }
+.idx.high { background:#dcfce7; color:#166534; }
+.idx.low { background:#fef2f2; color:#991b1b; }
+.idx.mid { background:#f8fafc; color:#475569; }
+
+/* ── Org Scorecard ───────────────────────────────────────── */
+.org-picker-bar {
+  display:flex; align-items:center; gap:12px; margin-bottom:20px;
+  padding:14px 18px; background:var(--m-bg-card); border:1px solid var(--m-border); border-radius:10px;
+}
+.org-picker-bar label { font-size:var(--m-sm); font-weight:500; color:var(--m-text-sec); white-space:nowrap; }
+.org-picker-bar select { flex:1; max-width:420px; padding:7px 12px; font-size:var(--m-sm); }
+.org-empty { padding:60px 20px; text-align:center; color:var(--m-text-muted); }
+
+/* Opportunity cards */
+.opp-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:24px; }
+.opp-card {
+  padding:18px 20px; background:var(--m-bg-card);
+  border:1px solid var(--m-border); border-radius:10px; box-shadow:var(--m-shadow-sm);
+}
+.opp-card.primary { border-color:var(--m-accent); background:var(--m-accent-bg); }
+.opp-label { font-size:var(--m-xs); text-transform:uppercase; color:var(--m-text-muted); letter-spacing:.3px; font-weight:500; }
+.opp-value { font-size:1.4rem; font-weight:700; font-family:var(--m-mono); margin-top:6px; }
+.opp-sub { font-size:var(--m-xs); color:var(--m-text-muted); margin-top:4px; line-height:1.4; }
+
+/* Trend sparkline */
+.trend-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin-bottom:20px; }
+.trend-card {
+  padding:12px 16px; background:var(--m-bg-card); border:1px solid var(--m-border); border-radius:10px;
+  text-align:center;
+}
+.trend-metric { font-size:var(--m-xs); color:var(--m-text-muted); text-transform:uppercase; margin-bottom:4px; }
+.trend-value { font-size:1.15rem; font-weight:700; font-family:var(--m-mono); }
+.trend-delta { font-size:var(--m-xs); font-weight:600; margin-top:2px; }
+.trend-delta.up { color:var(--m-success); }
+.trend-delta.down { color:var(--m-error); }
+
+/* Sparkline canvas */
+.sparkline-wrap { height:40px; margin-top:6px; }
+.sparkline-wrap canvas { width:100%; height:100%; }
+
+/* Service line comparison bars (horizontal) */
+.sl-compare { display:flex; flex-direction:column; gap:6px; }
+.sl-row { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid var(--m-bg-tert); }
+.sl-name { width:180px; font-size:var(--m-xs); font-weight:500; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sl-bars { flex:1; display:flex; flex-direction:column; gap:2px; }
+.sl-bar-line { display:flex; align-items:center; gap:6px; height:12px; }
+.sl-bar-fill { height:100%; border-radius:3px; min-width:2px; transition:width .3s; }
+.sl-bar-fill.org { background:var(--m-accent); }
+.sl-bar-fill.peer { background:#cbd5e1; }
+.sl-bar-val { font-size:0.6rem; font-family:var(--m-mono); color:var(--m-text-muted); white-space:nowrap; }
+.sl-badges { display:flex; gap:4px; width:100px; justify-content:flex-end; flex-shrink:0; }
+
+/* Org header card */
+.org-header-card {
+  padding:20px 24px; background:var(--m-bg-card); border:1px solid var(--m-border);
+  border-radius:10px; margin-bottom:20px; box-shadow:var(--m-shadow-sm);
+}
+.org-name { font-size:1.25rem; font-weight:700; }
+.org-meta { font-size:var(--m-sm); color:var(--m-text-muted); margin-top:4px; }
+
+/* Loading */
+.loading { padding:40px; text-align:center; color:var(--m-text-muted); }
+.loading::after { content:''; display:inline-block; width:16px; height:16px; border:2px solid var(--m-border); border-top-color:var(--m-accent); border-radius:50%; animation:spin .6s linear infinite; margin-left:8px; vertical-align:middle; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Ranking clickable */
+.rank-row { cursor:pointer; }
+.rank-row:hover { background:var(--m-accent-bg) !important; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bar-label, .sl-name { width:120px; }
+  .page-body { padding:16px; }
+  .insight-banner { padding:18px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── Header ──────────────────────────────────────────────── -->
+<header class="mbx-header">
+  <a class="mbx-logo" href="/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 12c-2-2.5-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.5 6-4z"/><path d="M12 12c2 2.5 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.5-6 4z"/></svg>
+    Mobius
+  </a>
+  <span class="mbx-sep">/</span>
+  <span class="mbx-page-title">Behavioral Health Market Analysis</span>
+  <span class="mbx-spacer"></span>
+  <span class="mbx-context" id="headerCtx">FL Medicaid · 2024</span>
+</header>
+
+<!-- ── Tabs ─────────────────────────────────────────────────── -->
+<nav class="tab-bar">
+  <div class="tab active" data-tab="industry">Market Overview</div>
+  <div class="tab" data-tab="org">Organization Deep Dive</div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MARKET OVERVIEW TAB
+     ═══════════════════════════════════════════════════════════ -->
+<div class="tab-panel active" id="panel-industry">
+  <div class="page-body">
+
+    <!-- Insight banner — generated from data -->
+    <div class="insight-banner" id="insightBanner">
+      <div class="insight-title">Loading market analysis...</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row" id="kpiRow"></div>
+
+    <!-- Revenue Share by Service Line (bar chart) -->
+    <div class="chart-section">
+      <div class="chart-wrap">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Revenue Share: Community Mental Health Centers vs Other Providers</div>
+            <div class="chart-subtitle">Share of total Medicaid spending by service category</div>
+          </div>
+        </div>
+        <div id="shareChart"><div class="loading">Loading</div></div>
+        <div class="bar-legend">
+          <span><span class="bar-legend-dot" style="background:var(--m-accent)"></span>Community MH Centers</span>
+          <span><span class="bar-legend-dot" style="background:#cbd5e1"></span>Other Providers</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rate comparison chart -->
+    <div class="chart-section">
+      <div class="chart-wrap">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Payment per Claim: Where CMHCs Are Paid More or Less</div>
+            <div class="chart-subtitle">Average Medicaid payment per claim by billing code — top gaps</div>
+          </div>
+        </div>
+        <div id="rateChart"><div class="loading">Loading</div></div>
+      </div>
+    </div>
+
+    <!-- Refine filters -->
+    <div class="refine-toggle" id="refineToggle" onclick="toggleFilters()">
+      <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"/></svg>
+      Refine view — filter by region, org type, or service
+    </div>
+    <div class="filter-row" id="filterRow">
+      <div class="filter-group">
+        <span class="filter-label">Break Down By</span>
+        <select id="fBy">
+          <option value="">Total Market</option>
+          <option value="service_line" selected>Service Category</option>
+          <option value="msa">Region</option>
+          <option value="org_type">Organization Type</option>
+          <option value="market_tier">Market Density</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Service Category</span>
+        <select id="fSL"><option value="">All</option></select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Region</span>
+        <select id="fMSA"><option value="">All</option></select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Organization Type</span>
+        <select id="fOrgType"><option value="">All</option></select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Market Density</span>
+        <select id="fTier"><option value="">All</option></select>
+      </div>
+    </div>
+
+    <!-- Detail: Displacement Table (collapsible) -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection('summarySection')">
+        <div class="section-title">Detailed Comparison by Service Category</div>
+        <span class="section-toggle" id="summaryToggle">Show table ▾</span>
+      </div>
+      <div class="section-body collapsed" id="summarySection">
+        <div class="section-explain">Side-by-side comparison of spending, patient volume, and payment rates between Community Mental Health Centers and other behavioral health providers.</div>
+        <div class="dtable-wrap" id="summaryTable"><div class="loading">Loading</div></div>
+      </div>
+    </div>
+
+    <!-- Detail: Code-level rates (collapsible) -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection('ratesSection')">
+        <div class="section-title">Billing Code Rate Gaps</div>
+        <span class="section-toggle" id="ratesToggle">Show table ▾</span>
+      </div>
+      <div class="section-body collapsed" id="ratesSection">
+        <div class="section-explain">Payment differences at the individual billing code level. Codes where CMHCs are paid less (underpaid) or more (overpaid) than non-CMHC providers for the same service.</div>
+        <div id="ratesSub" style="font-size:var(--m-xs);color:var(--m-text-muted);margin-bottom:8px;font-family:var(--m-mono)"></div>
+        <div class="dtable-wrap" id="ratesTable"><div class="loading">Loading</div></div>
+      </div>
+    </div>
+
+    <!-- Organization Ranking -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection('rankingSection')">
+        <div class="section-title">Organization Rankings</div>
+        <span class="section-toggle" id="rankingToggle">Show table ▾</span>
+      </div>
+      <div class="section-body collapsed" id="rankingSection">
+        <div class="section-explain">All community mental health centers ranked by Medicaid revenue. Click any row to see a detailed breakdown for that organization.</div>
+        <div class="dtable-wrap" id="rankingTable"><div class="loading">Loading</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ORGANIZATION DEEP DIVE TAB
+     ═══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="panel-org">
+  <div class="page-body">
+
+    <div class="org-picker-bar">
+      <label for="orgPicker">Choose an organization:</label>
+      <select id="orgPicker"><option value="">Select a community mental health center...</option></select>
+    </div>
+
+    <div id="orgContent">
+      <div class="org-empty">Select an organization above to see its performance analysis, peer comparison, and revenue opportunity.</div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// CONFIG & HELPERS
+// ═══════════════════════════════════════════════════════════════
+const API = window.location.port === '8011' ? '' : 'http://localhost:8011';
+
+async function fetchJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+  return r.json();
+}
+
+function $(id) { return document.getElementById(id); }
+function fmt(n) { return n == null ? '—' : n.toLocaleString('en-US', {maximumFractionDigits:0}); }
+function fmtPct(n, d=1) { return n == null ? '—' : (n * 100).toFixed(d) + '%'; }
+function fmtDol(n) {
+  if (n == null) return '—';
+  if (Math.abs(n) >= 1e6) return '$' + (n/1e6).toFixed(1) + 'M';
+  if (Math.abs(n) >= 1e3) return '$' + (n/1e3).toFixed(0) + 'K';
+  return '$' + n.toFixed(0);
+}
+function fmtDolFull(n) { return n == null ? '—' : '$' + n.toLocaleString('en-US', {maximumFractionDigits:0}); }
+
+function idxBadge(v, label) {
+  if (v == null) return '<span class="idx mid">—</span>';
+  const cls = v > 1.10 ? 'high' : v < 0.90 ? 'low' : 'mid';
+  const txt = label ? `${(v*100).toFixed(0)}% of peers` : v.toFixed(2);
+  return `<span class="idx ${cls}">${txt}</span>`;
+}
+
+function rateBar(ratio) {
+  const w = Math.min(100, Math.max(5, ratio * 100));
+  const cls = ratio < 0.95 ? 'under' : ratio > 1.05 ? 'over' : 'neutral';
+  return `<span class="rate-bar-wrap"><span class="rate-bar ${cls}" style="width:${w}%"></span></span>`;
+}
+
+// Stage label mapping
+const STAGE_LABELS = {
+  '1_intake': 'Access & Intake',
+  '1_access': 'Access & Intake',
+  '2_clinical': 'Clinical Treatment',
+  '3_ongoing': 'Ongoing Support',
+  '4_residential': 'Residential',
+};
+function stageLabel(s) { return STAGE_LABELS[s] || s; }
+
+// ═══════════════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════════════
+let orgTabLoaded = false;
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    $('panel-' + tab.dataset.tab).classList.add('active');
+    if (tab.dataset.tab === 'org' && !orgTabLoaded) { orgTabLoaded = true; loadOrgPicker(); }
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════
+// COLLAPSIBLE SECTIONS
+// ═══════════════════════════════════════════════════════════════
+function toggleSection(id) {
+  const body = $(id);
+  const toggleEl = $(id.replace('Section', 'Toggle'));
+  body.classList.toggle('collapsed');
+  const open = !body.classList.contains('collapsed');
+  if (toggleEl) toggleEl.textContent = open ? 'Hide table ▴' : 'Show table ▾';
+}
+
+function toggleFilters() {
+  const row = $('filterRow');
+  const tog = $('refineToggle');
+  row.classList.toggle('open');
+  tog.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FILTERS
+// ═══════════════════════════════════════════════════════════════
+async function loadFilters() {
+  try {
+    const f = await fetchJSON(`${API}/displacement/filters`);
+    populateSelect('fSL', f.service_lines);
+    populateSelect('fMSA', f.msas);
+    populateSelect('fOrgType', f.org_types);
+    populateSelect('fTier', f.market_tiers);
+  } catch(e) { console.error('Filter load failed:', e); }
+}
+
+function populateSelect(id, items) {
+  const sel = $(id);
+  const val = sel.value;
+  while (sel.options.length > 1) sel.remove(1);
+  (items||[]).forEach(v => sel.add(new Option(v, v)));
+  sel.value = val;
+}
+
+function filterParams() {
+  const p = new URLSearchParams();
+  const by = $('fBy').value; if (by) p.set('by', by);
+  const sl = $('fSL').value; if (sl) p.set('service_line', sl);
+  const msa = $('fMSA').value; if (msa) p.set('msa', msa);
+  const ot = $('fOrgType').value; if (ot) p.set('org_type', ot);
+  const t = $('fTier').value; if (t) p.set('market_tier', t);
+  return p.toString();
+}
+
+['fBy','fSL','fMSA','fOrgType','fTier'].forEach(id => {
+  $(id).addEventListener('change', loadIndustry);
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INDUSTRY VIEW
+// ═══════════════════════════════════════════════════════════════
+let lastMarketData = null;
+
+async function loadIndustry() {
+  const qs = filterParams();
+
+  const [mkt, rates, ranking] = await Promise.all([
+    fetchJSON(`${API}/displacement/market?${qs}`).catch(e => null),
+    fetchJSON(`${API}/displacement/rates?${qs}`).catch(e => null),
+    fetchJSON(`${API}/displacement/ranking?${qs}`).catch(e => null),
+  ]);
+
+  if (mkt) { lastMarketData = mkt; renderInsight(mkt, rates); renderKPIs(mkt); renderShareChart(mkt); }
+  if (rates) renderRateChart(rates);
+  if (mkt) renderMarketTable(mkt);
+  if (rates) renderRatesTable(rates);
+  if (ranking) renderRanking(ranking);
+}
+
+// ── Insight Banner ────────────────────────────────────────────
+function renderInsight(mkt, rates) {
+  const slices = mkt.slices || [];
+  let totalMkt = 0, totalCMHC = 0, totalBenes = 0, cmhcBenes = 0;
+  slices.forEach(s => {
+    totalMkt += s.mkt_paid || 0;
+    totalCMHC += (s.cmhc?.total_paid || 0);
+    totalBenes += s.mkt_benes || 0;
+    cmhcBenes += (s.cmhc?.total_benes || 0);
+  });
+
+  const revShare = totalCMHC / totalMkt;
+  const beneShare = cmhcBenes / totalBenes;
+
+  // Find biggest rate gap service line
+  const sorted = [...slices].filter(s => s.rpc_ratio && s.cmhc?.total_paid > 500000)
+    .sort((a, b) => a.rpc_ratio - b.rpc_ratio);
+  const worst = sorted[0];
+  const best = sorted[sorted.length - 1];
+
+  const gapDol = rates ? fmtDol(Math.abs(rates.net_rate_gap)) : '';
+  const gapPct = rates ? fmtPct(rates.gap_pct) : '';
+
+  let body = `Florida's Medicaid behavioral health market totals <strong class="hl-num">${fmtDol(totalMkt)}</strong> in annual spending. `;
+  body += `Community Mental Health Centers serve <strong class="hl-num">${fmtPct(beneShare, 0)}</strong> of patients but capture only <strong class="hl-num">${fmtPct(revShare, 0)}</strong> of revenue.`;
+
+  if (worst && worst.rpc_ratio < 0.95) {
+    body += ` The largest payment gap is in <strong>${worst.dim}</strong>, where CMHCs are paid <strong class="hl-down">${(100 - worst.rpc_ratio*100).toFixed(0)}% less</strong> per claim than other providers.`;
+  }
+  if (rates && rates.net_rate_gap > 0) {
+    body += ` Across all shared billing codes, CMHCs receive <strong class="hl-down">${gapDol}</strong> less annually than they would at market-average rates.`;
+  }
+
+  $('insightBanner').innerHTML = `
+    <div class="insight-title">How do Community Mental Health Centers compare?</div>
+    <div class="insight-body">${body}</div>
+  `;
+}
+
+// ── KPIs ──────────────────────────────────────────────────────
+function renderKPIs(mkt) {
+  const slices = mkt.slices || [];
+  let totalMkt = 0, totalCMHC = 0, totalBenes = 0, cmhcBenes = 0, cmhcOrgs = 0;
+  slices.forEach(s => {
+    totalMkt += s.mkt_paid || 0;
+    totalCMHC += (s.cmhc?.total_paid || 0);
+    totalBenes += s.mkt_benes || 0;
+    cmhcBenes += (s.cmhc?.total_benes || 0);
+    cmhcOrgs = Math.max(cmhcOrgs, s.cmhc?.n_orgs || 0);
+  });
+
+  // Weighted avg rate ratio
+  let rateNum = 0, rateDen = 0;
+  slices.filter(s => s.rpc_ratio && s.cmhc?.total_paid).forEach(s => {
+    rateNum += s.rpc_ratio * s.cmhc.total_paid;
+    rateDen += s.cmhc.total_paid;
+  });
+  const avgRateRatio = rateDen ? rateNum / rateDen : 1;
+  const rateGapPct = avgRateRatio < 1 ? (1 - avgRateRatio) : 0;
+
+  $('kpiRow').innerHTML = `
+    <div class="kpi-card">
+      <div class="kpi-label">Total Market Spending</div>
+      <div class="kpi-value">${fmtDol(totalMkt)}</div>
+      <div class="kpi-sub">FL Medicaid Behavioral Health, 2024</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CMHC Revenue Share</div>
+      <div class="kpi-value">${fmtPct(totalCMHC/totalMkt)}</div>
+      <div class="kpi-sub">${fmtDol(totalCMHC)} of total</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CMHC Patient Share</div>
+      <div class="kpi-value">${fmtPct(cmhcBenes/totalBenes)}</div>
+      <div class="kpi-sub">${fmt(cmhcBenes)} of ${fmt(totalBenes)} patients</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avg Payment Gap</div>
+      <div class="kpi-value">${rateGapPct > 0 ? '-' : ''}${fmtPct(rateGapPct)}</div>
+      <div class="kpi-sub">${rateGapPct > 0 ? 'CMHCs paid less per claim' : 'At or above market rate'}</div>
+    </div>
+  `;
+}
+
+// ── Share Chart (horizontal bars) ─────────────────────────────
+function renderShareChart(mkt) {
+  const slices = (mkt.slices || [])
+    .filter(s => s.mkt_paid > 1e6)
+    .sort((a, b) => b.mkt_paid - a.mkt_paid);
+  if (!slices.length) { $('shareChart').innerHTML = ''; return; }
+
+  const maxPaid = Math.max(...slices.map(s => s.mkt_paid));
+
+  let html = '<div class="bar-chart">';
+  slices.forEach(s => {
+    const cmhcPaid = s.cmhc?.total_paid || 0;
+    const nonPaid = (s.non_cmhc?.total_paid || 0);
+    const cmhcW = (cmhcPaid / maxPaid * 100).toFixed(1);
+    const nonW = (nonPaid / maxPaid * 100).toFixed(1);
+    html += `<div class="bar-row">
+      <div class="bar-label" title="${s.dim}">${s.dim}</div>
+      <div class="bar-track">
+        <div class="bar-fill cmhc" style="width:${cmhcW}%"></div>
+        <div class="bar-fill non" style="width:${nonW}%"></div>
+      </div>
+      <div class="bar-value">${fmtDol(s.mkt_paid)}</div>
+    </div>`;
+  });
+  html += '</div>';
+  $('shareChart').innerHTML = html;
+}
+
+// ── Rate Chart (diverging bars for top gaps) ──────────────────
+function renderRateChart(data) {
+  if (!data?.codes?.length) { $('rateChart').innerHTML = '<div style="color:var(--m-text-muted);padding:12px">No rate data available.</div>'; return; }
+
+  // Show top 10 underpaid + top 5 overpaid
+  const under = data.codes.filter(c => c.rate_ratio < 1.0).slice(0, 8);
+  const over = data.codes.filter(c => c.rate_ratio > 1.0).sort((a,b) => a.annual_gap - b.annual_gap).slice(0, 4);
+  const codes = [...under, ...over];
+  if (!codes.length) { $('rateChart').innerHTML = ''; return; }
+
+  const maxRPC = Math.max(...codes.map(c => Math.max(c.cmhc_rpc, c.non_cmhc_rpc)));
+
+  let html = '<div class="grouped-bars">';
+  codes.forEach(c => {
+    const cmhcW = (c.cmhc_rpc / maxRPC * 100).toFixed(1);
+    const nonW = (c.non_cmhc_rpc / maxRPC * 100).toFixed(1);
+    const pctDiff = ((c.rate_ratio - 1) * 100).toFixed(0);
+    const diffColor = c.rate_ratio < 0.95 ? 'var(--m-error)' : c.rate_ratio > 1.05 ? 'var(--m-success)' : 'var(--m-text-muted)';
+    const diffLabel = c.rate_ratio < 1 ? `${pctDiff}%` : `+${pctDiff}%`;
+    const desc = c.description ? c.description.slice(0, 30) : c.hcpcs_code;
+
+    html += `<div class="grouped-row">
+      <div class="bar-label" title="${c.hcpcs_code}: ${c.description||''}">${c.hcpcs_code} — ${desc}</div>
+      <div class="grouped-pair">
+        <div class="grouped-bar-line">
+          <div class="grouped-bar-fill cmhc" style="width:${cmhcW}%"></div>
+          <span class="grouped-val">${fmtDolFull(c.cmhc_rpc)}</span>
+        </div>
+        <div class="grouped-bar-line">
+          <div class="grouped-bar-fill non" style="width:${nonW}%"></div>
+          <span class="grouped-val">${fmtDolFull(c.non_cmhc_rpc)}</span>
+        </div>
+      </div>
+      <div class="bar-value" style="color:${diffColor};font-weight:600;min-width:50px;text-align:right">${diffLabel}</div>
+    </div>`;
+  });
+  html += '</div>';
+  html += `<div class="bar-legend" style="margin-top:8px">
+    <span><span class="bar-legend-dot" style="background:var(--m-accent)"></span>CMHC rate</span>
+    <span><span class="bar-legend-dot" style="background:#cbd5e1"></span>Other providers</span>
+    <span style="margin-left:auto;font-family:var(--m-mono)">Difference = annual gap from market rate</span>
+  </div>`;
+  $('rateChart').innerHTML = html;
+}
+
+// ── Market Table ──────────────────────────────────────────────
+function renderMarketTable(data) {
+  const slices = data.slices || [];
+  if (!slices.length) { $('summaryTable').innerHTML = '<div style="color:var(--m-text-muted);padding:12px">No data.</div>'; return; }
+
+  const by = data.by;
+  const dimLabel = by ? by.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Total';
+
+  let html = `<table class="dtable"><thead><tr>
+    <th>${dimLabel}</th>
+    <th class="num">Total Spending</th>
+    <th class="num">CMHC Spending</th>
+    <th class="num">CMHC Share</th>
+    <th class="num">Patient Share</th>
+    <th class="num">CMHC Visits/Patient</th>
+    <th class="num">Other Visits/Patient</th>
+    <th class="num">CMHC $/Claim</th>
+    <th class="num">Other $/Claim</th>
+    <th class="num">Rate Comparison</th>
+  </tr></thead><tbody>`;
+
+  slices.sort((a, b) => b.mkt_paid - a.mkt_paid).forEach(s => {
+    const c = s.cmhc || {};
+    const n = s.non_cmhc || {};
+    const ratioFmt = s.rpc_ratio ? fmtPct(s.rpc_ratio, 0) : '—';
+    html += `<tr>
+      <td>${s.dim}</td>
+      <td class="num">${fmtDolFull(s.mkt_paid)}</td>
+      <td class="num">${fmtDolFull(c.total_paid||0)}</td>
+      <td class="num">${fmtPct(s.cmhc_rev_share)}</td>
+      <td class="num">${fmtPct(s.cmhc_bene_share)}</td>
+      <td class="num">${(c.avg_cpb||0).toFixed(1)}</td>
+      <td class="num">${(n.avg_cpb||0).toFixed(1)}</td>
+      <td class="num">${fmtDolFull(c.avg_rpc||0)}</td>
+      <td class="num">${fmtDolFull(n.avg_rpc||0)}</td>
+      <td class="num">${rateBar(s.rpc_ratio||1)} ${ratioFmt}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  $('summaryTable').innerHTML = html;
+}
+
+// ── Rates Table ───────────────────────────────────────────────
+function renderRatesTable(data) {
+  if (!data?.codes?.length) { $('ratesTable').innerHTML = '<div style="color:var(--m-text-muted);padding:12px">No rate data.</div>'; return; }
+
+  $('ratesSub').textContent = `${data.n_codes} shared billing codes · Net annual gap: ${fmtDolFull(data.net_rate_gap)} (${fmtPct(data.gap_pct)} of CMHC revenue)`;
+
+  const under = data.codes.filter(c => c.rate_ratio < 1.0).slice(0, 15);
+  const over = data.codes.filter(c => c.rate_ratio > 1.0).sort((a,b) => a.annual_gap - b.annual_gap).slice(0, 10);
+
+  let html = '';
+  if (under.length) {
+    html += `<div style="font-weight:600;margin:12px 10px 4px;color:var(--m-error);font-size:var(--m-sm)">Underpaid — CMHCs receive less than market rate (${under.length} codes)</div>`;
+    html += codeTable(under, 'Annual Shortfall');
+  }
+  if (over.length) {
+    html += `<div style="font-weight:600;margin:16px 10px 4px;color:var(--m-success);font-size:var(--m-sm)">Overpaid — CMHCs receive more than market rate (${over.length} codes)</div>`;
+    html += codeTable(over, 'Annual Excess');
+  }
+  $('ratesTable').innerHTML = html;
+}
+
+function codeTable(codes, gapLabel) {
+  let html = `<table class="dtable"><thead><tr>
+    <th>Code</th><th>Service</th><th>Category</th><th class="num">CMHC $/Claim</th><th class="num">Market $/Claim</th>
+    <th class="num">Comparison</th><th class="num">${gapLabel}</th>
+  </tr></thead><tbody>`;
+  codes.forEach(c => {
+    html += `<tr>
+      <td class="code-col">${c.hcpcs_code}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${c.description||''}">${c.description?.slice(0,35)||''}</td>
+      <td style="font-size:var(--m-xs);color:var(--m-text-muted)">${c.ahca_category||''}</td>
+      <td class="num">${fmtDolFull(c.cmhc_rpc)}</td>
+      <td class="num">${fmtDolFull(c.non_cmhc_rpc)}</td>
+      <td class="num">${rateBar(c.rate_ratio)} ${fmtPct(c.rate_ratio)}</td>
+      <td class="num">${fmtDolFull(Math.abs(c.annual_gap))}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  return html;
+}
+
+// ── Ranking ───────────────────────────────────────────────────
+function renderRanking(data) {
+  if (!data?.orgs?.length) { $('rankingTable').innerHTML = '<div style="color:var(--m-text-muted);padding:12px">No data.</div>'; return; }
+
+  let html = `<table class="dtable"><thead><tr>
+    <th>#</th><th>Organization</th><th class="num">Revenue</th><th class="num">Patients</th>
+    <th class="num">Providers</th><th class="num">Services</th>
+    <th class="num">Rate vs Peers</th><th class="num">Utilization vs Peers</th>
+    <th class="num">Annual Rate Gap</th>
+  </tr></thead><tbody>`;
+
+  data.orgs.slice(0, 50).forEach((o, i) => {
+    html += `<tr class="rank-row" onclick="viewOrg('${o.org_slug}')">
+      <td>${i+1}</td>
+      <td style="font-weight:500">${o.org_name?.slice(0,40)||''}</td>
+      <td class="num">${fmtDol(o.total_paid)}</td>
+      <td class="num">${fmt(o.total_benes)}</td>
+      <td class="num">${o.n_npis}</td>
+      <td class="num">${o.n_sls}</td>
+      <td class="num">${idxBadge(o.avg_rate_idx, true)}</td>
+      <td class="num">${idxBadge(o.avg_util_idx, true)}</td>
+      <td class="num">${fmtDol(o.rate_gap)}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  $('rankingTable').innerHTML = html;
+}
+
+// Click org in ranking → switch to org tab
+function viewOrg(slug) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector('[data-tab="org"]').classList.add('active');
+  $('panel-org').classList.add('active');
+  if (!orgTabLoaded) { orgTabLoaded = true; loadOrgPicker(); }
+  setTimeout(() => {
+    $('orgPicker').value = slug;
+    loadOrgScorecard(slug);
+  }, 300);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ORG DEEP DIVE
+// ═══════════════════════════════════════════════════════════════
+async function loadOrgPicker() {
+  try {
+    const d = await fetchJSON(`${API}/displacement/orgs`);
+    const sel = $('orgPicker');
+    d.orgs.forEach(o => {
+      sel.add(new Option(`${o.org_name} — ${fmtDol(o.revenue)}`, o.org_slug));
+    });
+  } catch(e) { console.error('Org picker failed:', e); }
+}
+
+$('orgPicker').addEventListener('change', function() {
+  if (this.value) loadOrgScorecard(this.value);
+});
+
+async function loadOrgScorecard(slug) {
+  $('orgContent').innerHTML = '<div class="loading">Loading organization analysis</div>';
+  try {
+    const d = await fetchJSON(`${API}/displacement/org/${slug}`);
+    renderOrgScorecard(d);
+  } catch(e) {
+    $('orgContent').innerHTML = `<div style="color:var(--m-error);padding:20px">Error loading: ${e.message}</div>`;
+  }
+}
+
+function renderOrgScorecard(data) {
+  const info = data.org_info;
+  const trend = data.trend || [];
+  const sls = data.service_lines || [];
+  const opp = data.opportunity || {};
+
+  const latest = trend[trend.length - 1];
+  const prev = trend.length > 1 ? trend[trend.length - 2] : null;
+  const revDelta = prev ? ((latest.revenue - prev.revenue) / prev.revenue) : 0;
+  const benesDelta = prev ? ((latest.benes - prev.benes) / prev.benes) : 0;
+
+  let html = '';
+
+  // ── Opportunity Cards (TOP — the headline) ──────────────
+  html += `<div style="margin-bottom:24px">`;
+  html += `<div style="font-size:.95rem;font-weight:600;margin-bottom:10px">Revenue Opportunity</div>`;
+  html += `<div class="opp-row">`;
+
+  if (opp.fix_rates) {
+    const rGap = opp.fix_rates.gap_pct;
+    const rLabel = rGap > 0 ? 'Underpaid vs peers' : 'Overpaid vs peers';
+    html += `<div class="opp-card">
+      <div class="opp-label">Close the Rate Gap</div>
+      <div class="opp-value" style="color:${rGap > 0 ? 'var(--m-error)' : 'var(--m-success)'}">${fmtPct(Math.abs(rGap))}</div>
+      <div class="opp-sub">${fmtDolFull(Math.abs(opp.fix_rates.gap_dollars))} · ${rLabel}</div>
+    </div>`;
+  }
+  if (opp.fix_conversion) {
+    html += `<div class="opp-card">
+      <div class="opp-label">Increase Patient Engagement</div>
+      <div class="opp-value" style="color:var(--m-warning)">${fmtPct(opp.fix_conversion.gap_pct)}</div>
+      <div class="opp-sub">${fmtDolFull(opp.fix_conversion.gap_dollars)} · Fewer visits per patient than peers</div>
+    </div>`;
+  }
+  html += `<div class="opp-card primary">
+    <div class="opp-label">Total Addressable Gap</div>
+    <div class="opp-value">${fmtPct(opp.combined_gap_pct)}</div>
+    <div class="opp-sub">Combined rate + engagement opportunity vs peer average</div>
+  </div>`;
+  html += '</div></div>';
+
+  // ── Org Header ──────────────────────────────────────────
+  const tierLabel = info.market_tier ? info.market_tier.charAt(0).toUpperCase() + info.market_tier.slice(1) : '';
+  html += `<div class="org-header-card">
+    <div class="org-name">${info.org_name}</div>
+    <div class="org-meta">${tierLabel} market · ${info.n_sls} service categories · ${fmtDolFull(info.revenue)} annual revenue (2024)</div>
+  </div>`;
+
+  // ── Trend KPIs with Sparklines ──────────────────────────
+  html += `<div class="trend-row">
+    <div class="trend-card">
+      <div class="trend-metric">Annual Revenue</div>
+      <div class="trend-value">${fmtDol(latest?.revenue)}</div>
+      <div class="trend-delta ${revDelta >= 0 ? 'up' : 'down'}">${revDelta >= 0 ? '+' : ''}${(revDelta*100).toFixed(0)}% vs prior year</div>
+      <div class="sparkline-wrap"><canvas id="sparkRev"></canvas></div>
+    </div>
+    <div class="trend-card">
+      <div class="trend-metric">Patients Served</div>
+      <div class="trend-value">${fmt(latest?.benes)}</div>
+      <div class="trend-delta ${benesDelta >= 0 ? 'up' : 'down'}">${benesDelta >= 0 ? '+' : ''}${(benesDelta*100).toFixed(0)}% vs prior year</div>
+      <div class="sparkline-wrap"><canvas id="sparkBenes"></canvas></div>
+    </div>
+    <div class="trend-card">
+      <div class="trend-metric">Avg Payment / Claim</div>
+      <div class="trend-value">${fmtDolFull(latest?.rpc)}</div>
+      <div class="sparkline-wrap"><canvas id="sparkRPC"></canvas></div>
+    </div>
+    <div class="trend-card">
+      <div class="trend-metric">Visits per Patient</div>
+      <div class="trend-value">${latest?.cpb?.toFixed(1) || '—'}</div>
+      <div class="sparkline-wrap"><canvas id="sparkCPB"></canvas></div>
+    </div>
+  </div>`;
+
+  // ── Service Line Comparison (visual bars) ───────────────
+  const sortedSLs = [...sls].sort((a, b) => b.total_paid - a.total_paid);
+  if (sortedSLs.length) {
+    const maxRate = Math.max(...sortedSLs.map(s => Math.max(s.payment_per_claim || 0, s.peer_p50_rate || 0)));
+
+    html += `<div class="section">
+      <div style="font-size:.95rem;font-weight:600;margin-bottom:4px">Performance by Service Category</div>
+      <div class="section-explain">How this organization's payment rates and patient engagement compare to peer averages. Bars show payment per claim; badges show overall index vs peers.</div>
+      <div class="sl-compare">
+        <div class="sl-row" style="border-bottom:2px solid var(--m-border-med);font-weight:500;font-size:var(--m-xs);color:var(--m-text-muted)">
+          <div class="sl-name">SERVICE</div>
+          <div class="sl-bars" style="padding-left:4px">PAYMENT PER CLAIM</div>
+          <div class="sl-badges" style="text-align:right">RATE · VISITS</div>
+        </div>`;
+
+    sortedSLs.forEach(sl => {
+      const orgW = maxRate ? (sl.payment_per_claim / maxRate * 100).toFixed(1) : 0;
+      const peerW = maxRate ? ((sl.peer_p50_rate || 0) / maxRate * 100).toFixed(1) : 0;
+
+      html += `<div class="sl-row">
+        <div class="sl-name" title="${sl.service_line}">${sl.service_line}</div>
+        <div class="sl-bars">
+          <div class="sl-bar-line">
+            <div class="sl-bar-fill org" style="width:${orgW}%"></div>
+            <span class="sl-bar-val">${fmtDolFull(sl.payment_per_claim)} org</span>
+          </div>
+          <div class="sl-bar-line">
+            <div class="sl-bar-fill peer" style="width:${peerW}%"></div>
+            <span class="sl-bar-val">${fmtDolFull(sl.peer_p50_rate)} peers</span>
+          </div>
+        </div>
+        <div class="sl-badges">
+          ${idxBadge(sl.rate_index)}
+          ${idxBadge(sl.util_index)}
+        </div>
+      </div>`;
+    });
+
+    html += `</div>
+      <div class="bar-legend" style="margin-top:8px">
+        <span><span class="bar-legend-dot" style="background:var(--m-accent)"></span>This org</span>
+        <span><span class="bar-legend-dot" style="background:#cbd5e1"></span>Peer median</span>
+        <span style="margin-left:auto">Badges: <span class="idx high" style="margin:0 2px">above</span> <span class="idx mid" style="margin:0 2px">at par</span> <span class="idx low" style="margin:0 2px">below</span> peers</span>
+      </div>
+    </div>`;
+  }
+
+  // ── Engagement Comparison (grouped bars) ────────────────
+  const clinicalSLs = sls.filter(s => s.non_cmhc_avg_cpb > 0 && s.claims_per_bene > 0);
+  if (clinicalSLs.length) {
+    const maxCPB = Math.max(...clinicalSLs.map(s => Math.max(s.claims_per_bene, s.non_cmhc_avg_cpb)));
+
+    html += `<div class="section">
+      <div style="font-size:.95rem;font-weight:600;margin-bottom:4px">Patient Engagement: Visits per Patient</div>
+      <div class="section-explain">How many visits each patient receives at this organization compared to the peer average. Lower engagement may indicate patients leaving before completing treatment.</div>
+      <div class="grouped-bars">`;
+
+    clinicalSLs.sort((a,b) => b.total_paid - a.total_paid).forEach(sl => {
+      const orgW = (sl.claims_per_bene / maxCPB * 100).toFixed(1);
+      const peerW = (sl.non_cmhc_avg_cpb / maxCPB * 100).toFixed(1);
+      const ratio = sl.claims_per_bene / sl.non_cmhc_avg_cpb;
+      const pctLabel = ratio < 1 ? `${((1-ratio)*100).toFixed(0)}% fewer` : ratio > 1 ? `${((ratio-1)*100).toFixed(0)}% more` : 'At par';
+      const pctColor = ratio < 0.8 ? 'var(--m-error)' : ratio < 0.95 ? 'var(--m-warning)' : 'var(--m-success)';
+
+      html += `<div class="grouped-row">
+        <div class="bar-label">${sl.service_line}</div>
+        <div class="grouped-pair">
+          <div class="grouped-bar-line"><div class="grouped-bar-fill cmhc" style="width:${orgW}%"></div><span class="grouped-val">${sl.claims_per_bene.toFixed(1)} visits</span></div>
+          <div class="grouped-bar-line"><div class="grouped-bar-fill non" style="width:${peerW}%"></div><span class="grouped-val">${sl.non_cmhc_avg_cpb.toFixed(1)} peer avg</span></div>
+        </div>
+        <div class="bar-value" style="color:${pctColor};font-weight:600">${pctLabel}</div>
+      </div>`;
+    });
+
+    html += `</div>
+      <div class="bar-legend" style="margin-top:8px">
+        <span><span class="bar-legend-dot" style="background:var(--m-accent)"></span>This org</span>
+        <span><span class="bar-legend-dot" style="background:#cbd5e1"></span>Peer average</span>
+      </div>
+    </div>`;
+  }
+
+  // ── Detailed Trend Table (collapsed) ────────────────────
+  html += `<div class="section">
+    <div class="section-header" onclick="toggleSection('orgTrendSection')">
+      <div class="section-title">Historical Trend</div>
+      <span class="section-toggle" id="orgTrendToggle">Show table ▾</span>
+    </div>
+    <div class="section-body collapsed" id="orgTrendSection">
+      <div class="dtable-wrap">
+        <table class="dtable"><thead><tr>
+          <th>Year</th><th class="num">Revenue</th><th class="num">Claims</th>
+          <th class="num">Patients</th><th class="num">Providers</th>
+          <th class="num">$/Claim</th><th class="num">Visits/Patient</th>
+        </tr></thead><tbody>`;
+  trend.forEach(t => {
+    html += `<tr><td>${t.year}</td><td class="num">${fmtDolFull(t.revenue)}</td>
+      <td class="num">${fmt(t.claims)}</td><td class="num">${fmt(t.benes)}</td>
+      <td class="num">${t.npis}</td><td class="num">${fmtDolFull(t.rpc)}</td>
+      <td class="num">${t.cpb?.toFixed(1)||'—'}</td></tr>`;
+  });
+  html += '</tbody></table></div></div></div>';
+
+  $('orgContent').innerHTML = html;
+
+  // Draw sparklines after DOM is ready
+  requestAnimationFrame(() => {
+    if (trend.length > 1) {
+      drawSparkline('sparkRev', trend.map(t => t.revenue));
+      drawSparkline('sparkBenes', trend.map(t => t.benes));
+      drawSparkline('sparkRPC', trend.map(t => t.rpc));
+      drawSparkline('sparkCPB', trend.map(t => t.cpb));
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SPARKLINE
+// ═══════════════════════════════════════════════════════════════
+function drawSparkline(canvasId, values) {
+  const canvas = $(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+
+  const w = rect.width;
+  const h = rect.height;
+  const pad = 4;
+  const vals = values.filter(v => v != null);
+  if (vals.length < 2) return;
+
+  const min = Math.min(...vals);
+  const max = Math.max(...vals);
+  const range = max - min || 1;
+
+  ctx.beginPath();
+  ctx.strokeStyle = '#3b82f6';
+  ctx.lineWidth = 1.5;
+  ctx.lineJoin = 'round';
+
+  vals.forEach((v, i) => {
+    const x = pad + (i / (vals.length - 1)) * (w - pad * 2);
+    const y = h - pad - ((v - min) / range) * (h - pad * 2);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Fill area
+  const lastX = pad + ((vals.length - 1) / (vals.length - 1)) * (w - pad * 2);
+  ctx.lineTo(lastX, h);
+  ctx.lineTo(pad, h);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(59,130,246,.08)';
+  ctx.fill();
+
+  // Dot on last point
+  const lx = pad + ((vals.length - 1) / (vals.length - 1)) * (w - pad * 2);
+  const ly = h - pad - ((vals[vals.length - 1] - min) / range) * (h - pad * 2);
+  ctx.beginPath();
+  ctx.arc(lx, ly, 3, 0, Math.PI * 2);
+  ctx.fillStyle = '#3b82f6';
+  ctx.fill();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+(async function init() {
+  await loadFilters();
+  loadIndustry();
+})();
+</script>
+</body>
+</html>

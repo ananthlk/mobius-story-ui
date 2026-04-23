@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verification Report — Providr Suite</title>
+<style>
+:root {
+  --mobius-text-primary: #1a1d21;
+  --mobius-text-secondary: #374151;
+  --mobius-text-muted: #64748b;
+  --mobius-bg-primary: #fafbfc;
+  --mobius-bg-card: #ffffff;
+  --mobius-bg-tertiary: #f1f5f9;
+  --mobius-border: #e2e8f0;
+  --mobius-border-medium: #d1d5db;
+  --mobius-accent: #3b82f6;
+  --mobius-accent-hover: #2563eb;
+  --mobius-accent-text: #ffffff;
+  --mobius-success: #16a34a;
+  --mobius-error: #dc2626;
+  --mobius-warning: #f59e0b;
+  --mobius-shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --mobius-shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --mobius-font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--mobius-font-sans);
+  background: var(--mobius-bg-primary);
+  color: var(--mobius-text-primary);
+  min-height: 100vh;
+}
+.page { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.brand { display: flex; align-items: center; gap: 0.75rem; }
+.logo-mark { font-size: 1.4rem; font-weight: 700; color: var(--mobius-accent); }
+.service-label { font-size: 0.875rem; color: var(--mobius-text-muted); border-left: 1px solid var(--mobius-border); padding-left: 0.75rem; }
+.export-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn-sm {
+  padding: 0.4rem 0.875rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid var(--mobius-border-medium);
+  background: var(--mobius-bg-card);
+  color: var(--mobius-text-secondary);
+  transition: background 0.12s;
+}
+.btn-sm:hover { background: var(--mobius-bg-tertiary); }
+
+/* Stat cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.stat-card {
+  background: var(--mobius-bg-card);
+  border: 1px solid var(--mobius-border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--mobius-shadow-sm);
+}
+.stat-card .num { font-size: 2rem; font-weight: 700; line-height: 1.1; }
+.stat-card .lbl { font-size: 0.8125rem; color: var(--mobius-text-muted); margin-top: 0.25rem; }
+.stat-card.green .num { color: var(--mobius-success); }
+.stat-card.red .num { color: var(--mobius-error); }
+.stat-card.yellow .num { color: var(--mobius-warning); }
+.stat-card.blue .num { color: var(--mobius-accent); }
+
+/* Layout */
+.body-columns { display: grid; grid-template-columns: 1fr 320px; gap: 1.25rem; }
+@media (max-width: 800px) { .body-columns { grid-template-columns: 1fr; } }
+
+/* Table area */
+.table-card {
+  background: var(--mobius-bg-card);
+  border: 1px solid var(--mobius-border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--mobius-shadow-sm);
+}
+.table-toolbar {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--mobius-border);
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-tabs { display: flex; gap: 0; }
+.filter-tab {
+  padding: 0.35rem 0.875rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid var(--mobius-border-medium);
+  background: var(--mobius-bg-card);
+  color: var(--mobius-text-secondary);
+  transition: background 0.12s;
+}
+.filter-tab:first-child { border-radius: 6px 0 0 6px; }
+.filter-tab:last-child { border-radius: 0 6px 6px 0; border-left: none; }
+.filter-tab + .filter-tab { border-left: none; }
+.filter-tab.active { background: var(--mobius-accent); color: #fff; border-color: var(--mobius-accent); }
+.search-input {
+  margin-left: auto;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--mobius-border-medium);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  width: 200px;
+  outline: none;
+}
+.search-input:focus { border-color: var(--mobius-accent); }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+th {
+  padding: 0.6rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  background: var(--mobius-bg-tertiary);
+  color: var(--mobius-text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+th:hover { color: var(--mobius-text-primary); }
+td { padding: 0.6rem 1rem; border-top: 1px solid var(--mobius-border); vertical-align: middle; }
+tr.validated td { background: #f0fdf4; }
+tr.invalid td { background: #fef2f2; }
+tr.needs_review td { background: #fffbeb; }
+tr.corrected td { background: #eff6ff; }
+tr.parse_error td { background: #fdf4ff; }
+tr:hover td { filter: brightness(0.97); }
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge.validated { background: #dcfce7; color: #166534; }
+.badge.invalid { background: #fee2e2; color: #991b1b; }
+.badge.needs_review { background: #fef9c3; color: #854d0e; }
+.badge.corrected { background: #dbeafe; color: #1e40af; }
+.badge.excluded { background: #f3f4f6; color: #6b7280; }
+.badge.pending { background: #f3f4f6; color: #6b7280; }
+.badge.parse_error { background: #f5d0fe; color: #86198f; }
+.parse-warn-icon { display: inline-block; margin-left: 0.35rem; font-size: 0.85em; cursor: help; }
+.bulk-action-bar {
+  display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+  padding: 0.65rem 1rem;
+  background: #fdf4ff;
+  border-bottom: 1px solid #e9d5ff;
+  font-size: 0.875rem;
+}
+.bulk-action-bar.invalid-bar {
+  background: #fef2f2;
+  border-bottom-color: #fecaca;
+}
+.bulk-action-bar .bar-label { color: var(--mobius-text-secondary); flex: 1; }
+.bulk-action-bar .bar-label strong { color: var(--mobius-text-primary); }
+.btn-danger-sm {
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #fca5a5;
+  background: #fee2e2;
+  color: #991b1b;
+  transition: background 0.15s;
+}
+.btn-danger-sm:hover { background: #fecaca; }
+.btn-warning-sm {
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #d8b4fe;
+  background: #f5d0fe;
+  color: #86198f;
+  transition: background 0.15s;
+}
+.btn-warning-sm:hover { background: #e9d5ff; }
+.npi-mono { font-family: monospace; font-size: 0.8125rem; }
+
+/* Detail row (expanded) */
+tr.detail-row td { padding: 0; background: #fafbfc; }
+.detail-inner {
+  padding: 0.875rem 1rem;
+  font-size: 0.875rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+}
+.detail-inner { padding: 0.875rem 1rem; font-size: 0.875rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.detail-section { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; }
+.detail-inner .di { display: flex; flex-direction: column; gap: 0.15rem; min-width: 130px; }
+.detail-inner .dl { font-size: 0.72rem; color: var(--mobius-text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.detail-inner .dv { font-weight: 500; }
+.detail-narrative { padding: 0.6rem 0.875rem; border-radius: 7px; font-size: 0.84rem; line-height: 1.55; }
+.detail-narrative.pass   { background: #f0fdf4; border-left: 3px solid #16a34a; }
+.detail-narrative.warn   { background: #fffbeb; border-left: 3px solid #d97706; }
+.detail-narrative.fail   { background: #fef2f2; border-left: 3px solid #dc2626; }
+.detail-narrative.review { background: #fdf4ff; border-left: 3px solid #9333ea; }
+.detail-narrative.info   { background: #eff6ff; border-left: 3px solid #3b82f6; }
+.candidate-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; }
+.candidate-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0.75rem; border: 1px solid var(--mobius-border); border-radius: 6px; background: var(--mobius-bg-card); font-size: 0.8125rem; }
+.candidate-item .ci-name { flex: 1; font-weight: 500; }
+.candidate-item .ci-npi  { font-family: monospace; font-size: 0.78rem; color: var(--mobius-text-muted); }
+.candidate-item .ci-spec { font-size: 0.78rem; color: var(--mobius-text-secondary); }
+.candidate-item .ci-loc  { font-size: 0.78rem; color: var(--mobius-text-muted); }
+.candidate-item .ci-conf { font-size: 0.78rem; padding: 0.1rem 0.4rem; border-radius: 4px; background: #f0fdf4; color: #166534; font-weight: 600; }
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.tl-entry { display: flex; gap: 0.75rem; padding: 0.5rem 0 0.5rem 0.875rem; border-left: 2px solid var(--mobius-border); margin-left: 0.25rem; position: relative; }
+.tl-entry::before { content: ''; position: absolute; left: -5px; top: 0.75rem; width: 8px; height: 8px; border-radius: 50%; background: var(--mobius-border-medium); }
+.tl-entry:first-child::before { background: #6366f1; }
+.tl-entry .tl-ts { font-size: 0.72rem; color: var(--mobius-text-muted); white-space: nowrap; min-width: 110px; }
+.tl-entry .tl-body { flex: 1; font-size: 0.8125rem; }
+.tl-entry .tl-type { font-weight: 600; margin-bottom: 0.1rem; }
+.tl-entry .tl-desc { color: var(--mobius-text-secondary); }
+.detail-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; padding-top: 0.5rem; border-top: 1px solid var(--mobius-border); }
+.btn-revalidate { padding: 0.3rem 0.875rem; border-radius: 6px; font-size: 0.8125rem; font-family: inherit; font-weight: 600; cursor: pointer; border: 1px solid #a5b4fc; background: #eef2ff; color: #3730a3; transition: background 0.15s; }
+.btn-revalidate:hover { background: #e0e7ff; }
+.btn-revalidate:disabled { opacity: 0.5; cursor: not-allowed; }
+/* ── Inline row edit form ──────────────────────────────────── */
+.edit-form {
+  background: var(--mobius-bg-tertiary);
+  border: 1.5px solid var(--mobius-border-medium);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+.edit-form-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--mobius-text-primary);
+  margin-bottom: 0.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.edit-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 0.625rem;
+}
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.edit-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--mobius-text-muted);
+}
+.edit-input {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--mobius-border-medium);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-family: inherit;
+  background: var(--mobius-bg-card);
+  color: var(--mobius-text-primary);
+  transition: border-color 0.15s;
+}
+.edit-input:focus { outline: none; border-color: var(--mobius-accent); }
+.edit-input.mono { font-family: monospace; }
+.edit-resolution-row {
+  display: flex;
+  gap: 0.625rem;
+  flex-direction: column;
+}
+.edit-resolution-pills {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.resolution-pill {
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid var(--mobius-border-medium);
+  background: var(--mobius-bg-card);
+  color: var(--mobius-text-secondary);
+  transition: background 0.12s, border-color 0.12s;
+  user-select: none;
+}
+.resolution-pill:hover { background: var(--mobius-bg-tertiary); border-color: var(--mobius-text-muted); }
+.resolution-pill.active { background: #fef2f2; border-color: #dc2626; color: #991b1b; }
+.resolution-pill.active.soft { background: #fffbeb; border-color: #d97706; color: #92400e; }
+.edit-form-footer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.btn-save { padding: 0.375rem 1rem; border-radius: 7px; font-size: 0.8125rem; font-weight: 700; cursor: pointer; border: none; background: var(--mobius-accent); color: #fff; transition: background 0.15s; }
+.btn-save:hover { background: var(--mobius-accent-hover); }
+.btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-edit-cancel { padding: 0.375rem 0.75rem; border-radius: 7px; font-size: 0.8125rem; font-weight: 600; cursor: pointer; border: 1px solid var(--mobius-border-medium); background: var(--mobius-bg-card); color: var(--mobius-text-secondary); transition: background 0.15s; }
+.btn-edit-cancel:hover { background: var(--mobius-bg-tertiary); }
+.taxonomy-code { font-family: monospace; font-size: 0.75rem; background: var(--mobius-bg-tertiary); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--mobius-text-muted); border: 1px solid var(--mobius-border); }
+/* Resolve button visible inline in the table row */
+.btn-resolve { padding: 0.22rem 0.65rem; border-radius: 5px; font-size: 0.75rem; font-family: inherit; font-weight: 600; cursor: pointer; border: 1.5px solid #9333ea; background: #fdf4ff; color: #7e22ce; transition: background 0.15s; white-space: nowrap; }
+.btn-resolve:hover { background: #f3e8ff; }
+
+/* ── Match-selection dialog ─────────────────────────────────── */
+.match-dialog-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(3px);
+}
+.match-dialog {
+  background: var(--mobius-bg-card);
+  border-radius: 14px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.24);
+  width: min(640px, 95vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.match-dialog-header {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--mobius-border);
+}
+.match-dialog-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--mobius-text-primary);
+  margin-bottom: 0.25rem;
+}
+.match-dialog-subtitle {
+  font-size: 0.8125rem;
+  color: var(--mobius-text-muted);
+  line-height: 1.45;
+}
+.match-dialog-body {
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.match-candidate-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  border: 1.5px solid var(--mobius-border);
+  border-radius: 10px;
+  background: var(--mobius-bg-card);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.match-candidate-card:hover {
+  border-color: #9333ea;
+  background: #fdf4ff;
+  box-shadow: 0 2px 10px rgba(147,51,234,0.12);
+}
+.match-candidate-card.mcc-best {
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
+.match-candidate-card.mcc-best:hover {
+  background: #dcfce7;
+  border-color: #15803d;
+}
+.mcc-meta { grid-column: 1; display: flex; flex-direction: column; gap: 0.25rem; }
+.mcc-name { font-weight: 600; font-size: 0.9375rem; color: var(--mobius-text-primary); }
+.mcc-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; font-size: 0.78rem; color: var(--mobius-text-muted); }
+.mcc-npi { font-family: monospace; background: var(--mobius-bg-tertiary); padding: 0.1rem 0.4rem; border-radius: 4px; }
+.mcc-best-badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.15rem 0.45rem; border-radius: 20px; background: #16a34a; color: #fff; }
+.mcc-conf { grid-column: 2; grid-row: 1 / 3; align-self: center; font-size: 1.0625rem; font-weight: 700; padding: 0.4rem 0.7rem; border-radius: 8px; text-align: center; white-space: nowrap; }
+.mcc-conf.high  { background: #f0fdf4; color: #16a34a; }
+.mcc-conf.mid   { background: #fffbeb; color: #92400e; }
+.mcc-conf.low   { background: #fef2f2; color: #991b1b; }
+.mcc-select-btn { grid-column: 1 / -1; display: none; } /* hidden – whole card is clickable */
+.match-dialog-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--mobius-border);
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.match-dialog-footer .btn-manual { font-size: 0.8125rem; font-weight: 600; padding: 0.45rem 1rem; border-radius: 7px; cursor: pointer; border: 1.5px solid var(--mobius-border-medium); background: var(--mobius-bg-card); color: var(--mobius-text-secondary); transition: background 0.15s; }
+.match-dialog-footer .btn-manual:hover { background: var(--mobius-bg-tertiary); }
+.match-dialog-footer .btn-cancel { margin-left: auto; font-size: 0.8125rem; color: var(--mobius-text-muted); background: none; border: none; cursor: pointer; padding: 0.4rem 0.75rem; border-radius: 6px; }
+.match-dialog-footer .btn-cancel:hover { background: var(--mobius-bg-tertiary); }
+
+/* Sidebar */
+.sidebar {}
+.issue-card {
+  background: var(--mobius-bg-card);
+  border: 1px solid var(--mobius-border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--mobius-shadow-sm);
+  margin-bottom: 1rem;
+}
+.issue-card .ic-header {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--mobius-border);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+.issue-item {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--mobius-bg-tertiary);
+  font-size: 0.875rem;
+}
+.issue-item:last-child { border-bottom: none; }
+.issue-name { font-weight: 500; margin-bottom: 0.25rem; }
+.issue-npi { font-family: monospace; font-size: 0.8rem; color: var(--mobius-text-muted); margin-bottom: 0.5rem; }
+.issue-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn-xs {
+  padding: 0.25rem 0.625rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid var(--mobius-border-medium);
+  background: var(--mobius-bg-card);
+  color: var(--mobius-text-secondary);
+}
+.btn-xs:hover { background: var(--mobius-bg-tertiary); }
+.btn-xs.accept { border-color: var(--mobius-success); color: var(--mobius-success); }
+.btn-xs.unable { border-color: var(--mobius-error); color: var(--mobius-error); }
+.npi-input {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--mobius-border-medium);
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-family: monospace;
+  display: none;
+}
+
+.empty-msg { padding: 2rem; text-align: center; color: var(--mobius-text-muted); font-size: 0.875rem; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand">
+      <span class="logo-mark">Providr</span>
+      <span class="service-label">Verification Report</span>
+    </div>
+    <div class="export-btns" id="exportBtns" style="display:none">
+      <a class="btn-sm" id="expCsv" href="#">Export CSV</a>
+      <a class="btn-sm" id="expExcel" href="#">Export Excel</a>
+      <a class="btn-sm" id="expAudit" href="#">Audit Log</a>
+    </div>
+  </header>
+
+  <!-- Summary stat cards -->
+  <div class="stats-grid">
+    <div class="stat-card blue"><div class="num" id="sTotal">—</div><div class="lbl">Total providers</div></div>
+    <div class="stat-card green"><div class="num" id="sRate">—</div><div class="lbl">Verified</div></div>
+    <div class="stat-card yellow"><div class="num" id="sIssues">—</div><div class="lbl">Issues found</div></div>
+    <div class="stat-card"><div class="num" id="sApiCalls">—</div><div class="lbl">API calls made</div></div>
+  </div>
+
+  <div class="body-columns">
+    <!-- Main providers table -->
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div class="filter-tabs">
+          <button class="filter-tab active" onclick="setFilter('all', this)">All</button>
+          <button class="filter-tab" onclick="setFilter('validated', this)">Confirmed</button>
+          <button class="filter-tab" onclick="setFilter('needs_review', this)">Needs Review</button>
+          <button class="filter-tab" onclick="setFilter('invalid', this)">Not Found</button>
+          <button class="filter-tab" id="parseErrorTab" onclick="setFilter('parse_error', this)" style="display:none">
+            Unreadable <span id="parseErrorCount" class="badge parse_error" style="margin-left:0.25rem;vertical-align:middle"></span>
+          </button>
+        </div>
+        <input class="search-input" id="searchInput" type="text" placeholder="Search by name…" oninput="renderTable()">
+      </div>
+
+      <!-- Bulk action bars (shown only when relevant rows exist) -->
+      <div class="bulk-action-bar" id="parseErrorBar" style="display:none">
+        <span class="bar-label">
+          <strong id="parseErrorBarCount">0</strong> rows have unreadable entries
+          (invalid names, placeholders, or number-only values)
+        </span>
+        <button class="btn-warning-sm" onclick="bulkExclude(['parse_error'])">
+          Remove unreadable entries
+        </button>
+      </div>
+      <div class="bulk-action-bar invalid-bar" id="invalidBar" style="display:none">
+        <span class="bar-label">
+          <strong id="invalidBarCount">0</strong> rows could not be matched in the national provider registry
+        </span>
+        <button class="btn-danger-sm" onclick="bulkExclude(['invalid'])">
+          Remove all invalid
+        </button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="providerTable">
+          <thead>
+            <tr>
+              <th onclick="sortTable('row_number')">#</th>
+              <th onclick="sortTable('provider_name')">Name</th>
+              <th onclick="sortTable('npi_uploaded')">Provider ID (NPI)</th>
+              <th onclick="sortTable('npi_validated')">Verified NPI</th>
+              <th onclick="sortTable('specialty_uploaded')">Specialty</th>
+              <th onclick="sortTable('status')">Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="empty-msg" id="emptyMsg" style="display:none">No providers match this filter.</div>
+      </div>
+    </div>
+
+    <!-- Issue resolution sidebar -->
+    <div class="sidebar">
+      <div class="issue-card">
+        <div class="ic-header">Needs Review (<span id="reviewCount">0</span>)</div>
+        <div id="issueList"><div class="empty-msg">No issues to resolve.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Match-selection dialog (rendered by JS) -->
+<div id="matchDialogBackdrop" class="match-dialog-backdrop" style="display:none" role="dialog" aria-modal="true" aria-labelledby="matchDialogTitle">
+  <div class="match-dialog">
+    <div class="match-dialog-header">
+      <div class="match-dialog-title" id="matchDialogTitle">Select the correct provider</div>
+      <div class="match-dialog-subtitle" id="matchDialogSubtitle"></div>
+    </div>
+    <div class="match-dialog-body" id="matchDialogBody"></div>
+    <div class="match-dialog-footer">
+      <button type="button" class="btn-manual" id="matchDialogManual">Enter NPI manually</button>
+      <button type="button" class="btn-cancel" id="matchDialogCancel">Skip for now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const uploadId = params.get('upload_id') || '';
+const API = window.location.origin;
+
+let allProviders = [];
+let sortKey = 'row_number';
+let sortAsc = true;
+let activeFilter = 'all';
+
+async function loadReport() {
+  if (!uploadId) return;
+  try {
+    const r = await fetch(`${API}/roster/reconcile/${uploadId}/report`);
+    if (!r.ok) {
+      document.getElementById('tableBody').innerHTML = '<tr><td colspan="7" class="empty-msg">Report not found. Run verification first.</td></tr>';
+      return;
+    }
+    const data = await r.json();
+    allProviders = (data.providers || []).map(p => ({
+      ...p,
+      npi_validated: p.latest_validation?.npi_validated || '',
+      specialty_validated: p.latest_validation?.specialty_validated || '',
+      validation_type: p.latest_validation?.validation_type || '',
+      match_confidence: p.latest_validation?.match_confidence ?? null,
+      validation_details: p.latest_validation?.validation_details || {},
+      validation_history: p.validation_history || (p.latest_validation ? [p.latest_validation] : []),
+    }));
+
+    // Stats
+    const total = data.total_providers || allProviders.length;
+    const validated = data.validated_count || 0;
+    const issues = (data.needs_review_count || 0) + (data.invalid_count || 0) + (data.parse_error_count || 0);
+    document.getElementById('sTotal').textContent = total;
+    document.getElementById('sRate').textContent = total > 0 ? Math.round(validated * 100 / total) + '%' : '—';
+    document.getElementById('sIssues').textContent = issues;
+    document.getElementById('sApiCalls').textContent = data.api_calls_made || 0;
+
+    updateBulkBars();
+
+    // Export buttons
+    const expBtns = document.getElementById('exportBtns');
+    expBtns.style.display = 'flex';
+    document.getElementById('expCsv').href = `${API}/roster/reconcile/${uploadId}/export/csv`;
+    document.getElementById('expExcel').href = `${API}/roster/reconcile/${uploadId}/export/excel`;
+    document.getElementById('expAudit').href = `${API}/roster/reconcile/${uploadId}/export/audit-log`;
+
+    renderTable();
+    renderIssues();
+  } catch (e) {
+    console.error(e);
+    document.getElementById('tableBody').innerHTML = '<tr><td colspan="7" class="empty-msg">Error loading report.</td></tr>';
+  }
+}
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+function sortTable(key) {
+  if (sortKey === key) sortAsc = !sortAsc;
+  else { sortKey = key; sortAsc = true; }
+  renderTable();
+}
+
+function renderTable() {
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  let rows = allProviders.filter(p => {
+    if (activeFilter !== 'all' && p.status !== activeFilter) return false;
+    if (q && !p.provider_name.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  rows.sort((a, b) => {
+    let va = a[sortKey] ?? '', vb = b[sortKey] ?? '';
+    if (typeof va === 'number') return sortAsc ? va - vb : vb - va;
+    return sortAsc ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
+  });
+
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyMsg');
+
+  if (!rows.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = rows.map(p => {
+    const candidates = ((p.latest_validation || {}).validation_details || {}).candidates || [];
+    const resolveBtn = (p.status === 'needs_review' && candidates.length > 0)
+      ? `<button class="btn-resolve" onclick="event.stopPropagation(); openMatchDialog(${p.id})">Resolve →</button>`
+      : '';
+    return `
+    <tr class="${p.status}" data-id="${p.id}" onclick="toggleDetail(${p.id}, this)">
+      <td>${p.row_number}</td>
+      <td>
+        ${esc(p.provider_name)}
+        ${p.parse_notes ? `<span class="parse-warn-icon" title="${esc(p.parse_notes)}">⚠️</span>` : ''}
+      </td>
+      <td class="npi-mono">${p.npi_uploaded || '—'}</td>
+      <td class="npi-mono">${p.npi_validated || '—'}</td>
+      <td>${esc(p.specialty_uploaded || p.specialty_validated || '—')}</td>
+      <td><span class="badge ${p.status}">${({validated:'confirmed',invalid:'not found',needs_review:'needs review',parse_error:'unreadable entry',corrected:'corrected',excluded:'excluded',pending:'pending'})[p.status] || p.status.replace(/_/g, ' ')}</span>${resolveBtn ? ' ' + resolveBtn : ''}</td>
+      <td style="color:var(--mobius-text-muted);font-size:0.8rem">▾</td>
+    </tr>
+    <tr class="detail-row" id="detail-${p.id}" style="display:none">
+      <td colspan="7">
+        <div class="detail-inner" onclick="event.stopPropagation()">
+          ${buildDetailContent(p)}
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function buildDetailContent(p) {
+  const parts = [];
+  const lv = p.latest_validation || {};
+  const history = p.validation_history || (lv ? [lv] : []);
+
+  // ── Parse error banner ──────────────────────────────────────────────
+  if (p.parse_notes) {
+    parts.push(`<div class="detail-narrative review">
+      <strong>⚠ Parse issue detected</strong><br>
+      ${esc(p.parse_notes)}<br>
+      <em style="font-size:0.8rem">This row was not sent to the national provider registry — fix the name and re-check, or remove the row.</em>
+    </div>`);
+  }
+
+  // ── Narrative: what happened ────────────────────────────────────────
+  if (lv.validation_type) {
+    const narrative = buildNarrative(p, lv);
+    parts.push(`<div class="detail-narrative ${narrative.tone}">${narrative.html}</div>`);
+  }
+
+  // ── Uploaded vs registry facts ──────────────────────────────────────
+  const confPct = lv.match_confidence != null ? Math.round(lv.match_confidence * 100) + '%' : null;
+  const confColor = lv.match_confidence >= 0.8 ? '#166534' : lv.match_confidence >= 0.6 ? '#854d0e' : '#991b1b';
+  const txCode = (lv.validation_details || {}).taxonomy_code || ((lv.validation_details || {}).matches || []).at(0)?.taxonomy_code || '';
+  const specDisplay = lv.specialty_validated
+    ? (txCode ? `${esc(lv.specialty_validated)} <span class="taxonomy-code">${esc(txCode)}</span>` : esc(lv.specialty_validated))
+    : '—';
+  parts.push(`<div class="detail-section">
+    <div class="di"><span class="dl">Uploaded NPI</span><span class="dv npi-mono">${p.npi_uploaded || '—'}</span></div>
+    <div class="di"><span class="dl">Registry NPI</span><span class="dv npi-mono">${lv.npi_validated || '—'}</span></div>
+    <div class="di"><span class="dl">Registry name</span><span class="dv">${esc(lv.provider_name_validated || '—')}</span></div>
+    <div class="di"><span class="dl">Specialty (registry)</span><span class="dv">${specDisplay}</span></div>
+    <div class="di"><span class="dl">License</span><span class="dv">${p.license_number || '—'}</span></div>
+    <div class="di"><span class="dl">State</span><span class="dv">${p.state || '—'}</span></div>
+    ${confPct ? `<div class="di"><span class="dl">Name match</span><span class="dv" style="color:${confColor}">${lv.match_confidence >= 0.8 ? 'Best match' : lv.match_confidence >= 0.6 ? 'Possible match' : 'Weak match'}</span></div>` : ''}
+  </div>`);
+
+  // ── Candidates (needs_review with multiple NPPES matches) ───────────
+  const candidates = (lv.validation_details || {}).candidates || [];
+  if (candidates.length > 0) {
+    const rows = candidates.map(c => {
+      const name = c.name || c.npi || 'Unknown';
+      const sim = p.provider_name ? nameSimScore(p.provider_name, name) : null;
+      const confStr = sim != null ? (sim >= 0.8 ? 'Best match' : sim >= 0.55 ? 'Possible match' : 'Weak match') : '';
+      const confEl = confStr ? `<span class="ci-conf">${confStr}</span>` : '';
+      const loc = [c.city, c.state].filter(Boolean).join(', ');
+      const specText = c.taxonomy ? (c.taxonomy_code ? `${esc(c.taxonomy)} <span class="taxonomy-code">${esc(c.taxonomy_code)}</span>` : esc(c.taxonomy)) : '';
+      return `<li class="candidate-item">
+        <span class="ci-name">${esc(name)}</span>
+        <span class="ci-npi">${c.npi || ''}</span>
+        ${specText ? `<span class="ci-spec">${specText}</span>` : ''}
+        ${loc ? `<span class="ci-loc">📍 ${esc(loc)}</span>` : ''}
+        ${confEl}
+        <button class="btn-xs accept" onclick="openMatchDialog(${p.id})">Resolve</button>
+      </li>`;
+    }).join('');
+    parts.push(`<div>
+      <div class="dl" style="margin-bottom:0.4rem">Registry candidates — select the correct provider</div>
+      <ul class="candidate-list">${rows}</ul>
+    </div>`);
+  }
+
+  // ── Validation history timeline ─────────────────────────────────────
+  if (history.length > 0) {
+    const entries = history.map((vr, i) => {
+      const ts = vr.validated_at ? new Date(vr.validated_at).toLocaleString() : '';
+      const typeLabel = { npi_lookup: 'NPI Lookup', npi_search: 'Name Search', manual_correction: 'Manual Correction' }[vr.validation_type] || vr.validation_type || '—';
+      const statusLabel = { pass: '✓ Passed', fail: '✗ Failed', warning: '⚠ Warning', manual_review: '👤 Needs review' }[vr.validation_status] || vr.validation_status || '';
+      const detail = buildVrDetail(vr);
+      return `<div class="tl-entry">
+        <span class="tl-ts">${ts}</span>
+        <div class="tl-body">
+          <div class="tl-type">${typeLabel} — ${statusLabel}</div>
+          <div class="tl-desc">${detail}</div>
+        </div>
+      </div>`;
+    }).join('');
+    parts.push(`<div><div class="dl" style="margin-bottom:0.4rem">What we found</div><div class="timeline">${entries}</div></div>`);
+  }
+
+  // ── Edit form (shown when user clicks Edit) ──────────────────────────
+  parts.push(buildEditForm(p));
+
+  // ── Actions ─────────────────────────────────────────────────────────
+  parts.push(`<div class="detail-actions">
+    <button class="btn-revalidate" id="revbtn-${p.id}" onclick="revalidateProvider(${p.id})">↺ Re-check</button>
+    <button class="btn-xs" onclick="toggleEditForm(${p.id})" id="editbtn-${p.id}">✏ Edit row</button>
+    ${p.status !== 'excluded' ? `<button class="btn-xs unable" onclick="excludeOne(${p.id})">Remove row</button>` : ''}
+  </div>`);
+
+  return parts.join('');
+}
+
+// ── Resolution quick-picks ────────────────────────────────────────────────────
+const RESOLUTION_PILLS = [
+  { value: 'deceased',         label: 'Deceased',           cls: 'active' },
+  { value: 'retired',          label: 'Retired',            cls: 'active soft' },
+  { value: 'no_longer_active', label: 'No longer active',   cls: 'active soft' },
+  { value: 'duplicate',        label: 'Duplicate entry',    cls: 'active soft' },
+  { value: 'cannot_validate',  label: 'Cannot validate',    cls: 'active' },
+];
+
+function buildEditForm(p) {
+  const pillsHtml = RESOLUTION_PILLS.map(r =>
+    `<button type="button" class="resolution-pill" data-value="${r.value}"
+       onclick="toggleResolutionPill(${p.id}, this, '${r.cls}')">${r.label}</button>`
+  ).join('');
+  return `
+  <div class="edit-form" id="editform-${p.id}" style="display:none">
+    <div class="edit-form-title">✏ Edit row — <span style="font-weight:400;color:var(--mobius-text-muted)">changes are saved when you click Save</span></div>
+    <div class="edit-form-grid">
+      <div class="edit-field" style="grid-column: 1 / -1">
+        <label class="edit-label">Provider name</label>
+        <input class="edit-input" id="ef-name-${p.id}" value="${esc(p.provider_name || '')}" placeholder="Full name">
+      </div>
+      <div class="edit-field">
+        <label class="edit-label">NPI</label>
+        <input class="edit-input mono" id="ef-npi-${p.id}" value="${esc(p.npi_uploaded || '')}" maxlength="10" placeholder="10 digits">
+      </div>
+      <div class="edit-field">
+        <label class="edit-label">Specialty</label>
+        <input class="edit-input" id="ef-specialty-${p.id}" value="${esc(p.specialty_uploaded || '')}" placeholder="Specialty">
+      </div>
+      <div class="edit-field">
+        <label class="edit-label">License</label>
+        <input class="edit-input" id="ef-license-${p.id}" value="${esc(p.license_number || '')}" placeholder="License #">
+      </div>
+      <div class="edit-field">
+        <label class="edit-label">State</label>
+        <input class="edit-input" id="ef-state-${p.id}" value="${esc(p.state || '')}" maxlength="2" placeholder="FL" style="max-width:80px">
+      </div>
+    </div>
+    <div class="edit-resolution-row">
+      <div class="edit-label">Resolution reason <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional — marks row as closed)</span></div>
+      <div class="edit-resolution-pills" id="ef-pills-${p.id}">${pillsHtml}</div>
+      <input class="edit-input" id="ef-reason-hidden-${p.id}" type="hidden" value="">
+    </div>
+    <div class="edit-field">
+      <label class="edit-label">Notes <span style="font-weight:400;text-transform:none;letter-spacing:0">(free-form — e.g. "Provider retired May 2025, confirmed by office manager")</span></label>
+      <textarea class="edit-input" id="ef-notes-${p.id}" rows="2" placeholder="Any context, source, or follow-up notes…" style="resize:vertical">${esc((p.latest_validation && p.latest_validation.validation_details && p.latest_validation.validation_details.notes) || '')}</textarea>
+    </div>
+    <div class="edit-form-footer">
+      <button type="button" class="btn-save" onclick="saveEditForm(${p.id})">Save changes</button>
+      <button type="button" class="btn-edit-cancel" onclick="toggleEditForm(${p.id})">Cancel</button>
+      <span class="edit-save-status" id="ef-status-${p.id}" style="font-size:0.8rem;margin-left:0.25rem"></span>
+    </div>
+  </div>`;
+}
+
+function toggleEditForm(providerId) {
+  const form = document.getElementById('editform-' + providerId);
+  const btn = document.getElementById('editbtn-' + providerId);
+  if (!form) return;
+  const open = form.style.display !== 'none';
+  form.style.display = open ? 'none' : 'block';
+  if (btn) btn.textContent = open ? '✏ Edit row' : '✕ Close edit';
+}
+
+function toggleResolutionPill(providerId, el, activeCls) {
+  const pills = el.closest('.edit-resolution-pills').querySelectorAll('.resolution-pill');
+  const hidden = document.getElementById('ef-reason-hidden-' + providerId);
+  const wasActive = el.classList.contains('active');
+  pills.forEach(p => { p.className = 'resolution-pill'; });
+  if (!wasActive) {
+    el.className = 'resolution-pill ' + activeCls;
+    if (hidden) hidden.value = el.dataset.value;
+  } else {
+    if (hidden) hidden.value = '';
+  }
+}
+
+async function saveEditForm(providerId) {
+  const statusEl = document.getElementById('ef-status-' + providerId);
+  const body = {
+    name_corrected:     (document.getElementById('ef-name-' + providerId)?.value || '').trim() || null,
+    npi_corrected:      (document.getElementById('ef-npi-' + providerId)?.value || '').trim() || null,
+    specialty_corrected:(document.getElementById('ef-specialty-' + providerId)?.value || '').trim() || null,
+    license_corrected:  (document.getElementById('ef-license-' + providerId)?.value || '').trim() || null,
+    state_corrected:    (document.getElementById('ef-state-' + providerId)?.value || '').trim() || null,
+    resolution_reason:  (document.getElementById('ef-reason-hidden-' + providerId)?.value || '').trim() || null,
+    correction_notes:   (document.getElementById('ef-notes-' + providerId)?.value || '').trim() || null,
+    correction_source: 'manual_edit',
+  };
+
+  // Filter out nulls that weren't changed
+  const p = allProviders.find(x => x.id === providerId);
+  if (p) {
+    if (body.name_corrected === p.provider_name) body.name_corrected = null;
+    if (body.npi_corrected === p.npi_uploaded) body.npi_corrected = null;
+    if (body.specialty_corrected === (p.specialty_uploaded || '')) body.specialty_corrected = null;
+    if (body.license_corrected === (p.license_number || '')) body.license_corrected = null;
+    if (body.state_corrected === (p.state || '')) body.state_corrected = null;
+  }
+
+  if (statusEl) { statusEl.textContent = 'Saving…'; statusEl.style.color = 'var(--mobius-text-muted)'; }
+  try {
+    const r = await fetch(`${API}/roster/provider/${providerId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!r.ok) throw new Error(await r.text());
+    const updated = await r.json();
+    allProviders = allProviders.map(x => x.id === providerId ? { ...x, ...updated } : x);
+    if (statusEl) { statusEl.textContent = '✓ Saved'; statusEl.style.color = 'var(--mobius-success)'; }
+    renderTable();
+    renderIssues();
+    toggleEditForm(providerId);
+  } catch (e) {
+    console.error(e);
+    if (statusEl) { statusEl.textContent = '✗ Save failed'; statusEl.style.color = 'var(--mobius-error)'; }
+  }
+}
+
+function buildNarrative(p, lv) {
+  const vtype = lv.validation_type || '';
+  const vstatus = lv.validation_status || '';
+  const details = lv.validation_details || {};
+  const conf = lv.match_confidence;
+  const regName = lv.provider_name_validated || '';
+  const regNpi = lv.npi_validated || '';
+
+  if (vtype === 'npi_lookup') {
+    if (vstatus === 'pass') {
+      return { tone: 'pass', html: `<strong>✓ NPI confirmed.</strong> Looked up NPI <code>${p.npi_uploaded}</code> — found <strong>${esc(regName)}</strong> (${esc(lv.specialty_validated || details.taxonomy || '')}), status Active. Name match: ${conf != null ? (conf >= 0.8 ? 'Best match' : conf >= 0.6 ? 'Possible match' : 'Weak match') : '—'}.` };
+    }
+    if (regNpi) {
+      const confMsg = conf != null ? `Name match: ${conf >= 0.8 ? 'Best match' : conf >= 0.6 ? 'Possible match' : 'Weak match'} — ` : '';
+      const reason = conf != null && conf < 0.6
+        ? `the name on your roster (<em>${esc(p.provider_name)}</em>) differs from the registry name (<em>${esc(regName)}</em>). This is common when rosters use a different name order or format.`
+        : `minor name format difference detected.`;
+      return { tone: 'warn', html: `<strong>⚠ NPI found but name needs review.</strong> ${confMsg}${reason}` };
+    }
+    return { tone: 'fail', html: `<strong>✗ NPI not found.</strong> NPI <code>${p.npi_uploaded}</code> returned no results from the national provider registry. The NPI may be incorrect or inactive.` };
+  }
+
+  if (vtype === 'npi_search') {
+    if (vstatus === 'manual_review') {
+      const n = (details.candidates || []).length;
+      return { tone: 'review', html: `<strong>👤 Multiple matches found.</strong> Searched the national provider registry by name <em>${esc(details.search_name || p.provider_name)}</em> — found <strong>${n} candidate${n !== 1 ? 's' : ''}</strong>. Select the correct provider from the list below, or enter their NPI manually.` };
+    }
+    if (vstatus === 'pass') {
+      return { tone: 'pass', html: `<strong>✓ Found by name search.</strong> <em>${esc(details.search_name || p.provider_name)}</em> matched <strong>${esc(regName)}</strong> (NPI ${regNpi}).` };
+    }
+    if ((details.reason || '') === 'no_name_and_no_npi') {
+      return { tone: 'fail', html: `<strong>✗ No name or NPI to search.</strong> This row has neither a recognisable provider name nor a valid NPI.` };
+    }
+    return { tone: 'fail', html: `<strong>✗ Not found in registry.</strong> Searched by name <em>${esc(details.search_name || p.provider_name)}</em> in state ${esc(details.state || p.state || 'FL')} — no results returned. Check the spelling or try entering the NPI manually.` };
+  }
+
+  if (vtype === 'manual_correction') {
+    return { tone: 'info', html: `<strong>✏ Manually corrected.</strong> NPI updated to <code>${regNpi}</code>.` };
+  }
+  return { tone: 'info', html: `Validation type: ${esc(vtype)}, status: ${esc(vstatus)}.` };
+}
+
+function buildVrDetail(vr) {
+  const d = vr.validation_details || {};
+  const regName = vr.provider_name_validated;
+  const npi = vr.npi_validated;
+  const parts = [];
+  if (regName) parts.push(`Registry: <strong>${esc(regName)}</strong>`);
+  if (npi) parts.push(`NPI: <code>${npi}</code>`);
+  if (vr.specialty_validated) parts.push(`Specialty: ${esc(vr.specialty_validated)}`);
+  if (vr.match_confidence != null) parts.push(`Match: ${vr.match_confidence >= 0.8 ? 'Best match' : vr.match_confidence >= 0.6 ? 'Possible match' : 'Weak match'}`);
+  if (d.reason) parts.push(`Reason: ${esc(d.reason)}`);
+  const candN = (d.candidates || []).length;
+  if (candN) parts.push(`${candN} candidates found`);
+  return parts.join(' · ') || '—';
+}
+
+function nameSimScore(a, b) {
+  // Simple token-set ratio for display (mirrors Python logic)
+  const norm = s => (s || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+  const na = new Set(norm(a).split(' ').filter(Boolean));
+  const nb = new Set(norm(b).split(' ').filter(Boolean));
+  const inter = [...na].filter(x => nb.has(x)).length;
+  const union = new Set([...na, ...nb]).size;
+  return union ? inter / union : 0;
+}
+
+async function revalidateProvider(providerId) {
+  const btn = document.getElementById('revbtn-' + providerId);
+  if (btn) { btn.disabled = true; btn.textContent = '↺ Re-checking…'; }
+  try {
+    const r = await fetch(`${API}/roster/provider/${providerId}/revalidate`, { method: 'POST' });
+    if (r.ok) {
+      const data = await r.json();
+      const updated = data.provider || data;
+      const vr = data.validation || null;
+      allProviders = allProviders.map(p => {
+        if (p.id !== providerId) return p;
+        const newP = { ...p, ...updated };
+        if (vr) {
+          newP.latest_validation = vr;
+          newP.validation_history = [vr, ...(p.validation_history || [])];
+          newP.npi_validated = vr.npi_validated || p.npi_validated;
+          newP.specialty_validated = vr.specialty_validated || p.specialty_validated;
+          newP.validation_type = vr.validation_type;
+          newP.match_confidence = vr.match_confidence;
+        }
+        return newP;
+      });
+      renderTable();
+      renderIssues();
+      updateBulkBars();
+      showToast('Re-check complete.');
+    } else {
+      showToast('Re-check failed.');
+      if (btn) { btn.disabled = false; btn.textContent = '↺ Re-check'; }
+    }
+  } catch (e) {
+    console.error(e);
+    if (btn) { btn.disabled = false; btn.textContent = '↺ Re-check'; }
+  }
+}
+
+function toggleDetail(id, row) {
+  const det = document.getElementById('detail-' + id);
+  if (!det) return;
+  det.style.display = det.style.display === 'none' ? '' : 'none';
+}
+
+function renderIssues() {
+  const issues = allProviders.filter(p =>
+    p.status === 'needs_review' || p.status === 'invalid' || p.status === 'parse_error'
+  );
+  document.getElementById('reviewCount').textContent = issues.length;
+  const list = document.getElementById('issueList');
+  if (!issues.length) {
+    list.innerHTML = '<div class="empty-msg">No issues to resolve.</div>';
+    return;
+  }
+  list.innerHTML = issues.map(p => `
+    <div class="issue-item" id="issue-${p.id}">
+      <div class="issue-name">
+        ${esc(p.provider_name)}
+        <span class="badge ${p.status}" style="margin-left:0.4rem;font-size:0.7rem">${({validated:'confirmed',invalid:'not found',needs_review:'needs review',parse_error:'unreadable entry',corrected:'corrected',excluded:'excluded',pending:'pending'})[p.status] || p.status.replace(/_/g, ' ')}</span>
+      </div>
+      ${p.parse_notes ? `<div style="font-size:0.78rem;color:#86198f;margin-bottom:0.3rem">⚠ ${esc(p.parse_notes)}</div>` : ''}
+      <div class="issue-npi">Uploaded NPI: ${p.npi_uploaded || 'none'}</div>
+      <div class="issue-actions">
+        ${(() => {
+          const candidates = ((p.latest_validation || {}).validation_details || {}).candidates || [];
+          return p.status === 'needs_review' && candidates.length > 0
+            ? `<button class="btn-resolve" onclick="openMatchDialog(${p.id})">Resolve →</button>`
+            : '';
+        })()}
+        ${p.status === 'parse_error' ? '' : p.npi_validated ? `<button class="btn-xs accept" onclick="acceptNpi(${p.id}, '${p.npi_validated}')">Accept ${p.npi_validated}</button>` : ''}
+        ${p.status === 'parse_error' ? '' : `<button class="btn-xs" onclick="showCorrectInput(${p.id})">Enter NPI</button>`}
+        ${p.status !== 'parse_error' ? `<button class="btn-revalidate" id="revbtn-${p.id}" onclick="revalidateProvider(${p.id})" style="font-size:0.78rem;padding:0.2rem 0.6rem">↺ Re-check</button>` : ''}
+        <button class="btn-xs unable" onclick="excludeOne(${p.id})">Remove row</button>
+      </div>
+      <input class="npi-input" id="npi-input-${p.id}" type="text" maxlength="10" placeholder="10-digit NPI"
+        onblur="submitCorrection(${p.id})">
+    </div>`).join('');
+}
+
+async function acceptNpi(providerId, npi) {
+  closeMatchDialog();
+  await applyCorrection(providerId, { npi_corrected: npi, correction_source: 'registry_selected' });
+}
+
+// ── Match-selection dialog ────────────────────────────────────────────────────
+let _matchDialogProviderId = null;
+
+function openMatchDialog(providerId) {
+  const p = allProviders.find(x => x.id === providerId);
+  if (!p) return;
+  const lv = p.latest_validation || {};
+  const candidates = (lv.validation_details || {}).candidates || [];
+  if (!candidates.length) return;
+
+  _matchDialogProviderId = providerId;
+
+  // Sort candidates by similarity descending
+  const scored = candidates.map(c => ({
+    ...c,
+    _sim: p.provider_name ? nameSimScore(p.provider_name, c.name || '') : 0,
+  })).sort((a, b) => b._sim - a._sim);
+
+  const bestSim = scored[0]._sim;
+
+  document.getElementById('matchDialogSubtitle').innerHTML =
+    `Searching for <strong>${esc(p.provider_name)}</strong>${p.npi_uploaded ? ' · uploaded NPI: <code>' + esc(p.npi_uploaded) + '</code>' : ''}<br>` +
+    `The national provider registry returned <strong>${candidates.length} match${candidates.length !== 1 ? 'es' : ''}</strong>. Click the correct provider to confirm.`;
+
+  const bodyEl = document.getElementById('matchDialogBody');
+  bodyEl.innerHTML = scored.map((c, i) => {
+    const sim = c._sim;
+    const pct = Math.round(sim * 100);
+    const confClass = sim >= 0.8 ? 'high' : sim >= 0.55 ? 'mid' : 'low';
+    const isBest = i === 0 && sim === bestSim && sim >= 0.5;
+    return `<div class="match-candidate-card${isBest ? ' mcc-best' : ''}" onclick="acceptNpi(${p.id}, '${esc(c.npi || '')}')">
+      <div class="mcc-meta">
+        <div class="mcc-name">${esc(c.name || 'Unknown')}${isBest ? ' <span class="mcc-best-badge">Best match</span>' : ''}</div>
+        <div class="mcc-tags">
+          <span class="mcc-npi">${esc(c.npi || '—')}</span>
+          ${c.taxonomy ? `<span>${esc(c.taxonomy)}${c.taxonomy_code ? ' <span class="taxonomy-code">' + esc(c.taxonomy_code) + '</span>' : ''}</span>` : ''}
+          ${c.city ? `<span>📍 ${esc(c.city)}${c.state ? ', ' + esc(c.state) : ''}</span>` : (c.state ? `<span>📍 ${esc(c.state)}</span>` : '')}
+          ${c.status ? `<span style="color:${c.status === 'A' ? 'var(--mobius-success)' : '#dc2626'}">${c.status === 'A' ? '● Active' : c.status}</span>` : ''}
+        </div>
+        ${c.address ? `<div style="font-size:0.74rem;color:var(--mobius-text-muted);margin-top:0.2rem">${esc(c.address)}</div>` : ''}
+      </div>
+      <div class="mcc-conf ${confClass}">${sim >= 0.8 ? 'Best match' : sim >= 0.55 ? 'Possible match' : 'Weak match'}</div>
+    </div>`;
+  }).join('');
+
+  const backdrop = document.getElementById('matchDialogBackdrop');
+  backdrop.style.display = 'flex';
+  backdrop.setAttribute('aria-hidden', 'false');
+}
+
+function closeMatchDialog() {
+  _matchDialogProviderId = null;
+  const backdrop = document.getElementById('matchDialogBackdrop');
+  backdrop.style.display = 'none';
+  backdrop.setAttribute('aria-hidden', 'true');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('matchDialogCancel').addEventListener('click', closeMatchDialog);
+  document.getElementById('matchDialogManual').addEventListener('click', () => {
+    const id = _matchDialogProviderId;
+    closeMatchDialog();
+    if (id != null) {
+      // Open the row's detail panel and trigger the manual NPI input
+      const row = document.querySelector(`tr[data-id="${id}"]`);
+      const detailRow = document.getElementById('detail-' + id);
+      if (detailRow && detailRow.style.display === 'none') {
+        toggleDetail(id, row);
+      }
+      setTimeout(() => showCorrectInput(id), 100);
+    }
+  });
+  document.getElementById('matchDialogBackdrop').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeMatchDialog();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMatchDialog();
+  });
+});
+
+function showCorrectInput(providerId) {
+  const inp = document.getElementById('npi-input-' + providerId);
+  inp.style.display = 'block';
+  inp.focus();
+}
+
+async function submitCorrection(providerId) {
+  const inp = document.getElementById('npi-input-' + providerId);
+  const npi = inp.value.trim();
+  if (npi.length === 10) await applyCorrection(providerId, { npi_corrected: npi, correction_source: 'manual_entry' });
+}
+
+async function markUnable(providerId) {
+  await applyCorrection(providerId, { correction_notes: 'Unable to validate', correction_source: 'manual_entry' });
+}
+
+async function applyCorrection(providerId, body) {
+  try {
+    const r = await fetch(`${API}/roster/provider/${providerId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (r.ok) {
+      const updated = await r.json();
+      allProviders = allProviders.map(p => p.id === providerId ? { ...p, ...updated, npi_validated: updated.npi_uploaded } : p);
+      renderTable();
+      renderIssues();
+    }
+  } catch (e) { console.error(e); }
+}
+
+function updateBulkBars() {
+  const parseErrors = allProviders.filter(p => p.status === 'parse_error');
+  const invalid = allProviders.filter(p => p.status === 'invalid');
+
+  // Parse error tab + bar
+  const tab = document.getElementById('parseErrorTab');
+  const parseBar = document.getElementById('parseErrorBar');
+  const parseCnt = document.getElementById('parseErrorCount');
+  const parseBarCnt = document.getElementById('parseErrorBarCount');
+  if (parseErrors.length > 0) {
+    tab.style.display = '';
+    parseCnt.textContent = parseErrors.length;
+    parseBarCnt.textContent = parseErrors.length;
+    parseBar.style.display = 'flex';
+  } else {
+    tab.style.display = 'none';
+    parseBar.style.display = 'none';
+  }
+
+  // Invalid bar
+  const invBar = document.getElementById('invalidBar');
+  const invBarCnt = document.getElementById('invalidBarCount');
+  if (invalid.length > 0) {
+    invBarCnt.textContent = invalid.length;
+    invBar.style.display = 'flex';
+  } else {
+    invBar.style.display = 'none';
+  }
+}
+
+async function bulkExclude(statuses) {
+  const label = statuses.join(' and ') + ' rows';
+  if (!confirm(`Remove all ${label}? They will be marked as excluded (you can see them by filtering All).`)) return;
+  try {
+    const r = await fetch(`${API}/roster/reconcile/${uploadId}/bulk-exclude`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ statuses }),
+    });
+    if (!r.ok) { alert('Failed to exclude rows'); return; }
+    const data = await r.json();
+    // Update local state
+    allProviders = allProviders.map(p =>
+      statuses.includes(p.status) ? { ...p, status: 'excluded' } : p
+    );
+    renderTable();
+    renderIssues();
+    updateBulkBars();
+    const msg = `Removed ${data.excluded_count} row(s). They are now excluded from exports.`;
+    showToast(msg);
+  } catch (e) { console.error(e); alert('Error: ' + e.message); }
+}
+
+async function excludeOne(providerId) {
+  try {
+    const r = await fetch(`${API}/roster/provider/${providerId}`, { method: 'DELETE' });
+    if (r.ok) {
+      allProviders = allProviders.map(p => p.id === providerId ? { ...p, status: 'excluded' } : p);
+      renderTable();
+      renderIssues();
+      updateBulkBars();
+      showToast('Row removed.');
+    }
+  } catch (e) { console.error(e); }
+}
+
+function showToast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:0.6rem 1.25rem;border-radius:8px;font-size:0.875rem;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,0.2);transition:opacity 0.3s';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._to);
+  t._to = setTimeout(() => { t.style.opacity = '0'; }, 3000);
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+loadReport();
+</script>
+</body>
+</html>
