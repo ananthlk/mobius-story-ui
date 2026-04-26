@@ -1,13 +1,14 @@
 steps:
   # Build the container image
+  # Build context is the repo root (mobius-story-ui dir submitted by deploy.sh)
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - build
       - '-t'
       - '$_IMAGE'
       - '-f'
-      - 'mobius-story-ui/Dockerfile'
-      - 'mobius-story-ui'
+      - 'Dockerfile'
+      - '.'
     id: build
 
   # Push to Artifact Registry
