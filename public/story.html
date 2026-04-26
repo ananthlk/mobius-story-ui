@@ -3340,8 +3340,9 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 // CONFIG
 // ═══════════════════════════════════════════════════════════════
 // Skill API (roster/story endpoints) lives on 8010.
-// Chat API (mobius-chat /chat, /chat/stream) lives on 8000.
-const API      = 'http://localhost:8011';  // skills API
+// Skills API — same-origin proxy so it works locally AND on Cloud Run.
+// server/main.py routes /proxy/skills/* → SKILLS_API_URL (default localhost:8011).
+const API      = window.location.origin + '/proxy/skills';
 const CHAT_API = (() => {
   // Use same-origin proxy to avoid CORS — server/main.py forwards to Cloud Run.
   // Path structure: /proxy/chat/{path} → https://mobius-chat-ortabkknqa-uc.a.run.app/{path}
@@ -4208,9 +4209,9 @@ function _buildEnvelope(nodeOrSlotId){
     dataLines ? `Verified values:\n${dataLines}` : null,
   ].filter(Boolean).join('\n');
 
-  // Only send system_context when we have actual verified data — omit otherwise
-  // (PRD: omitting = legacy behavior, zero overhead)
-  const systemContext = hasData ? systemContextParts : null;
+  // Always send system_context — at minimum slide label/period/frame so the model
+  // knows what page it's on. Numeric data section is additive when available.
+  const systemContext = systemContextParts || null;
 
   // Structured fields kept for any legacy story/drill-in callers
   const structured = {

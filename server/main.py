@@ -75,6 +75,27 @@ def _proxy_headers(request: Request) -> dict:
     return {k: v for k, v in request.headers.items() if k.lower() not in _HOP_BY_HOP}
 
 
+@_proxy.api_route("/proxy/skills/{path:path}", methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"])
+async def skills_proxy(path: str, request: Request):
+    """Forward /proxy/skills/{path} → SKILLS_API_URL/{path}."""
+    url = f"{SKILLS_API_URL}/{path}"
+    body = await request.body()
+    headers = _proxy_headers(request)
+    r = await _http.request(
+        method=request.method,
+        url=url,
+        content=body,
+        headers=headers,
+        params=dict(request.query_params),
+    )
+    return Response(
+        content=r.content,
+        status_code=r.status_code,
+        headers={k: v for k, v in r.headers.items() if k.lower() not in _HOP_BY_HOP},
+        media_type=r.headers.get("content-type"),
+    )
+
+
 @_proxy.api_route("/proxy/chat/{path:path}", methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"])
 async def chat_proxy(path: str, request: Request):
     """Forward /proxy/chat/{path} → CHAT_API_URL/{path}.
