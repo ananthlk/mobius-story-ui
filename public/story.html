@@ -4161,7 +4161,7 @@ function renderSlide(){
 // thread_id = "slideId::nodeId" — scoped per node per slide.
 // Changing node = new thread (history cleared). Same node = continuation.
 let _storyThread   = null;   // current thread_id string
-let _chatMode      = 'extended'; // quick | normal | extended — default to full reasoning
+let _chatMode      = 'agentic'; // agentic | copilot | quick — API-valid values; default to full reasoning
 
 // Wire mode toggle buttons — DOM already parsed (script at end of body)
 document.querySelectorAll('.mode-btn').forEach(btn => {
@@ -4340,8 +4340,9 @@ async function submitQuestion(question){
     // Build envelope per system_context PRD contract
     const { systemContext, threadId } = _buildEnvelope(STATE.activeNode || STATE.activeSlot || '');
 
-    // Always use selected mode (default: extended/thinking) — context is passed as system_context, not as shortcut
-    const chatMode = _chatMode !== 'normal' ? _chatMode : 'extended';
+    // Map internal mode to API-valid values: agentic | copilot | quick
+    const _modeMap = { extended: 'agentic', normal: 'copilot', agentic: 'agentic', copilot: 'copilot', quick: 'quick' };
+    const chatMode = _modeMap[_chatMode] || 'agentic';
 
     const payload = {
       message:   question,                              // plain question only — no inline context
