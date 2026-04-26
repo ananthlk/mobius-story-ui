@@ -1,0 +1,325 @@
+{
+  "source": "2025 BHPF CFO Benchmarking Survey",
+  "year": 2025,
+  "tiers": {
+    "all": {
+      "label": "All BHPF",
+      "description": "All 34 member organizations"
+    },
+    "sm": {
+      "label": "<$15M",
+      "description": "13 members with revenue under $15M"
+    },
+    "mid": {
+      "label": "$15\u201330M",
+      "description": "8 members with revenue $15M\u2013$30M"
+    },
+    "lg": {
+      "label": "$30M+",
+      "description": "13 members with revenue over $30M"
+    }
+  },
+  "data": {
+    "all": {
+      "n": 34,
+      "revenue": {
+        "avg": 32696583.7,
+        "median": 23849557.5
+      },
+      "admin_pct_revenue": {
+        "avg": 0.1169,
+        "median": 0.1154
+      },
+      "ar_days": {
+        "avg": 84.5,
+        "median": 44.0
+      },
+      "total_fte": {
+        "avg": 345.49,
+        "median": 249.0
+      },
+      "staff_by_dept": {
+        "accounting_payroll": {
+          "avg_fte": 6.55,
+          "median_fte": 5.0,
+          "avg_pct_staff": 0.023
+        },
+        "it_is": {
+          "avg_fte": 6.38,
+          "median_fte": 5.0,
+          "avg_pct_staff": 0.0197
+        },
+        "billing": {
+          "avg_fte": 6.66,
+          "median_fte": 7.0,
+          "avg_pct_staff": 0.0262
+        },
+        "hr": {
+          "avg_fte": 4.49,
+          "median_fte": 3.0,
+          "avg_pct_staff": 0.0146
+        },
+        "utilization_mgmt": {
+          "avg_fte": 3.86,
+          "median_fte": 2.1
+        },
+        "csuite": {
+          "avg_fte": 4.37,
+          "median_fte": 4.0
+        }
+      },
+      "call_center": {
+        "avg_daily_calls": 510.9,
+        "avg_ftes": 4.77
+      },
+      "it_budget_pct": {
+        "avg": 0.0337,
+        "median": 0.03
+      },
+      "days_cash": {
+        "avg": 96.63,
+        "median": 86.0
+      },
+      "net_operating_margin": {
+        "avg": 0.0334,
+        "median": 0.034
+      },
+      "patients_served": {
+        "avg": 9122.0,
+        "median": 6000.0
+      }
+    },
+    "sm": {
+      "n": 13,
+      "revenue": {
+        "avg": 9865964.26,
+        "median": 9469806.7
+      },
+      "admin_pct_revenue": {
+        "avg": 0.1078,
+        "median": 0.1075
+      },
+      "ar_days": {
+        "avg": 120.81,
+        "median": 43.0
+      },
+      "total_fte": {
+        "avg": 120.09,
+        "median": 120.0
+      },
+      "staff_by_dept": {
+        "accounting_payroll": {
+          "avg_fte": 3.85,
+          "median_fte": 4.0,
+          "avg_pct_staff": 0.0339
+        },
+        "it_is": {
+          "avg_fte": 2.8,
+          "median_fte": 2.0,
+          "avg_pct_staff": 0.0219
+        },
+        "billing": {
+          "avg_fte": 4.41,
+          "median_fte": 4.0,
+          "avg_pct_staff": 0.0363
+        },
+        "hr": {
+          "avg_fte": 2.0,
+          "median_fte": 2.0,
+          "avg_pct_staff": 0.0178
+        },
+        "utilization_mgmt": {
+          "avg_fte": 1.91,
+          "median_fte": 1.0
+        },
+        "csuite": {
+          "avg_fte": 3.2,
+          "median_fte": 3.0
+        }
+      },
+      "call_center": {
+        "avg_daily_calls": 120.0,
+        "avg_ftes": 3.5
+      },
+      "it_budget_pct": {
+        "avg": 0.0428,
+        "median": 0.035
+      },
+      "days_cash": {
+        "avg": 86.36,
+        "median": 83.5
+      },
+      "net_operating_margin": {
+        "avg": 0.038,
+        "median": 0.034
+      },
+      "patients_served": {
+        "avg": 3999.0,
+        "median": 4100.0
+      }
+    },
+    "mid": {
+      "n": 8,
+      "revenue": {
+        "avg": 23653087.88,
+        "median": 23849557.5
+      },
+      "admin_pct_revenue": {
+        "avg": 0.1145,
+        "median": 0.114
+      },
+      "ar_days": {
+        "avg": 89.6,
+        "median": 57.0
+      },
+      "total_fte": {
+        "avg": 247.1,
+        "median": 221.0
+      },
+      "staff_by_dept": {
+        "accounting_payroll": {
+          "avg_fte": 4.91,
+          "median_fte": 5.0,
+          "avg_pct_staff": 0.0189
+        },
+        "it_is": {
+          "avg_fte": 5.06,
+          "median_fte": 6.0,
+          "avg_pct_staff": 0.021
+        },
+        "billing": {
+          "avg_fte": 6.79,
+          "median_fte": 6.5,
+          "avg_pct_staff": 0.0294
+        },
+        "hr": {
+          "avg_fte": 2.89,
+          "median_fte": 3.0,
+          "avg_pct_staff": 0.011
+        },
+        "utilization_mgmt": {
+          "avg_fte": 4.14,
+          "median_fte": 3.0
+        },
+        "csuite": {
+          "avg_fte": 4.17,
+          "median_fte": 4.0
+        }
+      },
+      "call_center": {
+        "avg_daily_calls": 56.0,
+        "avg_ftes": 3.2
+      },
+      "it_budget_pct": {
+        "avg": 0.027,
+        "median": 0.0266
+      },
+      "days_cash": {
+        "avg": 86.33,
+        "median": 88.5
+      },
+      "net_operating_margin": {
+        "avg": 0.0414,
+        "median": 0.05
+      },
+      "patients_served": {
+        "avg": 6336.0,
+        "median": 3288.0
+      }
+    },
+    "lg": {
+      "n": 13,
+      "revenue": {
+        "avg": 61092431.35,
+        "median": 51762000.0
+      },
+      "admin_pct_revenue": {
+        "avg": 0.1263,
+        "median": 0.13
+      },
+      "ar_days": {
+        "avg": 52.49,
+        "median": 44.0
+      },
+      "total_fte": {
+        "avg": 609.5,
+        "median": 591.5
+      },
+      "staff_by_dept": {
+        "accounting_payroll": {
+          "avg_fte": 9.75,
+          "median_fte": 10.0,
+          "avg_pct_staff": 0.0162
+        },
+        "it_is": {
+          "avg_fte": 10.12,
+          "median_fte": 7.75,
+          "avg_pct_staff": 0.0171
+        },
+        "billing": {
+          "avg_fte": 8.65,
+          "median_fte": 8.5,
+          "avg_pct_staff": 0.0153
+        },
+        "hr": {
+          "avg_fte": 7.72,
+          "median_fte": 7.5,
+          "avg_pct_staff": 0.0137
+        },
+        "utilization_mgmt": {
+          "avg_fte": 5.48,
+          "median_fte": 3.0
+        },
+        "csuite": {
+          "avg_fte": 5.55,
+          "median_fte": 5.0
+        }
+      },
+      "call_center": {
+        "avg_daily_calls": 1060.56,
+        "avg_ftes": 6.45
+      },
+      "it_budget_pct": {
+        "avg": 0.0283,
+        "median": 0.03
+      },
+      "days_cash": {
+        "avg": 110.33,
+        "median": 86.0
+      },
+      "net_operating_margin": {
+        "avg": 0.0253,
+        "median": 0.012
+      },
+      "patients_served": {
+        "avg": 16428.0,
+        "median": 14530.0
+      }
+    },
+    "all_2016": {
+      "n": 26,
+      "note": "2016 CFO Benchmarking Survey \u2014 26 members",
+      "staff_by_dept": {
+        "accounting_payroll": {
+          "avg_fte": 7.2,
+          "avg_pct_staff": 0.0145
+        },
+        "it_is": {
+          "avg_fte": 7.61,
+          "avg_pct_staff": 0.0153
+        },
+        "billing": {
+          "avg_fte": 6.84,
+          "avg_pct_staff": 0.0137
+        },
+        "hr": {
+          "avg_fte": 6.59,
+          "avg_pct_staff": 0.0132
+        }
+      },
+      "ar_days": {
+        "avg": 44.59
+      }
+    }
+  }
+}
