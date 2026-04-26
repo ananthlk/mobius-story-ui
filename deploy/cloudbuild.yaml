@@ -1,0 +1,24 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - '-t'
+      - '$_IMAGE'
+      - '-f'
+      - 'mobius-story-ui/Dockerfile'
+      - 'mobius-story-ui'
+    id: build
+
+  # Push to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '$_IMAGE']
+    id: push
+    waitFor: ['build']
+
+substitutions:
+  _IMAGE: 'us-central1-docker.pkg.dev/mobius-os-dev/mobius-story-ui/story-ui:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
