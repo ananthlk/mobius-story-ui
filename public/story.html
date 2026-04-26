@@ -3718,8 +3718,8 @@ async function loadSlide(){
   // fact-pack scope param: fbha is an alias for all_cmhc at the API level
   const factPackScope = STATE.scope === 'fbha' ? 'all_cmhc' : STATE.scope;
   const params = new URLSearchParams({scope: factPackScope});
-  const fp = await fetch(`${API}/story/fact-pack?${params}`).then(r=>r.json()).catch(()=>null);
-  if(!fp){ document.getElementById('factSrc').textContent='fact pack error'; document.getElementById('factSrc').className='tb-badge fallback'; return; }
+  const fp = await fetch(`${API}/story/fact-pack?${params}`).then(r=>r.ok ? r.json() : null).catch(()=>null);
+  if(!fp){ document.getElementById('factSrc').textContent='BHPF aggregate'; document.getElementById('factSrc').className='tb-badge'; return; }
   STATE.factPack = fp;
 
   renderCover(fp);
