@@ -3729,6 +3729,14 @@ async function loadSlide(){
     document.getElementById('factSrc').className='tb-badge';
     document.getElementById('narrativeSrc').textContent='';
     document.getElementById('narrativeSrc').className='tb-badge';
+    // Clear radial node spinners — no live data available
+    ['rn-market','rn-benes','rn-service','rn-lookalike','rn-rate','rn-churn'].forEach(id => {
+      const el = document.getElementById(id+'-stat');
+      if(el){ el.classList.remove('loading-stat'); el.textContent = '—'; }
+    });
+    // Set a neutral fallback narrative so the summary slot isn't blank
+    STATE.narrative = { title:'', thesis:'', body_1:'Live data unavailable — showing BHPF aggregate benchmarks.', body_2:'', drill_prompts:[] };
+    renderSlide();
     return;
   }
   STATE.factPack = fp;
