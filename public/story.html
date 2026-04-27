@@ -3679,11 +3679,16 @@ function goTo(idx){
   if(SLIDES[currentIdx]?.id === 'ch-finale'){
     setTimeout(()=>{ renderFinaleHeatMap(); }, 60);
   }
-  // admin slides — ensure admin benchmarks are available in STATE.cover
-  if(['admin-overview','admin-s1','admin-s2b-orbital','admin-s2b-score',
-      'admin-s1c','admin-s4','admin-s5'].includes(SLIDES[currentIdx]?.id)){
-    // loadAdminBenchmarks already ran at boot; just ensure cover has the keys
-    // (no-op if already populated)
+  // admin slides — render charts on entry
+  const _curId = SLIDES[currentIdx]?.id;
+  if(_curId === 'admin-overview'){
+    setTimeout(()=>{
+      if(window._wireOvTabs)   _wireOvTabs();
+      if(window._buildAdmOverview) _buildAdmOverview('all');
+    }, 60);
+  }
+  if(_curId === 'admin-s1'){
+    setTimeout(()=>{ if(window._buildAdmC1fte) _buildAdmC1fte(); }, 60);
   }
   // left-behind cascade hook
   if(SLIDES[currentIdx]?.id === 'ch2-left-behind'){
@@ -6532,14 +6537,7 @@ function personaSkip(){
 
 })();
 
-// Hook into goTo for admin slide rendering
-const _origGoTo = window.goTo || goTo;
-window.goTo = function(idx){
-  _origGoTo(idx);
-  const id = (typeof SLIDES !== 'undefined' && SLIDES[idx]) ? SLIDES[idx].id : '';
-  if(id === 'admin-overview'){ setTimeout(()=>{ window._wireOvTabs&&_wireOvTabs(); window._buildAdmOverview&&_buildAdmOverview('all'); }, 60); }
-  if(id === 'admin-s1')      { setTimeout(()=>{ window._buildAdmC1fte&&_buildAdmC1fte(); }, 60); }
-};
+// (chart hooks wired directly inside goTo() above)
 
 </script>
 </body>
