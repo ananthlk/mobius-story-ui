@@ -3419,6 +3419,7 @@ let STATE = {
   activeSlot: null,
   activeNode: null,       // node_id for profile radial nodes
   cover: {},              // cover dict populated by renderProfile()
+  staticDataMode: false,  // true when skills API unavailable; disables loading spinners
 };
 
 // ═══════════════════════════════════════════════════════════════
@@ -3728,6 +3729,7 @@ async function loadSlide(){
     // Skills API unavailable — load static baseline values so radial nodes show data
     const staticFp = await fetch('/data/bhpf_cover_static.json').then(r=>r.ok?r.json():null).catch(()=>null);
     if(staticFp){
+      STATE.staticDataMode = true;
       document.getElementById('factSrc').textContent='BHPF aggregate · 2019 baseline';
       document.getElementById('factSrc').className='tb-badge tb-badge--static';
       document.getElementById('narrativeSrc').textContent='';
@@ -3952,11 +3954,13 @@ function renderProfile(fp){
   STATE.cover = cv;
 
   // All stats start as spinners (set in HTML); renderProfile clears them as data arrives
-  // Re-apply spinners if renderProfile is called before data is ready
-  ['market','benes','service','lookalike','rate','churn'].forEach(k => {
-    const el = document.getElementById(`rn-${k}-stat`);
-    if(el && !el.textContent.trim()) el.classList.add('loading-stat');
-  });
+  // Re-apply spinners only when live API data is expected; skip in static data mode
+  if(!STATE.staticDataMode){
+    ['market','benes','service','lookalike','rate','churn'].forEach(k => {
+      const el = document.getElementById(`rn-${k}-stat`);
+      if(el && !el.textContent.trim()) el.classList.add('loading-stat');
+    });
+  }
 
   // Mark all as estimated first; will flip to live as data lands
   ['market','benes','service','lookalike','rate','churn'].forEach(_pipEst);
@@ -4894,7 +4898,7 @@ function applyProfileData(){
     const el = document.getElementById(`rn-${nodeKey}-stat`);
     if(!el) return;
     if(!val || val === '—'){
-      if(isLive){
+      if(isLive && !STATE.staticDataMode){
         el.classList.add('loading-stat');
         el.innerHTML = '';
       } else {
