@@ -77,23 +77,37 @@ def _proxy_headers(request: Request) -> dict:
 
 @_proxy.api_route("/proxy/skills/{path:path}", methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"])
 async def skills_proxy(path: str, request: Request):
-    """Forward /proxy/skills/{path} → SKILLS_API_URL/{path}."""
+    """Forward /proxy/skills/{path} → SKILLS_API_URL/{path}.
+
+    Fails fast (5s) with 503 when skills API is unavailable so the UI
+    degrades gracefully rather than hanging indefinitely.
+    """
+    # Short-circuit immediately if skills API is not configured
+    if "not-yet-deployed" in SKILLS_API_URL or "invalid" in SKILLS_API_URL:
+        return Response(content='{"error":"skills API not deployed"}',
+                        status_code=503, media_type="application/json")
     url = f"{SKILLS_API_URL}/{path}"
     body = await request.body()
     headers = _proxy_headers(request)
-    r = await _http.request(
-        method=request.method,
-        url=url,
-        content=body,
-        headers=headers,
-        params=dict(request.query_params),
-    )
-    return Response(
-        content=r.content,
-        status_code=r.status_code,
-        headers={k: v for k, v in r.headers.items() if k.lower() not in _HOP_BY_HOP},
-        media_type=r.headers.get("content-type"),
-    )
+    try:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(5)) as client:
+            r = await client.request(
+                method=request.method,
+                url=url,
+                content=body,
+                headers=headers,
+                params=dict(request.query_params),
+            )
+        return Response(
+            content=r.content,
+            status_code=r.status_code,
+            headers={k: v for k, v in r.headers.items() if k.lower() not in _HOP_BY_HOP},
+            media_type=r.headers.get("content-type"),
+        )
+    except Exception as exc:
+        logger.warning("skills proxy error: %s", exc)
+        return Response(content='{"error":"skills API unreachable"}',
+                        status_code=503, media_type="application/json")
 
 
 @_proxy.api_route("/proxy/chat/{path:path}", methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"])
