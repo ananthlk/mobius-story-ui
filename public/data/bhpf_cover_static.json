@@ -1,0 +1,33 @@
+{
+  "_note": "Static fallback values for radial nodes when skills API is unavailable. Sourced from BHPF 2019 baseline analysis.",
+  "period": { "year": "2024", "baseline_year": "2019" },
+  "cover": {
+    "baseline_year": "2019",
+    "bhpf_share_baseline": 16,
+    "bhpf_share_current": 13,
+    "bhpf_share_delta_pp": -3,
+    "bhpf_benes_baseline": 180000,
+    "mkt_benes_baseline": 1100000,
+    "bhpf_bene_share_baseline": 16,
+    "bhpf_bene_share_current": 13,
+    "bhpf_bene_share_delta_pp": -3,
+    "lookalike_orgs_baseline": 21,
+    "lookalike_orgs_current": 47,
+    "bhpf_service_mix_ratio": 2.3,
+    "bhpf_ongoing_pct": 0.58,
+    "bhpf_intake_pct": 0.14,
+    "bhpf_high_acuity_pct": 0.28,
+    "bhpf_crisis_pct": 0.12,
+    "bhpf_churn_index": 1.05,
+    "mkt_clinician_churn_pct": 0.18,
+    "bhpf_rpb": 1195,
+    "market_rpb": 1358,
+    "bhpf_rpb_vs_market_pct": -12.0,
+    "mkt_growth_pct": 0.34,
+    "mkt_total_baseline": 730000000,
+    "mkt_total_current": 977000000,
+    "bhpf_growth_not_captured_dol": 249000000,
+    "code_universe": "81 AHCA procedure codes",
+    "data_note": "BHPF aggregate · static baseline"
+  }
+}

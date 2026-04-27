@@ -3725,17 +3725,30 @@ async function loadSlide(){
   const params = new URLSearchParams({scope: factPackScope});
   const fp = await fetch(`${API}/story/fact-pack?${params}`).then(r=>r.ok ? r.json() : null).catch(()=>null);
   if(!fp){
-    document.getElementById('factSrc').textContent='BHPF aggregate';
-    document.getElementById('factSrc').className='tb-badge';
-    document.getElementById('narrativeSrc').textContent='';
-    document.getElementById('narrativeSrc').className='tb-badge';
-    // Clear radial node spinners — no live data available
-    ['rn-market','rn-benes','rn-service','rn-lookalike','rn-rate','rn-churn'].forEach(id => {
-      const el = document.getElementById(id+'-stat');
-      if(el){ el.classList.remove('loading-stat'); el.textContent = '—'; }
-    });
+    // Skills API unavailable — load static baseline values so radial nodes show data
+    const staticFp = await fetch('/data/bhpf_cover_static.json').then(r=>r.ok?r.json():null).catch(()=>null);
+    if(staticFp){
+      document.getElementById('factSrc').textContent='BHPF aggregate · 2019 baseline';
+      document.getElementById('factSrc').className='tb-badge tb-badge--static';
+      document.getElementById('narrativeSrc').textContent='';
+      document.getElementById('narrativeSrc').className='tb-badge';
+      STATE.factPack = staticFp;
+      renderCover(staticFp);
+      renderProfile(staticFp);
+      renderEvoSlide(staticFp);
+    } else {
+      document.getElementById('factSrc').textContent='BHPF aggregate';
+      document.getElementById('factSrc').className='tb-badge';
+      document.getElementById('narrativeSrc').textContent='';
+      document.getElementById('narrativeSrc').className='tb-badge';
+      // Clear radial node spinners — no live data available
+      ['rn-market','rn-benes','rn-service','rn-lookalike','rn-rate','rn-churn'].forEach(id => {
+        const el = document.getElementById(id+'-stat');
+        if(el){ el.classList.remove('loading-stat'); el.textContent = '—'; }
+      });
+    }
     // Set a neutral fallback narrative so the summary slot isn't blank
-    STATE.narrative = { title:'', thesis:'', body_1:'Live data unavailable — showing BHPF aggregate benchmarks.', body_2:'', drill_prompts:[] };
+    STATE.narrative = { title:'', thesis:'', body_1:'Showing BHPF 2019 baseline benchmarks.', body_2:'', drill_prompts:[] };
     renderSlide();
     return;
   }
