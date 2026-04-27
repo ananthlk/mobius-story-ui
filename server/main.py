@@ -90,7 +90,7 @@ async def skills_proxy(path: str, request: Request):
     body = await request.body()
     headers = _proxy_headers(request)
     try:
-        async with httpx.AsyncClient(timeout=httpx.Timeout(5)) as client:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(connect=10, read=120, write=30, pool=10)) as client:
             r = await client.request(
                 method=request.method,
                 url=url,
