@@ -3724,7 +3724,13 @@ async function loadSlide(){
   const factPackScope = STATE.scope === 'fbha' ? 'all_cmhc' : STATE.scope;
   const params = new URLSearchParams({scope: factPackScope});
   const fp = await fetch(`${API}/story/fact-pack?${params}`).then(r=>r.ok ? r.json() : null).catch(()=>null);
-  if(!fp){ document.getElementById('factSrc').textContent='BHPF aggregate'; document.getElementById('factSrc').className='tb-badge'; return; }
+  if(!fp){
+    document.getElementById('factSrc').textContent='BHPF aggregate';
+    document.getElementById('factSrc').className='tb-badge';
+    document.getElementById('narrativeSrc').textContent='';
+    document.getElementById('narrativeSrc').className='tb-badge';
+    return;
+  }
   STATE.factPack = fp;
 
   renderCover(fp);
