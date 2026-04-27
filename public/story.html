@@ -3871,8 +3871,8 @@ async function _streamEntitySummary(entity){
       _entitySummaryFetching.delete(entity);
       es.close();
       if(!_entitySummaryCache[entity]){
-        // On error, show a brief message rather than stale static stub
-        if(isActive() && el) el.textContent = 'Summary unavailable — check API connection.';
+        // Skills API unavailable — clear the slot rather than showing an error
+        if(isActive() && el) el.textContent = '';
       }
     };
   } catch(err){
