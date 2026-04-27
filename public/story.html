@@ -6413,6 +6413,134 @@ function personaSkip(){
   goTo(SLIDES.findIndex(s => s.id === 'cover'));
 }
 
+// ═══════════════════════════════════════════════════════════════
+// ADMIN SLIDES — Chart rendering
+// All data sourced from STATE.cover (loaded by loadAdminBenchmarks())
+// ═══════════════════════════════════════════════════════════════
+(function(){
+  const ADM_A='#BA7517', ADM_G='#1D9E75', ADM_R='#E24B4A', ADM_GR='#A09D98';
+  const _charts = {};
+  const _kill = id => { try{ _charts[id]&&_charts[id].destroy(); }catch(e){} delete _charts[id]; };
+
+  // ── admin-overview: FTE by dept + 2016 vs 2025 ──────────────────
+  function buildAdmOverview(tier){
+    tier = tier || 'all';
+    const cv = STATE.cover || {};
+    const d  = (window._admBenchData || {})[tier] || {};
+    const dept = d.staff_by_dept || {};
+    const old  = (window._admBenchData || {}).all_2016 || {};
+
+    // KPI panel
+    const setEl = (id, v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
+    setEl('ov-pct', d.admin_pct_revenue ? (d.admin_pct_revenue.avg*100).toFixed(1)+'%' : '—');
+    setEl('ov-fte', d.total_fte ? d.total_fte.avg.toFixed(0)+' FTE avg' : '—');
+    setEl('ov-n',   d.n ? d.n+' orgs' : '—');
+
+    // Largest dept by avg FTE
+    const depts = ['accounting_payroll','it_is','billing','hr'];
+    const labels = {accounting_payroll:'Finance',it_is:'IT',billing:'Billing/RCM',hr:'HR'};
+    const topDept = depts.reduce((a,b)=>
+      ((dept[a]?.avg_fte||0) >= (dept[b]?.avg_fte||0) ? a : b), depts[0]);
+    setEl('ov-top', labels[topDept] || '—');
+
+    // Panel 2: FTE by dept bar chart
+    _kill('admC0b');
+    const ctx2 = document.getElementById('admC0b');
+    if(ctx2){
+      const vals = depts.map(k => +(dept[k]?.avg_fte||0).toFixed(2));
+      _charts['admC0b'] = new Chart(ctx2, {
+        type:'bar',
+        data:{ labels:depts.map(k=>labels[k]),
+               datasets:[{label:'Avg FTE/org',data:vals,backgroundColor:ADM_A,borderRadius:4}] },
+        options:{ responsive:true, maintainAspectRatio:false,
+          plugins:{legend:{display:false}},
+          scales:{x:{grid:{display:false},ticks:{color:ADM_GR,font:{size:11}}},
+                  y:{ticks:{color:ADM_GR,font:{size:11}},grid:{color:'rgba(0,0,0,.05)'}}} }
+      });
+    }
+
+    // Panel 3: 2016 vs 2025 comparison
+    _kill('admC0c');
+    const ctx3 = document.getElementById('admC0c');
+    if(ctx3 && old.staff_by_dept){
+      const cur25 = depts.map(k => +(dept[k]?.avg_fte||0).toFixed(2));
+      const cur16 = depts.map(k => +(old.staff_by_dept[k]?.avg_fte||0).toFixed(2));
+      _charts['admC0c'] = new Chart(ctx3, {
+        type:'bar',
+        data:{ labels:depts.map(k=>labels[k]),
+               datasets:[
+                 {label:'2016',data:cur16,backgroundColor:'rgba(160,157,152,.45)',borderRadius:4},
+                 {label:'2025',data:cur25,backgroundColor:ADM_A,borderRadius:4}
+               ] },
+        options:{ responsive:true, maintainAspectRatio:false,
+          plugins:{legend:{display:true,position:'top',labels:{font:{size:10},color:ADM_GR}}},
+          scales:{x:{grid:{display:false},ticks:{color:ADM_GR,font:{size:11}}},
+                  y:{ticks:{color:ADM_GR,font:{size:11}},grid:{color:'rgba(0,0,0,.05)'}}} }
+      });
+    }
+  }
+
+  // Wire tier tabs on admin-overview
+  function _wireOvTabs(){
+    const tabs = document.getElementById('admTov');
+    if(!tabs || tabs.dataset.wired) return;
+    tabs.dataset.wired = '1';
+    tabs.addEventListener('click', e => {
+      const b = e.target.closest('.adm-tab'); if(!b) return;
+      tabs.querySelectorAll('.adm-tab').forEach(t=>t.classList.remove('on'));
+      b.classList.add('on');
+      buildAdmOverview(b.dataset.v);
+    });
+  }
+
+  // ── admin-s1: FTE comparison (BHPF vs PCP) ──────────────────────
+  function buildAdmC1fte(){
+    _kill('admC1fte');
+    const ctx = document.getElementById('admC1fte'); if(!ctx) return;
+    const cv  = STATE.cover || {};
+    // BHPF data from benchmarks; PCP from MGMA 2024
+    const pcpBenchmark = {accounting_payroll:2.2, it_is:1.8, billing:2.5, hr:1.1};
+    const d  = (window._admBenchData || {}).mid || {};  // use mid tier as representative
+    const dept = d.staff_by_dept || {};
+    const labels = ['Finance','IT','Billing/RCM','HR'];
+    const keys   = ['accounting_payroll','it_is','billing','hr'];
+    const bhpf   = keys.map(k => +(dept[k]?.avg_fte||0).toFixed(2));
+    const pcp    = keys.map(k => pcpBenchmark[k]);
+    _charts['admC1fte'] = new Chart(ctx, {
+      type:'bar',
+      data:{ labels,
+             datasets:[
+               {label:'BHPF',data:bhpf,backgroundColor:ADM_A,borderRadius:4},
+               {label:'PCP benchmark',data:pcp,backgroundColor:ADM_G,borderRadius:4}
+             ] },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{display:false}},
+        scales:{x:{grid:{display:false},ticks:{color:ADM_GR,font:{size:11}}},
+                y:{ticks:{color:ADM_GR,font:{size:10}},grid:{color:'rgba(0,0,0,.05)'}}} }
+    });
+  }
+
+  // ── Expose on window so goTo() hook can call them ────────────────
+  window._buildAdmOverview = buildAdmOverview;
+  window._buildAdmC1fte    = buildAdmC1fte;
+  window._wireOvTabs       = _wireOvTabs;
+
+  // Preload full benchmark data for tier switching
+  fetch('/data/admin_benchmarks.json').then(r=>r.json()).then(d=>{
+    window._admBenchData = d.data || {};
+  }).catch(()=>{});
+
+})();
+
+// Hook into goTo for admin slide rendering
+const _origGoTo = window.goTo || goTo;
+window.goTo = function(idx){
+  _origGoTo(idx);
+  const id = (typeof SLIDES !== 'undefined' && SLIDES[idx]) ? SLIDES[idx].id : '';
+  if(id === 'admin-overview'){ setTimeout(()=>{ window._wireOvTabs&&_wireOvTabs(); window._buildAdmOverview&&_buildAdmOverview('all'); }, 60); }
+  if(id === 'admin-s1')      { setTimeout(()=>{ window._buildAdmC1fte&&_buildAdmC1fte(); }, 60); }
+};
+
 </script>
 </body>
 </html>
