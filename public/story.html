@@ -263,12 +263,35 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
   content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
   border:5px solid transparent;border-top-color:var(--ink);
 }
-.rcm-gate-card{width:112px;border-radius:10px;padding:9px 10px;border:1.5px solid var(--rule);background:#fff;text-align:center;transition:box-shadow .18s,border-color .25s,background .25s;cursor:default}
+.rcm-gate-card{width:112px;border-radius:10px;padding:9px 10px;border:1.5px solid var(--rule);background:#fff;text-align:center;transition:opacity .3s,box-shadow .25s,border-color .25s,background .25s,transform .28s;cursor:default}
 .rcm-gate-card.rcm-active{box-shadow:0 0 0 3px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.12)}
+.rcm-gate-card.rcm-dim{opacity:.12;transform:translate(-50%,-50%) scale(.92)!important}
+.rcm-gate-card.rcm-lit{box-shadow:0 0 0 3px rgba(26,26,25,.22),0 6px 24px rgba(0,0,0,.16)!important;border-color:#1A1917!important;transform:translate(-50%,-50%) scale(1.07)!important;z-index:10!important}
+@keyframes rcmFlyIn{from{opacity:0;transform:translate(-50%,-50%) scale(.7) translateY(14px)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.rcm-gate-card.rcm-fly{animation:rcmFlyIn .38s cubic-bezier(.22,.9,.36,1) both}
 .rcm-score-row{padding:7px 9px;border-radius:7px;border-left:3px solid;background:#fff;cursor:pointer;position:relative;transition:box-shadow .15s}
 .rcm-score-row:hover{box-shadow:0 2px 10px rgba(0,0,0,.09)}
-.rcm-score-detail{display:none;margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,.08);font-size:10px;line-height:1.5;font-weight:300;text-align:left}
+.rcm-score-detail{display:none;margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,.08);font-size:10px;line-height:1.5;font-weight:300;text-align:left;color:#6B6966}
 .rcm-score-row.open .rcm-score-detail{display:block}
+@keyframes rcmRowIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+.rcm-row-in{animation:rcmRowIn .32s ease both}
+/* caption shown during play sequence */
+.rcm-caption{padding:9px 12px;border-top:1px solid rgba(0,0,0,.07);font-size:.67rem;line-height:1.55;background:#FAFAF8;color:#3D3B38;flex-shrink:0;min-height:56px;transition:opacity .25s}
+/* ── RCM v2 — 8-gate orbital (admin-s2b-orbital-v2) ── */
+.r8-gate{position:absolute;transform:translate(-50%,-50%);width:102px;border-radius:10px;padding:8px 9px;text-align:center;background:#fff;border:1.5px solid var(--rule);z-index:2;transition:border-color .25s,box-shadow .25s,background .25s;cursor:default}
+.r8-gate.r8-new{border-color:#1a9070;background:#f0faf7;box-shadow:0 0 0 2px rgba(26,144,112,.18),0 4px 16px rgba(0,0,0,.08)}
+.r8-gate-badge{display:none;font-size:7.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#1a9070;color:#fff;padding:1px 5px;border-radius:3px;margin-bottom:3px}
+.r8-new .r8-gate-badge{display:inline-block}
+.r8-gate-icon{font-size:15px;margin-bottom:3px;line-height:1}
+.r8-gate-label{font-size:9px;font-weight:500;color:#3D3B38;line-height:1.3}
+.r8-new .r8-gate-label{color:#0d6b52}
+.r8-gate-score{margin-top:4px;font-family:var(--mono);font-size:11px;font-weight:700}
+.r8-sc-row{padding:6px 9px;border-radius:7px;border-left:3px solid;background:#fff;display:flex;justify-content:space-between;align-items:center;font-size:10px}
+.r8-sc-row.r8-sc-new{border-left-color:#1a9070!important;background:#f0faf7;box-shadow:0 0 0 1px rgba(26,144,112,.12)}
+.r8-sc-row-label{color:#3D3B38;flex:1;padding-right:6px}
+.r8-sc-new .r8-sc-row-label{color:#0d6b52;font-weight:500}
+.r8-sc-row-val{font-family:var(--mono);font-size:12px;font-weight:700}
+.r8-new-tag{font-size:7px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#1a9070;color:#fff;padding:1px 4px;border-radius:3px;margin-left:4px}
 .pi-row{display:flex;flex-direction:column;gap:2px;padding:6px 8px;border-radius:6px;border-left:2px solid var(--c)}
 .pi-label{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
 .pi-text{font-size:11px;color:var(--ink2);font-weight:300;line-height:1.4}
@@ -1810,6 +1833,8 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                     </div>
                     <!-- scrollable rows — flex:1 + min-height:0 means it fills remaining space and scrolls -->
                     <div id="rcm-scorecard" style="flex:1;min-height:0;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:4px"></div>
+                    <!-- caption shown during play — one gate at a time -->
+                    <div id="rcm-caption" class="rcm-caption" style="display:none"></div>
                     <!-- verdict — pinned at bottom, never scrolls away -->
                     <div id="rcm-verdict" style="display:none;padding:10px 12px;border-top:1px solid rgba(0,0,0,.08);font-size:.67rem;line-height:1.55;flex-shrink:0;background:#FAFAF8;transition:opacity .4s,transform .4s"></div>
                   </div>
@@ -1822,6 +1847,121 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                 </div>
               </div>
             </div>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           admin-s2b-orbital-v2  —  8-gate version (Provider Credentialing added)
+           Keeps original admin-s2b-orbital intact so we can retire when ready
+      ═══════════════════════════════════════════════════════════ -->
+      <div class="slide" data-id="admin-s2b-orbital-v2" style="height:100%;overflow:hidden">
+        <div class="adm-slide" style="padding:1rem 1.5rem .75rem;gap:0">
+
+          <!-- header row -->
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0;margin-bottom:.625rem">
+            <div>
+              <div class="adm-eyebrow">Admin — Platform Intelligence</div>
+              <div class="adm-title" style="font-size:1.35rem;line-height:1.2;margin:0">The gap isn't effort.<br>It's the platform.</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;flex-shrink:0">
+              <span style="font-size:.67rem;color:#9C9890;margin-right:2px">Platform:</span>
+              <button class="rcm-ptab adm-tab" data-p="netsmart"   onclick="rcm8Select('netsmart',this)">Netsmart</button>
+              <button class="rcm-ptab adm-tab" data-p="welligent"  onclick="rcm8Select('welligent',this)">Welligent</button>
+              <button class="rcm-ptab adm-tab" data-p="qualifacts" onclick="rcm8Select('qualifacts',this)">Qualifacts</button>
+              <button class="rcm-ptab adm-tab" data-p="athena"     onclick="rcm8Select('athena',this)">Athena</button>
+              <button id="rcm8-play-btn" onclick="rcm8Play()" style="padding:.3rem .85rem;border-radius:20px;border:1px solid #1A1917;font-size:.72rem;cursor:pointer;background:#1A1917;color:#fff;font-weight:600;transition:all .15s">▶ Play</button>
+            </div>
+          </div>
+
+          <!-- body: orbital + scorecard -->
+          <div style="flex:1;display:grid;grid-template-columns:1fr 252px;gap:0;min-height:0;border:1px solid rgba(0,0,0,.08);border-radius:10px;overflow:hidden">
+
+            <!-- orbital canvas -->
+            <div style="position:relative;overflow:hidden;background:#FAFAF8" id="r8-canvas">
+              <svg id="r8-svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1"></svg>
+
+              <!-- Center hub: Shared Intelligence -->
+              <div id="r8-hub" style="position:absolute;left:50%;top:calc(50% - 18px);transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:#fff;border:2px solid #1A1917;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.10);z-index:3">
+                <div style="font-size:9px;font-weight:700;color:#1A1917;line-height:1.2">Shared<br>Intelligence</div>
+                <div style="font-size:6px;letter-spacing:.07em;text-transform:uppercase;color:#9C9890;margin-top:2px">Network Intel</div>
+                <div id="r8-hub-grade" style="font-size:8px;font-weight:700;margin-top:2px;color:#E24B4A">Broken</div>
+              </div>
+
+              <!-- Gate 0: top — Patient Engagement & Appointment -->
+              <div class="r8-gate" id="r8g-0" style="left:50%;top:9%">
+                <div class="r8-gate-badge">Mobius gap</div>
+                <div class="r8-gate-icon">📅</div>
+                <div class="r8-gate-label">Patient Engagement &amp; Appointment</div>
+                <div class="r8-gate-score" id="r8s-0"></div>
+              </div>
+              <!-- Gate 1: top-right — Eligibility Verification -->
+              <div class="r8-gate" id="r8g-1" style="left:80%;top:21%">
+                <div class="r8-gate-badge">Mobius gap</div>
+                <div class="r8-gate-icon">✅</div>
+                <div class="r8-gate-label">Eligibility Verification</div>
+                <div class="r8-gate-score" id="r8s-1"></div>
+              </div>
+              <!-- Gate 2: right — Payor Benefits & Policies -->
+              <div class="r8-gate" id="r8g-2" style="left:90%;top:50%">
+                <div class="r8-gate-badge">Mobius gap</div>
+                <div class="r8-gate-icon">📄</div>
+                <div class="r8-gate-label">Payor Benefits &amp; Policies</div>
+                <div class="r8-gate-score" id="r8s-2"></div>
+              </div>
+              <!-- Gate 3: bottom-right — Provider Credentialing (NEW — Mobius gap) -->
+              <div class="r8-gate r8-new" id="r8g-3" style="left:80%;top:79%">
+                <div class="r8-gate-badge">Mobius gap</div>
+                <div class="r8-gate-icon">🪪</div>
+                <div class="r8-gate-label">Provider Credentialing</div>
+                <div class="r8-gate-score" id="r8s-3"></div>
+              </div>
+              <!-- Gate 4: bottom — Authorization -->
+              <div class="r8-gate" id="r8g-4" style="left:50%;top:91%">
+                <div class="r8-gate-badge">Mobius gap</div>
+                <div class="r8-gate-icon">📋</div>
+                <div class="r8-gate-label">Authorization</div>
+                <div class="r8-gate-score" id="r8s-4"></div>
+              </div>
+              <!-- Gate 5: bottom-left — Coding & Claim Submission -->
+              <div class="r8-gate" id="r8g-5" style="left:20%;top:79%">
+                <div class="r8-gate-badge">Mobius gap</div>
+                <div class="r8-gate-icon">💻</div>
+                <div class="r8-gate-label">Coding &amp; Claim Submission</div>
+                <div class="r8-gate-score" id="r8s-5"></div>
+              </div>
+              <!-- Gate 6: left — Denial Mgmt / Reconciliation -->
+              <div class="r8-gate" id="r8g-6" style="left:10%;top:50%">
+                <div class="r8-gate-badge">Mobius gap</div>
+                <div class="r8-gate-icon">🚫</div>
+                <div class="r8-gate-label">Denial Mgmt / Reconciliation</div>
+                <div class="r8-gate-score" id="r8s-6"></div>
+              </div>
+              <!-- Gate 7: top-left — Claim Closure & Posting -->
+              <div class="r8-gate" id="r8g-7" style="left:20%;top:21%">
+                <div class="r8-gate-badge">Mobius gap</div>
+                <div class="r8-gate-icon">🔐</div>
+                <div class="r8-gate-label">Claim Closure &amp; Posting</div>
+                <div class="r8-gate-score" id="r8s-7"></div>
+              </div>
+            </div>
+
+            <!-- right: scorecard panel -->
+            <div style="display:flex;flex-direction:column;background:#fff;border-left:1px solid rgba(0,0,0,.08);min-height:0;overflow:hidden">
+              <div style="padding:10px 12px 6px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,.06);flex-shrink:0">
+                <span style="font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9C9890">Score card</span>
+                <span id="r8-running-score" style="font-family:var(--mono);font-size:.72rem;font-weight:700;color:#6B6966">0 / 32</span>
+              </div>
+              <div id="r8-scorecard" style="flex:1;min-height:0;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:4px"></div>
+              <div id="r8-caption" class="rcm-caption" style="display:none"></div>
+              <div id="r8-verdict" style="display:none;padding:10px 12px;border-top:1px solid rgba(0,0,0,.08);font-size:.67rem;line-height:1.55;flex-shrink:0;background:#FAFAF8;color:#6B6966"></div>
+            </div>
+          </div>
+
+          <!-- footnote -->
+          <div style="display:flex;justify-content:space-between;margin-top:.4rem;flex-shrink:0">
+            <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">Sources: G2, Capterra, SoftwareAdvice, vendor product pages — verified reviews only</div>
+            <div id="r8-footnote" style="font-size:10px;color:var(--ink4);font-family:var(--mono)">Netsmart · 8 gates + shared intelligence · 2025</div>
+          </div>
+        </div>
+      </div>
 
       <div class="slide" data-id="admin-s2b-score" style="height:100%;overflow:hidden">
               <div class="adm-slide" style="padding:1rem 1.5rem .75rem;gap:0">
@@ -3369,6 +3509,7 @@ const SLIDES = [
   {id: 'admin-overview', title: 'The BHPF admin profile.'},
   {id: 'admin-s1', title: 'Under-invested. Worst outcomes for your scale.'},
   {id: 'admin-s2b-orbital', title: "The gap isn't effort."},
+  {id: 'admin-s2b-orbital-v2', title: "The gap isn't effort — 8 gates."},
   {id: 'admin-s2b-score', title: "The gap isn't effort. It's the platform."},
   {id: 'admin-s1c', title: 'Healthcare pricing is calibrated'},
   {id: 'admin-s4', title: 'What if all of BHPF'},
@@ -3484,6 +3625,12 @@ const SLIDE_CONTEXTS = {
     label:        'Platform Gap — Why admin cost is a technology problem',
     period:       '2025',
     frame:        'BHPF runs 34 separate EHR/RCM stacks. No single vendor covers the full capability shape needed: Netsmart/Qualifacts lead on BH workflow, Athena leads on RCM and shared intelligence, no platform scores above 8/10 across all 7 RCM gates. Current fragmentation means no shared denial intelligence, no network credentialing pool, no unified prior-auth engine. The cost is the 18% denial rate and the 84-day AR.',
+    out_of_scope: 'Vendor pricing, specific contract terms, implementation timelines.',
+  },
+  'admin-s2b-orbital-v2': {
+    label:        'Platform Gap (v2) — 8 gates incl. Provider Credentialing',
+    period:       '2025',
+    frame:        'Eight RCM gates scored across 4 platforms. Provider Credentialing is the new 8th gate and the critical Mobius gap — every platform scores 2 (Partial) or 1 (Broken). Athena validates enrollment but has no BH scope-of-practice, taxonomy alignment, or 90-day Medicaid blackout detection. Mobius closes this gap through a shared credentialing pool that covers all BHPF members. Shared Intelligence at the center scores Partial at best across all platforms — no cross-org denial learning, no unified network benchmarking.',
     out_of_scope: 'Vendor pricing, specific contract terms, implementation timelines.',
   },
   'admin-s2b-score': {
@@ -3680,6 +3827,17 @@ function goTo(idx){
   if(SLIDES[currentIdx]?.id === 'ch-finale'){
     setTimeout(()=>{ renderFinaleHeatMap(); }, 60);
   }
+  // admin-s2b-orbital — 7-gate orbital init (rcmLayout positions cards + populates scores)
+  if(SLIDES[currentIdx]?.id === 'admin-s2b-orbital'){
+    setTimeout(()=>{ if(typeof rcmLayout === 'function') rcmLayout(); }, 60);
+  }
+  // admin-s2b-orbital-v2 — 8-gate orbital init
+  if(SLIDES[currentIdx]?.id === 'admin-s2b-orbital-v2'){
+    setTimeout(()=>{
+      const tab = document.querySelector('[data-id="admin-s2b-orbital-v2"] .rcm-ptab[data-p="netsmart"]');
+      if(typeof rcm8Select === 'function') rcm8Select('netsmart', tab);
+    }, 60);
+  }
   // admin slides — render charts on entry
   const _curId = SLIDES[currentIdx]?.id;
   if(_curId === 'admin-overview'){
@@ -3720,9 +3878,34 @@ function _fmtBenes(n){ if(!n||n<1)return'—'; if(n>=1e6)return(n/1e6).toFixed(2
 // ═══════════════════════════════════════════════════════════════
 // DATA LOADING
 // ═══════════════════════════════════════════════════════════════
+// Scopes the fact-pack API supports today
+const _SUPPORTED_SCOPES = new Set(['all_cmhc','fbha','bhpf','msa','org']);
+// Display labels for unsupported scopes shown in the banner
+const _SCOPE_LABELS = { ind_bh:'Independent BH', fqhc:'FQHCs', bh_specialty:'BH Specialty', sud:'SUD Providers' };
+
 async function loadSlide(){
   // fact-pack scope param: fbha is an alias for all_cmhc at the API level
-  const factPackScope = STATE.scope === 'fbha' ? 'all_cmhc' : STATE.scope;
+  // unsupported scopes (ind_bh, fqhc, bh_specialty, sud) fall back to all_cmhc
+  // so nodes show data instead of spinning forever
+  const rawScope = STATE.scope;
+  const factPackScope = _SUPPORTED_SCOPES.has(rawScope) ? rawScope : 'all_cmhc';
+  const scopeFallback = !_SUPPORTED_SCOPES.has(rawScope);
+
+  // Show/hide "segment coming soon" banner
+  let banner = document.getElementById('_scope-fallback-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = '_scope-fallback-banner';
+    banner.style.cssText = 'position:fixed;top:36px;left:50%;transform:translateX(-50%);z-index:999;background:#fffbeb;border:1px solid #f59e0b;color:#92400e;font-family:var(--mono);font-size:10px;padding:4px 14px;border-radius:20px;pointer-events:none;transition:opacity .3s';
+    document.body.appendChild(banner);
+  }
+  if (scopeFallback) {
+    banner.textContent = `${_SCOPE_LABELS[rawScope] || rawScope} · segment data coming soon — showing All FL CMHC`;
+    banner.style.opacity = '1';
+  } else {
+    banner.style.opacity = '0';
+  }
+
   const params = new URLSearchParams({scope: factPackScope});
   const fp = await fetch(`${API}/story/fact-pack?${params}`).then(r=>r.ok ? r.json() : null).catch(()=>null);
   if(!fp){
@@ -5340,6 +5523,8 @@ function layoutEvoRadial(){
 window.addEventListener('resize', () => {
   // Re-layout both radials if their slides are active
   if(SLIDES[currentIdx]?.id === 'ch2-evolution') layoutEvoRadial();
+  if(SLIDES[currentIdx]?.id === 'admin-s2b-orbital'    && typeof rcmDrawLines  === 'function') rcmDrawLines();
+  if(SLIDES[currentIdx]?.id === 'admin-s2b-orbital-v2' && typeof rcm8DrawLines === 'function') rcm8DrawLines();
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -6569,6 +6754,547 @@ function personaSkip(){
 })();
 
 // (chart hooks wired directly inside goTo() above)
+
+// ═══════════════════════════════════════════════════════════════
+// RCM v1 — 7-gate orbital (admin-s2b-orbital)
+// Scale: 1=Broken · 2=Partial · 3=Works · 4=Automated
+// ═══════════════════════════════════════════════════════════════
+const RCM_GATES = [
+  { label: 'Eligibility Verification', icon: '✅', positions: [50,9],
+    scores: { netsmart:3, welligent:2, qualifacts:3, athena:4 },
+    detail: {
+      netsmart:   'Real-time 270/271 EDI. BH payer list incomplete — Medicaid MCO gaps require manual workaround.',
+      welligent:  'Batch eligibility only. Real-time check requires third-party add-on. Frequent manual re-verification.',
+      qualifacts: 'Real-time 270/271 via Availity. Coverage detail thin for BH specialty codes.',
+      athena:     'Real-time eligibility with benefits detail. Best-in-class payer connectivity including FL Medicaid MCOs.',
+    }
+  },
+  { label: 'Prior Authorization', icon: '📋', positions: [83,25],
+    scores: { netsmart:3, welligent:2, qualifacts:3, athena:3 },
+    detail: {
+      netsmart:   'PA tracking built in. No AI-assist on likelihood or appeal path. Manual submission for most BH payors.',
+      welligent:  'PA tracked as a field, not a workflow. No automated submission. High manual burden per auth.',
+      qualifacts: 'PA workflow similar to Netsmart. Gold Carding not supported. No predictive denial flag.',
+      athena:     'PA workflow with payor rules engine. No BH-specific scope-of-practice validation. Gold Carding partial.',
+    }
+  },
+  { label: 'Clinical Coding', icon: '🏷️', positions: [93,57],
+    scores: { netsmart:4, welligent:3, qualifacts:4, athena:3 },
+    detail: {
+      netsmart:   'BH-specific HCPCS/CPT code sets. Coding rules engine flags mismatches at point of service. Strongest BH coder.',
+      welligent:  'Code lookup functional but no automated rules engine. Coder must manually validate against LCD/NCD.',
+      qualifacts: 'Coding rules engine matches Netsmart. ICD-10 crosswalk updated quarterly. Strongest on BH code sets.',
+      athena:     'General medical coding engine. BH specialty codes (H-codes, T-codes) require manual configuration.',
+    }
+  },
+  { label: 'Claim Submission', icon: '📤', positions: [73,84],
+    scores: { netsmart:4, welligent:3, qualifacts:4, athena:4 },
+    detail: {
+      netsmart:   'Clearinghouse-integrated batch submission. 835 auto-posting. Clean claim rate ~94% on first pass.',
+      welligent:  'EDI submission functional but scrubber is basic. Higher rework rate vs peers. Manual 835 reconciliation.',
+      qualifacts: 'Equivalent to Netsmart. Clearinghouse integration with real-time claim status tracking.',
+      athena:     'Athena clearinghouse (largest in US). Highest clean claim rate. 835 auto-posting and reconciliation built in.',
+    }
+  },
+  { label: 'Denial Management', icon: '🚫', positions: [37,84],
+    scores: { netsmart:2, welligent:2, qualifacts:2, athena:3 },
+    detail: {
+      netsmart:   'Denial tracking in AR module. No AI on denial patterns. Appeal templates manual. No cross-org learning.',
+      welligent:  'Denial queue exists but no workflow automation. AR staff manage appeals via spreadsheet outside platform.',
+      qualifacts: 'Similar to Netsmart. Denial reporting available but no predictive flagging or appeal assist.',
+      athena:     'Denial rules engine with payor-specific appeal workflows. Still single-org — no network denial intelligence.',
+    }
+  },
+  { label: 'AR Follow-Up', icon: '📊', positions: [17,57],
+    scores: { netsmart:2, welligent:1, qualifacts:2, athena:3 },
+    detail: {
+      netsmart:   'AR worklist exists. No AI prioritization. Average AR days 84 across BHPF on Netsmart.',
+      welligent:  'Broken — no AR aging workflow. Staff manually work unbilled/denied claims from reports. Highest AR days.',
+      qualifacts: 'AR worklist with aging buckets. No intelligent prioritization by recovery likelihood.',
+      athena:     'AI-prioritized AR worklist. Recovery likelihood scoring. Best-in-class AR days (~34) vs 84 BHPF average.',
+    }
+  },
+  { label: 'Analytics & Reporting', icon: '📈', positions: [7,25],
+    scores: { netsmart:2, welligent:2, qualifacts:3, athena:3 },
+    detail: {
+      netsmart:   'Standard financial reports. No benchmark comparison. No cross-org analytics. Each org sees only itself.',
+      welligent:  'Canned reports only. No custom dashboards. No peer benchmarking. Analytics is a known product weakness.',
+      qualifacts: 'Better BI tooling than peers. Custom dashboards available. Still single-org — no network view.',
+      athena:     'Strong analytics with benchmark data from Athena network. BH-specific benchmarks limited vs general medical.',
+    }
+  },
+];
+
+const RCM_VERDICTS = {
+  netsmart:   'Netsmart leads on BH workflow — clinical coding and claim submission score 4. But denial management, AR follow-up, and analytics are weak. Network intelligence is broken: no shared denial learning, no cross-org AR benchmarking, each of your 34 orgs runs in total isolation.',
+  welligent:  'Welligent scores lowest across all 7 gates. AR follow-up is broken — staff work claims from reports outside the platform entirely. No shared intelligence of any kind.',
+  qualifacts: 'Qualifacts matches Netsmart on workflow gates with a slight analytics edge. Denial management and AR follow-up remain partial. No shared denial intelligence across orgs.',
+  athena:     'Athena leads on eligibility, submission, denial, AR, and analytics — strongest single-platform score by total. Network intelligence is partial: it works within one org but has no cross-org benchmarking, no shared denial learning across your network.',
+};
+const RCM_SI_GRADES = {
+  netsmart:   { label: 'Broken',  color: '#E24B4A' },
+  welligent:  { label: 'Broken',  color: '#E24B4A' },
+  qualifacts: { label: 'Partial', color: '#BA7517' },
+  athena:     { label: 'Partial', color: '#BA7517' },
+};
+const RCM_SC = { 1:'#E24B4A', 2:'#BA7517', 3:'#0d6b52', 4:'#065f3a' };
+const RCM_SL = { 1:'1 · Broken', 2:'2 · Partial', 3:'3 · Works', 4:'4 · Automated' };
+const RCM_PO = ['netsmart','welligent','qualifacts','athena'];
+let _rcmP = 'netsmart', _rcmTimer = null, _rcmInit = false, _rcmPlaying = false;
+
+// ── layout: position cards + build inner HTML (runs once) ──
+function rcmLayout() {
+  if (_rcmInit) return; _rcmInit = true;
+  RCM_GATES.forEach((g, i) => {
+    const el = document.getElementById('rcm-card-' + i); if (!el) return;
+    el.style.left = g.positions[0] + '%';
+    el.style.top  = g.positions[1] + '%';
+    el.innerHTML  = `<div style="font-size:14px;margin-bottom:2px;line-height:1">${g.icon}</div>
+      <div style="font-size:8.5px;font-weight:500;color:#3D3B38;line-height:1.25">${g.label}</div>
+      <div id="rcms-${i}" style="margin-top:3px;font-family:var(--mono);font-size:10px;font-weight:700"></div>`;
+  });
+}
+
+// ── instant platform switch (tab click) ──
+function rcmSelectPlatform(p) {
+  if (!_rcmInit) rcmLayout();
+  _rcmStopPlay();
+  _rcmP = p;
+  document.querySelectorAll('[data-id="admin-s2b-orbital"] .rcm-ptab').forEach(b =>
+    b.classList.toggle('on', b.dataset.p === p));
+  const scores = RCM_GATES.map(g => g.scores[p]);
+  // Hub
+  const hn = document.getElementById('rcm-hub-name');
+  const hg = document.getElementById('rcm-hub-si-grade');
+  if (hn) hn.textContent = p.charAt(0).toUpperCase() + p.slice(1);
+  if (hg) { hg.textContent = RCM_SI_GRADES[p].label; hg.style.color = RCM_SI_GRADES[p].color; }
+  // All gate cards visible + scored
+  RCM_GATES.forEach((g, i) => {
+    const card = document.getElementById('rcm-card-' + i); if (!card) return;
+    card.classList.remove('rcm-dim','rcm-lit','rcm-fly');
+    const sc = document.getElementById('rcms-' + i); if (!sc) return;
+    sc.textContent = RCM_SL[scores[i]]; sc.style.color = RCM_SC[scores[i]];
+  });
+  // Running score
+  const total = scores.reduce((a,b)=>a+b,0);
+  const rs = document.getElementById('rcm-running-score');
+  if (rs) rs.textContent = `${total} / ${RCM_GATES.length * 4}`;
+  // Scorecard — all rows, click to expand detail
+  const sc = document.getElementById('rcm-scorecard');
+  if (sc) sc.innerHTML = RCM_GATES.map((g,i) => {
+    const s = scores[i];
+    return `<div class="rcm-score-row" style="border-left-color:${RCM_SC[s]}" onclick="this.classList.toggle('open')">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:10px;color:#3D3B38;font-weight:500">${g.label}</span>
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:${RCM_SC[s]}">${RCM_SL[s]}</span>
+      </div>
+      <div class="rcm-score-detail">${g.detail[p]}</div>
+    </div>`;
+  }).join('');
+  // Caption off, verdict on
+  const cap = document.getElementById('rcm-caption'); if (cap) cap.style.display = 'none';
+  const v   = document.getElementById('rcm-verdict');
+  if (v) { v.style.display = 'block'; v.textContent = RCM_VERDICTS[p]; }
+  const fn = document.getElementById('rcm-footnote');
+  if (fn) fn.textContent = `${p.charAt(0).toUpperCase()+p.slice(1)} · 7 RCM gates + network intelligence`;
+  rcmDrawLines();
+}
+
+// ── play: cinematic gate-by-gate reveal ──
+const RCM_GATE_MS = 1400; // ms per gate
+
+function _rcmStopPlay() {
+  if (_rcmTimer) { clearTimeout(_rcmTimer); _rcmTimer = null; }
+  _rcmPlaying = false;
+  const btn = document.getElementById('rcm-play-btn');
+  if (btn) btn.textContent = '▶ Play';
+}
+
+function rcmPlay() {
+  if (!_rcmInit) rcmLayout();
+  if (_rcmPlaying) { _rcmStopPlay(); rcmSelectPlatform(_rcmP); return; }
+
+  _rcmPlaying = true;
+  const btn = document.getElementById('rcm-play-btn');
+  if (btn) btn.textContent = '⏹ Stop';
+
+  const p      = _rcmP;
+  const scores = RCM_GATES.map(g => g.scores[p]);
+  const n      = RCM_GATES.length;
+
+  // Hub update
+  const hn = document.getElementById('rcm-hub-name');
+  const hg = document.getElementById('rcm-hub-si-grade');
+  if (hn) hn.textContent = p.charAt(0).toUpperCase() + p.slice(1);
+  if (hg) { hg.textContent = RCM_SI_GRADES[p].label; hg.style.color = RCM_SI_GRADES[p].color; }
+
+  // Reset: dim all cards, clear scorecard, hide verdict, show caption
+  RCM_GATES.forEach((_, i) => {
+    const c = document.getElementById('rcm-card-' + i); if (!c) return;
+    c.classList.add('rcm-dim'); c.classList.remove('rcm-lit','rcm-fly');
+    const sc = document.getElementById('rcms-' + i); if (sc) sc.textContent = '';
+  });
+  const scEl  = document.getElementById('rcm-scorecard'); if (scEl) scEl.innerHTML = '';
+  const capEl = document.getElementById('rcm-caption');
+  const vEl   = document.getElementById('rcm-verdict');
+  const rsEl  = document.getElementById('rcm-running-score');
+  if (capEl) { capEl.style.display = 'block'; capEl.textContent = ''; }
+  if (vEl)   vEl.style.display = 'none';
+  if (rsEl)  rsEl.textContent = `0 / ${n * 4}`;
+  // Clear spoke lines
+  const svg = document.getElementById('rcm-arm-svg'); if (svg) svg.innerHTML = '';
+
+  let revealed = 0;
+
+  function revealGate(i) {
+    if (!_rcmPlaying) return;
+    const card = document.getElementById('rcm-card-' + i); if (!card) return;
+    const g = RCM_GATES[i]; const s = scores[i];
+
+    // Fly in this card
+    card.classList.remove('rcm-dim'); card.classList.add('rcm-fly');
+    setTimeout(() => { if (card) card.classList.remove('rcm-fly'); }, 420);
+
+    // Score label on card
+    setTimeout(() => {
+      const sc = document.getElementById('rcms-' + i);
+      if (sc) { sc.textContent = RCM_SL[s]; sc.style.color = RCM_SC[s]; }
+    }, 220);
+
+    // Lit pulse then settle
+    setTimeout(() => { card.classList.add('rcm-lit'); }, 80);
+    setTimeout(() => { card.classList.remove('rcm-lit'); }, 680);
+
+    // Caption — show this gate's detail
+    if (capEl) {
+      capEl.style.opacity = '0';
+      setTimeout(() => {
+        capEl.innerHTML = `<strong style="font-size:.68rem;color:#1A1917">${g.icon} ${g.label}</strong>
+          <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:${RCM_SC[s]};margin-left:6px">${RCM_SL[s]}</span>
+          <div style="margin-top:4px;font-size:.65rem;color:#6B6966;line-height:1.5">${g.detail[p]}</div>`;
+        capEl.style.opacity = '1';
+      }, 120);
+    }
+
+    // Scorecard row flies in
+    setTimeout(() => {
+      if (!_rcmPlaying || !scEl) return;
+      const row = document.createElement('div');
+      row.className = 'rcm-score-row rcm-row-in';
+      row.style.borderLeftColor = RCM_SC[s];
+      row.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:10px;color:#3D3B38;font-weight:500">${g.label}</span>
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:${RCM_SC[s]}">${RCM_SL[s]}</span>
+      </div>
+      <div class="rcm-score-detail">${g.detail[p]}</div>`;
+      row.onclick = () => row.classList.toggle('open');
+      scEl.appendChild(row);
+      revealed++;
+      if (rsEl) rsEl.textContent = `${scores.slice(0,revealed).reduce((a,b)=>a+b,0)} / ${n * 4}`;
+      // Redraw lines with this node now included
+      rcmDrawLines();
+    }, 300);
+
+    // Schedule next gate or finish
+    if (i < n - 1) {
+      _rcmTimer = setTimeout(() => revealGate(i + 1), RCM_GATE_MS);
+    } else {
+      // All gates done — swap caption → verdict
+      _rcmTimer = setTimeout(() => {
+        if (!_rcmPlaying) return;
+        if (capEl) capEl.style.display = 'none';
+        if (vEl) { vEl.style.display = 'block'; vEl.textContent = RCM_VERDICTS[p]; }
+        _rcmStopPlay();
+      }, RCM_GATE_MS);
+    }
+  }
+
+  revealGate(0);
+}
+
+function rcmDrawLines() {
+  setTimeout(() => {
+    const svg = document.getElementById('rcm-arm-svg');
+    const cvs = document.getElementById('rcm-canvas');
+    const hub = document.getElementById('rcm-hub');
+    if (!svg || !cvs || !hub) return;
+    const cr = cvs.getBoundingClientRect(), hr = hub.getBoundingClientRect();
+    const cx = hr.left-cr.left+hr.width/2, cy = hr.top-cr.top+hr.height/2;
+    svg.setAttribute('viewBox', `0 0 ${cr.width} ${cr.height}`);
+    svg.innerHTML = Array.from({length:7}, (_,i) => {
+      const el = document.getElementById('rcm-card-'+i); if (!el) return '';
+      if (el.classList.contains('rcm-dim')) return ''; // skip unshown cards during play
+      const nr = el.getBoundingClientRect();
+      return `<line x1="${cx}" y1="${cy}" x2="${nr.left-cr.left+nr.width/2}" y2="${nr.top-cr.top+nr.height/2}"
+        stroke="rgba(0,0,0,.1)" stroke-width="1" stroke-dasharray="5 4"/>`;
+    }).join('');
+  }, 50);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RCM v2 — 8-gate orbital (admin-s2b-orbital-v2)
+// Provider Credentialing added as 8th gate (Mobius gap)
+// ═══════════════════════════════════════════════════════════════
+const RCM8_GATES = [
+  { label: 'Patient Engagement & Appointment', icon: '📅',
+    scores: { netsmart:3, welligent:2, qualifacts:3, athena:3 },
+    detail: {
+      netsmart:   'Scheduling and intake integrated with EHR. No AI-assisted outreach or no-show prediction.',
+      welligent:  'Basic scheduling module. No automated reminders or engagement tracking.',
+      qualifacts: 'Scheduling with patient portal. Engagement analytics limited.',
+      athena:     'Athena Communicate for reminders and outreach. No-show prediction available.',
+    }
+  },
+  { label: 'Eligibility Verification', icon: '✅',
+    scores: { netsmart:3, welligent:2, qualifacts:3, athena:4 },
+    detail: {
+      netsmart:   'Real-time 270/271. BH Medicaid MCO gaps require manual workaround.',
+      welligent:  'Batch eligibility only. Real-time requires third-party add-on.',
+      qualifacts: 'Real-time via Availity. Coverage detail thin for BH specialty codes.',
+      athena:     'Real-time with full benefits detail. Best payer connectivity incl. FL Medicaid MCOs.',
+    }
+  },
+  { label: 'Payor Benefits & Policies', icon: '📄',
+    scores: { netsmart:2, welligent:2, qualifacts:2, athena:4 },
+    detail: {
+      netsmart:   'Payer rules must be manually maintained. No feed for FL Medicaid fee schedule updates.',
+      welligent:  'No payor policy engine. Coverage rules managed outside the platform in spreadsheets.',
+      qualifacts: 'Basic payer rules. BH-specific policy nuances (Gold Carding, AHCA rules) not automated.',
+      athena:     'Athena network pushes payor policy updates automatically. Best-in-class BH payor coverage rules.',
+    }
+  },
+  { label: 'Provider Credentialing', icon: '🪪', isNew: true,
+    scores: { netsmart:2, welligent:1, qualifacts:2, athena:2 },
+    detail: {
+      netsmart:   'Tracks credential status as a field. No automated Medicaid enrollment monitoring. 90-day blackout window not detected.',
+      welligent:  'Broken — credentialing is entirely outside the platform. No enrollment tracking, no taxonomy validation.',
+      qualifacts: 'Tracks credential status. Cannot detect 90-day Medicaid blackout windows or cross-org taxonomy gaps.',
+      athena:     'Validates enrollment but no BH scope-of-practice or taxonomy validation. Mobius fills this gap — shared credentialing pool across all BHPF orgs.',
+    }
+  },
+  { label: 'Authorization', icon: '📋',
+    scores: { netsmart:3, welligent:2, qualifacts:3, athena:3 },
+    detail: {
+      netsmart:   'PA tracking built in. No AI likelihood scoring or appeal path suggestion.',
+      welligent:  'PA tracked as a field only. No workflow or automated submission.',
+      qualifacts: 'PA workflow similar to Netsmart. Gold Carding not supported.',
+      athena:     'PA workflow with payor rules engine. BH-specific scope-of-practice validation missing.',
+    }
+  },
+  { label: 'Coding & Claim Submission', icon: '💻',
+    scores: { netsmart:4, welligent:3, qualifacts:4, athena:3 },
+    detail: {
+      netsmart:   'BH-specific HCPCS/CPT code sets with rules engine. Strongest BH coder. Clean claim rate ~94%.',
+      welligent:  'Coding functional but no automated rules engine. Coder must manually validate LCDs.',
+      qualifacts: 'Matches Netsmart on BH code sets. ICD-10 crosswalk updated quarterly.',
+      athena:     'General medical coding engine. BH H-codes and T-codes require manual configuration.',
+    }
+  },
+  { label: 'Denial Mgmt / Reconciliation', icon: '🚫',
+    scores: { netsmart:2, welligent:2, qualifacts:2, athena:3 },
+    detail: {
+      netsmart:   'Denial queue in AR module. No AI on patterns. Appeal templates manual. No cross-org learning.',
+      welligent:  'Denial queue exists but no workflow automation. AR staff use spreadsheets outside platform.',
+      qualifacts: 'Denial reporting available but no predictive flagging or appeal assist.',
+      athena:     'Rules engine with payor-specific workflows. Single-org only — no network denial intelligence.',
+    }
+  },
+  { label: 'Claim Closure & Posting', icon: '🔐',
+    scores: { netsmart:3, welligent:2, qualifacts:3, athena:4 },
+    detail: {
+      netsmart:   '835 auto-posting integrated. Payment reconciliation functional. AR days average 84 across BHPF.',
+      welligent:  'Manual 835 reconciliation. Highest AR days across all platforms.',
+      qualifacts: 'Clearinghouse integration with real-time claim status. AR performance similar to Netsmart.',
+      athena:     'Automated 835 posting and reconciliation. AI-prioritized AR worklist. Target AR days: 34.',
+    }
+  },
+];
+
+const RCM8_VERDICTS = {
+  netsmart:   'Netsmart leads on BH workflow (coding + submission) but has minimal network intelligence. No shared credentialing pool, no cross-org denial learning. Provider credentialing is manual — each hire triggers a 90-day Medicaid blackout with no automated detection.',
+  welligent:  'Welligent scores lowest across all gates. Provider credentialing is broken — no Medicaid enrollment tracking, no taxonomy validation. Denial management and AR follow-up are fully manual processes.',
+  qualifacts: 'Qualifacts matches Netsmart on workflow gates. Provider credentialing sits at partial — the system tracks status but cannot detect 90-day blackout windows or cross-org taxonomy gaps. Shared intelligence is limited to single-org reporting.',
+  athena:     'Athena leads on eligibility, payor policy, and claim lifecycle. Provider credentialing is the critical gap — it validates enrollment but has no BH scope-of-practice, taxonomy alignment, or 90-day blackout detection. Shared intelligence only works within a single org. Mobius closes the credentialing gap across the full BHPF network.',
+};
+
+const RCM8_SI_GRADES = {
+  netsmart:   { label: 'Broken',  color: '#E24B4A' },
+  welligent:  { label: 'Broken',  color: '#E24B4A' },
+  qualifacts: { label: 'Partial', color: '#BA7517' },
+  athena:     { label: 'Partial', color: '#BA7517' },
+};
+
+const RCM8_SCORE_COLORS = { 1: '#E24B4A', 2: '#BA7517', 3: '#0d6b52', 4: '#065f3a' };
+const RCM8_SCORE_LABELS = { 1: '1 · Broken', 2: '2 · Partial', 3: '3 · Works', 4: '4 · Automated' };
+const RCM8_PLATFORM_ORDER = ['netsmart','welligent','qualifacts','athena'];
+
+let _rcm8P = 'netsmart', _rcm8Timer = null, _rcm8Playing = false;
+
+function _rcm8StopPlay() {
+  if (_rcm8Timer) { clearTimeout(_rcm8Timer); _rcm8Timer = null; }
+  _rcm8Playing = false;
+  const btn = document.getElementById('rcm8-play-btn');
+  if (btn) btn.textContent = '▶ Play';
+}
+
+function rcm8Select(p, btn) {
+  _rcm8StopPlay();
+  _rcm8P = p;
+  document.querySelectorAll('[data-id="admin-s2b-orbital-v2"] .rcm-ptab').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  const scores = RCM8_GATES.map(g => g.scores[p]);
+  const total  = scores.reduce((a,b) => a+b, 0);
+  // Hub
+  const grd = RCM8_SI_GRADES[p], ge = document.getElementById('r8-hub-grade');
+  if (ge) { ge.textContent = grd.label; ge.style.color = grd.color; }
+  // Gate scores (all visible)
+  RCM8_GATES.forEach((g, i) => {
+    const sc = document.getElementById('r8s-'+i); if (!sc) return;
+    sc.textContent = RCM8_SCORE_LABELS[scores[i]]; sc.style.color = RCM8_SCORE_COLORS[scores[i]];
+  });
+  // Running score
+  const rs = document.getElementById('r8-running-score');
+  if (rs) rs.textContent = `${total} / ${RCM8_GATES.length * 4}`;
+  // Scorecard
+  const sc = document.getElementById('r8-scorecard');
+  if (sc) sc.innerHTML = RCM8_GATES.map((g, i) => {
+    const s = scores[i], isNew = !!g.isNew;
+    const bc = isNew ? '#1a9070' : RCM8_SCORE_COLORS[s];
+    const bg = isNew ? 'background:#f0faf7;' : '';
+    return `<div class="rcm-score-row" style="border-left-color:${bc};${bg}" onclick="this.classList.toggle('open')">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:10px;color:${isNew?'#0d6b52':'#3D3B38'};font-weight:${isNew?600:500}">${g.label}${isNew?'<span style="font-size:7px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#1a9070;color:#fff;padding:1px 4px;border-radius:3px;margin-left:4px">Mobius gap</span>':''}</span>
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:${RCM8_SCORE_COLORS[s]}">${RCM8_SCORE_LABELS[s]}</span>
+      </div>
+      <div class="rcm-score-detail">${g.detail[p]}</div>
+    </div>`;
+  }).join('');
+  // Caption off, verdict on
+  const cap = document.getElementById('r8-caption'); if (cap) cap.style.display = 'none';
+  const v   = document.getElementById('r8-verdict');
+  if (v) { v.style.display = 'block'; v.textContent = RCM8_VERDICTS[p]; }
+  const fn = document.getElementById('r8-footnote');
+  if (fn) fn.textContent = `${p.charAt(0).toUpperCase()+p.slice(1)} · 8 gates + shared intelligence · 2025`;
+  rcm8DrawLines();
+}
+
+const RCM8_GATE_MS = 1400;
+
+function rcm8Play() {
+  if (_rcm8Playing) { _rcm8StopPlay(); rcm8Select(_rcm8P, document.querySelector(`[data-id="admin-s2b-orbital-v2"] .rcm-ptab[data-p="${_rcm8P}"]`)); return; }
+  _rcm8Playing = true;
+  const btn = document.getElementById('rcm8-play-btn');
+  if (btn) btn.textContent = '⏹ Stop';
+
+  const p = _rcm8P;
+  const scores = RCM8_GATES.map(g => g.scores[p]);
+  const n = RCM8_GATES.length;
+
+  // Hub
+  const grd = RCM8_SI_GRADES[p], ge = document.getElementById('r8-hub-grade');
+  if (ge) { ge.textContent = grd.label; ge.style.color = grd.color; }
+
+  // Reset: dim gate scores, clear scorecard, show caption
+  RCM8_GATES.forEach((g, i) => {
+    const sc = document.getElementById('r8s-'+i); if (sc) sc.textContent = '';
+  });
+  const scEl = document.getElementById('r8-scorecard'); if (scEl) scEl.innerHTML = '';
+  const capEl = document.getElementById('r8-caption');
+  const vEl   = document.getElementById('r8-verdict');
+  const rsEl  = document.getElementById('r8-running-score');
+  if (capEl) { capEl.style.display = 'block'; capEl.textContent = ''; }
+  if (vEl)   vEl.style.display = 'none';
+  if (rsEl)  rsEl.textContent = `0 / ${n * 4}`;
+  const svg = document.getElementById('r8-svg'); if (svg) svg.innerHTML = '';
+
+  let revealed = 0;
+
+  function revealGate(i) {
+    if (!_rcm8Playing) return;
+    const g = RCM8_GATES[i]; const s = scores[i]; const isNew = !!g.isNew;
+
+    // Score on node
+    setTimeout(() => {
+      const sc = document.getElementById('r8s-'+i);
+      if (sc) { sc.textContent = RCM8_SCORE_LABELS[s]; sc.style.color = RCM8_SCORE_COLORS[s]; }
+      // Pulse the gate card
+      const card = document.getElementById('r8g-'+i);
+      if (card) {
+        card.style.boxShadow = isNew
+          ? '0 0 0 3px rgba(26,144,112,.45), 0 8px 28px rgba(0,0,0,.12)'
+          : '0 0 0 3px rgba(26,26,25,.22), 0 6px 24px rgba(0,0,0,.14)';
+        card.style.transform = 'translate(-50%,-50%) scale(1.08)';
+        setTimeout(() => {
+          if (card) { card.style.boxShadow = ''; card.style.transform = ''; }
+        }, 500);
+      }
+    }, 80);
+
+    // Caption
+    if (capEl) {
+      capEl.style.opacity = '0';
+      setTimeout(() => {
+        capEl.innerHTML = `<strong style="font-size:.68rem;color:#1A1917">${g.icon} ${g.label}</strong>
+          <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:${RCM8_SCORE_COLORS[s]};margin-left:6px">${RCM8_SCORE_LABELS[s]}${isNew?' · <span style="color:#0d6b52">Mobius gap</span>':''}</span>
+          <div style="margin-top:4px;font-size:.65rem;color:#6B6966;line-height:1.5">${g.detail[p]}</div>`;
+        capEl.style.opacity = '1';
+      }, 140);
+    }
+
+    // Scorecard row
+    setTimeout(() => {
+      if (!_rcm8Playing || !scEl) return;
+      const bc = isNew ? '#1a9070' : RCM8_SCORE_COLORS[s];
+      const bg = isNew ? 'background:#f0faf7;' : '';
+      const row = document.createElement('div');
+      row.className = 'rcm-score-row rcm-row-in';
+      row.style.cssText = `border-left-color:${bc};${bg}`;
+      row.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:10px;color:${isNew?'#0d6b52':'#3D3B38'};font-weight:${isNew?600:500}">${g.label}${isNew?'<span style="font-size:7px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#1a9070;color:#fff;padding:1px 4px;border-radius:3px;margin-left:4px">Mobius gap</span>':''}</span>
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:${RCM8_SCORE_COLORS[s]}">${RCM8_SCORE_LABELS[s]}</span>
+      </div>
+      <div class="rcm-score-detail">${g.detail[p]}</div>`;
+      row.onclick = () => row.classList.toggle('open');
+      scEl.appendChild(row);
+      revealed++;
+      if (rsEl) rsEl.textContent = `${scores.slice(0,revealed).reduce((a,b)=>a+b,0)} / ${n*4}`;
+      rcm8DrawLines();
+    }, 320);
+
+    if (i < n - 1) {
+      _rcm8Timer = setTimeout(() => revealGate(i+1), RCM8_GATE_MS);
+    } else {
+      _rcm8Timer = setTimeout(() => {
+        if (!_rcm8Playing) return;
+        if (capEl) capEl.style.display = 'none';
+        if (vEl) { vEl.style.display = 'block'; vEl.textContent = RCM8_VERDICTS[p]; }
+        _rcm8StopPlay();
+      }, RCM8_GATE_MS);
+    }
+  }
+
+  revealGate(0);
+}
+
+function rcm8DrawLines() {
+  setTimeout(() => {
+    const svg = document.getElementById('r8-svg'), cvs = document.getElementById('r8-canvas'), hub = document.getElementById('r8-hub');
+    if (!svg || !cvs || !hub) return;
+    const cr = cvs.getBoundingClientRect(), hr = hub.getBoundingClientRect();
+    const cx = hr.left-cr.left+hr.width/2, cy = hr.top-cr.top+hr.height/2;
+    svg.setAttribute('viewBox', `0 0 ${cr.width} ${cr.height}`);
+    svg.innerHTML = Array.from({length:8}, (_,i) => {
+      const el = document.getElementById('r8g-'+i); if (!el) return '';
+      // During play: only draw lines to gates that have been scored
+      const sc = document.getElementById('r8s-'+i);
+      if (_rcm8Playing && (!sc || !sc.textContent)) return '';
+      const nr = el.getBoundingClientRect(); const isNew = !!RCM8_GATES[i].isNew;
+      return `<line x1="${cx}" y1="${cy}" x2="${nr.left-cr.left+nr.width/2}" y2="${nr.top-cr.top+nr.height/2}"
+        stroke="${isNew?'rgba(26,144,112,.4)':'rgba(0,0,0,.1)'}" stroke-width="${isNew?1.5:1}" stroke-dasharray="5 4"/>`;
+    }).join('');
+  }, 50);
+}
+
 
 </script>
 </body>
