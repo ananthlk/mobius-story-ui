@@ -1,0 +1,997 @@
+{
+  "scope": {
+    "type": "all_cmhc",
+    "value": null,
+    "label": "All FL CMHCs"
+  },
+  "period": {
+    "year": "2019",
+    "baseline_year": "2019",
+    "current_year": "2019"
+  },
+  "market": {
+    "total_2024": 687762186.0,
+    "cmhc_paid_2024": 79621652.0,
+    "cmhc_rev_share": 0.1158,
+    "cmhc_bene_share": 0.1633,
+    "n_cmhc_orgs": 42,
+    "service_lines": [
+      {
+        "service_line": "Psychosocial Rehab (TBOS)",
+        "mkt_paid": 195987358.0,
+        "cmhc_rev_share": 0.1332,
+        "cmhc_bene_share": 0.1789,
+        "rpc_ratio": 1.049
+      },
+      {
+        "service_line": "Targeted Case Management",
+        "mkt_paid": 134426132.0,
+        "cmhc_rev_share": 0.097,
+        "cmhc_bene_share": 0.0914,
+        "rpc_ratio": 1.0
+      },
+      {
+        "service_line": "Community Support",
+        "mkt_paid": 103328685.0,
+        "cmhc_rev_share": 0.1206,
+        "cmhc_bene_share": 0.1318,
+        "rpc_ratio": 1.116
+      },
+      {
+        "service_line": "Medical/Psychiatric",
+        "mkt_paid": 79234622.0,
+        "cmhc_rev_share": 0.1848,
+        "cmhc_bene_share": 0.2257,
+        "rpc_ratio": 1.029
+      },
+      {
+        "service_line": "Assessment",
+        "mkt_paid": 34564505.0,
+        "cmhc_rev_share": 0.2289,
+        "cmhc_bene_share": 0.2508,
+        "rpc_ratio": 0.874
+      },
+      {
+        "service_line": "Substance Use Disorder",
+        "mkt_paid": 31526149.0,
+        "cmhc_rev_share": 0.0,
+        "cmhc_bene_share": 0.0,
+        "rpc_ratio": 0.0
+      },
+      {
+        "service_line": "MH Rehab/Day Treatment",
+        "mkt_paid": 29667994.0,
+        "cmhc_rev_share": 0.0,
+        "cmhc_bene_share": 0.0,
+        "rpc_ratio": 0.0
+      },
+      {
+        "service_line": "Treatment Planning",
+        "mkt_paid": 24912410.0,
+        "cmhc_rev_share": 0.2176,
+        "cmhc_bene_share": 0.2343,
+        "rpc_ratio": 0.976
+      },
+      {
+        "service_line": "Practitioner Therapy",
+        "mkt_paid": 23926468.0,
+        "cmhc_rev_share": 0.0013,
+        "cmhc_bene_share": 0.0194,
+        "rpc_ratio": 0.079
+      },
+      {
+        "service_line": "Crisis/Screening",
+        "mkt_paid": 9268795.0,
+        "cmhc_rev_share": 0.0,
+        "cmhc_bene_share": 0.0,
+        "rpc_ratio": 0.0
+      },
+      {
+        "service_line": "Psych Testing",
+        "mkt_paid": 8747674.0,
+        "cmhc_rev_share": 0.0,
+        "cmhc_bene_share": 0.0,
+        "rpc_ratio": 0.0
+      },
+      {
+        "service_line": "Psychiatric Evaluation",
+        "mkt_paid": 6171710.0,
+        "cmhc_rev_share": 0.0,
+        "cmhc_bene_share": 0.0003,
+        "rpc_ratio": 0.136
+      },
+      {
+        "service_line": "Other BH Support",
+        "mkt_paid": 4311056.0,
+        "cmhc_rev_share": 0.0,
+        "cmhc_bene_share": 0.0,
+        "rpc_ratio": 0.0
+      },
+      {
+        "service_line": "FACT",
+        "mkt_paid": 1641270.0,
+        "cmhc_rev_share": 0.0,
+        "cmhc_bene_share": 0.0,
+        "rpc_ratio": 0.0
+      },
+      {
+        "service_line": "Telehealth MH",
+        "mkt_paid": 47356.0,
+        "cmhc_rev_share": 0.0,
+        "cmhc_bene_share": 0.0,
+        "rpc_ratio": 0.0
+      }
+    ]
+  },
+  "rates": {
+    "n_shared_codes": 28,
+    "n_underpaid_codes": 19,
+    "net_rate_gap": 16945971.0,
+    "gap_pct_of_cmhc": 0.1594,
+    "avg_rate_ratio": 0.895,
+    "top_underpaid": [
+      {
+        "code": "H0019",
+        "service": "Alcohol and/or drug services - crisis intervention residential",
+        "category": "Substance Use Disorder",
+        "ratio": 0.194,
+        "gap": 4011499.0,
+        "cmhc_rpc": 180.54,
+        "non_cmhc_rpc": 931.9
+      },
+      {
+        "code": "H2017",
+        "service": "Psychosocial rehabilitation - community support team",
+        "category": "Community Support",
+        "ratio": 0.844,
+        "gap": 3885982.0,
+        "cmhc_rpc": 83.35,
+        "non_cmhc_rpc": 98.73
+      },
+      {
+        "code": "T1017",
+        "service": "Targeted case management",
+        "category": "Targeted Case Management",
+        "ratio": 0.873,
+        "gap": 3226690.0,
+        "cmhc_rpc": 50.25,
+        "non_cmhc_rpc": 57.56
+      },
+      {
+        "code": "H0031",
+        "service": "Mental health assessment by non-physician",
+        "category": "Assessment",
+        "ratio": 0.68,
+        "gap": 2270127.0,
+        "cmhc_rpc": 36.16,
+        "non_cmhc_rpc": 53.14
+      },
+      {
+        "code": "H2019",
+        "service": "Therapeutic behavioral on-site services",
+        "category": "Psychosocial Rehab (TBOS)",
+        "ratio": 0.956,
+        "gap": 1396927.0,
+        "cmhc_rpc": 63.46,
+        "non_cmhc_rpc": 66.35
+      },
+      {
+        "code": "H0020",
+        "service": "Alcohol and/or drug services - methadone administration",
+        "category": "Medical/Psychiatric",
+        "ratio": 0.898,
+        "gap": 1230967.0,
+        "cmhc_rpc": 56.36,
+        "non_cmhc_rpc": 62.78
+      },
+      {
+        "code": "H2030",
+        "service": "Mental health clubhouse services",
+        "category": "Community Support",
+        "ratio": 0.708,
+        "gap": 525539.0,
+        "cmhc_rpc": 63.92,
+        "non_cmhc_rpc": 90.26
+      },
+      {
+        "code": "H2012",
+        "service": "Behavioral health day treatment - per hour",
+        "category": "Psychosocial Rehab (TBOS)",
+        "ratio": 0.369,
+        "gap": 344437.0,
+        "cmhc_rpc": 35.62,
+        "non_cmhc_rpc": 96.62
+      },
+      {
+        "code": "S5145",
+        "service": "Specialized therapeutic foster care per diem",
+        "category": "Behavioral Health Overlay Services",
+        "ratio": 0.859,
+        "gap": 292332.0,
+        "cmhc_rpc": 120.13,
+        "non_cmhc_rpc": 139.89
+      },
+      {
+        "code": "90837",
+        "service": "Psychotherapy 60 minutes",
+        "category": "Practitioner Therapy",
+        "ratio": 0.163,
+        "gap": 124659.0,
+        "cmhc_rpc": 9.69,
+        "non_cmhc_rpc": 59.57
+      }
+    ]
+  },
+  "cover": {
+    "baseline_year": "2019",
+    "current_year": "2019",
+    "mkt_total_baseline": 422303686.0,
+    "mkt_total_current": 422303686.0,
+    "mkt_growth_dol": 0.0,
+    "mkt_growth_pct": 0.0,
+    "bhpf_share_baseline": 15.78,
+    "bhpf_share_current": 15.78,
+    "bhpf_share_delta_pp": 0.0,
+    "bhpf_bene_share_baseline": 21.65,
+    "bhpf_bene_share_current": 21.65,
+    "bhpf_bene_share_delta_pp": 0.0,
+    "bhpf_benes_baseline": 564462.0,
+    "bhpf_benes_current": 564462.0,
+    "mkt_benes_baseline": 2607656.0,
+    "mkt_benes_current": 2607656.0,
+    "fbha_benes_baseline": 313656.0,
+    "fbha_benes_current": 313656.0,
+    "lookalike_benes_baseline": 188009.0,
+    "lookalike_benes_current": 188009.0,
+    "community_benes_baseline": 1541529.0,
+    "community_benes_current": 1541529.0,
+    "fqhc_share_baseline": 4.22,
+    "fqhc_benes_baseline": 164595,
+    "fqhc_orgs_baseline": 26,
+    "fqhc_share_current": 2.04,
+    "fqhc_benes_current": 167840,
+    "fqhc_orgs_current": 25,
+    "cmhc_share_baseline": 26.66,
+    "cmhc_share_current": 26.66,
+    "cmhc_share_delta_pp": 0.0,
+    "lookalike_orgs_baseline": 21,
+    "lookalike_orgs_current": 21,
+    "lookalike_share_baseline": 6.0,
+    "lookalike_share_current": 6.0,
+    "lookalike_growth_x": 1.0,
+    "bhpf_growth_not_captured_dol": 0.0,
+    "bhpf_rpb": 118.07,
+    "bhpf_rpb_vs_market_pct": -27.1,
+    "fbha_rpb": null,
+    "fbha_rpb_vs_market_pct": null,
+    "all_cmhc_rpb": null,
+    "all_cmhc_rpb_vs_market_pct": null,
+    "lookalike_rpb": null,
+    "lookalike_rpb_vs_market_pct": null,
+    "fqhc_rpb": 108.18,
+    "fqhc_rpb_vs_market_pct": -33.2,
+    "community_rpb": null,
+    "community_rpb_vs_market_pct": null,
+    "market_rpb": 161.95,
+    "bhpf_churn_index": 1.0397,
+    "fbha_churn_index": null,
+    "all_cmhc_churn_index": null,
+    "lookalike_churn_index": 1.0491,
+    "fqhc_churn_index": 1.0353,
+    "community_churn_index": null,
+    "mkt_clinician_churn_pct": 12.8,
+    "bhpf_service_mix_ratio": 4.6,
+    "bhpf_ongoing_pct": 0.821,
+    "bhpf_intake_pct": 0.147,
+    "bhpf_high_acuity_pct": 0.032,
+    "fbha_service_mix_ratio": null,
+    "fbha_ongoing_pct": null,
+    "fbha_intake_pct": null,
+    "fbha_high_acuity_pct": null,
+    "all_cmhc_service_mix_ratio": null,
+    "all_cmhc_ongoing_pct": null,
+    "all_cmhc_intake_pct": null,
+    "all_cmhc_high_acuity_pct": null,
+    "lookalike_service_mix_ratio": 5.6,
+    "lookalike_ongoing_pct": 0.848,
+    "lookalike_intake_pct": 0.152,
+    "lookalike_high_acuity_pct": 0.0,
+    "fqhc_service_mix_ratio": 2.45,
+    "fqhc_ongoing_pct": 0.71,
+    "fqhc_intake_pct": 0.288,
+    "fqhc_high_acuity_pct": 0.002,
+    "community_service_mix_ratio": null,
+    "community_ongoing_pct": null,
+    "community_intake_pct": null,
+    "community_high_acuity_pct": null,
+    "community_bh_share_baseline": 58.02,
+    "community_bh_benes_baseline": 1313254,
+    "community_bh_orgs_baseline": 183,
+    "community_bh_share_current": 55.93,
+    "community_bh_benes_current": 1331413,
+    "community_bh_orgs_current": 323,
+    "community_bh_service_mix_ratio": 5.8,
+    "community_bh_churn_index": 0.9838,
+    "community_bh_rpb": 186.57,
+    "community_bh_rpb_vs_market_pct": 15.2,
+    "bh_specialty_share_baseline": null,
+    "bh_specialty_benes_baseline": null,
+    "bh_specialty_orgs_baseline": null,
+    "bh_specialty_share_current": null,
+    "bh_specialty_benes_current": null,
+    "bh_specialty_orgs_current": null,
+    "bh_specialty_service_mix_ratio": null,
+    "bh_specialty_churn_index": null,
+    "bh_specialty_rpb": null,
+    "bh_specialty_rpb_vs_market_pct": null,
+    "sud_share_baseline": null,
+    "sud_benes_baseline": null,
+    "sud_orgs_baseline": null,
+    "sud_share_current": null,
+    "sud_benes_current": null,
+    "sud_orgs_current": null,
+    "sud_service_mix_ratio": 3.79,
+    "sud_churn_index": 1.0821,
+    "sud_rpb": 152.4,
+    "sud_rpb_vs_market_pct": -5.9,
+    "bhpf_orgs_baseline": 25,
+    "bhpf_orgs_current": 25,
+    "fbha_orgs_baseline": 25,
+    "fbha_orgs_current": 25,
+    "non_cmhc_orgs_baseline": 348,
+    "non_cmhc_orgs_current": 348,
+    "community_orgs_baseline": 348,
+    "community_orgs_current": 348,
+    "community_share_baseline": 67.34,
+    "community_share_current": 67.34,
+    "source": "org_kpis_v2",
+    "code_universe": "fl_bh_code_reference (81 codes, outpatient & community BH)",
+    "data_note": "2024 includes partial Nov-Dec; use as directional.",
+    "years_series": {
+      "2019": {
+        "bhpf": {
+          "share": 15.78,
+          "benes": 564462.0,
+          "orgs": 25,
+          "svc_ratio": 4.6,
+          "churn_pct": 4.0,
+          "rpb_pct": -27.1,
+          "rpb_abs": 118.07,
+          "market_rpb": 161.95
+        },
+        "fbha": {
+          "share": 26.66,
+          "benes": 878118.0,
+          "orgs": 50,
+          "svc_ratio": 1.99,
+          "churn_pct": 5.7,
+          "rpb_pct": -9.5,
+          "rpb_abs": 146.53,
+          "market_rpb": 161.95
+        },
+        "lookalike": {
+          "share": 6.0,
+          "benes": 188009.0,
+          "orgs": 21,
+          "svc_ratio": 5.6,
+          "churn_pct": 4.9,
+          "rpb_pct": -16.8,
+          "rpb_abs": 134.74,
+          "market_rpb": 161.95
+        },
+        "fqhc": {
+          "share": 4.22,
+          "benes": 164595,
+          "orgs": 26,
+          "svc_ratio": 2.45,
+          "churn_pct": 3.5,
+          "rpb_pct": -33.2,
+          "rpb_abs": 108.18,
+          "market_rpb": 161.95
+        },
+        "community_bh": {
+          "share": 58.02,
+          "benes": 1313254,
+          "orgs": 183,
+          "svc_ratio": 5.8,
+          "churn_pct": -1.6,
+          "rpb_pct": 15.2,
+          "rpb_abs": 186.57,
+          "market_rpb": 161.95
+        },
+        "bh_specialty": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.4,
+          "churn_pct": -4.8,
+          "rpb_pct": -11.7,
+          "rpb_abs": 142.95,
+          "market_rpb": 161.95
+        },
+        "sud": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.79,
+          "churn_pct": 8.2,
+          "rpb_pct": -5.9,
+          "rpb_abs": 152.4,
+          "market_rpb": 161.95
+        },
+        "_market": {
+          "mkt_total": 422303686.0,
+          "mkt_benes": 2607656.0
+        }
+      },
+      "2020": {
+        "bhpf": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 4.44,
+          "churn_pct": 5.6,
+          "rpb_pct": -26.2,
+          "rpb_abs": 121.56,
+          "market_rpb": 164.71
+        },
+        "fbha": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 1.59,
+          "churn_pct": 7.7,
+          "rpb_pct": -11.9,
+          "rpb_abs": 145.13,
+          "market_rpb": 164.71
+        },
+        "lookalike": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 7.88,
+          "churn_pct": 6.8,
+          "rpb_pct": -16.2,
+          "rpb_abs": 138.1,
+          "market_rpb": 164.71
+        },
+        "fqhc": {
+          "share": 4.13,
+          "benes": 159574,
+          "orgs": 24,
+          "svc_ratio": 2.48,
+          "churn_pct": 3.4,
+          "rpb_pct": -30.3,
+          "rpb_abs": 114.86,
+          "market_rpb": 164.71
+        },
+        "community_bh": {
+          "share": 56.4,
+          "benes": 1320936,
+          "orgs": 211,
+          "svc_ratio": 5.29,
+          "churn_pct": -1.6,
+          "rpb_pct": 15.0,
+          "rpb_abs": 189.41,
+          "market_rpb": 164.71
+        },
+        "bh_specialty": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.78,
+          "churn_pct": -5.6,
+          "rpb_pct": -12.0,
+          "rpb_abs": 144.9,
+          "market_rpb": 164.71
+        },
+        "sud": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.71,
+          "churn_pct": 9.3,
+          "rpb_pct": -16.3,
+          "rpb_abs": 137.82,
+          "market_rpb": 164.71
+        },
+        "_market": {
+          "mkt_total": null,
+          "mkt_benes": null
+        }
+      },
+      "2021": {
+        "bhpf": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.63,
+          "churn_pct": 4.3,
+          "rpb_pct": -27.4,
+          "rpb_abs": 117.19,
+          "market_rpb": 161.3
+        },
+        "fbha": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 1.31,
+          "churn_pct": 5.8,
+          "rpb_pct": -18.6,
+          "rpb_abs": 131.34,
+          "market_rpb": 161.3
+        },
+        "lookalike": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 6.65,
+          "churn_pct": 2.9,
+          "rpb_pct": -12.9,
+          "rpb_abs": 140.55,
+          "market_rpb": 161.3
+        },
+        "fqhc": {
+          "share": 3.58,
+          "benes": 176040,
+          "orgs": 23,
+          "svc_ratio": 1.76,
+          "churn_pct": 5.7,
+          "rpb_pct": -39.9,
+          "rpb_abs": 96.87,
+          "market_rpb": 161.3
+        },
+        "community_bh": {
+          "share": 55.99,
+          "benes": 1384557,
+          "orgs": 271,
+          "svc_ratio": 4.67,
+          "churn_pct": -1.4,
+          "rpb_pct": 19.5,
+          "rpb_abs": 192.79,
+          "market_rpb": 161.3
+        },
+        "bh_specialty": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.16,
+          "churn_pct": -4.7,
+          "rpb_pct": -15.2,
+          "rpb_abs": 136.73,
+          "market_rpb": 161.3
+        },
+        "sud": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.46,
+          "churn_pct": 5.3,
+          "rpb_pct": -19.8,
+          "rpb_abs": 129.35,
+          "market_rpb": 161.3
+        },
+        "_market": {
+          "mkt_total": null,
+          "mkt_benes": null
+        }
+      },
+      "2022": {
+        "bhpf": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 2.69,
+          "churn_pct": 4.5,
+          "rpb_pct": -17.1,
+          "rpb_abs": 110.97,
+          "market_rpb": 133.87
+        },
+        "fbha": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 1.05,
+          "churn_pct": 4.7,
+          "rpb_pct": -12.6,
+          "rpb_abs": 116.95,
+          "market_rpb": 133.87
+        },
+        "lookalike": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 5.18,
+          "churn_pct": 3.9,
+          "rpb_pct": -16.3,
+          "rpb_abs": 112.05,
+          "market_rpb": 133.87
+        },
+        "fqhc": {
+          "share": 3.98,
+          "benes": 175452,
+          "orgs": 25,
+          "svc_ratio": 1.54,
+          "churn_pct": 5.9,
+          "rpb_pct": -32.1,
+          "rpb_abs": 90.85,
+          "market_rpb": 133.87
+        },
+        "community_bh": {
+          "share": 54.95,
+          "benes": 1366777,
+          "orgs": 255,
+          "svc_ratio": 3.46,
+          "churn_pct": -2.9,
+          "rpb_pct": 20.3,
+          "rpb_abs": 160.99,
+          "market_rpb": 133.87
+        },
+        "bh_specialty": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 2.81,
+          "churn_pct": -5.1,
+          "rpb_pct": -16.2,
+          "rpb_abs": 112.16,
+          "market_rpb": 133.87
+        },
+        "sud": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.06,
+          "churn_pct": 6.3,
+          "rpb_pct": -17.5,
+          "rpb_abs": 110.44,
+          "market_rpb": 133.87
+        },
+        "_market": {
+          "mkt_total": null,
+          "mkt_benes": null
+        }
+      },
+      "2023": {
+        "bhpf": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 2.47,
+          "churn_pct": 3.4,
+          "rpb_pct": -26.8,
+          "rpb_abs": 127.42,
+          "market_rpb": 174.09
+        },
+        "fbha": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 1.1,
+          "churn_pct": 4.3,
+          "rpb_pct": -28.8,
+          "rpb_abs": 123.94,
+          "market_rpb": 174.09
+        },
+        "lookalike": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 6.87,
+          "churn_pct": 5.7,
+          "rpb_pct": -7.2,
+          "rpb_abs": 161.58,
+          "market_rpb": 174.09
+        },
+        "fqhc": {
+          "share": 2.89,
+          "benes": 227429,
+          "orgs": 25,
+          "svc_ratio": 1.49,
+          "churn_pct": 7.3,
+          "rpb_pct": -56.0,
+          "rpb_abs": 76.66,
+          "market_rpb": 174.09
+        },
+        "community_bh": {
+          "share": 56.61,
+          "benes": 1548261,
+          "orgs": 301,
+          "svc_ratio": 5.3,
+          "churn_pct": -1.8,
+          "rpb_pct": 26.8,
+          "rpb_abs": 220.8,
+          "market_rpb": 174.09
+        },
+        "bh_specialty": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.96,
+          "churn_pct": -5.0,
+          "rpb_pct": -21.4,
+          "rpb_abs": 136.8,
+          "market_rpb": 174.09
+        },
+        "sud": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.17,
+          "churn_pct": 4.1,
+          "rpb_pct": -31.9,
+          "rpb_abs": 118.5,
+          "market_rpb": 174.09
+        },
+        "_market": {
+          "mkt_total": null,
+          "mkt_benes": null
+        }
+      },
+      "2024": {
+        "bhpf": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 2.84,
+          "churn_pct": 7.0,
+          "rpb_pct": -42.2,
+          "rpb_abs": 137.19,
+          "market_rpb": 237.38
+        },
+        "fbha": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 1.3,
+          "churn_pct": 6.1,
+          "rpb_pct": -40.8,
+          "rpb_abs": 140.53,
+          "market_rpb": 237.38
+        },
+        "lookalike": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 7.9,
+          "churn_pct": 8.4,
+          "rpb_pct": 4.3,
+          "rpb_abs": 247.7,
+          "market_rpb": 237.38
+        },
+        "fqhc": {
+          "share": 2.04,
+          "benes": 167840,
+          "orgs": 25,
+          "svc_ratio": 1.69,
+          "churn_pct": 6.4,
+          "rpb_pct": -64.7,
+          "rpb_abs": 83.91,
+          "market_rpb": 237.38
+        },
+        "community_bh": {
+          "share": 55.93,
+          "benes": 1331413,
+          "orgs": 323,
+          "svc_ratio": 8.57,
+          "churn_pct": -2.4,
+          "rpb_pct": 22.0,
+          "rpb_abs": 289.6,
+          "market_rpb": 237.38
+        },
+        "bh_specialty": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 5.51,
+          "churn_pct": -5.8,
+          "rpb_pct": -25.1,
+          "rpb_abs": 177.81,
+          "market_rpb": 237.38
+        },
+        "sud": {
+          "share": null,
+          "benes": null,
+          "orgs": null,
+          "svc_ratio": 3.26,
+          "churn_pct": 3.7,
+          "rpb_pct": -40.9,
+          "rpb_abs": 140.3,
+          "market_rpb": 237.38
+        },
+        "_market": {
+          "mkt_total": null,
+          "mkt_benes": null
+        }
+      }
+    },
+    "entity_summaries": {
+      "bhpf": "BHPF: 15.8% revenue share in 2019. Service mix 4.6\u00d7 (ongoing-heavy). Workforce retention 1.04\u00d7 market.",
+      "fbha": "FBHA (all CMHCs): 26.7% revenue share in 2019. ",
+      "lookalike": "New entrants: 21 orgs in 2019. Service mix 5.6\u00d7 (lean outpatient). Retention 1.05\u00d7 market.",
+      "fqhc": "FQHCs: primary-care BH hybrid. Service mix 2.5\u00d7 (primary-care hybrid). Retention 1.04\u00d7 market.",
+      "community": "Community providers: None orgs in 2019. ",
+      "community_bh": "Independent BH (COMMUNITY_BH): 183 orgs in 2019. Service mix 5.8\u00d7. Retention 0.98\u00d7 market.",
+      "bh_specialty": "BH Specialty: None orgs in 2019. ",
+      "sud": "SUD Providers: None orgs in 2019. Service mix 3.8\u00d7. Retention 1.08\u00d7 market.",
+      "all_cmhc": "FBHA (all CMHCs): 26.7% revenue share in 2019. "
+    },
+    "snapshot_2024": {
+      "bhpf": {
+        "service_mix_ratio": 4.6,
+        "ongoing_pct": 0.821,
+        "intake_pct": 0.147,
+        "high_acuity_pct": 0.032,
+        "churn_index": 1.0397,
+        "churn_vs_mkt_pct": 4.0,
+        "rpb": 118.07,
+        "rpb_vs_market_pct": -27.1,
+        "market_rpb": 161.95,
+        "share": 15.78,
+        "benes": 564462.0,
+        "orgs": 25
+      },
+      "fbha": {
+        "service_mix_ratio": null,
+        "ongoing_pct": null,
+        "intake_pct": null,
+        "high_acuity_pct": null,
+        "churn_index": null,
+        "churn_vs_mkt_pct": null,
+        "rpb": null,
+        "rpb_vs_market_pct": null,
+        "market_rpb": null,
+        "share": 26.66,
+        "benes": 313656.0,
+        "orgs": 25
+      },
+      "all_cmhc": {
+        "service_mix_ratio": null,
+        "ongoing_pct": null,
+        "intake_pct": null,
+        "high_acuity_pct": null,
+        "churn_index": null,
+        "churn_vs_mkt_pct": null,
+        "rpb": null,
+        "rpb_vs_market_pct": null,
+        "market_rpb": null,
+        "share": 26.66,
+        "benes": 313656.0,
+        "orgs": 25
+      },
+      "lookalike": {
+        "service_mix_ratio": 5.6,
+        "ongoing_pct": 0.848,
+        "intake_pct": 0.152,
+        "high_acuity_pct": 0.0,
+        "churn_index": 1.0491,
+        "churn_vs_mkt_pct": 4.9,
+        "rpb": null,
+        "rpb_vs_market_pct": null,
+        "market_rpb": null,
+        "share": 6.0,
+        "benes": 188009.0,
+        "orgs": 21
+      },
+      "fqhc": {
+        "service_mix_ratio": 2.45,
+        "ongoing_pct": 0.71,
+        "intake_pct": 0.288,
+        "high_acuity_pct": 0.002,
+        "churn_index": 1.0353,
+        "churn_vs_mkt_pct": 3.5,
+        "rpb": 108.18,
+        "rpb_vs_market_pct": -33.2,
+        "market_rpb": 161.95,
+        "share": 2.04,
+        "benes": null,
+        "orgs": null
+      },
+      "community_bh": {
+        "service_mix_ratio": 5.8,
+        "ongoing_pct": 0.853,
+        "intake_pct": 0.093,
+        "high_acuity_pct": 0.054,
+        "churn_index": 0.9838,
+        "churn_vs_mkt_pct": -1.6,
+        "rpb": 186.57,
+        "rpb_vs_market_pct": 15.2,
+        "market_rpb": 161.95,
+        "share": null,
+        "benes": null,
+        "orgs": null
+      },
+      "bh_specialty": {
+        "service_mix_ratio": null,
+        "ongoing_pct": null,
+        "intake_pct": null,
+        "high_acuity_pct": null,
+        "churn_index": null,
+        "churn_vs_mkt_pct": null,
+        "rpb": null,
+        "rpb_vs_market_pct": null,
+        "market_rpb": null,
+        "share": null,
+        "benes": null,
+        "orgs": null
+      },
+      "sud": {
+        "service_mix_ratio": 3.79,
+        "ongoing_pct": 0.791,
+        "intake_pct": 0.077,
+        "high_acuity_pct": 0.132,
+        "churn_index": 1.0821,
+        "churn_vs_mkt_pct": 8.2,
+        "rpb": 152.4,
+        "rpb_vs_market_pct": -5.9,
+        "market_rpb": 161.95,
+        "share": 3.11,
+        "benes": 152645,
+        "orgs": 23
+      },
+      "_market": {
+        "mkt_total": 422303686.0,
+        "mkt_growth_pct": 0.0,
+        "year": "2019"
+      }
+    }
+  },
+  "timeseries": [
+    {
+      "year": "2019",
+      "mkt_total": 422303686.0,
+      "mkt_benes": 2607656.0,
+      "bhpf_paid": 66643900.0,
+      "bhpf_benes": 564462.0,
+      "cmhc_paid": 112604940.0,
+      "cmhc_benes": 878118.0,
+      "lookalike_paid": 25332410.0,
+      "lookalike_orgs": 21,
+      "tiers": {
+        "non_cmhc": {
+          "paid": 284366336.0,
+          "benes": 1541529.0,
+          "orgs": 348,
+          "rev_share_pct": 67.34,
+          "bene_share_pct": 59.12
+        },
+        "tier1_bhpf": {
+          "paid": 66643900.0,
+          "benes": 564462.0,
+          "orgs": 25,
+          "rev_share_pct": 15.78,
+          "bene_share_pct": 21.65
+        },
+        "tier2_fbha": {
+          "paid": 45961040.0,
+          "benes": 313656.0,
+          "orgs": 25,
+          "rev_share_pct": 10.88,
+          "bene_share_pct": 12.03
+        },
+        "tier3_lookalike": {
+          "paid": 25332410.0,
+          "benes": 188009.0,
+          "orgs": 21,
+          "rev_share_pct": 6.0,
+          "bene_share_pct": 7.21
+        }
+      },
+      "bhpf_rev_share_pct": 15.78,
+      "bhpf_bene_share_pct": 21.65,
+      "cmhc_rev_share_pct": 26.66,
+      "cmhc_bene_share_pct": 33.67
+    }
+  ],
+  "placeholders": {
+    "market_total_2020": 422303686.0,
+    "market_growth_pct": 0.0,
+    "market_growth_dol": 0.0,
+    "cmhc_share_2020": 0.2666,
+    "cmhc_share_delta_pp": 0.0,
+    "lookalike_2020": 21,
+    "lookalike_2024": 21,
+    "lookalike_growth": 1.0,
+    "note": "Derived from live BigQuery timeseries (2019-2024). Source: org_kpis_v2."
+  }
+}

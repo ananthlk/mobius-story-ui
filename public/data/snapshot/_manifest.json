@@ -1,0 +1,13 @@
+{
+  "generated": "2026-04-30T15:50:53.177910Z",
+  "skills_api": "https://mobius-provider-roster-credentialing-ortabkknqa-uc.a.run.app",
+  "snapshots": [
+    "fact-pack__bhpf__all",
+    "fact-pack__fbha__all",
+    "fact-pack__all_cmhc__all",
+    "widget__rate-codes",
+    "widget__service-line-share",
+    "widget__org-ranking"
+  ],
+  "failed": []
+}

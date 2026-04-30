@@ -1,0 +1,109 @@
+{
+  "rows": [
+    {
+      "service_line": "Community Support",
+      "mkt_paid": 269951160.0,
+      "cmhc_rev_share": 0.1674,
+      "cmhc_bene_share": 0.1571,
+      "rpc_ratio": 1.046
+    },
+    {
+      "service_line": "Psychosocial Rehab (TBOS)",
+      "mkt_paid": 222932693.0,
+      "cmhc_rev_share": 0.1666,
+      "cmhc_bene_share": 0.2078,
+      "rpc_ratio": 0.986
+    },
+    {
+      "service_line": "Targeted Case Management",
+      "mkt_paid": 175000877.0,
+      "cmhc_rev_share": 0.1586,
+      "cmhc_bene_share": 0.1285,
+      "rpc_ratio": 1.063
+    },
+    {
+      "service_line": "Practitioner Therapy",
+      "mkt_paid": 77289404.0,
+      "cmhc_rev_share": 0.0115,
+      "cmhc_bene_share": 0.0446,
+      "rpc_ratio": 0.361
+    },
+    {
+      "service_line": "Medical/Psychiatric",
+      "mkt_paid": 71891797.0,
+      "cmhc_rev_share": 0.1762,
+      "cmhc_bene_share": 0.2165,
+      "rpc_ratio": 1.025
+    },
+    {
+      "service_line": "MH Rehab/Day Treatment",
+      "mkt_paid": 39350956.0,
+      "cmhc_rev_share": 0.0049,
+      "cmhc_bene_share": 0.0161,
+      "rpc_ratio": 0.776
+    },
+    {
+      "service_line": "Assessment",
+      "mkt_paid": 34935134.0,
+      "cmhc_rev_share": 0.2238,
+      "cmhc_bene_share": 0.2501,
+      "rpc_ratio": 0.881
+    },
+    {
+      "service_line": "Substance Use Disorder",
+      "mkt_paid": 33843568.0,
+      "cmhc_rev_share": 0.0749,
+      "cmhc_bene_share": 0.0305,
+      "rpc_ratio": 1.247
+    },
+    {
+      "service_line": "Treatment Planning",
+      "mkt_paid": 22336149.0,
+      "cmhc_rev_share": 0.2565,
+      "cmhc_bene_share": 0.2765,
+      "rpc_ratio": 0.945
+    },
+    {
+      "service_line": "FACT",
+      "mkt_paid": 21694244.0,
+      "cmhc_rev_share": 0.3361,
+      "cmhc_bene_share": 0.3404,
+      "rpc_ratio": 0.841
+    },
+    {
+      "service_line": "Crisis/Screening",
+      "mkt_paid": 15803139.0,
+      "cmhc_rev_share": 0.0535,
+      "cmhc_bene_share": 0.0032,
+      "rpc_ratio": 5.823
+    },
+    {
+      "service_line": "Psychiatric Evaluation",
+      "mkt_paid": 15709598.0,
+      "cmhc_rev_share": 0.0023,
+      "cmhc_bene_share": 0.0172,
+      "rpc_ratio": 0.138
+    },
+    {
+      "service_line": "Psych Testing",
+      "mkt_paid": 15546593.0,
+      "cmhc_rev_share": 0.0,
+      "cmhc_bene_share": 0.0017,
+      "rpc_ratio": 0.024
+    },
+    {
+      "service_line": "Other BH Support",
+      "mkt_paid": 4669668.0,
+      "cmhc_rev_share": 0.0016,
+      "cmhc_bene_share": 0.0144,
+      "rpc_ratio": 0.255
+    },
+    {
+      "service_line": "Telehealth MH",
+      "mkt_paid": 1608626.0,
+      "cmhc_rev_share": 0.0004,
+      "cmhc_bene_share": 0.0006,
+      "rpc_ratio": 0.569
+    }
+  ]
+}

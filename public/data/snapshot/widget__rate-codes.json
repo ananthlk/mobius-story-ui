@@ -1,0 +1,116 @@
+{
+  "n_underpaid": 24,
+  "net_gap": 8626537.0,
+  "codes": [
+    {
+      "hcpcs_code": "H0019",
+      "ahca_category": "Substance Use Disorder",
+      "description": "Alcohol and/or drug services - crisis intervention residential",
+      "cmhc_rpc": 186.28,
+      "non_cmhc_rpc": 762.79,
+      "rate_ratio": 0.244,
+      "annual_gap": 4501385.0,
+      "cmhc_claims": 7808,
+      "cmhc_paid": 1454483.17
+    },
+    {
+      "hcpcs_code": "H2017",
+      "ahca_category": "Community Support",
+      "description": "Psychosocial rehabilitation - community support team",
+      "cmhc_rpc": 106.86,
+      "non_cmhc_rpc": 115.97,
+      "rate_ratio": 0.921,
+      "annual_gap": 2741220.0,
+      "cmhc_claims": 300996,
+      "cmhc_paid": 32164078.170000013
+    },
+    {
+      "hcpcs_code": "T1017",
+      "ahca_category": "Targeted Case Management",
+      "description": "Targeted case management",
+      "cmhc_rpc": 57.96,
+      "non_cmhc_rpc": 64.89,
+      "rate_ratio": 0.893,
+      "annual_gap": 2449147.0,
+      "cmhc_claims": 353036,
+      "cmhc_paid": 20460597.950000007
+    },
+    {
+      "hcpcs_code": "H0031",
+      "ahca_category": "Assessment",
+      "description": "Mental health assessment by non-physician",
+      "cmhc_rpc": 37.01,
+      "non_cmhc_rpc": 55.8,
+      "rate_ratio": 0.663,
+      "annual_gap": 1524815.0,
+      "cmhc_claims": 81148,
+      "cmhc_paid": 3003003.43
+    },
+    {
+      "hcpcs_code": "H0032",
+      "ahca_category": "Treatment Planning",
+      "description": "Mental health service plan development by non-physician",
+      "cmhc_rpc": 61.6,
+      "non_cmhc_rpc": 64.95,
+      "rate_ratio": 0.948,
+      "annual_gap": 257935.0,
+      "cmhc_claims": 77027,
+      "cmhc_paid": 4745000.090000001
+    },
+    {
+      "hcpcs_code": "90837",
+      "ahca_category": "Practitioner Therapy",
+      "description": "Psychotherapy 60 minutes",
+      "cmhc_rpc": 48.69,
+      "non_cmhc_rpc": 80.59,
+      "rate_ratio": 0.604,
+      "annual_gap": 212370.0,
+      "cmhc_claims": 6657,
+      "cmhc_paid": 324119.97
+    },
+    {
+      "hcpcs_code": "H0040",
+      "ahca_category": "FACT",
+      "description": "Assertive community treatment - per diem",
+      "cmhc_rpc": 30.37,
+      "non_cmhc_rpc": 30.95,
+      "rate_ratio": 0.981,
+      "annual_gap": 105457.0,
+      "cmhc_claims": 183879,
+      "cmhc_paid": 5585264.950000001
+    },
+    {
+      "hcpcs_code": "90836",
+      "ahca_category": "Practitioner Therapy",
+      "description": "Psychotherapy 45 min add-on to E/M",
+      "cmhc_rpc": 51.53,
+      "non_cmhc_rpc": 147.36,
+      "rate_ratio": 0.35,
+      "annual_gap": 54723.0,
+      "cmhc_claims": 571,
+      "cmhc_paid": 29420.950000000004
+    },
+    {
+      "hcpcs_code": "H2020",
+      "ahca_category": "Psychosocial Rehab (TBOS)",
+      "description": "Therapeutic behavioral services - day treatment",
+      "cmhc_rpc": 28.52,
+      "non_cmhc_rpc": 38.23,
+      "rate_ratio": 0.746,
+      "annual_gap": 38673.0,
+      "cmhc_claims": 3984,
+      "cmhc_paid": 113624.42
+    },
+    {
+      "hcpcs_code": "H2012",
+      "ahca_category": "Psychosocial Rehab (TBOS)",
+      "description": "Behavioral health day treatment - per hour",
+      "cmhc_rpc": 15.32,
+      "non_cmhc_rpc": 25.91,
+      "rate_ratio": 0.591,
+      "annual_gap": 31258.0,
+      "cmhc_claims": 2952,
+      "cmhc_paid": 45215.340000000004
+    }
+  ]
+}
