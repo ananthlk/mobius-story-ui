@@ -5799,6 +5799,16 @@ function _layoutAppRadial(yr){
 // ═══════════════════════════════════════════════════════════════
 goTo(0);
 
+// Pre-init both orbital slides so gate cards are positioned
+// even if the user deep-links or navigates directly to them.
+setTimeout(() => {
+  if (typeof rcmLayout   === 'function') rcmLayout();
+  if (typeof rcm8Select  === 'function') {
+    const t = document.querySelector('[data-id="admin-s2b-orbital-v2"] .rcm-ptab[data-p="netsmart"]');
+    rcm8Select('netsmart', t);
+  }
+}, 120);
+
 // Start cover big-stat animation immediately so users see motion
 // while the fact-pack API call is in flight. Uses the known target
 // ($249M). renderCover will correct the final value if it differs.
