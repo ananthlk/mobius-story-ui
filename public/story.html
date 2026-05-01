@@ -4323,6 +4323,21 @@ async function loadSlide(){
   }
   STATE.factPack = fp;
 
+  // Supplemental: fetch all_cmhc scope to fill FBHA fields missing from bhpf scope
+  // Run in background — merges into fp.cover so entity switching shows correct RPB
+  if(factPackScope === 'bhpf' && (!fp.cover?.fbha_rpb)){
+    apiFetch('/story/fact-pack', {params: {scope: 'all_cmhc'}}).then(cmhcFp => {
+      if(!cmhcFp?.cover) return;
+      const src = cmhcFp.cover;
+      const dst = fp.cover;
+      const fill = ['fbha_rpb','fbha_rpb_vs_market_pct','fbha_churn_index','fbha_service_mix_ratio',
+                    'fbha_ongoing_pct','fbha_intake_pct','all_cmhc_rpb','all_cmhc_rpb_vs_market_pct'];
+      fill.forEach(k => { if(dst[k] == null && src[k] != null) dst[k] = src[k]; });
+      // Re-render profile so FBHA entity switches show correct values
+      renderProfile(fp);
+    }).catch(()=>{});
+  }
+
   renderCover(fp);
   renderProfile(fp);
   renderEvoSlide(fp);
@@ -4668,11 +4683,16 @@ function renderProfile(fp){
     if(churnIdx != null){
       const delta = ((churnIdx - 1) * 100);
       row.churn = (delta >= 0 ? '+' : '') + delta.toFixed(1) + '%';
+    } else if(STATE.yearsSeries) {
+      // Fallback: churn_pct in yearsSeries 2019 is already expressed as % vs market
+      const ysChurn = STATE.yearsSeries?.['2019']?.[p]?.churn_pct;
+      if(ysChurn != null) row.churn = (ysChurn >= 0 ? '+' : '') + ysChurn.toFixed(1) + '%';
     }
 
     // Revenue per beneficiary — show absolute $, store vs-market % for color
-    const entityRpb = cv[`${p}_rpb`];
-    const rpbVsPct  = cv[`${p}_rpb_vs_market_pct`];
+    // Also check alternate key used in all_cmhc scope (all_cmhc prefix aliases fbha)
+    const entityRpb = cv[`${p}_rpb`] ?? cv[`all_cmhc_rpb`] ?? null;
+    const rpbVsPct  = cv[`${p}_rpb_vs_market_pct`] ?? cv[`all_cmhc_rpb_vs_market_pct`] ?? null;
     if(entityRpb != null){
       // Display absolute RPB; sign-color comes from rpbVsPct comparison
       const rpbDisp = '$' + Math.round(entityRpb).toLocaleString();
