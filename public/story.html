@@ -759,7 +759,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .adm-s4b-sc-stats{display:flex;align-items:stretch;gap:0}
 .adm-s4b-sc-stat{flex:1;text-align:center;padding:.1rem 0}
 .adm-s4b-sc-val{font-size:1.3rem;font-weight:800;letter-spacing:-.035em;color:#1A1917;line-height:1}
-.adm-s4b-sc-sub{font-size:.54rem;color:#A09D98;margin-top:.2rem;font-family:var(--mono);
+.adm-s4b-sc-sub{font-size:.65rem;color:#A09D98;margin-top:.2rem;font-family:var(--mono);
   text-transform:uppercase;letter-spacing:.06em}
 .adm-s4b-sc-div{width:1px;background:rgba(0,0,0,.08);flex-shrink:0;margin:.1rem 0}
 .adm-s4b-sc-verdict{font-size:.64rem;color:#3D6B3D;line-height:1.55;
@@ -864,9 +864,9 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
   gap:.75rem;flex:1;min-height:0}
 .a4o-lv-meta{display:flex;flex-direction:column;gap:.18rem;flex-shrink:0}
 .a4o-lv-name{font-size:.72rem;font-weight:700;color:#D8D5CE;letter-spacing:-.01em}
-.a4o-lv-src{font-family:var(--mono);font-size:.48rem;font-weight:600;letter-spacing:.08em;
+.a4o-lv-src{font-family:var(--mono);font-size:.65rem;font-weight:600;letter-spacing:.08em;
   text-transform:uppercase;color:#3A3835}
-.a4o-lv-driver{font-size:.54rem;color:#4E4C48;line-height:1.4;margin-top:.1rem}
+.a4o-lv-driver{font-size:.7rem;color:#4E4C48;line-height:1.45;margin-top:.15rem}
 .a4o-lv-track{flex:1;background:rgba(255,255,255,.05);border-radius:6px;
   overflow:hidden;height:100%;position:relative;display:flex;align-items:stretch}
 .a4o-lv-fill{height:100%;border-radius:6px;display:flex;align-items:center;
@@ -876,7 +876,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .a4o-lv-amt{font-size:1.05rem;font-weight:900;letter-spacing:-.03em;
   text-align:right;white-space:nowrap;flex-shrink:0}
 /* source tag inside lever */
-.a4o-lv-tag{font-family:var(--mono);font-size:.45rem;font-weight:700;letter-spacing:.07em;
+.a4o-lv-tag{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.07em;
   text-transform:uppercase;padding:.1rem .3rem;border-radius:3px;align-self:flex-start}
 /* divider */
 .a4o-divider{height:1px;background:rgba(255,255,255,.06);flex-shrink:0;margin:.1rem 0}
@@ -1047,20 +1047,35 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                   </div>
                 </div>
       
-                <!-- ── Right: coming soon panel ── -->
-                <div class="persona-right" style="display:flex;align-items:center;justify-content:center">
-                  <div style="max-width:380px;text-align:center;padding:2rem">
-                    <div style="font-size:2.8rem;margin-bottom:1rem;line-height:1">🔮</div>
-                    <div style="font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#0d6b52;margin-bottom:.6rem">Coming soon</div>
-                    <div style="font-size:1.6rem;font-weight:800;color:#1A1917;line-height:1.2;letter-spacing:-.02em;margin-bottom:.75rem">Personalized<br>org briefings</div>
-                    <div style="font-size:.82rem;color:#6B6860;line-height:1.6;margin-bottom:1.5rem">Enter your organization and we'll tailor every chart, benchmark, and recommendation to your specific profile — revenue tier, EMR platform, and peer group.<br><br>This feature is in development for the next release.</div>
-                    <div style="display:inline-flex;align-items:center;gap:.5rem;background:#f0faf7;border:1px solid rgba(13,107,82,.2);border-radius:20px;padding:.4rem 1rem;font-size:.72rem;color:#0d6b52;font-weight:600">
-                      <span style="width:7px;height:7px;border-radius:50%;background:#0d6b52;flex-shrink:0"></span>
-                      Presenting with BHPF network defaults
+                <!-- ── Right: BHPF network summary ── -->
+                <div class="persona-right" style="display:flex;flex-direction:column;justify-content:center;padding:2.5rem 2.5rem">
+                  <div style="font-family:var(--mono);font-size:.55rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#0d6b52;margin-bottom:.75rem">BHPF Network — 2025 briefing</div>
+                  <div style="font-size:1.55rem;font-weight:800;color:#1A1917;line-height:1.2;letter-spacing:-.02em;margin-bottom:1.25rem">Florida's community mental<br>health network at a glance</div>
+                  <!-- Stat grid -->
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem">
+                    <div style="background:#fff;border-radius:10px;padding:.9rem 1rem;border:1px solid rgba(0,0,0,.07)">
+                      <div style="font-family:var(--mono);font-size:1.5rem;font-weight:900;color:#1A1917;letter-spacing:-.04em;line-height:1">$1.1B</div>
+                      <div style="font-size:.65rem;color:#9C9890;margin-top:4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em">Combined revenue</div>
                     </div>
-                    <div style="margin-top:1.25rem">
-                      <span onclick="personaSkip()" style="font-size:.72rem;color:#9C9890;text-decoration:underline;text-underline-offset:3px;cursor:pointer">Continue to briefing →</span>
+                    <div style="background:#fff;border-radius:10px;padding:.9rem 1rem;border:1px solid rgba(0,0,0,.07)">
+                      <div style="font-family:var(--mono);font-size:1.5rem;font-weight:900;color:#1A1917;letter-spacing:-.04em;line-height:1">34</div>
+                      <div style="font-size:.65rem;color:#9C9890;margin-top:4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em">Member orgs</div>
                     </div>
+                    <div style="background:#fff;border-radius:10px;padding:.9rem 1rem;border:1px solid rgba(0,0,0,.07)">
+                      <div style="font-family:var(--mono);font-size:1.5rem;font-weight:900;color:#E24B4A;letter-spacing:-.04em;line-height:1">–42%</div>
+                      <div style="font-size:.65rem;color:#9C9890;margin-top:4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em">RPB vs. market · 2024</div>
+                    </div>
+                    <div style="background:#fff;border-radius:10px;padding:.9rem 1rem;border:1px solid rgba(0,0,0,.07)">
+                      <div style="font-family:var(--mono);font-size:1.5rem;font-weight:900;color:#BA7517;letter-spacing:-.04em;line-height:1">$300M+</div>
+                      <div style="font-size:.65rem;color:#9C9890;margin-top:4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em">Market + operational exposure</div>
+                    </div>
+                  </div>
+                  <div style="background:#f0faf7;border:1px solid rgba(13,107,82,.18);border-radius:10px;padding:.85rem 1rem;margin-bottom:1.25rem">
+                    <div style="font-size:.72rem;color:#0d6b52;line-height:1.55;font-weight:500">BHPF collectively holds health-system scale — $1.1B combined. But each of 34 orgs operates at an average of $32M, absorbing costs built for someone twice their size.</div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="font-size:.65rem;color:#9C9890">CMS claims data 2018–2024 · Mobius analysis</div>
+                    <span onclick="personaSkip()" style="font-size:.72rem;color:#0d6b52;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer">Enter briefing →</span>
                   </div>
                 </div>
       
@@ -1072,7 +1087,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                 <div class="eyebrow light">Florida CMHC Industry Analysis · 2025</div>
                 <h1 class="s-title light">The Market Built Around Them</h1>
                 <p style="font-size:15px;color:var(--ink3);font-weight:300;max-width:400px;line-height:1.6;margin-bottom:24px">An industry analysis of Florida's community mental health centers — what happened, why the tools didn't work, and what transformation actually looks like.</p>
-                <div style="font-size:11px;color:var(--ink4);font-family:var(--mono)" id="cover-footnote">CMS DOGE 2018–2024 · 81 FL BH procedure codes · org_kpis_v2</div>
+                <div style="font-size:11px;color:var(--ink4);font-family:var(--mono)" id="cover-footnote">CMS claims data 2018–2024 · 81 FL BH procedure codes · Mobius analysis</div>
               </div>
               <div class="cover-r">
                 <div style="position:relative;z-index:1;max-width:420px">
@@ -1114,7 +1129,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                 <!-- Each line injected by JS with staggered fly-in -->
               </div>
               <div style="padding:16px 56px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;font-family:var(--mono);color:rgba(255,255,255,.3);letter-spacing:.06em">
-                CMS DOGE 2019–2024 · FL Medicaid BH · Mobius analysis
+                CMS claims data 2019–2024 · FL Medicaid BH · Mobius analysis
               </div>
             </div>
 
@@ -1267,7 +1282,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
       
               <!-- FOOTNOTE -->
               <div style="padding:3px 24px 5px;flex-shrink:0;border-top:1px solid var(--rule);display:flex;justify-content:space-between">
-                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS DOGE 2018–2024 · org_kpis_v2 · <span id="profile-live-count">0 of 6</span> nodes live · click any node to explore</div>
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS claims data 2018–2024 · Mobius analysis · <span id="profile-live-count">0 of 6</span> nodes live · click any node to explore</div>
                 <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="profile-filter-label2">BHPF · All FL · 2019</div>
               </div>
             </div>
@@ -1316,7 +1331,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                   <div class="force-year">2024</div>
                   <div class="force-icon">⚡</div>
                   <div class="force-title">New normal</div>
-                  <div class="force-stat" style="color:#a3e635">+46%</div>
+                  <div class="force-stat" style="color:#1D9E75">+46%</div>
                   <div class="force-stat-label">market RPB vs 2019</div>
                   <div class="force-body">The FL BH market nearly doubled in revenue. RPB hit $237. But the gains were not shared equally — the landscape split along fault lines that already existed.</div>
                 </div>
@@ -1324,7 +1339,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
               </div>
       
               <div style="padding:4px 32px 6px;flex-shrink:0;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center">
-                <div style="font-size:10px;color:rgba(255,255,255,.25);font-family:var(--mono)">CMS DOGE 2018–2024 · FL Medicaid fee-for-service</div>
+                <div style="font-size:10px;color:rgba(255,255,255,.25);font-family:var(--mono)">CMS claims data 2018–2024 · FL Medicaid fee-for-service</div>
                 <div style="font-size:10px;color:rgba(255,255,255,.25);font-family:var(--mono)">Each player was impacted differently →</div>
               </div>
             </div>
@@ -1442,7 +1457,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
       
               <!-- FOOTNOTE -->
               <div style="padding:3px 24px 5px;flex-shrink:0;border-top:1px solid var(--rule);display:flex;justify-content:space-between">
-                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS DOGE 2018–2024 · org_kpis_v2 · animated timeline · click entity to compare</div>
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS claims data 2018–2024 · Mobius analysis · animated timeline · click entity to compare</div>
                 <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="evo-footnote-label">BHPF · 2019–2024</div>
               </div>
             </div>
@@ -1500,7 +1515,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
               </div>
       
               <div style="padding:3px 24px 5px;flex-shrink:0;border-top:1px solid var(--rule);display:flex;justify-content:space-between">
-                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS DOGE 2018–2024 · org_kpis_v2 · 6-year scorecard · all FL Medicaid BH orgs</div>
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS claims data 2018–2024 · Mobius analysis · 6-year scorecard · all FL Medicaid BH orgs</div>
                 <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">← Animation  ·  Appendix →</div>
               </div>
             </div>
@@ -1600,7 +1615,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
               </div>
       
               <div style="padding:2px 32px 5px;flex-shrink:0;display:flex;justify-content:space-between">
-                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS DOGE 2018–2024 · FL Medicaid fee-for-service · org_kpis_v2</div>
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS claims data 2018–2024 · FL Medicaid fee-for-service · Mobius analysis</div>
                 <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="suggestedDrills" style="display:flex;gap:6px"></div>
               </div>
             </div>
@@ -4313,7 +4328,7 @@ function renderCover(fp){
   // Footnote
   const universe = cv.code_universe || '81 AHCA procedure codes';
   document.getElementById('cover-footnote').textContent =
-    `CMS DOGE 2018–2024 · ${universe} · org_kpis_v2` +
+    `CMS claims data 2018–2024 · ${universe} · Mobius analysis` +
     (cv.data_note ? ` · ${cv.data_note}` : '');
 }
 
@@ -5953,7 +5968,7 @@ function renderAppendixSlideNow(yr){
 
     <!-- FOOTNOTE -->
     <div style="padding:3px 24px 5px;flex-shrink:0;border-top:1px solid var(--rule);display:flex;justify-content:space-between">
-      <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS DOGE · org_kpis_v2 · ${yr} snapshot</div>
+      <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS claims data · Mobius analysis · ${yr} snapshot</div>
       <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="app-footnote-${yr}">BHPF · ${yr}</div>
     </div>
   `;
@@ -6165,7 +6180,7 @@ const EXEC_LINES = [
   {
     num: '03',
     headline: 'Total exposure: $300M+ in combined market and operational value',
-    detail: '$249M in market growth not captured + ~$60M in operational drag = a $300M+ problem. This is not an estimate — the market figure comes directly from CMS DOGE claims data 2019–2024. The operational figure is a conservative TAM across billing inefficiency, credentialing gaps, and AR drag. The full number is likely larger.'
+    detail: '$249M in market growth not captured + ~$60M in operational drag = a $300M+ problem. This is not an estimate — the market figure comes directly from CMS claims data 2019–2024. The operational figure is a conservative TAM across billing inefficiency, credentialing gaps, and AR drag. The full number is likely larger.'
   },
   {
     num: '04',
@@ -6185,7 +6200,7 @@ const EXEC_LINES = [
   {
     num: '07',
     headline: 'What follows is the evidence, the analysis, and the plan',
-    detail: 'Act I: the market data — what happened to rates, share, and revenue 2019–2024. Act II: the administrative evidence — what the platform gap costs in dollars and gates. Act III: the model — three tiers, two value buckets, and the network thesis. The analysis is grounded in CMS DOGE claims data, FL Medicaid payer rules, and BHPF org-level KPIs.'
+    detail: 'Act I: the market data — what happened to rates, share, and revenue 2019–2024. Act II: the administrative evidence — what the platform gap costs in dollars and gates. Act III: the model — three tiers, two value buckets, and the network thesis. The analysis is grounded in CMS claims data, FL Medicaid payer rules, and BHPF org-level KPIs.'
   },
 ];
 
