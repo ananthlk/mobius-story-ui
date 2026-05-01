@@ -601,6 +601,25 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .adm-s5c-body{font-size:.78rem;color:#9CA3AF;line-height:1.65;font-weight:300}
 .adm-s5c-strip{background:#1A1A1A;border-top:1px solid #222;border-radius:8px;padding:.75rem 1rem;font-size:.72rem;color:#6B7280;line-height:1.55;flex-shrink:0}
 .adm-s5c-strip strong{color:#9CA3AF}
+
+/* ── discussion — pre-appendix question slide ───────────────── */
+.disc-shell{background:#0F0F0F;height:100%;display:flex;flex-direction:column;padding:2.25rem 2.75rem 1.75rem;box-sizing:border-box;gap:1.5rem;color:#E5E7EB}
+.disc-eyebrow{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--teal2,#5CE8B0)}
+.disc-title{font-family:var(--serif);font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:700;color:#fff;line-height:1.1;margin:0;letter-spacing:-.01em}
+.disc-lead{font-size:.85rem;color:#9CA3AF;line-height:1.6;font-weight:300;max-width:780px;margin:0}
+.disc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;flex:1;min-height:0}
+.disc-panel{background:#171717;border:1px solid #232323;border-top:3px solid var(--disc-accent,#5CE8B0);border-radius:14px;padding:1.5rem 1.35rem 1.4rem;display:flex;flex-direction:column;gap:.85rem;opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+.disc-panel.in{opacity:1;transform:translateY(0)}
+.disc-panel:nth-child(1){--disc-accent:#5CE8B0}
+.disc-panel:nth-child(2){--disc-accent:#6aabf0}
+.disc-panel:nth-child(3){--disc-accent:#e8aa50}
+.disc-panel:nth-child(4){--disc-accent:#b090e0}
+.disc-num{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--disc-accent,#5CE8B0)}
+.disc-q{font-size:1.02rem;font-weight:700;color:#F9FAFB;line-height:1.3;margin:0}
+.disc-prompts{display:flex;flex-direction:column;gap:.5rem;margin-top:.2rem}
+.disc-prompt{font-size:.75rem;color:#9CA3AF;line-height:1.55;font-weight:300;padding-left:.7rem;border-left:1px solid #2A2A2A}
+.disc-strip{background:#171717;border:1px solid #232323;border-radius:10px;padding:.85rem 1.1rem;font-size:.72rem;color:#9CA3AF;line-height:1.6;flex-shrink:0;text-align:center}
+.disc-strip strong{color:#E5E7EB;font-weight:600}
 /* ── act2-master bridge (a2m) ───────────────────────────────── */
 .a2m-shell{background:#F7F6F2;height:100%;display:grid;grid-template-columns:1fr 340px;overflow:hidden}
 .a2m-left{display:flex;flex-direction:column;justify-content:center;padding:2.5rem 2.5rem 2.5rem 3rem;gap:1rem}
@@ -1652,7 +1671,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
       <div class="slide" data-id="admin-overview" style="height:100%;overflow:hidden">
               <div class="adm-slide">
                 <div class="adm-eyebrow">overview — administrative benchmarks</div>
-                <div style="display:flex;align-items:baseline;gap:1.25rem;flex-shrink:0;margin-bottom:.25rem">
+                <div style="display:flex;align-items:baseline;gap:1.25rem;flex-shrink:0;margin-bottom:1.1rem">
                   <div class="adm-title" style="margin:0">The BHPF admin profile.</div>
                   <div class="adm-tabs" id="admTov" style="margin:0">
                     <button class="adm-tab on" data-v="all">All BHPF</button>
@@ -1661,8 +1680,8 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                     <button class="adm-tab" data-v="lg">$30M+</button>
                   </div>
                 </div>
-                <!-- 3-panel grid -->
-                <div style="display:grid;grid-template-columns:190px 1fr 1fr;gap:.625rem;flex:1;min-height:0">
+                <!-- 3-panel grid — capped height + breathing gap from header so the panels don't crowd the title -->
+                <div style="display:grid;grid-template-columns:190px 1fr 1fr;gap:.625rem;flex:0 0 auto;height:min(62vh,560px);min-height:0">
                   <!-- Panel 1: Total admin KPI -->
                   <div style="background:#fff;border-radius:10px;padding:.875rem;border:1px solid rgba(0,0,0,.07);display:flex;flex-direction:column;gap:.5rem">
                     <div class="adm-kc-l">Total admin spend</div>
@@ -1704,8 +1723,8 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                 <div class="adm-title" style="font-size:clamp(1.15rem,2vw,1.6rem);margin-bottom:0">Over-invested. Worse outcomes.</div>
                 <div class="adm-lead" style="font-size:.78rem;line-height:1.45;margin-bottom:0;max-width:90ch">A $15M BHPF member and a $15M PCP practice look identical on staffing benchmarks — same FTE per department, same admin share. But outcomes are in different universes. The BHPF member is spending <em>more</em> and getting less, because 34 separate back-offices can't share intelligence, can't pool payer patterns, and can't negotiate from scale.</div>
 
-                <!-- FTE/org comparison chart -->
-                <div style="flex:1;min-height:120px;max-height:160px">
+                <!-- FTE/org comparison chart — pushed down with breathing room from the lead copy -->
+                <div style="flex:1;min-height:120px;max-height:160px;margin-top:2rem">
                   <div style="display:flex;align-items:center;gap:1rem;margin-bottom:.25rem">
                     <span style="font-size:.6rem;font-weight:600;color:#A09D98;text-transform:uppercase;letter-spacing:.07em">Avg FTE per org</span>
                     <div style="display:flex;align-items:center;gap:.3rem"><span style="width:8px;height:8px;border-radius:2px;background:#BA7517;flex-shrink:0"></span><span style="font-size:.62rem;color:#6B6860">BHPF</span></div>
@@ -1716,8 +1735,8 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                   </div>
                 </div>
 
-                <!-- 4-column department outcome cards -->
-                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;flex:0 0 auto">
+                <!-- 4-column department outcome cards — also nudged down so chart and cards don't crowd -->
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;flex:0 0 auto;margin-top:1rem">
       
                   <div style="background:#fff;border-radius:10px;padding:.625rem .75rem;border:1px solid rgba(0,0,0,.07);display:flex;flex-direction:column;gap:.3rem;cursor:pointer;min-height:0" onclick="drillIn('adm-card-ar','What is BHPF\'s median days in AR, how does it compare to the MGMA benchmark, and what drives the gap?')">
                     <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#A09D98">Finance · days in AR ↗</div>
@@ -2512,7 +2531,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                 <h2 class="s-title" style="color:#f8f7f4;font-size:clamp(32px,4.5vw,62px);margin-bottom:12px">Three acts of evidence.<br>One number. The decision.</h2>
                 <p style="font-size:15px;color:rgba(255,255,255,.55);font-weight:300;max-width:520px;line-height:1.65">Act I quantified leakage and displacement. Act II established $29M in admin savings. Act III sizes the revenue side. Act IV adds it up — and presents the governance options.</p>
               </div>
-      
+      </div>
             <!-- ── Act IV: Total Opportunity ─────────────────────── -->
 
       <div class="slide" data-id="act4-opportunity" style="height:100%;overflow:hidden">
@@ -2695,6 +2714,58 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
             </div>
       
       
+      <!-- ── Discussion: pre-appendix question slide ─────────────────── -->
+      <div class="slide" data-id="discussion" style="height:100%;overflow:hidden">
+        <div class="disc-shell">
+          <div>
+            <div class="disc-eyebrow">Discussion · before we open the appendix</div>
+            <h2 class="disc-title">Where do we go from here?</h2>
+          </div>
+          <p class="disc-lead">Four questions to ground the next conversation. There are no wrong answers — these are the inputs that decide what scope, sequence, and tier make sense for BHPF.</p>
+          <div class="disc-grid">
+            <div class="disc-panel">
+              <div class="disc-num">01 — Resonance</div>
+              <h3 class="disc-q">What landed?</h3>
+              <div class="disc-prompts">
+                <div class="disc-prompt">Which finding confirmed something you already suspected?</div>
+                <div class="disc-prompt">What in the data was new — or surprising?</div>
+                <div class="disc-prompt">Where does this story not match what you see on the ground?</div>
+              </div>
+            </div>
+            <div class="disc-panel">
+              <div class="disc-num">02 — Reality test</div>
+              <h3 class="disc-q">Is the opportunity real?</h3>
+              <div class="disc-prompts">
+                <div class="disc-prompt">Does the $107M–$180M map to what you see in members' P&amp;Ls?</div>
+                <div class="disc-prompt">Where is the math conservative — or aggressive?</div>
+                <div class="disc-prompt">Which of the four levers do you trust most? Which least?</div>
+              </div>
+            </div>
+            <div class="disc-panel">
+              <div class="disc-num">03 — Excitement &amp; skepticism</div>
+              <h3 class="disc-q">What excites you. What you're skeptical of.</h3>
+              <div class="disc-prompts">
+                <div class="disc-prompt">Which part of the plan is most worth pursuing?</div>
+                <div class="disc-prompt">Which part feels least proven?</div>
+                <div class="disc-prompt">What would have to be true for this to work?</div>
+              </div>
+            </div>
+            <div class="disc-panel">
+              <div class="disc-num">04 — Path forward</div>
+              <h3 class="disc-q">Tier A, B, or C — which fits BHPF today?</h3>
+              <div class="disc-prompts">
+                <div class="disc-prompt">A · Point Solutions ($5M–$20M) — start narrow, prove value.</div>
+                <div class="disc-prompt">B · Network Intelligence ($20M–$60M) — share the data layer.</div>
+                <div class="disc-prompt">C · Virtual Network ($50M–$150M) — operate as one network.</div>
+                <div class="disc-prompt">Which sequence — and what's the case for going further?</div>
+              </div>
+            </div>
+          </div>
+          <div class="disc-strip"><strong>What comes next:</strong> the appendix has the methodology, the data tables, and the per-year market detail behind every number you saw in the deck.</div>
+        </div>
+      </div>
+      <!-- ── /Discussion ─────────────────────────────────────────────── -->
+
             <!-- ══════════════════════════════════════════════════════ -->
             <!-- ── APPENDIX ─────────────────────────────────────────── -->
             <!-- ══════════════════════════════════════════════════════ -->
@@ -3665,6 +3736,8 @@ const SLIDES = [
   // ── Act V
   {id: 'act5-break', title: '$144M identified.'},
   {id: 'act5-approach', title: "$144M identified. Here's how much is real,"},
+  // ── Discussion (pre-appendix)
+  {id: 'discussion', title: 'Where do we go from here?'},
   // ── Appendix
   {id: 'act2-master', title: 'Appendix — act2-master'},
   {id: 'methodology', title: 'Appendix — methodology'},
@@ -3810,6 +3883,12 @@ const SLIDE_CONTEXTS = {
     period:       '2025',
     frame:        'Four conclusions from the admin act: (1) Structural over-investment — 11.7% vs 9% benchmark is not a management failure, it is a scale problem. (2) Platform fragmentation — 34 stacks with no shared intelligence is the root cause of the 18% denial rate. (3) AI alone does not fix it — tools exist today, the missing piece is the governance vehicle that lets them operate across orgs. (4) The prize is $29M annually — identifiable, not speculative, grounded in the CFO survey data.',
     out_of_scope: 'How to capture savings (Act V), employee impact, governance structure.',
+  },
+  'discussion': {
+    label:        'Discussion — pre-appendix questions for the BHPF audience',
+    period:       'present',
+    frame:        'Four open prompts to ground the next conversation: (1) Resonance — what landed, what surprised, what does not match what they see. (2) Reality test — does $107M–$180M map to member P&Ls; where is the math conservative or aggressive. (3) Excitement and skepticism — most worth pursuing, least proven, what would have to be true. (4) Path forward — Tier A point solutions, B network intelligence, or C virtual network; which fits BHPF today and what is the case to go further. There are no right answers; capture inputs verbatim and feed back into Act V scope decisions.',
+    out_of_scope: 'New analytical findings, new numbers, vendor selection. This slide is for capturing audience reaction, not delivering content.',
   },
 
   // ── Legacy ──────────────────────────────────────────────────────────
@@ -4021,6 +4100,22 @@ function goTo(idx){
   if(_curId === 'admin-s1c'){
     setTimeout(()=>{ if(typeof buildAdmCurve === 'function') buildAdmCurve(); }, 60);
   }
+  // admin-s5 — stagger the four conclusion panels in
+  if(_curId === 'admin-s5'){
+    const panels = document.querySelectorAll('[data-id="admin-s5"] .adm-s5c-panel');
+    panels.forEach(p => p.classList.remove('in'));
+    setTimeout(() => {
+      panels.forEach((p, i) => setTimeout(() => p.classList.add('in'), i * 140));
+    }, 80);
+  }
+  // discussion — stagger the four discussion-question cards in
+  if(_curId === 'discussion'){
+    const cards = document.querySelectorAll('[data-id="discussion"] .disc-panel');
+    cards.forEach(c => c.classList.remove('in'));
+    setTimeout(() => {
+      cards.forEach((c, i) => setTimeout(() => c.classList.add('in'), i * 140));
+    }, 80);
+  }
   if(_curId === 'act3-evo-map'){
     setTimeout(()=>{ if(typeof buildEvoMap==='function') buildEvoMap(); }, 80);
   }
@@ -4191,9 +4286,10 @@ function renderCover(fp){
   // Big stat: count-up animation from $0M → $${missedM}M
   // If the early-init animation already ran (page load), just snap to the
   // correct data-driven value. Otherwise run the full animation now.
-  document.getElementById('cover-big-sub').textContent =
-    `in market growth BHPF members did not capture`;
+  const subEl = document.getElementById('cover-big-sub');
+  if(subEl) subEl.textContent = `in market growth BHPF members did not capture`;
   const statEl = document.getElementById('cover-big-stat');
+  if(!statEl) return;
   if(statEl._coverAnimDone){
     // Early animation finished — just correct the number from data
     statEl.textContent = `$${missedM}M`;
