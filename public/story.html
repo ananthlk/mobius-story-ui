@@ -8019,15 +8019,17 @@ function _buildSynthMatrix(){
 
 
 // ── Evo-map: 8 RCM gate positions (match admin-s2b-orbital-v2 exactly) ──
+// Corner gates pulled toward 45° octagon positions (was ~37° from horizontal,
+// which let the corner cards overlap the side cards on both axes simultaneously).
 const EVO_GATE_POS = [
   { id:'patient_engagement', icon:'📅', label:'Patient Engagement', sub:'Scheduling · intake · reminders', left:'50%',  top:'16%' },
-  { id:'eligibility',        icon:'✅', label:'Eligibility Verification', sub:'Real-time 270/271 · MCO coverage', left:'80%',  top:'27%' },
+  { id:'eligibility',        icon:'✅', label:'Eligibility Verification', sub:'Real-time 270/271 · MCO coverage', left:'76%',  top:'22%' },
   { id:'payor_benefits',     icon:'📄', label:'Payor Policies & Benefits',      sub:'Fee schedules · payer rules engine', left:'84%',  top:'50%' },
-  { id:'credentialing',      icon:'🪪', label:'Credentialing',       sub:'Enrollment · taxonomy · blackout detection', left:'80%',  top:'73%' },
+  { id:'credentialing',      icon:'🪪', label:'Credentialing',       sub:'Enrollment · taxonomy · blackout detection', left:'76%',  top:'78%' },
   { id:'authorization',      icon:'📋', label:'Authorization',       sub:'PA tracking · prior auth',         left:'50%',  top:'84%' },
-  { id:'coding_claims',      icon:'💻', label:'Coding & Claims',     sub:'HCPCS/CPT · clean claim rate',     left:'20%',  top:'73%' },
+  { id:'coding_claims',      icon:'💻', label:'Coding & Claims',     sub:'HCPCS/CPT · clean claim rate',     left:'24%',  top:'78%' },
   { id:'denial_mgmt',        icon:'🚫', label:'Denial Mgmt',         sub:'AR follow-up · appeal workflows',  left:'16%',  top:'50%' },
-  { id:'claim_closure',      icon:'🔐', label:'Claim Closure',       sub:'835 auto-post · AR days',          left:'20%',  top:'27%' },
+  { id:'claim_closure',      icon:'🔐', label:'Claim Closure',       sub:'835 auto-post · AR days',          left:'24%',  top:'22%' },
 ];
 
 // Per-tier gate activations: which RCM gates unlock and what capabilities activate
@@ -8258,8 +8260,9 @@ function _evoRenderPanel(tabId) {
   // AI ring radius = aiR (76px). Container is ~690px wide × ~480px tall.
   // Top/bottom gates are primarily vertical (shorter absolute distance) → need higher start factor.
   // Side/corner gates are primarily horizontal → lower start factor.
+  // Must mirror EVO_GATE_POS — corners at 45° octagon positions to avoid card overlap
   const gatePct = [
-    [50,16],[80,27],[84,50],[80,73],[50,84],[20,73],[16,50],[20,27]
+    [50,16],[76,22],[84,50],[76,78],[50,84],[24,78],[16,50],[24,22]
   ];
   // Per-gate factors calibrated so lines begin at AI ring circumference and end with
   // a small visible gap before each card's bounding-rect edge (was uniform 0.72,
