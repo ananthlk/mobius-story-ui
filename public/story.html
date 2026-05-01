@@ -4132,11 +4132,19 @@ function goTo(idx){
   }
   // evolution slide hooks
   if(SLIDES[currentIdx]?.id === 'ch2-evolution'){
-    setTimeout(()=>{ layoutEvoRadial(); }, 60);
+    setTimeout(()=>{
+      // If fact-pack already loaded, render evo slide fully; otherwise layoutEvoRadial will show stubs
+      if(STATE.factPack && !STATE.yearsSeries) renderEvoSlide(STATE.factPack);
+      layoutEvoRadial();
+    }, 60);
   }
   // finale slide hook
   if(SLIDES[currentIdx]?.id === 'ch-finale'){
-    setTimeout(()=>{ renderFinaleHeatMap(); }, 60);
+    setTimeout(()=>{
+      // If yearsSeries not yet populated but factPack is, derive it now
+      if(STATE.factPack && !STATE.yearsSeries) renderEvoSlide(STATE.factPack);
+      renderFinaleHeatMap();
+    }, 60);
   }
   // admin-s2b-orbital-v2 — 8-gate orbital init
   if(SLIDES[currentIdx]?.id === 'admin-s2b-orbital-v2'){
@@ -4280,9 +4288,12 @@ async function loadSlide(){
 
   renderCover(fp);
   renderProfile(fp);
-  // If user is already on ch1-profile when data lands, re-layout so nodes are positioned correctly
-  if(SLIDES[currentIdx]?.id === 'ch1-profile') layoutRadial();
   renderEvoSlide(fp);
+  // If user landed on a data-dependent slide before loadSlide resolved, render now
+  const _landedOn = SLIDES[currentIdx]?.id;
+  if(_landedOn === 'ch1-profile') layoutRadial();
+  if(_landedOn === 'ch2-evolution') layoutEvoRadial();
+  if(_landedOn === 'ch-finale') renderFinaleHeatMap();
   // Kick off LLM-generated entity summaries in background (all 4 entities)
   _prefetchEntitySummaries();
 
