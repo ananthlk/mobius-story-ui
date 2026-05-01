@@ -4674,25 +4674,25 @@ function renderProfile(fp){
     // Resolve key prefix (all_cmhc aliases fbha)
     const p = (prefix === 'all_cmhc') ? 'fbha' : prefix;
 
-    // Service mix ratio
-    const svcRatio = cv[`${p}_service_mix_ratio`];
+    // Convenience: yearsSeries 2019 entity row for fallbacks
+    const ys19 = STATE.yearsSeries?.['2019']?.[p] || {};
+
+    // Service mix ratio — cover flat key first, then yearsSeries svc_ratio
+    const svcRatio = cv[`${p}_service_mix_ratio`] ?? ys19.svc_ratio ?? null;
     if(svcRatio != null) row.service = svcRatio.toFixed(1) + '×';
 
-    // Clinician retention — expressed as % vs market (e.g. +5.3% or -1.2%)
+    // Clinician retention — churn_index from cover, else churn_pct from yearsSeries (already % vs mkt)
     const churnIdx = cv[`${p}_churn_index`];
     if(churnIdx != null){
       const delta = ((churnIdx - 1) * 100);
       row.churn = (delta >= 0 ? '+' : '') + delta.toFixed(1) + '%';
-    } else if(STATE.yearsSeries) {
-      // Fallback: churn_pct in yearsSeries 2019 is already expressed as % vs market
-      const ysChurn = STATE.yearsSeries?.['2019']?.[p]?.churn_pct;
-      if(ysChurn != null) row.churn = (ysChurn >= 0 ? '+' : '') + ysChurn.toFixed(1) + '%';
+    } else if(ys19.churn_pct != null) {
+      row.churn = (ys19.churn_pct >= 0 ? '+' : '') + ys19.churn_pct.toFixed(1) + '%';
     }
 
-    // Revenue per beneficiary — show absolute $, store vs-market % for color
-    // Also check alternate key used in all_cmhc scope (all_cmhc prefix aliases fbha)
-    const entityRpb = cv[`${p}_rpb`] ?? cv[`all_cmhc_rpb`] ?? null;
-    const rpbVsPct  = cv[`${p}_rpb_vs_market_pct`] ?? cv[`all_cmhc_rpb_vs_market_pct`] ?? null;
+    // Revenue per beneficiary — cover flat key, then all_cmhc alias, then yearsSeries rpb_abs
+    const entityRpb = cv[`${p}_rpb`] ?? cv[`all_cmhc_rpb`] ?? ys19.rpb_abs ?? null;
+    const rpbVsPct  = cv[`${p}_rpb_vs_market_pct`] ?? cv[`all_cmhc_rpb_vs_market_pct`] ?? ys19.rpb_pct ?? null;
     if(entityRpb != null){
       // Display absolute RPB; sign-color comes from rpbVsPct comparison
       const rpbDisp = '$' + Math.round(entityRpb).toLocaleString();
