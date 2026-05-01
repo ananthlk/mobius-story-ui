@@ -1063,7 +1063,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                     </div>
                     <div style="background:#fff;border-radius:10px;padding:.9rem 1rem;border:1px solid rgba(0,0,0,.07)">
                       <div style="font-family:var(--mono);font-size:1.5rem;font-weight:900;color:#E24B4A;letter-spacing:-.04em;line-height:1">–42%</div>
-                      <div style="font-size:.65rem;color:#9C9890;margin-top:4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em">RPB vs. market · 2024</div>
+                      <div style="font-size:.65rem;color:#9C9890;margin-top:4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em">Revenue per patient vs. market · 2024</div>
                     </div>
                     <div style="background:#fff;border-radius:10px;padding:.9rem 1rem;border:1px solid rgba(0,0,0,.07)">
                       <div style="font-family:var(--mono);font-size:1.5rem;font-weight:900;color:#BA7517;letter-spacing:-.04em;line-height:1">$300M+</div>
@@ -1099,7 +1099,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                     <div style="display:flex;align-items:center;gap:10px">
                       <div style="flex:0 0 3px;height:32px;background:rgba(255,255,255,.55);border-radius:2px"></div>
                       <div>
-                        <div style="font-family:var(--serif);font-size:clamp(22px,3vw,36px);color:#fff;font-weight:700;line-height:1;letter-spacing:-.02em" id="cover-big-stat">—</div>
+                        <div style="font-family:var(--serif);font-size:clamp(22px,3vw,36px);color:#fff;font-weight:700;line-height:1;letter-spacing:-.02em" id="cover-big-stat">$249M</div>
                         <div style="font-size:11px;color:rgba(255,255,255,.55);margin-top:1px">market growth BHPF members did not capture</div>
                       </div>
                     </div>
@@ -1177,13 +1177,9 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                     <div style="display:flex;align-items:center;gap:5px">
                       <span class="pf-key">Entity</span>
                       <div style="display:flex;gap:3px" id="entity-group">
-                        <button class="pf-pill active" data-entity="bhpf"         onclick="setEntity('bhpf')">BHPF</button>
-                        <button class="pf-pill"         data-entity="fbha"         onclick="setEntity('fbha')">FBHA</button>
-                        <button class="pf-pill"         data-entity="lookalike"    onclick="setEntity('lookalike')">New entrants</button>
-                        <button class="pf-pill"         data-entity="fqhc"         onclick="setEntity('fqhc')">FQHCs</button>
-                        <button class="pf-pill"         data-entity="community_bh" onclick="setEntity('community_bh')">Ind. BH</button>
-                        <button class="pf-pill"         data-entity="bh_specialty" onclick="setEntity('bh_specialty')">BH Specialty</button>
-                        <button class="pf-pill"         data-entity="sud"          onclick="setEntity('sud')">SUD</button>
+                        <button class="pf-pill active" data-entity="bhpf"      onclick="setEntity('bhpf')">BHPF</button>
+                        <button class="pf-pill"         data-entity="fbha"      onclick="setEntity('fbha')">FBHA</button>
+                        <button class="pf-pill"         data-entity="lookalike" onclick="setEntity('lookalike')">New entrants</button>
                       </div>
                     </div>
                     <div style="width:1px;height:18px;background:var(--rule)"></div>
@@ -1313,7 +1309,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                   <div class="force-title">Enrollment surge</div>
                   <div class="force-stat" style="color:var(--teal2)">+18%</div>
                   <div class="force-stat-label">Medicaid enrollment</div>
-                  <div class="force-body">Continuous enrollment rules kept everyone on. More beneficiaries, same total spend — RPB compressed 17% as the denominator swelled.</div>
+                  <div class="force-body">Continuous enrollment rules kept everyone on. More beneficiaries, same total spend — revenue per patient compressed 17% as the denominator swelled.</div>
                 </div>
       
                 <!-- Force 3: Unwinding -->
@@ -1358,13 +1354,9 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                     <div style="display:flex;align-items:center;gap:5px">
                       <span class="pf-key">Entity</span>
                       <div style="display:flex;gap:3px" id="evo-entity-group">
-                        <button class="pf-pill active" data-entity="bhpf"         onclick="evoSetEntity('bhpf')">BHPF</button>
-                        <button class="pf-pill"         data-entity="fbha"         onclick="evoSetEntity('fbha')">FBHA</button>
-                        <button class="pf-pill"         data-entity="lookalike"    onclick="evoSetEntity('lookalike')">New entrants</button>
-                        <button class="pf-pill"         data-entity="fqhc"         onclick="evoSetEntity('fqhc')">FQHCs</button>
-                        <button class="pf-pill"         data-entity="community_bh" onclick="evoSetEntity('community_bh')">Ind. BH</button>
-                        <button class="pf-pill"         data-entity="bh_specialty" onclick="evoSetEntity('bh_specialty')">BH Specialty</button>
-                        <button class="pf-pill"         data-entity="sud"          onclick="evoSetEntity('sud')">SUD</button>
+                        <button class="pf-pill active" data-entity="bhpf"      onclick="evoSetEntity('bhpf')">BHPF</button>
+                        <button class="pf-pill"         data-entity="fbha"      onclick="evoSetEntity('fbha')">FBHA</button>
+                        <button class="pf-pill"         data-entity="lookalike" onclick="evoSetEntity('lookalike')">New entrants</button>
                       </div>
                     </div>
                   </div>
@@ -1498,14 +1490,59 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                         <th style="text-align:left;padding:8px 12px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);border-bottom:2px solid var(--rule);white-space:nowrap;min-width:120px">Segment</th>
                         <th class="hm-th">Share<br><span class="hm-th-sub">pp change</span></th>
                         <th class="hm-th">Benes<br><span class="hm-th-sub">% change</span></th>
-                        <th class="hm-th">RPB vs Mkt<br><span class="hm-th-sub">2024 position</span></th>
-                        <th class="hm-th">RPB Trend<br><span class="hm-th-sub">gap widening?</span></th>
-                        <th class="hm-th">Panel commitment<br><span class="hm-th-sub">Medicaid billing continuity</span></th>
+                        <th class="hm-th">Rev/patient vs mkt<br><span class="hm-th-sub">2024 position</span></th>
+                        <th class="hm-th">Rev/patient trend<br><span class="hm-th-sub">gap widening?</span></th>
+                        <th class="hm-th">Panel commitment<br><span class="hm-th-sub">% clinicians billing Medicaid next month</span></th>
                         <th class="hm-th">Verdict</th>
                       </tr>
                     </thead>
                     <tbody id="finale-tbody">
-                      <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--ink4);font-family:var(--mono);font-size:11px">Loading market scorecard…</td></tr>
+                      <!-- Static fallback rows — overwritten by renderFinaleHeatMap() when live data loads -->
+                      <tr>
+                        <td class="hm-seg-label">BHPF CMHCs<span class="hm-seg-tier">CMHC</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–9.08pp</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–40.3%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–42.2%</span></td>
+                        <td class="hm-cell hm-l1"><span class="hm-cell-val">↓ 15.1pp</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">+7.0%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#fee2e2;color:#991b1b">📉 Slipping</span></td>
+                      </tr>
+                      <tr>
+                        <td class="hm-seg-label">FBHA CMHCs<span class="hm-seg-tier">CMHC</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–14.47pp</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–31.0%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–40.8%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">↓ 31.3pp</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">+6.1%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#fee2e2;color:#991b1b">📉 Slipping</span></td>
+                      </tr>
+                      <tr>
+                        <td class="hm-seg-label">New entrants<span class="hm-seg-tier">BH Specialty</span></td>
+                        <td class="hm-cell hm-s2"><span class="hm-cell-val">+7.48pp</span></td>
+                        <td class="hm-cell hm-s2"><span class="hm-cell-val">+99.5%</span></td>
+                        <td class="hm-cell hm-n0"><span class="hm-cell-val">+4.3%</span></td>
+                        <td class="hm-cell hm-s2"><span class="hm-cell-val">↑ 21.1pp</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">+8.4%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#14532d;color:#bbf7d0">🏆 Winner</span></td>
+                      </tr>
+                      <tr>
+                        <td class="hm-seg-label">FQHCs<span class="hm-seg-tier">FQHC</span></td>
+                        <td class="hm-cell hm-l1"><span class="hm-cell-val">–2.18pp</span></td>
+                        <td class="hm-cell hm-n0"><span class="hm-cell-val">+2.0%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–64.7%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">↓ 31.5pp</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">+6.4%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#fef3e2;color:#a0600a">⚠️ Warning</span></td>
+                      </tr>
+                      <tr>
+                        <td class="hm-seg-label">Ind. BH practices<span class="hm-seg-tier">Community</span></td>
+                        <td class="hm-cell hm-n0"><span class="hm-cell-val">–2.09pp</span></td>
+                        <td class="hm-cell hm-n0"><span class="hm-cell-val">+1.4%</span></td>
+                        <td class="hm-cell hm-s2"><span class="hm-cell-val">+22.0%</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">↑ 6.8pp</span></td>
+                        <td class="hm-cell hm-l1"><span class="hm-cell-val">–2.4%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#14532d;color:#bbf7d0">🏆 Winner</span></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -1572,7 +1609,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                         <div class="cascade-chip-sub">BH Specialty share · 2024</div>
                       </div>
                       <div class="cascade-chip">
-                        <div class="cascade-chip-val" id="lb-la-orgs">—</div>
+                        <div class="cascade-chip-val" id="lb-la-orgs">21</div>
                         <div class="cascade-chip-sub">lookalike CMHCs entered</div>
                       </div>
                     </div>
@@ -1611,7 +1648,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
       
               <!-- Prose synthesis -->
               <div style="padding:12px 32px 10px;border-top:1px solid var(--rule);flex-shrink:0">
-                <p class="body" style="margin:0;font-size:13px;color:var(--ink2)" data-slot="body_1" onclick="drillIn('body_1')" id="lb-prose"><span class="loading"></span></p>
+                <p class="body" style="margin:0;font-size:13px;color:var(--ink2)" data-slot="body_1" onclick="drillIn('body_1')" id="lb-prose">200+ new entrants entered the FL Medicaid BH market between 2019 and 2024 — outpatient-only, lower overhead, no crisis obligation. BHPF lost 9 percentage points of market share. $249M in market growth went to organizations that carry none of the structural burden CMHCs do.</p>
               </div>
       
               <div style="padding:2px 32px 5px;flex-shrink:0;display:flex;justify-content:space-between">
@@ -1622,8 +1659,8 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 
       <div class="slide" data-id="act-infra-break" style="height:100%;overflow:hidden">
               <div class="ly-act">
-                <div class="act-eyebrow">Chapter III</div>
-                <div class="act-num">III</div>
+                <div class="act-eyebrow">Act II</div>
+                <div class="act-num">II</div>
                 <div class="act-name">The Operational Review</div>
                 <div class="act-sub">What the infrastructure gap costs. What the platform ceiling is. What the network unlocks.</div>
               </div>
@@ -6226,12 +6263,12 @@ const EXEC_LINES = [
   {
     num: '04',
     headline: 'Three approaches — each unlocks a different share',
-    detail: 'A — Point solutions: standalone tools, no integration, $5M–$20M network opportunity. Addresses 4 of 8 RCM gates. Shared intelligence: 10%. B — Network intelligence: connect your claims, they stay yours, $20M–$60M. All 8 gates, network learns across 34 orgs. Shared intelligence: 90%. C — Virtual network: operate as one, shared services, $50M–$150M. Full coverage, collective MCO leverage. Shared intelligence: 100%.'
+    detail: 'A — standalone tools, no integration required, $5–20M network opportunity. B — connect your claims (they stay yours), network learns across 34 orgs, $20–60M. C — operate as one, shared services, collective MCO leverage, $50–150M. Each tier builds on the last.'
   },
   {
     num: '05',
     headline: '$107M–$180M is realistically capturable across all three tiers',
-    detail: 'Not all $300M closes. Rate recovery requires network leverage. Operational savings require governance decisions. The realistic capture — across a sequenced A→B→C activation over 18–36 months — is $107M–$180M annually at run-rate. Year 1 capture is ~$22M. This is the waterfall the deck builds to.'
+    detail: 'Not all $300M closes. The realistic capture across a sequenced A→B→C activation over 18–36 months is $107M–$180M annually at run-rate. Year 1 is ~$22M. The deck builds the evidence for each tier.'
   },
   {
     num: '06',
