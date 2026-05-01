@@ -64,7 +64,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .exec-num{font-family:var(--serif);font-size:clamp(28px,3.2vw,44px);font-weight:700;color:var(--teal2);line-height:1;flex-shrink:0;width:52px;text-align:right;padding-top:2px}
 .exec-body{flex:1}
 .exec-headline{font-size:clamp(14px,1.35vw,18px);font-weight:600;color:#f8f7f4;line-height:1.3;margin-bottom:4px}
-.exec-detail{font-size:clamp(12px,1.05vw,14px);color:rgba(255,255,255,.5);font-weight:300;line-height:1.55}
+.exec-detail{font-size:clamp(12px,1.05vw,14px);color:rgba(255,255,255,.68);font-weight:300;line-height:1.55}
 .cover-l{background:var(--ink);padding:60px 40px 60px 8vw;display:flex;flex-direction:column;justify-content:flex-end}
 .cover-r{background:var(--coral);padding:60px 8vw 60px 40px;display:flex;flex-direction:column;justify-content:center;position:relative}
 .cover-r::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(0,0,0,.04) 40px,rgba(0,0,0,.04) 41px)}
@@ -218,7 +218,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .bar-label{font-size:12px;color:var(--ink2);width:185px;flex-shrink:0;line-height:1.3}
 .bar-track{flex:1;height:20px;background:var(--bg3);border-radius:3px;overflow:hidden}
-.bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding:0 7px;font-size:10px;font-weight:500}
+.bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding:0 7px;font-size:10px;font-weight:500;transition:width .6s ease}
 .bar-val{font-size:11px;color:var(--ink3);width:55px;text-align:right;flex-shrink:0}
 
 /* TIMELINE */
@@ -368,7 +368,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .app-slide-body{flex:1;display:grid;grid-template-columns:1fr 260px;overflow:hidden;min-height:0}
 
 /* ── HEAT MAP (finale slide) ─────────────────────────── */
-.hm-legend-chip{font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:2px 7px;border-radius:10px;white-space:nowrap}
+.hm-legend-chip{font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:3px 8px;border-radius:10px;white-space:nowrap}
 .hm-th{text-align:center;padding:8px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);border-bottom:2px solid var(--rule);white-space:nowrap;min-width:90px}
 .hm-th-sub{font-weight:300;color:var(--ink4);text-transform:none;letter-spacing:0;font-size:8.5px;display:block;margin-top:1px}
 .hm-seg-label{font-family:var(--serif);font-size:13px;font-weight:400;color:var(--ink);padding:10px 12px;border-bottom:1px solid var(--rule);white-space:nowrap}
@@ -444,7 +444,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .force-title{font-family:var(--serif);font-size:clamp(18px,2vw,26px);font-weight:700;color:#f8f7f4;margin-bottom:14px;line-height:1.1}
 .force-stat{font-family:var(--serif);font-size:clamp(32px,4vw,54px);font-weight:700;line-height:1;margin-bottom:4px}
 .force-stat-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:16px}
-.force-body{font-size:clamp(12px,1.2vw,13.5px);color:rgba(255,255,255,.5);line-height:1.65;font-weight:300;flex:1}
+.force-body{font-size:clamp(12px,1.2vw,13.5px);color:rgba(255,255,255,.68);line-height:1.65;font-weight:300;flex:1}
 
 /* ── CAPABILITIES SLIDE ──────────────────────────────── */
 .cap-card{display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:12px 14px;transition:background .15s}
@@ -2471,7 +2471,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
           <div style="flex:1;display:flex;align-items:stretch;min-height:0;gap:0">
 
             <!-- A — Point Solutions -->
-            <div style="flex:1;display:flex;flex-direction:column;border-radius:14px 0 0 14px;background:#f6fbf8;border:1.5px solid rgba(13,107,82,.18);border-right:none;padding:1.2rem 1.1rem 1rem;position:relative;overflow:hidden">
+            <div class="a3s-chevron-panel" style="flex:1;display:flex;flex-direction:column;border-radius:14px 0 0 14px;background:#f6fbf8;border:1.5px solid rgba(13,107,82,.18);border-right:none;padding:1.2rem 1.1rem 1rem;position:relative;overflow:hidden">
               <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#0d6b52;border-radius:14px 0 0 0"></div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem">
                 <div style="width:26px;height:26px;border-radius:50%;background:#0d6b52;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0">A</div>
@@ -2497,7 +2497,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
             </div>
 
             <!-- B — Network Intelligence -->
-            <div style="flex:1.4;display:flex;flex-direction:column;background:#eff6ff;border:1.5px solid rgba(26,111,191,.2);border-left:none;border-right:none;padding:1.2rem 1.1rem 1rem;position:relative;overflow:hidden">
+            <div class="a3s-chevron-panel" style="flex:1.4;display:flex;flex-direction:column;background:#eff6ff;border:1.5px solid rgba(26,111,191,.2);border-left:none;border-right:none;padding:1.2rem 1.1rem 1rem;position:relative;overflow:hidden">
               <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#1A6FBF"></div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem">
                 <div style="width:26px;height:26px;border-radius:50%;background:#1A6FBF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0">B</div>
@@ -2523,7 +2523,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
             </div>
 
             <!-- C — Virtual Network -->
-            <div style="flex:1.8;display:flex;flex-direction:column;border-radius:0 14px 14px 0;background:#f5f0ff;border:1.5px solid rgba(107,63,160,.2);border-left:none;padding:1.2rem 1.1rem 1rem;position:relative;overflow:hidden">
+            <div class="a3s-chevron-panel" style="flex:1.8;display:flex;flex-direction:column;border-radius:0 14px 14px 0;background:#f5f0ff;border:1.5px solid rgba(107,63,160,.2);border-left:none;padding:1.2rem 1.1rem 1rem;position:relative;overflow:hidden">
               <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#6B3FA0;border-radius:0 14px 0 0"></div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem">
                 <div style="width:26px;height:26px;border-radius:50%;background:#6B3FA0;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0">C</div>
@@ -4160,6 +4160,29 @@ function goTo(idx){
   }
   if(_curId === 'act3-evo-map'){
     setTimeout(()=>{ if(typeof buildEvoMap==='function') buildEvoMap(); }, 80);
+  }
+  // act3-synthesis — stagger A→B→C chevrons
+  if(_curId === 'act3-synthesis'){
+    const panels = document.querySelectorAll('[data-id="act3-synthesis"] .a3s-chevron-panel');
+    panels.forEach(p => { p.style.opacity='0'; p.style.transform='translateY(18px)'; p.style.transition='none'; });
+    setTimeout(()=>{
+      panels.forEach((p, i) => {
+        setTimeout(()=>{
+          p.style.transition='opacity .45s ease, transform .45s ease';
+          p.style.opacity='1'; p.style.transform='translateY(0)';
+        }, i * 160);
+      });
+    }, 80);
+  }
+  // act4-opportunity — animate bars from 0
+  if(_curId === 'act4-opportunity'){
+    setTimeout(()=>{
+      document.querySelectorAll('[data-id="act4-opportunity"] .bar-fill').forEach(el => {
+        const w = el.style.width;
+        el.style.width = '0';
+        requestAnimationFrame(()=>{ el.style.transition='width .6s ease'; el.style.width = w; });
+      });
+    }, 80);
   }
   // left-behind cascade hook
   if(SLIDES[currentIdx]?.id === 'ch2-left-behind'){
