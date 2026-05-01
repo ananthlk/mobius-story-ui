@@ -3680,28 +3680,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
   <!-- BOTTOM BAR -->
   <div class="bottombar">
     <div class="bb-hint">← → advance</div>
-    <div class="progress-dots" id="progress-dots">
-      <button class="pdot active" onclick="goTo(0)" title="Cover"></button>
-      <button class="pdot" onclick="goTo(1)" title="Left Behind — stats"></button>
-      <button class="pdot act-break-dot" onclick="goTo(2)" title="Act I — The evidence" style="background:rgba(255,255,255,.08)"></button>
-      <button class="pdot" onclick="goTo(3)" title="The backbone"></button>
-      <button class="pdot" onclick="goTo(4)" title="What changed"></button>
-      <button class="pdot" onclick="goTo(5)" title="Left behind — juxtaposition"></button>
-      <button class="pdot" onclick="goTo(6)" title="Left behind — stats"></button>
-      <button class="pdot" onclick="goTo(7)" title="What being left behind costs"></button>
-      <button class="pdot" onclick="goTo(8)" title="Four compounding problems"></button>
-      <button class="pdot" onclick="goTo(9)" title="Tech didn't fix it"></button>
-      <button class="pdot" onclick="goTo(10)" title="Where the money goes"></button>
-      <button class="pdot act-break-dot" onclick="goTo(11)" title="Act II — The inflection" style="background:rgba(255,255,255,.08)"></button>
-      <button class="pdot" onclick="goTo(12)" title="Three futures"></button>
-      <button class="pdot act-break-dot" onclick="goTo(13)" title="Act III — The transformation" style="background:rgba(255,255,255,.08)"></button>
-      <button class="pdot" onclick="goTo(14)" title="Individualized plan"></button>
-      <button class="pdot" onclick="goTo(15)" title="Shared services"></button>
-      <button class="pdot" onclick="goTo(16)" title="AI roadmap"></button>
-      <button class="pdot act-break-dot" onclick="goTo(17)" title="Act IV — The structure" style="background:rgba(255,255,255,.08)"></button>
-      <button class="pdot" onclick="goTo(18)" title="Three-entity model"></button>
-      <button class="pdot" onclick="goTo(19)" title="The scaling act"></button>
-    </div>
+    <div class="progress-dots" id="progress-dots"></div>
     <div class="bb-hint">↗ drill-in</div>
   </div>
 
@@ -3900,6 +3879,23 @@ const SLIDES = [
   {id: 'ch8-structure', title: 'Appendix — ch8-structure'},
   {id: 'ch9-scaling', title: 'Appendix — ch9-scaling'},
 ]
+
+// Build progress dots from SLIDES, excluding appendix
+function _buildProgressDots() {
+  const container = document.getElementById('progress-dots');
+  if (!container) return;
+  const appendixStart = SLIDES.findIndex(s => s.title.startsWith('Appendix —'));
+  const deckSlides = appendixStart > 0 ? SLIDES.slice(0, appendixStart) : SLIDES;
+  container.innerHTML = '';
+  deckSlides.forEach((slide, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'pdot' + (i === 0 ? ' active' : '');
+    btn.title = slide.title.replace(/&amp;/g, '&');
+    btn.onclick = () => goTo(i);
+    container.appendChild(btn);
+  });
+}
+_buildProgressDots();
 
 let currentIdx = 0;
 let STATE = {
@@ -4132,9 +4128,11 @@ function goTo(idx){
   document.getElementById('track').style.transform = `translateX(-${currentIdx * 100}%)`;
   document.getElementById('btn-prev').disabled = currentIdx === 0;
   document.getElementById('btn-next').disabled = currentIdx === SLIDES.length - 1;
-  document.getElementById('counter').textContent = `${currentIdx + 1} / ${SLIDES.length}`;
+  const _deckLength = SLIDES.findIndex(s => s.title.startsWith('Appendix —'));
+  const _deckTotal = _deckLength > 0 ? _deckLength : SLIDES.length;
+  document.getElementById('counter').textContent = `${currentIdx + 1} / ${_deckTotal}`;
   document.getElementById('breadcrumb').textContent = SLIDES[currentIdx].title;
-  document.querySelectorAll('.pdot').forEach((d, i) => d.classList.toggle('active', i === currentIdx));
+  document.querySelectorAll('#progress-dots .pdot').forEach((d, i) => d.classList.toggle('active', i === currentIdx));
   // profile slide hooks
   if(SLIDES[currentIdx]?.id === 'ch1-profile'){
     setTimeout(()=>{
