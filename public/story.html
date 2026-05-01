@@ -592,10 +592,13 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .adm-s5c-eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#4B5563}
 .adm-s5c-title{font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:#fff;line-height:1.15;margin:0}
 .adm-s5c-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.875rem;flex:1;min-height:0}
-.adm-s5c-panel{background:#1A1A1A;border:1px solid #222;border-radius:12px;padding:1.4rem 1.25rem;display:flex;flex-direction:column;gap:.6rem}
+.adm-s5c-panel{background:#1A1A1A;border:1px solid #222;border-left:3px solid var(--s5-accent,#4B5563);border-radius:12px;padding:1.6rem 1.4rem 1.4rem;display:flex;flex-direction:column;justify-content:space-between;gap:1rem;opacity:0;transform:translateY(20px);transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1)}
+.adm-s5c-panel.in{opacity:1;transform:translateY(0)}
 .adm-s5c-num{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4B5563}
-.adm-s5c-head{font-size:1.05rem;font-weight:700;color:#F9FAFB;line-height:1.25}
-.adm-s5c-body{font-size:.8rem;color:#9CA3AF;line-height:1.65;font-weight:300;flex:1}
+.adm-s5c-stat{font-family:var(--mono);font-size:clamp(1.85rem,3.2vw,2.85rem);font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--s5-accent,#F9FAFB);margin-top:.45rem}
+.adm-s5c-tag{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;margin-top:.4rem}
+.adm-s5c-head{font-size:1rem;font-weight:700;color:#F9FAFB;line-height:1.3;margin-bottom:.5rem}
+.adm-s5c-body{font-size:.78rem;color:#9CA3AF;line-height:1.65;font-weight:300}
 .adm-s5c-strip{background:#1A1A1A;border-top:1px solid #222;border-radius:8px;padding:.75rem 1rem;font-size:.72rem;color:#6B7280;line-height:1.55;flex-shrink:0}
 .adm-s5c-strip strong{color:#9CA3AF}
 /* ── act2-master bridge (a2m) ───────────────────────────────── */
@@ -1698,7 +1701,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
       <div class="slide" data-id="admin-s1" style="height:100%;overflow:hidden">
               <div class="adm-slide" style="padding-top:1.25rem;padding-bottom:1.25rem;gap:.75rem">
                 <div class="adm-eyebrow">01 — the diagnosis</div>
-                <div class="adm-title" style="font-size:clamp(1.15rem,2vw,1.6rem);margin-bottom:0">Over-invested. Worse outcomes. The structure is the problem.</div>
+                <div class="adm-title" style="font-size:clamp(1.15rem,2vw,1.6rem);margin-bottom:0">Over-invested. Worse outcomes.</div>
                 <div class="adm-lead" style="font-size:.78rem;line-height:1.45;margin-bottom:0;max-width:90ch">A $15M BHPF member and a $15M PCP practice look identical on staffing benchmarks — same FTE per department, same admin share. But outcomes are in different universes. The BHPF member is spending <em>more</em> and getting less, because 34 separate back-offices can't share intelligence, can't pool payer patterns, and can't negotiate from scale.</div>
 
                 <!-- FTE/org comparison chart -->
@@ -1897,8 +1900,8 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                 <!-- header -->
                 <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0;margin-bottom:.75rem">
                   <div>
-                    <div class="adm-eyebrow">Admin — Platform Intelligence</div>
-                    <div class="adm-title" style="font-size:1.35rem;line-height:1.2;margin:0">The gap isn't effort. It's the platform.</div>
+                    <div class="adm-eyebrow">Admin — Scorecard</div>
+                    <div class="adm-title" style="font-size:1.35rem;line-height:1.2;margin:0">Where every platform falls short.</div>
                   </div>
                   <div style="font-family:var(--mono);font-size:.67rem;color:#9C9890;text-align:right;line-height:1.6">
                     7 RCM gates + network intelligence<br>4 platforms · 2024 assessment
@@ -2329,74 +2332,12 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 
       <!-- ── Mobius thesis bridge ──────────────────────────────────────── -->
       <div class="slide ly-act dark" data-id="act3-mobius-thesis" style="height:100%;overflow:hidden">
-        <div style="display:flex;height:100%;padding:3rem 4rem 2.5rem;gap:3.5rem">
-
-          <!-- Left: identity + thesis -->
-          <div style="flex:1.1;display:flex;flex-direction:column;gap:1.4rem;justify-content:center">
-            <div class="eyebrow" style="color:rgba(255,255,255,.35)">The Mobius model</div>
-            <h2 class="s-title" style="color:#f8f7f4;font-size:clamp(28px,3.8vw,54px);margin-bottom:0;line-height:1.05">The problem is structural.<br>So is the fix.</h2>
-            <p style="font-size:15px;color:rgba(255,255,255,.52);font-weight:300;max-width:500px;line-height:1.7;margin:0">Three acts. Three different symptoms. One root cause: 34 organizations absorbing costs that only make sense at network scale — rates they can't renegotiate, platforms they can't afford, operations they can't share.</p>
-            <div style="padding:1.2rem 1.4rem;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)">
-              <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:10px">The Mobius thesis</div>
-              <div style="font-size:16px;font-weight:700;color:#f8f7f4;line-height:1.5">Turn the latent network into operating leverage — data that compounds, rates that renegotiate, operations that share cost.</div>
-            </div>
-            <!-- Value breakdown teaser -->
-            <div style="display:flex;gap:1.5rem;margin-top:.25rem">
-              <div>
-                <div style="font-family:var(--mono);font-size:1.5rem;font-weight:900;color:#1A6FBF;letter-spacing:-.03em;line-height:1">$78–151M</div>
-                <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:4px;letter-spacing:.05em;text-transform:uppercase">Market evolution</div>
-                <div style="font-size:9px;color:rgba(255,255,255,.2);margin-top:2px">Rate recovery · panel retention · referral capture</div>
-              </div>
-              <div style="width:1px;background:rgba(255,255,255,.08)"></div>
-              <div>
-                <div style="font-family:var(--mono);font-size:1.5rem;font-weight:900;color:#C9922B;letter-spacing:-.03em;line-height:1">$29M</div>
-                <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:4px;letter-spacing:.05em;text-transform:uppercase">Operational evolution</div>
-                <div style="font-size:9px;color:rgba(255,255,255,.2);margin-top:2px">Billing · credentialing · admin overhead</div>
-              </div>
-              <div style="width:1px;background:rgba(255,255,255,.08)"></div>
-              <div>
-                <div style="font-family:var(--mono);font-size:1.5rem;font-weight:900;color:#f8f7f4;letter-spacing:-.03em;line-height:1">$107–180M</div>
-                <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:4px;letter-spacing:.05em;text-transform:uppercase">Total reachable</div>
-                <div style="font-size:9px;color:rgba(255,255,255,.2);margin-top:2px">Depends on which approach BHPF chooses</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: 3 structural connects -->
-          <div style="flex:1;display:flex;flex-direction:column;gap:1rem;justify-content:center">
-            <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.4rem">Three acts → one structural cause → one fix</div>
-
-            <div style="border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:1.1rem 1.2rem">
-              <div style="display:flex;align-items:flex-start;gap:12px">
-                <div style="font-size:20px;line-height:1;margin-top:2px">📉</div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5bb8a0;margin-bottom:4px">Act I — Rate compression · <span style="color:rgba(255,255,255,.3)">$78M+ underpaid annually</span></div>
-                  <div style="font-size:13px;color:rgba(255,255,255,.72);line-height:1.55">No single CMHC has leverage to renegotiate underpaid Medicaid codes. 34 orgs acting as one do — and the data is already there to make the case.</div>
-                </div>
-              </div>
-            </div>
-
-            <div style="border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:1.1rem 1.2rem">
-              <div style="display:flex;align-items:flex-start;gap:12px">
-                <div style="font-size:20px;line-height:1;margin-top:2px">⚙️</div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5bb8a0;margin-bottom:4px">Act II — Admin fragmentation · <span style="color:rgba(255,255,255,.3)">$29M/yr overhead</span></div>
-                  <div style="font-size:13px;color:rgba(255,255,255,.72);line-height:1.55">34 separate IT stacks paying small-org pricing. Shared infrastructure doesn't just save money — it creates the intelligence layer that enables the other fixes.</div>
-                </div>
-              </div>
-            </div>
-
-            <div style="border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:1.1rem 1.2rem">
-              <div style="display:flex;align-items:flex-start;gap:12px">
-                <div style="font-size:20px;line-height:1;margin-top:2px">🔄</div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5bb8a0;margin-bottom:4px">Act III — Credentialing blackouts · <span style="color:rgba(255,255,255,.3)">$10–18M/yr churn cost</span></div>
-                  <div style="font-size:13px;color:rgba(255,255,255,.72);line-height:1.55">Each departure triggers a 90-day billing gap. A shared credentialing pool eliminates it for all 34 simultaneously — one enrollment, network-wide coverage.</div>
-                </div>
-              </div>
-            </div>
-
-          </div>
+        <div style="display:flex;flex-direction:column;justify-content:center;height:100%;padding:5vh 8vw;gap:1.5rem;max-width:1100px">
+          <div class="eyebrow" style="color:rgba(255,255,255,.35)">The thesis</div>
+          <h2 style="font-family:var(--serif);color:#f8f7f4;font-size:clamp(36px,5.5vw,72px);font-weight:700;margin:0;line-height:1.05;letter-spacing:-.02em">The problem is structural.<br>So is the fix.</h2>
+          <p style="font-size:clamp(14px,1.4vw,18px);color:rgba(255,255,255,.62);font-weight:300;line-height:1.65;max-width:680px;margin:0;border-left:3px solid var(--teal2);padding-left:18px">
+            Three acts. Three different symptoms. One root cause: 34 organizations absorbing costs that only make sense at network scale.
+          </p>
         </div>
       </div>
       <!-- ── /Mobius thesis ────────────────────────────────────────────── -->
@@ -2457,99 +2398,9 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
       </div>
       <!-- ── /Tee-up ─────────────────────────────────────────────────────── -->
 
-      <div class="slide" data-id="act3-synthesis" style="height:100%;overflow:hidden;display:flex;flex-direction:column;background:var(--bg)">
-
-        <!-- Title -->
-        <div style="flex:0 0 auto;padding:1rem 1.8rem .5rem">
-          <div class="eyebrow" style="margin-bottom:3px">The Mobius model — three engagement tiers</div>
-          <h1 class="s-title" style="margin:0 0 .2rem;font-size:clamp(16px,1.9vw,26px)">Three unlocks · <span style="color:var(--teal)">$107M – $180M</span> in reachable network opportunity</h1>
-          <div style="font-size:12px;color:var(--ink3);font-weight:300">Start where you are. Each tier builds on the last. Only the network makes all three possible.</div>
-        </div>
-
-        <!-- Main content: 3 chevrons full width -->
-        <div style="flex:1;display:flex;min-height:0;padding:0 1.4rem .9rem 1.4rem;gap:1.1rem">
-
-          <!-- 3 Chevron panels -->
-          <div style="flex:1;display:flex;align-items:stretch;min-height:0;gap:0">
-
-            <!-- A — Point Solutions -->
-            <div class="a3s-chevron-panel" style="flex:1;display:flex;flex-direction:column;border-radius:14px 0 0 14px;background:#f6fbf8;border:1.5px solid rgba(13,107,82,.18);border-right:none;padding:1.2rem 1.1rem 1rem;position:relative;overflow:hidden">
-              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#0d6b52;border-radius:14px 0 0 0"></div>
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem">
-                <div style="width:26px;height:26px;border-radius:50%;background:#0d6b52;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0">A</div>
-                <div>
-                  <div style="font-weight:800;font-size:13.5px;color:#0d6b52">Point Solutions</div>
-                  <div style="font-size:9.5px;color:#4a7a64">Mobius tools work standalone — no EMR required</div>
-                </div>
-              </div>
-              <div style="font-family:var(--mono);font-size:19px;font-weight:900;color:#0d6b52">$5M – $20M</div>
-              <div style="font-size:9px;color:#6B9882;margin-top:1px;margin-bottom:.7rem">network annual opportunity</div>
-              <div style="height:5px;border-radius:3px;background:rgba(13,107,82,.12);overflow:hidden;margin-bottom:.8rem">
-                <div style="width:14%;height:100%;background:#0d6b52;border-radius:3px"></div>
-              </div>
-              <div style="font-size:11px;color:#3d5c4a;line-height:1.6;flex:1">Four standalone tools targeting specific gaps — appeal strategy, rate evidence, roster compliance, policy lookup. No integration required. Each is a starting point, not the full answer.</div>
-              <div style="margin-top:.8rem;display:flex;flex-wrap:wrap;gap:4px">
-                <span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:#e8f0fb;color:#1A6FBF">Market</span>
-                <span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:#fef3e2;color:#a0600a">Operational</span>
-              </div>
-            </div>
-
-            <div style="flex:0 0 30px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#f6fbf8,#eff6ff);border-top:1.5px solid rgba(0,0,0,.07);border-bottom:1.5px solid rgba(0,0,0,.07)">
-              <svg width="20" height="20" viewBox="0 0 20 20"><path d="M2 10h12M10 6l4 4-4 4" stroke="#9C9890" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-            </div>
-
-            <!-- B — Network Intelligence -->
-            <div class="a3s-chevron-panel" style="flex:1.4;display:flex;flex-direction:column;background:#eff6ff;border:1.5px solid rgba(26,111,191,.2);border-left:none;border-right:none;padding:1.2rem 1.1rem 1rem;position:relative;overflow:hidden">
-              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#1A6FBF"></div>
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem">
-                <div style="width:26px;height:26px;border-radius:50%;background:#1A6FBF;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0">B</div>
-                <div>
-                  <div style="font-weight:800;font-size:13.5px;color:#1A6FBF">Network Intelligence</div>
-                  <div style="font-size:9.5px;color:#4a6fa0">Connect your claims to Mobius — they stay yours</div>
-                </div>
-              </div>
-              <div style="font-family:var(--mono);font-size:19px;font-weight:900;color:#1A6FBF">$20M – $60M</div>
-              <div style="font-size:9px;color:#5a80aa;margin-top:1px;margin-bottom:.7rem">network annual opportunity</div>
-              <div style="height:5px;border-radius:3px;background:rgba(26,111,191,.1);overflow:hidden;margin-bottom:.8rem">
-                <div style="width:40%;height:100%;background:#1A6FBF;border-radius:3px"></div>
-              </div>
-              <div style="font-size:11px;color:#2a4a70;line-height:1.6;flex:1">You connect your claims — they stay yours, never shared. The network learns from patterns across 34 orgs. Rate benchmarks update live. Denial signals from one org protect all 34 before they hit.</div>
-              <div style="margin-top:.8rem;display:flex;flex-wrap:wrap;gap:4px">
-                <span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:#e8f0fb;color:#1A6FBF">Market</span>
-                <span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:#fef3e2;color:#a0600a">Operational</span>
-              </div>
-            </div>
-
-            <div style="flex:0 0 30px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#eff6ff,#f5f0ff);border-top:1.5px solid rgba(0,0,0,.07);border-bottom:1.5px solid rgba(0,0,0,.07)">
-              <svg width="20" height="20" viewBox="0 0 20 20"><path d="M2 10h12M10 6l4 4-4 4" stroke="#9C9890" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-            </div>
-
-            <!-- C — Virtual Network -->
-            <div class="a3s-chevron-panel" style="flex:1.8;display:flex;flex-direction:column;border-radius:0 14px 14px 0;background:#f5f0ff;border:1.5px solid rgba(107,63,160,.2);border-left:none;padding:1.2rem 1.1rem 1rem;position:relative;overflow:hidden">
-              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#6B3FA0;border-radius:0 14px 0 0"></div>
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem">
-                <div style="width:26px;height:26px;border-radius:50%;background:#6B3FA0;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0">C</div>
-                <div>
-                  <div style="font-weight:800;font-size:13.5px;color:#6B3FA0">Virtual Network</div>
-                  <div style="font-size:9.5px;color:#7a5a9a">Mobius operates as shared infrastructure for all 34</div>
-                </div>
-              </div>
-              <div style="font-family:var(--mono);font-size:19px;font-weight:900;color:#6B3FA0">$50M – $150M</div>
-              <div style="font-size:9px;color:#8a6aaa;margin-top:1px;margin-bottom:.7rem">network annual opportunity</div>
-              <div style="height:5px;border-radius:3px;background:rgba(107,63,160,.1);overflow:hidden;margin-bottom:.8rem">
-                <div style="width:100%;height:100%;background:#6B3FA0;border-radius:3px"></div>
-              </div>
-              <div style="font-size:11px;color:#3d2a5c;line-height:1.6;flex:1">The highest-value unlock requires the network to act as one. No individual CMHC can renegotiate MCO rates or build shared operations. But 34 orgs together — with shared data, shared services, and shared leverage — can.</div>
-              <div style="margin-top:.8rem;display:flex;flex-wrap:wrap;gap:4px">
-                <span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:#e8f0fb;color:#1A6FBF">Market</span>
-                <span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:#fef3e2;color:#a0600a">Operational</span>
-              </div>
-            </div>
-
-          </div><!-- /3 chevrons -->
-        </div><!-- /main content -->
-
-      </div>
+      <!-- act3-synthesis removed: redundant with act3-teeup ($107-180M breakdown)
+           and act3-evo-map (A/B/C deep dive). Removing both DOM + SLIDES entry
+           keeps existing index alignment intact. -->
 
       <!-- ── Evolution Map slide ─────────────────────────────────────────── -->
       <div class="slide" data-id="act3-evo-map" style="height:100%;overflow:hidden;display:flex;flex-direction:column;background:var(--bg)">
@@ -3798,14 +3649,13 @@ const SLIDES = [
   {id: 'admin-overview', title: 'The BHPF admin profile.'},
   {id: 'admin-s1', title: 'Over-invested. Worse outcomes. The structure is the problem.'},
   {id: 'admin-s2b-orbital-v2', title: "The gap isn't effort — 8 gates."},
-  {id: 'admin-s2b-score', title: "The gap isn't effort. It's the platform."},
+  {id: 'admin-s2b-score', title: 'Where every platform falls short.'},
   {id: 'admin-s4', title: 'Collective scale. Local fragmentation.'},
   {id: 'admin-s5', title: 'What the admin evidence establishes'},
   // ── Act III
   {id: 'act3-churn-break', title: 'The clinician you lose'},
   {id: 'act3-mobius-thesis', title: 'The problem is structural. So is the fix.'},
   {id: 'act3-teeup', title: 'Three approaches. One question.'},
-  {id: 'act3-synthesis', title: 'The total opportunity'},
   {id: 'act3-evo-map',   title: 'Three unlocks'},
   {id: 'appendix-break', title: 'Appendix'},
   {id: 'act3-churn-close', title: 'Why churn is a'},
@@ -4173,19 +4023,6 @@ function goTo(idx){
   }
   if(_curId === 'act3-evo-map'){
     setTimeout(()=>{ if(typeof buildEvoMap==='function') buildEvoMap(); }, 80);
-  }
-  // act3-synthesis — stagger A→B→C chevrons
-  if(_curId === 'act3-synthesis'){
-    const panels = document.querySelectorAll('[data-id="act3-synthesis"] .a3s-chevron-panel');
-    panels.forEach(p => { p.style.opacity='0'; p.style.transform='translateY(18px)'; p.style.transition='none'; });
-    setTimeout(()=>{
-      panels.forEach((p, i) => {
-        setTimeout(()=>{
-          p.style.transition='opacity .45s ease, transform .45s ease';
-          p.style.opacity='1'; p.style.transform='translateY(0)';
-        }, i * 160);
-      });
-    }, 80);
   }
   // act4-opportunity — animate bars from 0
   if(_curId === 'act4-opportunity'){
