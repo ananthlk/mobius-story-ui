@@ -379,11 +379,11 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .hm-verdict{text-align:center;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:middle}
 .hm-verdict-chip{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap}
 /* color tiers — bg + text */
-.hm-s2{background:#14532d;color:#bbf7d0}   /* strong win  */
+.hm-s2{background:#14532d;color:#bbf7d0}   /* well above  */
 .hm-s1{background:#dcfce7;color:#14532d}   /* win         */
 .hm-n0{background:#f1f5f9;color:#475569}   /* neutral      */
 .hm-l1{background:#fee2e2;color:#991b1b}   /* loss         */
-.hm-l2{background:#dc2626;color:#fff0f0}   /* heavy loss   */
+.hm-l2{background:#dc2626;color:#fff0f0}   /* well below   */
 /* finale summary cards */
 .finale-card{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:14px 16px}
 .finale-card-title{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
@@ -1460,7 +1460,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
                   <div>
                     <div class="eyebrow" style="margin-bottom:2px">Finale — The verdict</div>
-                    <h1 class="s-title" style="margin-bottom:0;font-size:clamp(18px,2vw,28px)">Winners &amp; Losers · 2019–2024</h1>
+                    <h1 class="s-title" style="margin-bottom:0;font-size:clamp(18px,2vw,28px)">Market outcomes · 2019–2024</h1>
                   </div>
                   <div style="font-size:11px;color:var(--ink3);font-family:var(--mono);text-align:right;line-height:1.5">
                     Florida Medicaid Behavioral Health<br>6-year market scorecard
@@ -1474,11 +1474,11 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
                 <!-- Legend -->
                 <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap">
                   <span style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase;margin-right:4px">Scale:</span>
-                  <span class="hm-legend-chip" style="background:#14532d;color:#bbf7d0">Strong win</span>
-                  <span class="hm-legend-chip" style="background:#166534;color:#dcfce7">Win</span>
+                  <span class="hm-legend-chip" style="background:#14532d;color:#bbf7d0">Well above</span>
+                  <span class="hm-legend-chip" style="background:#166534;color:#dcfce7">Above</span>
                   <span class="hm-legend-chip" style="background:#e2e8f0;color:#334155">Neutral</span>
-                  <span class="hm-legend-chip" style="background:#fca5a5;color:#7f1d1d">Loss</span>
-                  <span class="hm-legend-chip" style="background:#dc2626;color:#fff0f0">Heavy loss</span>
+                  <span class="hm-legend-chip" style="background:#fca5a5;color:#7f1d1d">Below</span>
+                  <span class="hm-legend-chip" style="background:#dc2626;color:#fff0f0">Well below</span>
                   <span style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-left:8px">Each metric: 2019→2024 change or 2024 position vs market</span>
                 </div>
       
@@ -3826,7 +3826,7 @@ const SLIDES = [
   {id: 'ch1-profile', title: 'The pre-COVID picture · 2019'},
   {id: 'ch-forces', title: 'Four forces reshaped the market'},
   {id: 'ch2-evolution', title: 'Market evolution · 2019–2024'},
-  {id: 'ch-finale', title: 'Winners &amp; Losers · 2019–2024'},
+  {id: 'ch-finale', title: 'Market outcomes · 2019–2024'},
   {id: 'ch2-left-behind', title: 'Left behind'},
   // ── Act II
   {id: 'act-infra-break', title: 'Chapter III — The Operational Review'},
@@ -3941,7 +3941,7 @@ const SLIDE_CONTEXTS = {
     out_of_scope: 'Individual org performance, projections beyond 2024.',
   },
   'ch-finale': {
-    label:        'Winners and Losers 2019–2024 — Provider Type Heatmap',
+    label:        'Market outcomes 2019–2024 — Provider type scorecard',
     period:       '2019–2024',
     frame:        'Heatmap of which provider types gained (green) or lost (red) across the six market dimensions. New entrant BH specialty: all green. CMHCs (BHPF members): red on market share and rate, neutral on service mix and panel commitment. FQHCs and SUD providers: mixed. The pattern shows displacement was selective — entrants took the easiest revenue, left the hardest patients.',
     out_of_scope: 'Individual org performance within BHPF, future projections.',
@@ -4131,7 +4131,7 @@ function goTo(idx){
   const _deckLength = SLIDES.findIndex(s => s.title.startsWith('Appendix —'));
   const _deckTotal = _deckLength > 0 ? _deckLength : SLIDES.length;
   document.getElementById('counter').textContent = `${currentIdx + 1} / ${_deckTotal}`;
-  document.getElementById('breadcrumb').textContent = SLIDES[currentIdx].title;
+  document.getElementById('breadcrumb').textContent = SLIDES[currentIdx].title.replace(/&amp;/g,'&');
   document.querySelectorAll('#progress-dots .pdot').forEach((d, i) => d.classList.toggle('active', i === currentIdx));
   // profile slide hooks
   if(SLIDES[currentIdx]?.id === 'ch1-profile'){
@@ -5625,7 +5625,7 @@ function layoutRadial(){
     const nr = el.getBoundingClientRect();
     const nx = nr.left - cr.left + nr.width  / 2;
     const ny = nr.top  - cr.top  + nr.height / 2;
-    return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#dddde0" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+    return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#e2e0d8" stroke-width="1" stroke-dasharray="3 6"/>`;
   }).filter(Boolean);
 
   svg.innerHTML = lines.join('');
@@ -5939,7 +5939,7 @@ function layoutEvoRadial(){
     const nr = el.getBoundingClientRect();
     const nx = nr.left - cr.left + nr.width  / 2;
     const ny = nr.top  - cr.top  + nr.height / 2;
-    return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#dddde0" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+    return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#e2e0d8" stroke-width="1" stroke-dasharray="3 6"/>`;
   }).filter(Boolean);
 
   svg.innerHTML = lines.join('');
@@ -6213,7 +6213,7 @@ function _layoutAppRadial(yr){
     const nr = el.getBoundingClientRect();
     const nx = nr.left - cr.left + nr.width  / 2;
     const ny = nr.top  - cr.top  + nr.height / 2;
-    return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#dddde0" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+    return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#e2e0d8" stroke-width="1" stroke-dasharray="3 6"/>`;
   }).filter(Boolean);
   svg.innerHTML = lines.join('');
 }
@@ -6406,7 +6406,7 @@ const EVO_YEAR_INSIGHTS = {
 const EVO_ENTITY_VERDICTS = {
   bhpf:         { icon: '🔻', cls: 'hm-l2', text: '–27% → –42% RPB gap. Market doubled; BHPF grew 16%. Committed to Medicaid. Not compensated for it.' },
   fbha:         { icon: '🔻', cls: 'hm-l2', text: '–21% → –42%. Whole CMHC tier left behind. Commitment without compensation.' },
-  lookalike:    { icon: '🏆', cls: 'hm-s2', text: '–17% → +4%. Crossed market average in 2024. Episodic Medicaid billing + selective intake = the winning formula.' },
+  lookalike:    { icon: '🏆', cls: 'hm-s2', text: '–17% → +4%. Crossed above market average in 2024. Episodic billing + selective intake drove the shift.' },
   fqhc:         { icon: '⚠️', cls: 'hm-l2', text: '–33% → –65%. Steepest decline. BH is now a loss-leader for FQHCs.' },
   community_bh: { icon: '🏆', cls: 'hm-s1', text: '+15% → +22% above market. Small, acute panels. Episodic billing keeps RPB high.' },
   bh_specialty: { icon: '📉', cls: 'hm-l1', text: '–12% → –25%. Lowest panel commitment. Clinicians follow commercial rates.' },
@@ -6541,7 +6541,7 @@ function _hmCell(val, fmt, tierFn, delay){
 function _verdictChip(key){
   const v = EVO_ENTITY_VERDICTS[key];
   if(!v) return '<td class="hm-verdict">—</td>';
-  return `<td class="hm-verdict"><span class="hm-verdict-chip ${v.cls}">${v.icon} ${v.icon === '🏆' ? 'Winner' : v.icon === '⚠️' ? 'Warning' : v.icon === '📉' ? 'Slipping' : 'Loser'}</span></td>`;
+  return `<td class="hm-verdict"><span class="hm-verdict-chip ${v.cls}">${v.icon === '🏆' ? 'Gained' : v.icon === '⚠️' ? 'At risk' : v.icon === '📉' ? 'Declining' : 'Under pressure'}</span></td>`;
 }
 
 function renderFinaleHeatMap(){
@@ -6604,13 +6604,13 @@ function _renderFinaleSummary(){
   el.style.display = 'grid';
   el.innerHTML = `
     <div class="finale-card">
-      <div class="finale-card-title">🏆 The winners</div>
+      <div class="finale-card-title">Gained ground</div>
       <div class="finale-card-body">
         <strong>New entrants</strong> crossed above the market RPB average in 2024. They got there through episodic Medicaid billing — open a panel, bill intensively, close it — not through commitment. <strong>Ind. BH</strong> stayed above market throughout by keeping panels small and acute.
       </div>
     </div>
     <div class="finale-card">
-      <div class="finale-card-title">🔻 The structural losers</div>
+      <div class="finale-card-title">Under structural pressure</div>
       <div class="finale-card-body">
         <strong>CMHCs</strong> are the most Medicaid-committed segment — 90%+ of their clinicians keep billing Medicaid month after month. Yet the RPB gap widened from –27% to –42%. Commitment without compensation. <strong>FQHCs</strong> are in freefall at –65% below market — BH is now a loss-leader.
       </div>
