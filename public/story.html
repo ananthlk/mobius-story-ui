@@ -1093,11 +1093,11 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
             </div>
 
       <div class="slide" data-id="exec-summary" style="background:var(--ink);display:flex;flex-direction:column;height:100%;overflow:hidden;position:relative">
-              <div style="padding:18px 56px 12px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)">
-                <div class="eyebrow" style="color:var(--teal2);margin-bottom:3px">The story in seven points</div>
-                <h1 class="s-title light" style="font-size:clamp(16px,1.7vw,24px);margin-bottom:0;color:#f8f7f4;line-height:1.2">What happened, why it matters, and what comes next</h1>
+              <div style="padding:14px 56px 10px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)">
+                <div class="eyebrow" style="color:var(--teal2);margin-bottom:2px">The story in seven points</div>
+                <h1 style="font-family:var(--serif);font-size:clamp(14px,1.4vw,20px);font-weight:700;margin:0;color:#f8f7f4;line-height:1.2;letter-spacing:-.01em">What happened, why it matters, and what comes next</h1>
               </div>
-              <div id="exec-lines-wrap" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:8px 56px 12px;gap:0">
+              <div id="exec-lines-wrap" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:6px 56px 10px;gap:0">
                 <!-- Each line injected by JS with staggered fly-in -->
               </div>
               <div style="padding:16px 56px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;font-family:var(--mono);color:rgba(255,255,255,.3);letter-spacing:.06em">
@@ -5597,7 +5597,14 @@ function layoutRadial(){
     const nr = el.getBoundingClientRect();
     const nx = nr.left - cr.left + nr.width  / 2;
     const ny = nr.top  - cr.top  + nr.height / 2;
-    return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#e2e0d8" stroke-width="1" stroke-dasharray="3 6"/>`;
+    const dx = nx - cx, dy = ny - cy;
+    const len = Math.hypot(dx, dy) || 1;
+    const ux = dx / len, uy = dy / len;
+    const tEdge = Math.min(nr.width  / 2 / Math.abs(ux || 1e-6),
+                           nr.height / 2 / Math.abs(uy || 1e-6));
+    const x1 = cx + ux * 56, y1 = cy + uy * 56;
+    const x2 = nx - ux * (tEdge + 6), y2 = ny - uy * (tEdge + 6);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#a8a8ad" stroke-width="1.25" stroke-dasharray="4 4"/>`;
   }).filter(Boolean);
 
   svg.innerHTML = lines.join('');
@@ -5911,7 +5918,14 @@ function layoutEvoRadial(){
     const nr = el.getBoundingClientRect();
     const nx = nr.left - cr.left + nr.width  / 2;
     const ny = nr.top  - cr.top  + nr.height / 2;
-    return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#e2e0d8" stroke-width="1" stroke-dasharray="3 6"/>`;
+    const dx = nx - cx, dy = ny - cy;
+    const len = Math.hypot(dx, dy) || 1;
+    const ux = dx / len, uy = dy / len;
+    const tEdge = Math.min(nr.width  / 2 / Math.abs(ux || 1e-6),
+                           nr.height / 2 / Math.abs(uy || 1e-6));
+    const x1 = cx + ux * 56, y1 = cy + uy * 56;
+    const x2 = nx - ux * (tEdge + 6), y2 = ny - uy * (tEdge + 6);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#a8a8ad" stroke-width="1.25" stroke-dasharray="4 4"/>`;
   }).filter(Boolean);
 
   svg.innerHTML = lines.join('');
@@ -6185,7 +6199,14 @@ function _layoutAppRadial(yr){
     const nr = el.getBoundingClientRect();
     const nx = nr.left - cr.left + nr.width  / 2;
     const ny = nr.top  - cr.top  + nr.height / 2;
-    return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#e2e0d8" stroke-width="1" stroke-dasharray="3 6"/>`;
+    const dx = nx - cx, dy = ny - cy;
+    const len = Math.hypot(dx, dy) || 1;
+    const ux = dx / len, uy = dy / len;
+    const tEdge = Math.min(nr.width  / 2 / Math.abs(ux || 1e-6),
+                           nr.height / 2 / Math.abs(uy || 1e-6));
+    const x1 = cx + ux * 54, y1 = cy + uy * 54;
+    const x2 = nx - ux * (tEdge + 6), y2 = ny - uy * (tEdge + 6);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#a8a8ad" stroke-width="1.25" stroke-dasharray="4 4"/>`;
   }).filter(Boolean);
   svg.innerHTML = lines.join('');
 }
