@@ -4100,7 +4100,12 @@ function goTo(idx){
   document.querySelectorAll('.pdot').forEach((d, i) => d.classList.toggle('active', i === currentIdx));
   // profile slide hooks
   if(SLIDES[currentIdx]?.id === 'ch1-profile'){
-    setTimeout(()=>{ layoutRadial(); populateProfileLLM(); }, 60);
+    setTimeout(()=>{
+      layoutRadial();
+      populateProfileLLM();
+      // If fact-pack already loaded, populate stat nodes immediately (avoids spinner stuck on re-entry)
+      if(STATE.factPack) renderProfile(STATE.factPack);
+    }, 60);
   }
   // methodology parade hook
   if(SLIDES[currentIdx]?.id === 'methodology'){
@@ -4275,6 +4280,8 @@ async function loadSlide(){
 
   renderCover(fp);
   renderProfile(fp);
+  // If user is already on ch1-profile when data lands, re-layout so nodes are positioned correctly
+  if(SLIDES[currentIdx]?.id === 'ch1-profile') layoutRadial();
   renderEvoSlide(fp);
   // Kick off LLM-generated entity summaries in background (all 4 entities)
   _prefetchEntitySummaries();
