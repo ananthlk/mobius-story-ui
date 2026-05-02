@@ -1,0 +1,35 @@
+{
+  "module_id": "ch9-scaling",
+  "kind": "slide",
+  "slug": "ch9-scaling",
+  "title": "The scaling act",
+  "act": "appendix",
+  "sequence": 33,
+  "chapter": "Appendix \u2014 scaling story",
+  "tags": [
+    "appendix",
+    "scaling",
+    "moat"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "The scaling act",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "How the network compounds over time: claims aggregation, AI denial model accuracy, network rate intelligence \u2014 into a defensible moat."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "ch8-structure",
+    "act5-approach"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

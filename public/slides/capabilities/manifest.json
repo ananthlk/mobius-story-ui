@@ -1,0 +1,35 @@
+{
+  "module_id": "capabilities",
+  "kind": "slide",
+  "slug": "capabilities",
+  "title": "What this platform does \u00b7 Built for the questions you actually have",
+  "act": "appendix",
+  "sequence": 31,
+  "chapter": "Appendix \u2014 capabilities demo",
+  "tags": [
+    "appendix",
+    "demo",
+    "capabilities",
+    "AI"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "What this platform does \u00b7 Built for the questions you actually have",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Capabilities demo of the Mobius Intelligence platform \u2014 answering the kinds of questions a CFO would actually ask."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "discussion"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}
