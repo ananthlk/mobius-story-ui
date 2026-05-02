@@ -1,0 +1,19 @@
+{
+  "_comment": "Cold-start fallback for ch-forces. Live data from /story/fact-pack.",
+  "blocks": {
+    "main": {
+      "label": "Four forces reshaped the market",
+      "cuts": {
+        "_note": {
+          "value": "see live skill response"
+        }
+      }
+    }
+  },
+  "narrative_anchors": [],
+  "_meta": {
+    "module_id": "ch-forces",
+    "schema_version": 1,
+    "as_of": "2026-05-02"
+  }
+}

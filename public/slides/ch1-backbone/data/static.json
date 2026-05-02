@@ -1,0 +1,15 @@
+{
+  "blocks":{
+    "three_blocks":{"label":"3 framing stats","cuts":{
+      "who_you_serve":{"value":"1 in 4","source":"FL Medicaid BH share carried by CMHCs"},
+      "medicaid_economics":{"value":"42¢","source":"CMHC therapy reimbursement vs commercial 60-min session"},
+      "cost_of_crisis":{"value":"8–12×","source":"Crisis-to-inpatient cost multiple"}
+    }}
+  },
+  "narrative_anchors":[
+    {"id":"who_you_serve","value":"1 in 4","unit":"","source_cut":"blocks.three_blocks.cuts.who_you_serve.value","definition":"FL Medicaid BH patients carried by CMHCs."},
+    {"id":"medicaid_share","value":"42¢","unit":"","source_cut":"blocks.three_blocks.cuts.medicaid_economics.value","definition":"CMHC clinician reimbursement vs commercial."},
+    {"id":"cost_of_crisis","value":"8–12×","unit":"","source_cut":"blocks.three_blocks.cuts.cost_of_crisis.value","definition":"Cost multiple when crisis patients escalate to inpatient."}
+  ],
+  "_meta":{"module_id":"ch1-backbone","schema_version":1,"as_of":"2026-05-02"}
+}

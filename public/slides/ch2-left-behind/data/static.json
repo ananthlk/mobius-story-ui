@@ -1,0 +1,19 @@
+{
+  "_comment": "Cold-start fallback for ch2-left-behind. Live data from /story/fact-pack.",
+  "blocks": {
+    "main": {
+      "label": "Left behind",
+      "cuts": {
+        "_note": {
+          "value": "see live skill response"
+        }
+      }
+    }
+  },
+  "narrative_anchors": [],
+  "_meta": {
+    "module_id": "ch2-left-behind",
+    "schema_version": 1,
+    "as_of": "2026-05-02"
+  }
+}

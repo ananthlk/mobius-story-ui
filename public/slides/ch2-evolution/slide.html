@@ -1,0 +1,113 @@
+<div class="slide" data-id="ch2-evolution" style="background:var(--bg);display:flex;flex-direction:column;height:100%;overflow:hidden">
+      
+              <!-- HEADER -->
+              <div style="padding:12px 24px 0;flex-shrink:0;border-bottom:1px solid var(--rule);padding-bottom:10px">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                  <div>
+                    <div class="eyebrow" style="margin-bottom:2px">Chapter 2 — Market evolution</div>
+                    <h1 class="s-title" style="margin-bottom:0;font-size:clamp(18px,2vw,28px)">Market evolution · 2019–2024</h1>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                    <!-- Entity pills (same as ch1-profile, synced) -->
+                    <div style="display:flex;align-items:center;gap:5px">
+                      <span class="pf-key">Entity</span>
+                      <div style="display:flex;gap:3px" id="evo-entity-group">
+                        <button class="pf-pill active" data-entity="bhpf"      onclick="evoSetEntity('bhpf')">BHPF</button>
+                        <button class="pf-pill"         data-entity="fbha"      onclick="evoSetEntity('fbha')">FBHA</button>
+                        <button class="pf-pill"         data-entity="lookalike" onclick="evoSetEntity('lookalike')">New entrants</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- BODY: radial left + right panel -->
+              <div style="flex:1;display:grid;grid-template-columns:1fr 280px;overflow:hidden;min-height:0">
+      
+                <!-- RADIAL CANVAS (mirrors ch1-profile) -->
+                <div style="position:relative;overflow:hidden" id="evo-canvas">
+                  <svg id="evo-svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></svg>
+      
+                  <!-- CENTER HUB -->
+                  <div id="evo-hub" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100px;height:100px;border-radius:50%;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 0 0 7px rgba(29,158,117,.15),0 4px 24px rgba(0,0,0,.22);z-index:2">
+                    <div style="font-family:var(--serif);font-size:20px;font-weight:700;color:#f8f7f4;line-height:1.1" id="evo-hub-year">2019</div>
+                    <div id="evo-hub-label" style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2);margin-top:2px;font-family:var(--mono)">baseline</div>
+                  </div>
+      
+                  <!-- 6 NODES — same % positions as ch1-profile -->
+                  <!-- top -->
+                  <div class="rad-node" id="evo-rn-market" style="left:50%;top:17%">
+                    <div class="rn-node-header"><div class="rn-label">Market share</div></div>
+                    <div class="rn-stat" id="evo-stat-market">—</div>
+                    <div class="rn-sub" id="evo-sub-market">of FL Medicaid BH revenue</div>
+                    <div id="evo-delta-market" class="evo-delta" style="display:none"></div>
+                  </div>
+                  <!-- top-right -->
+                  <div class="rad-node" id="evo-rn-benes" style="left:79%;top:30%">
+                    <div class="rn-node-header"><div class="rn-label">Lives touched</div></div>
+                    <div class="rn-stat" id="evo-stat-benes">—</div>
+                    <div class="rn-sub">unique Medicaid BH beneficiaries</div>
+                    <div id="evo-delta-benes" class="evo-delta" style="display:none"></div>
+                  </div>
+                  <!-- bottom-right -->
+                  <div class="rad-node" id="evo-rn-service" style="left:79%;top:70%">
+                    <div class="rn-node-header"><div class="rn-label">Service mix</div></div>
+                    <div class="rn-stat" id="evo-stat-service">—</div>
+                    <div class="rn-sub">ongoing per $1 of crisis · intake · ACT</div>
+                    <div id="evo-delta-service" class="evo-delta" style="display:none"></div>
+                  </div>
+                  <!-- bottom -->
+                  <div class="rad-node" id="evo-rn-lookalike" style="left:50%;top:83%">
+                    <div class="rn-node-header"><div class="rn-label" id="evo-label-lookalike">Org count</div></div>
+                    <div class="rn-stat" id="evo-stat-lookalike">—</div>
+                    <div class="rn-sub" id="evo-sub-lookalike">organizations in FL</div>
+                    <div id="evo-delta-lookalike" class="evo-delta" style="display:none"></div>
+                  </div>
+                  <!-- bottom-left -->
+                  <div class="rad-node" id="evo-rn-rate" style="left:21%;top:70%">
+                    <div class="rn-node-header"><div class="rn-label">Rate position</div></div>
+                    <div class="rn-stat" id="evo-stat-rate">—</div>
+                    <div class="rn-sub">revenue per beneficiary vs FL market</div>
+                    <div id="evo-delta-rate" class="evo-delta" style="display:none"></div>
+                  </div>
+                  <!-- top-left -->
+                  <div class="rad-node" id="evo-rn-churn" style="left:21%;top:30%">
+                    <div class="rn-node-header"><div class="rn-label">Panel commitment</div></div>
+                    <div class="rn-stat" id="evo-stat-churn">—</div>
+                    <div class="rn-sub">% clinicians billing Medicaid next month · vs market</div>
+                    <div id="evo-delta-churn" class="evo-delta" style="display:none"></div>
+                  </div>
+                </div>
+      
+                <!-- RIGHT PANEL: narrative story strip -->
+                <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0;overflow:hidden;border-left:1px solid var(--rule)">
+      
+                  <!-- Play controls (top) -->
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-shrink:0">
+                    <button id="evo-play-btn" onclick="evoTogglePlay()" style="width:34px;height:34px;border-radius:50%;border:1.5px solid var(--teal2);background:var(--teal-l);color:var(--teal);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0">▶</button>
+                    <span style="font-size:11px;color:var(--ink3);font-family:var(--mono)" id="evo-play-label">Play · 2s per year</span>
+                  </div>
+      
+                  <!-- Scrollable year story — grows as years play -->
+                  <div id="evo-story-strip" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:0;padding-right:4px">
+                    <!-- entries injected by _evoAppendStoryEntry() -->
+                  </div>
+      
+                  <!-- 2024 verdict card — shown when animation completes -->
+                  <div id="evo-verdict-box" style="display:none;flex-shrink:0;margin-top:10px;border-radius:8px;padding:10px 14px;background:var(--ink)">
+                    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:5px">Verdict · 2019 → 2024</div>
+                    <div style="font-family:var(--serif);font-size:11.5px;color:#f8f7f4;line-height:1.5;font-weight:300" id="evo-verdict-text"></div>
+                  </div>
+      
+                  <!-- hidden year-list still needed for dot tracking by existing JS -->
+                  <div id="evo-year-list" style="display:none"></div>
+                </div>
+      
+              </div><!-- end body grid -->
+      
+              <!-- FOOTNOTE -->
+              <div style="padding:3px 24px 5px;flex-shrink:0;border-top:1px solid var(--rule);display:flex;justify-content:space-between">
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS claims data 2018–2024 · Mobius analysis · animated timeline · click entity to compare</div>
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="evo-footnote-label">BHPF · 2019–2024</div>
+              </div>
+            </div>

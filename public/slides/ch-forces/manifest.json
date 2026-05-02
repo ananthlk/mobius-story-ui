@@ -1,0 +1,40 @@
+{
+  "module_id": "ch-forces",
+  "kind": "slide",
+  "slug": "ch-forces",
+  "title": "Four forces reshaped the market",
+  "act": "I",
+  "sequence": 6,
+  "chapter": "Act I \u2014 Macro forces",
+  "tags": [
+    "COVID",
+    "enrollment",
+    "unwinding",
+    "rate-compression"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "Four forces reshaped the market",
+      "data_mode": "live",
+      "endpoint": "/proxy/skills/story/fact-pack",
+      "chat_context": true,
+      "chat_scope": "Four forces (COVID volume shock, Medicaid expansion/unwinding, new-entrant entry, rate compression) reshaped FL Medicaid BH between 2019 and 2024."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [
+    "story_fact_pack"
+  ],
+  "cross_slide_links": [
+    "ch1-profile",
+    "ch2-evolution",
+    "ch-finale"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1,
+    "note": "Markup is verbatim from story.html. Interactive logic (renderEvoSlide, layoutEvoRadial, renderFinaleHeatMap, renderLeftBehindCascade) lives in story.html globals."
+  }
+}

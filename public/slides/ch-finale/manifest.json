@@ -1,0 +1,40 @@
+{
+  "module_id": "ch-finale",
+  "kind": "slide",
+  "slug": "ch-finale",
+  "title": "Market outcomes \u00b7 2019\u20132024",
+  "act": "I",
+  "sequence": 8,
+  "chapter": "Act I \u2014 Provider-type heatmap",
+  "tags": [
+    "heatmap",
+    "provider-type",
+    "outcomes",
+    "displacement"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "Market outcomes \u00b7 2019\u20132024",
+      "data_mode": "live",
+      "endpoint": "/proxy/skills/story/fact-pack",
+      "chat_context": true,
+      "chat_scope": "Heatmap of which provider types gained (green) vs lost (red) across 6 dimensions. New-entrant BH specialty: all green. CMHCs: red on share and rate."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [
+    "story_fact_pack"
+  ],
+  "cross_slide_links": [
+    "ch2-evolution",
+    "ch2-left-behind",
+    "act4-opportunity"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1,
+    "note": "Markup is verbatim from story.html. Interactive logic (renderEvoSlide, layoutEvoRadial, renderFinaleHeatMap, renderLeftBehindCascade) lives in story.html globals."
+  }
+}

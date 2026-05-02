@@ -1,0 +1,24 @@
+{
+  "_comment":"Live data path: /story/fact-pack?scope={entity}. Cold-start fallback values shown here for rendering when API is unreachable.",
+  "blocks":{
+    "radial_six_nodes":{"label":"6 radial nodes — BHPF 2019 baseline","cuts":{
+      "bhpf__2019":{
+        "market_share_pct":16.0,
+        "beneficiaries":564000,
+        "service_mix_ratio":"~3.5",
+        "lookalike_count":21,
+        "revenue_per_bene":118,
+        "rpb_vs_market_pct":-12,
+        "panel_commitment_pct_vs_market":5
+      }
+    }}
+  },
+  "narrative_anchors":[
+    {"id":"market_share","value":16.0,"unit":"%","source_cut":"blocks.radial_six_nodes.cuts.bhpf__2019.market_share_pct","definition":"BHPF share of FL Medicaid BH revenue in 2019."},
+    {"id":"beneficiaries","value":"564K","unit":"","source_cut":"blocks.radial_six_nodes.cuts.bhpf__2019.beneficiaries","definition":"Unique Medicaid BH beneficiaries served by BHPF in 2019."},
+    {"id":"new_entrants","value":21,"unit":"count","source_cut":"blocks.radial_six_nodes.cuts.bhpf__2019.lookalike_count","definition":"BH-specialty new-entrant orgs active in FL in 2019."},
+    {"id":"rpb","value":118,"unit":"","source_cut":"blocks.radial_six_nodes.cuts.bhpf__2019.revenue_per_bene","definition":"BHPF revenue per beneficiary in 2019 ($)."},
+    {"id":"rpb_gap_pct","value":-12,"unit":"%","source_cut":"blocks.radial_six_nodes.cuts.bhpf__2019.rpb_vs_market_pct","definition":"BHPF RPB position vs FL market median, 2019."}
+  ],
+  "_meta":{"module_id":"ch1-profile","schema_version":1,"as_of":"2026-05-02"}
+}

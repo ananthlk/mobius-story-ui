@@ -1,0 +1,102 @@
+<div class="slide" data-id="ch-finale" style="background:var(--bg);display:flex;flex-direction:column;height:100%;overflow:hidden">
+      
+              <div style="padding:12px 24px 10px;flex-shrink:0;border-bottom:1px solid var(--rule)">
+                <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                  <div>
+                    <div class="eyebrow" style="margin-bottom:2px">Finale — The verdict</div>
+                    <h1 class="s-title" style="margin-bottom:0;font-size:clamp(18px,2vw,28px)">Market outcomes · 2019–2024</h1>
+                  </div>
+                  <div style="font-size:11px;color:var(--ink3);font-family:var(--mono);text-align:right;line-height:1.5">
+                    Florida Medicaid Behavioral Health<br>6-year market scorecard
+                  </div>
+                </div>
+              </div>
+      
+              <!-- HEAT MAP BODY -->
+              <div style="flex:1;overflow:auto;padding:16px 24px">
+      
+                <!-- Legend -->
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+                  <span style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase;margin-right:4px">Scale:</span>
+                  <span class="hm-legend-chip" style="background:#14532d;color:#bbf7d0">Well above</span>
+                  <span class="hm-legend-chip" style="background:#166534;color:#dcfce7">Above</span>
+                  <span class="hm-legend-chip" style="background:#e2e8f0;color:#334155">Neutral</span>
+                  <span class="hm-legend-chip" style="background:#fca5a5;color:#7f1d1d">Below</span>
+                  <span class="hm-legend-chip" style="background:#dc2626;color:#fff0f0">Well below</span>
+                  <span style="font-family:var(--mono);font-size:9px;color:var(--ink4);margin-left:8px">Each metric: 2019→2024 change or 2024 position vs market</span>
+                </div>
+      
+                <!-- Heat map table -->
+                <div style="overflow-x:auto">
+                  <table id="finale-heatmap" style="border-collapse:collapse;width:100%;min-width:700px;font-size:12px">
+                    <thead>
+                      <tr>
+                        <th style="text-align:left;padding:8px 12px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);border-bottom:2px solid var(--rule);white-space:nowrap;min-width:120px">Segment</th>
+                        <th class="hm-th">Share<br><span class="hm-th-sub">pp change</span></th>
+                        <th class="hm-th">Benes<br><span class="hm-th-sub">% change</span></th>
+                        <th class="hm-th">Rev/patient vs mkt<br><span class="hm-th-sub">2024 position</span></th>
+                        <th class="hm-th">Rev/patient trend<br><span class="hm-th-sub">gap widening?</span></th>
+                        <th class="hm-th">Panel commitment<br><span class="hm-th-sub">% clinicians billing Medicaid next month</span></th>
+                        <th class="hm-th">Verdict</th>
+                      </tr>
+                    </thead>
+                    <tbody id="finale-tbody">
+                      <!-- Static fallback rows — overwritten by renderFinaleHeatMap() when live data loads -->
+                      <tr>
+                        <td class="hm-seg-label">BHPF CMHCs<span class="hm-seg-tier">CMHC</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–9.08pp</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–40.3%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–42.2%</span></td>
+                        <td class="hm-cell hm-l1"><span class="hm-cell-val">↓ 15.1pp</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">+7.0%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#fee2e2;color:#991b1b">📉 Slipping</span></td>
+                      </tr>
+                      <tr>
+                        <td class="hm-seg-label">FBHA CMHCs<span class="hm-seg-tier">CMHC</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–14.47pp</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–31.0%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–40.8%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">↓ 31.3pp</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">+6.1%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#fee2e2;color:#991b1b">📉 Slipping</span></td>
+                      </tr>
+                      <tr>
+                        <td class="hm-seg-label">New entrants<span class="hm-seg-tier">BH Specialty</span></td>
+                        <td class="hm-cell hm-s2"><span class="hm-cell-val">+7.48pp</span></td>
+                        <td class="hm-cell hm-s2"><span class="hm-cell-val">+99.5%</span></td>
+                        <td class="hm-cell hm-n0"><span class="hm-cell-val">+4.3%</span></td>
+                        <td class="hm-cell hm-s2"><span class="hm-cell-val">↑ 21.1pp</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">+8.4%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#14532d;color:#bbf7d0">🏆 Winner</span></td>
+                      </tr>
+                      <tr>
+                        <td class="hm-seg-label">FQHCs<span class="hm-seg-tier">FQHC</span></td>
+                        <td class="hm-cell hm-l1"><span class="hm-cell-val">–2.18pp</span></td>
+                        <td class="hm-cell hm-n0"><span class="hm-cell-val">+2.0%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">–64.7%</span></td>
+                        <td class="hm-cell hm-l2"><span class="hm-cell-val">↓ 31.5pp</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">+6.4%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#fef3e2;color:#a0600a">⚠️ Warning</span></td>
+                      </tr>
+                      <tr>
+                        <td class="hm-seg-label">Ind. BH practices<span class="hm-seg-tier">Community</span></td>
+                        <td class="hm-cell hm-n0"><span class="hm-cell-val">–2.09pp</span></td>
+                        <td class="hm-cell hm-n0"><span class="hm-cell-val">+1.4%</span></td>
+                        <td class="hm-cell hm-s2"><span class="hm-cell-val">+22.0%</span></td>
+                        <td class="hm-cell hm-s1"><span class="hm-cell-val">↑ 6.8pp</span></td>
+                        <td class="hm-cell hm-l1"><span class="hm-cell-val">–2.4%</span></td>
+                        <td class="hm-verdict"><span class="hm-verdict-chip" style="background:#14532d;color:#bbf7d0">🏆 Winner</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+      
+                <!-- Story summary below table -->
+                <div id="finale-summary" style="display:none;margin-top:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px"></div>
+              </div>
+      
+              <div style="padding:3px 24px 5px;flex-shrink:0;border-top:1px solid var(--rule);display:flex;justify-content:space-between">
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS claims data 2018–2024 · Mobius analysis · 6-year scorecard · all FL Medicaid BH orgs</div>
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">← Animation  ·  Appendix →</div>
+              </div>
+            </div>
