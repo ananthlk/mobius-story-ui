@@ -1,0 +1,38 @@
+{
+  "module_id": "act4-opportunity",
+  "kind": "slide",
+  "slug": "act4-opportunity",
+  "title": "What BHPF is leaving on the table",
+  "act": "IV",
+  "sequence": 27,
+  "chapter": "Act IV \u2014 Total opportunity",
+  "tags": [
+    "opportunity",
+    "4-buckets",
+    "144M",
+    "217M"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "What BHPF is leaving on the table",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "$144M+ floor / $217M ceiling. Patient leakage $60\u2013125M, admin overspend $66M, employee churn $10\u201318M, rate gap $7.8M. Built bottom-up."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "cover",
+    "admin-s4",
+    "act3-churn-break",
+    "act5-approach"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

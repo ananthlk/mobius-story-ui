@@ -1,0 +1,10 @@
+{
+  "_comment": "Cold-start fallback for appendix-break.",
+  "blocks": {},
+  "narrative_anchors": [],
+  "_meta": {
+    "module_id": "appendix-break",
+    "schema_version": 1,
+    "as_of": "2026-05-02"
+  }
+}
