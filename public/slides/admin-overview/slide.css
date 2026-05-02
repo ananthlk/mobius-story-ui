@@ -1,0 +1,172 @@
+/*
+  admin-overview — Act II opener. 3-panel grid (KPI card + 2 charts) with
+  4-tier tabs. Lifted from inline .adm-* classes in story.html and renamed
+  .admin-overview-* to scope per slide-module convention.
+*/
+
+.admin-overview-shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem .75rem;
+  box-sizing: border-box;
+  background: var(--bg, #faf9f5);
+  gap: 0;
+}
+
+.admin-overview-eyebrow {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #A09D98;
+  margin-bottom: .35rem;
+}
+
+.admin-overview-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  flex-shrink: 0;
+  margin-bottom: 1.1rem;
+}
+
+.admin-overview-title {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+  font-weight: 700;
+  color: #1A1917;
+  margin: 0;
+  letter-spacing: -.01em;
+}
+
+.admin-overview-tabs {
+  display: flex;
+  gap: .25rem;
+  margin: 0;
+}
+
+.admin-overview-tab {
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  padding: .35rem .7rem;
+  border: 1px solid rgba(0, 0, 0, .12);
+  background: #fff;
+  color: #6B6860;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.admin-overview-tab:hover {
+  background: #FAFAF8;
+  color: #1A1917;
+}
+
+.admin-overview-tab.on {
+  background: #1A1917;
+  color: #fff;
+  border-color: #1A1917;
+}
+
+.admin-overview-grid {
+  display: grid;
+  grid-template-columns: 190px 1fr 1fr;
+  gap: .625rem;
+  flex: 0 0 auto;
+  height: min(62vh, 560px);
+  min-height: 0;
+}
+
+.admin-overview-panel {
+  background: #fff;
+  border-radius: 10px;
+  padding: .875rem;
+  border: 1px solid rgba(0, 0, 0, .07);
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  min-height: 0;
+}
+
+.admin-overview-panel-label {
+  font-family: var(--mono);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #A09D98;
+  margin-bottom: .375rem;
+}
+
+.admin-overview-stat-big {
+  font-family: var(--serif);
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #1A1917;
+  letter-spacing: -.025em;
+}
+
+.admin-overview-stat-sub {
+  font-size: .68rem;
+  color: #A09D98;
+  margin-top: .15rem;
+}
+
+.admin-overview-stat-list {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  font-size: .72rem;
+}
+
+.admin-overview-stat-row {
+  display: flex;
+  justify-content: space-between;
+  gap: .25rem;
+  color: #6B6860;
+}
+
+.admin-overview-stat-val {
+  font-weight: 600;
+  color: #1A1917;
+  white-space: nowrap;
+}
+
+.admin-overview-stat-emph {
+  color: #BA7517;
+}
+
+.admin-overview-panel-footnote {
+  margin-top: auto;
+  padding-top: .5rem;
+  border-top: 1px solid rgba(0, 0, 0, .06);
+  font-size: .62rem;
+  color: #A09D98;
+  line-height: 1.45;
+}
+
+.admin-overview-canvas-wrap {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+}
+
+.admin-overview-canvas-wrap canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.admin-overview-source {
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .04em;
+  color: #A09D98;
+  margin-top: .375rem;
+  flex-shrink: 0;
+}

@@ -1,0 +1,64 @@
+{
+  "module_id": "admin-overview",
+  "kind": "slide",
+  "slug": "admin-overview",
+  "title": "The BHPF admin profile.",
+
+  "act": "II",
+  "sequence": 12,
+  "chapter": "Act II — Administrative Infrastructure",
+  "tags": ["admin", "benchmarking", "FTE", "CFO-survey", "tier-comparison"],
+
+  "blocks": [
+    {
+      "id": "admin_kpi",
+      "label": "Total admin spend KPI card (% of revenue, FTE, n, top dept)",
+      "data_mode": "hybrid",
+      "static_source": "data/static.json",
+      "live_source": "cfo_admin_benchmarks",
+      "endpoint": "/proxy/skills/analytics/cfo-admin-benchmarks?tier={tier}",
+      "chat_context": true,
+      "chat_scope": "Per-tier BHPF admin %-of-revenue, total FTE, sample size, and largest admin department."
+    },
+    {
+      "id": "fte_by_dept",
+      "label": "Avg FTE per org by department (Finance / IT / Billing / HR)",
+      "data_mode": "hybrid",
+      "static_source": "data/static.json",
+      "live_source": "cfo_admin_benchmarks",
+      "endpoint": "/proxy/skills/analytics/cfo-admin-benchmarks?tier={tier}",
+      "chat_context": true,
+      "chat_scope": "Department-level FTE breakdown for any tier (all / <$15M / $15-30M / $30M+)."
+    },
+    {
+      "id": "fte_2016_vs_2025",
+      "label": "2016 vs 2025 — avg FTE per org by department",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "How admin FTE per BHPF member has changed from 2016 baseline to 2025 survey."
+    }
+  ],
+
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "rag_corpus": ["bhpf_cfo_survey_2025.pdf"],
+
+  "skills_available": [
+    "cfo_admin_benchmarks"
+  ],
+
+  "cross_slide_links": [
+    "act2-opener",
+    "admin-s1",
+    "admin-s1c",
+    "admin-s4",
+    "admin-s5",
+    "act4-opportunity"
+  ],
+
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

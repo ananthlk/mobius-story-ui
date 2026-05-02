@@ -1,0 +1,119 @@
+{
+  "_comment": "Cold-start fallback for admin-overview. Data source: BHPF CFO Survey 2025.",
+  "blocks": {
+    "admin_kpi": {
+      "label": "BHPF admin profile by tier",
+      "cuts": {
+        "bhpf__all": {
+          "admin_pct_revenue_avg": 0.1169,
+          "total_fte_avg": 345.49,
+          "n": 34
+        },
+        "bhpf__sm": {
+          "admin_pct_revenue_avg": 0.1078,
+          "total_fte_avg": 120.09,
+          "n": 13
+        },
+        "bhpf__mid": {
+          "admin_pct_revenue_avg": 0.1145,
+          "total_fte_avg": 247.1,
+          "n": 8
+        },
+        "bhpf__lg": {
+          "admin_pct_revenue_avg": 0.1263,
+          "total_fte_avg": 609.5,
+          "n": 13
+        }
+      }
+    },
+    "fte_by_dept": {
+      "label": "Avg FTE per org by department",
+      "cuts": {
+        "bhpf__all": {
+          "finance": 6.55,
+          "it": 6.38,
+          "billing": 6.66,
+          "hr": 4.49
+        },
+        "bhpf__sm": {
+          "finance": 3.85,
+          "it": 2.8,
+          "billing": 4.41,
+          "hr": 2.0
+        },
+        "bhpf__mid": {
+          "finance": 4.91,
+          "it": 5.06,
+          "billing": 6.79,
+          "hr": 2.89
+        },
+        "bhpf__lg": {
+          "finance": 9.75,
+          "it": 10.12,
+          "billing": 8.65,
+          "hr": 7.72
+        }
+      }
+    },
+    "fte_2016_vs_2025": {
+      "label": "2016 vs 2025 \u2014 avg FTE per org",
+      "cuts": {
+        "bhpf__2016": {
+          "finance": 7.2,
+          "it": 7.61,
+          "billing": 6.84,
+          "hr": 6.59
+        },
+        "bhpf__2025": {
+          "finance": 6.55,
+          "it": 6.38,
+          "billing": 6.66,
+          "hr": 4.49
+        }
+      }
+    }
+  },
+  "narrative_anchors": [
+    {
+      "id": "admin_pct_avg",
+      "value": 11.7,
+      "unit": "%",
+      "source_cut": "blocks.admin_kpi.cuts.bhpf__all.admin_pct_revenue_avg",
+      "definition": "Avg admin spend as % of revenue across 34 BHPF members."
+    },
+    {
+      "id": "admin_pct_benchmark",
+      "value": 9.0,
+      "unit": "%",
+      "source_cut": "external",
+      "definition": "APQC $1B+ health systems benchmark for admin %-of-revenue."
+    },
+    {
+      "id": "admin_pp_gap",
+      "value": 2.7,
+      "unit": "pp",
+      "source_cut": "derived",
+      "definition": "Gap between BHPF admin pct and APQC $1B+ benchmark."
+    },
+    {
+      "id": "total_fte_avg",
+      "value": 345,
+      "unit": "FTE",
+      "source_cut": "blocks.admin_kpi.cuts.bhpf__all.total_fte_avg",
+      "definition": "Avg total admin FTE per BHPF member org."
+    },
+    {
+      "id": "n_members",
+      "value": 34,
+      "unit": "count",
+      "source_cut": "blocks.admin_kpi.cuts.bhpf__all.n",
+      "definition": "BHPF member organizations in survey sample."
+    }
+  ],
+  "_meta": {
+    "module_id": "admin-overview",
+    "schema_version": 1,
+    "as_of": "2026-05-02",
+    "source_job": "extract from public/data/admin_benchmarks.json"
+  }
+}

@@ -1,0 +1,60 @@
+<!--
+  admin-overview — Act II opener of the operational review.
+  Tabs select a tier; charts re-render via cfo_admin_benchmarks skill.
+-->
+<div class="slide" data-id="admin-overview" style="height:100%;overflow:hidden">
+  <div class="admin-overview-shell">
+
+    <div class="admin-overview-eyebrow">overview — administrative benchmarks</div>
+
+    <div class="admin-overview-header">
+      <h2 class="admin-overview-title">The BHPF admin profile.</h2>
+      <div class="admin-overview-tabs" data-role="tier-tabs">
+        <button class="admin-overview-tab on" data-tier="all">All BHPF</button>
+        <button class="admin-overview-tab" data-tier="sm">&lt;$15M</button>
+        <button class="admin-overview-tab" data-tier="mid">$15–30M</button>
+        <button class="admin-overview-tab" data-tier="lg">$30M+</button>
+      </div>
+    </div>
+
+    <div class="admin-overview-grid">
+
+      <!-- Panel 1 — KPI card -->
+      <div class="admin-overview-panel" data-block="admin_kpi">
+        <div class="admin-overview-panel-label">Total admin spend</div>
+        <div>
+          <div class="admin-overview-stat-big" data-anchor="admin_pct_avg">—</div>
+          <div class="admin-overview-stat-sub">% of revenue</div>
+        </div>
+        <div class="admin-overview-stat-list">
+          <div class="admin-overview-stat-row"><span>Avg FTE per org</span><span data-field="total_fte" class="admin-overview-stat-val">—</span></div>
+          <div class="admin-overview-stat-row"><span>Orgs in tier</span><span data-field="n" class="admin-overview-stat-val">—</span></div>
+          <div class="admin-overview-stat-row"><span>Largest department</span><span data-field="top_dept" class="admin-overview-stat-val admin-overview-stat-emph">—</span></div>
+        </div>
+        <div class="admin-overview-panel-footnote">
+          % of revenue is self-reported total admin budget (incl. overhead, facilities, depreciation). FTE bars are headcount only — these measure different things.
+        </div>
+      </div>
+
+      <!-- Panel 2 — FTE by dept bar chart -->
+      <div class="admin-overview-panel" data-block="fte_by_dept">
+        <div class="admin-overview-panel-label">Avg FTE per org · by department</div>
+        <div class="admin-overview-canvas-wrap">
+          <canvas data-canvas="fte-by-dept"></canvas>
+        </div>
+      </div>
+
+      <!-- Panel 3 — 2016 vs 2025 trend -->
+      <div class="admin-overview-panel" data-block="fte_2016_vs_2025">
+        <div class="admin-overview-panel-label" data-field="trend-label">2016 vs 2025 · avg FTE per org</div>
+        <div class="admin-overview-canvas-wrap">
+          <canvas data-canvas="fte-2016-vs-2025"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="admin-overview-source">BHPF CFO Benchmarking Survey 2025 (n=34) · org size tiers based on annual revenue</div>
+
+  </div>
+</div>
