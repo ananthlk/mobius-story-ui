@@ -1,0 +1,38 @@
+{
+  "_comment": "Cold-start fallback + JSONB shape contract. This file mirrors the row that lives in briefing.modules.data for this slide.",
+
+  "blocks": {
+    "{{block_id_1}}": {
+      "label": "{{Human-readable label, also shown in slide.html}}",
+      "cuts": {
+        "{{scope_a}}__{{filter}}": {
+          "value": 0,
+          "unit": "M",
+          "source_table": "{{e.g. landing_medicaid_npi_dev.org_kpis_v2}}",
+          "source_filter": "{{e.g. year=2024 AND state='FL'}}"
+        },
+        "{{scope_b}}__{{filter}}": {
+          "value": 0,
+          "unit": "M"
+        }
+      }
+    }
+  },
+
+  "narrative_anchors": [
+    {
+      "id": "{{anchor_id_1}}",
+      "value": 0,
+      "unit": "M",
+      "source_cut": "blocks.{{block_id_1}}.cuts.{{scope_a}}__{{filter}}",
+      "definition": "{{Plain-language definition — what does this number mean?}}"
+    }
+  ],
+
+  "_meta": {
+    "module_id": "{{slug}}",
+    "schema_version": 1,
+    "as_of": "{{YYYY-MM-DD — when these numbers were generated}}",
+    "source_job": "{{the script / job that populated this — e.g. scripts/snapshot.py}}"
+  }
+}

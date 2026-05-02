@@ -1,0 +1,154 @@
+/*
+  Scoped styles for one slide module.
+
+  CONVENTIONS:
+  - Every selector starts with .{slug}- (replace .tpl- below).
+  - Use design tokens from mobius-tokens.css — never hex literals for
+    brand colors. Geometric values (px, rem) are fine inline.
+  - Animation pattern: opacity:0 + transform:translateY(20px) by default;
+    .{slug}-block.in fades in. slide.js adds .in with stagger on mount.
+  - Don't fight the deck shell — .slide gives you a 100% × 100% box.
+*/
+
+.tpl-shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2.5rem 1.5rem;
+  gap: 1.25rem;
+  box-sizing: border-box;
+  background: var(--bg);
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+
+.tpl-eyebrow {
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink4);
+}
+
+.tpl-title {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: -.01em;
+}
+
+.tpl-lead {
+  font-size: .85rem;
+  color: var(--ink3);
+  line-height: 1.6;
+  font-weight: 300;
+  max-width: 780px;
+  margin: 0;
+}
+
+/* ── Body ───────────────────────────────────────────────────── */
+
+.tpl-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.tpl-block {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .07);
+  border-radius: 12px;
+  padding: 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+
+  /* Stagger-in animation */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .55s cubic-bezier(.22, 1, .36, 1),
+              transform .55s cubic-bezier(.22, 1, .36, 1);
+}
+
+.tpl-block.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tpl-block-label {
+  font-family: var(--mono);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink4);
+}
+
+.tpl-stat {
+  font-family: var(--serif);
+  font-size: clamp(1.85rem, 3.2vw, 2.85rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.tpl-block-detail {
+  font-size: .78rem;
+  color: var(--ink3);
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+/* ── Drill-in node ──────────────────────────────────────────── */
+
+.tpl-node {
+  cursor: pointer;
+  border-left: 3px solid var(--teal2, #0d6b52);
+  padding: .9rem 1.1rem;
+  background: var(--bg-soft, #faf9f5);
+  border-radius: 0 8px 8px 0;
+  transition: background .2s ease;
+}
+
+.tpl-node:hover {
+  background: rgba(13, 107, 82, .06);
+}
+
+.tpl-node-label {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--ink2);
+  margin-bottom: .25rem;
+}
+
+.tpl-node-stat {
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+
+.tpl-footer {
+  background: rgba(0, 0, 0, .03);
+  border-top: 1px solid rgba(0, 0, 0, .06);
+  border-radius: 8px;
+  padding: .75rem 1rem;
+  font-size: .72rem;
+  color: var(--ink3);
+  line-height: 1.55;
+  flex-shrink: 0;
+}
+
+.tpl-footer strong {
+  color: var(--ink2);
+  font-weight: 600;
+}

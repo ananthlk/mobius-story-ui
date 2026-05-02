@@ -1,0 +1,36 @@
+{
+  "_comment": "Field-level schema for static.json. Chat reads this when asked 'what does this field mean?' — every block, cut, and anchor should have a row.",
+
+  "blocks": {
+    "{{block_id_1}}": {
+      "description": "{{One-sentence description of what this block represents.}}",
+      "kind": "{{kpi | comparison | trend | breakdown | scorecard}}",
+      "cut_keys": {
+        "{{scope}}": "{{What this scope key means — e.g. 'bhpf' = aggregate of 34 BHPF member CMHCs}}",
+        "{{filter}}": "{{What this filter applies — e.g. 'all' = no further filtering, 'msa_mia' = Miami MSA only}}"
+      },
+      "fields": {
+        "value": {
+          "type": "number",
+          "unit": "{{M|B|K|%|pp|FTE|count}}",
+          "description": "{{What 'value' means in this block specifically}}"
+        },
+        "fte": {
+          "type": "number",
+          "unit": "FTE",
+          "description": "{{Optional supplementary fields, with their definitions}}"
+        }
+      }
+    }
+  },
+
+  "narrative_anchors": {
+    "schema": {
+      "id": "Stable identifier — referenced from narrative.md as {{ANCHOR:id}}",
+      "value": "Numeric value rendered into the slide",
+      "unit": "Display unit; recognized: M, B, K, %, pp, FTE, count, days",
+      "source_cut": "Dotted JSON path into blocks.* — defines where this anchor's value comes from",
+      "definition": "Plain-language meaning shown in chat hover / drill-in"
+    }
+  }
+}
