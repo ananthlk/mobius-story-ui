@@ -1,0 +1,8 @@
+{
+  "_comment": "EXEC_LINES is a global JS array in story.html. Once that array migrates here, populate this file.",
+  "blocks": {"seven_lines": {"label": "7 summary points", "cuts": {"_note": {"value": "See window.EXEC_LINES until JS port lands."}}}},
+  "narrative_anchors": [
+    {"id": "n_lines", "value": 7, "unit": "count", "source_cut": "blocks.seven_lines", "definition": "Number of executive-summary narrative lines."}
+  ],
+  "_meta": {"module_id": "exec-summary", "schema_version": 1, "as_of": "2026-05-02"}
+}

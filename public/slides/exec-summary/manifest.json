@@ -1,0 +1,16 @@
+{
+  "module_id": "exec-summary",
+  "kind": "slide",
+  "slug": "exec-summary",
+  "title": "What happened, why it matters, and what comes next",
+  "act": "intro",
+  "sequence": 2,
+  "chapter": "Executive summary",
+  "tags": ["intro", "summary", "7-points"],
+  "blocks": [{"id": "seven_lines", "label": "7 narrative lines (animated fly-in)", "data_mode": "live", "endpoint": "window.EXEC_LINES (global from story.html)", "chat_context": true, "chat_scope": "Each of the 7 summary points and the slide it points to."}],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": ["cover", "act1-break", "act4-opportunity", "act5-approach"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1, "note": "EXEC_LINES animation lives in story.html globals (_resetExecLines, _animateExecLines)."}
+}

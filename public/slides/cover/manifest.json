@@ -1,0 +1,18 @@
+{
+  "module_id": "cover",
+  "kind": "slide",
+  "slug": "cover",
+  "title": "The Market Built Around Them",
+  "act": "intro",
+  "sequence": 1,
+  "chapter": "Headline opportunity",
+  "tags": ["cover", "headline", "four-buckets"],
+  "blocks": [
+    {"id": "headline", "label": "$144M+ floor / $217M upper band", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "Total opportunity, four-bucket breakdown, capture plan."}
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": ["exec-summary", "act4-opportunity", "act5-approach"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1}
+}
