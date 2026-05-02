@@ -3807,6 +3807,30 @@ function _buildProgressDots() {
 }
 _buildProgressDots();
 
+// ── Slide-module preview hook ────────────────────────────────────────
+// When the URL contains ?preview-module=<slug>[,<slug>,…], swap the
+// inline DOM for those slides with the loaded module. Pilot path for
+// the per-slide-module refactor — no production behavior change unless
+// the query param is present.
+(function _maybeLoadPreviewModules(){
+  const qs = new URLSearchParams(window.location.search);
+  const raw = qs.get('preview-module');
+  if (!raw) return;
+  const slugs = raw.split(',').map(s => s.trim()).filter(Boolean);
+  if (!slugs.length) return;
+  // Expose state the loader needs (it patches goTo and reads SLIDES/currentIdx)
+  window.SLIDES = SLIDES;
+  // Defer until after the deck's other init has set up goTo
+  setTimeout(async () => {
+    try {
+      const { loadModule } = await import('/slides/_shared/loader.js');
+      for (const slug of slugs) await loadModule(slug);
+    } catch (e) {
+      console.warn('[preview-module] loader failed:', e);
+    }
+  }, 200);
+})();
+
 let currentIdx = 0;
 let STATE = {
   scope: 'fbha',

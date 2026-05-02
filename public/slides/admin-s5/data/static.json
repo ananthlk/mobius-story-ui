@@ -1,0 +1,135 @@
+{
+  "_comment": "Cold-start fallback for admin-s5 (Act II — four conclusions).",
+
+  "blocks": {
+    "admin_overhead": {
+      "label": "Excess admin spend & FTE — BHPF network",
+      "cuts": {
+        "bhpf__all": {
+          "fte_excess": 345,
+          "annual_overhead_m": 66,
+          "scale_dividend_m": 37,
+          "ai_dividend_m": 29,
+          "source_table": "landing_medicaid_npi_dev.cfo_admin_benchmarks",
+          "source_filter": "year=2025 AND scope='bhpf_all'"
+        },
+        "benchmark__1bn": {
+          "admin_pct_revenue": 9.0,
+          "source": "APQC Open Standards Benchmarking 2024"
+        },
+        "bhpf__pct": {
+          "admin_pct_revenue": 11.7,
+          "delta_pp": 2.7,
+          "source_table": "landing_medicaid_npi_dev.cfo_admin_benchmarks"
+        }
+      }
+    },
+    "vendor_pricing": {
+      "label": "Vendor ROI deck calibration vs BHPF average org size",
+      "cuts": {
+        "vendor__validation_size_m": {
+          "value": 500,
+          "definition": "Org revenue size at which standard 2:1 ROI deck math holds"
+        },
+        "bhpf__avg_org_revenue_m": {
+          "value": 32,
+          "source_table": "landing_medicaid_npi_dev.org_kpis_v2",
+          "source_filter": "year=2024 AND in_bhpf=TRUE"
+        },
+        "fixed_cost_consumption_low_pct": { "value": 50 },
+        "fixed_cost_consumption_high_pct": { "value": 68 }
+      }
+    },
+    "network_scale": {
+      "label": "BHPF combined network footprint",
+      "cuts": {
+        "bhpf__all": {
+          "combined_revenue_b": 1.1,
+          "n_orgs": 34,
+          "source_table": "landing_medicaid_npi_dev.org_kpis_v2",
+          "source_filter": "year=2024 AND in_bhpf=TRUE"
+        }
+      }
+    }
+  },
+
+  "narrative_anchors": [
+    {
+      "id": "fte_excess",
+      "value": 345,
+      "unit": "FTE",
+      "source_cut": "blocks.admin_overhead.cuts.bhpf__all.fte_excess",
+      "definition": "Excess admin FTE across 34 BHPF members vs APQC $1B+ benchmark."
+    },
+    {
+      "id": "annual_overhead",
+      "value": 66,
+      "unit": "M",
+      "source_cut": "blocks.admin_overhead.cuts.bhpf__all.annual_overhead_m",
+      "definition": "Total annual admin overspend vs $1B+ benchmark — pure overhead, not management failure."
+    },
+    {
+      "id": "scale_dividend",
+      "value": 37,
+      "unit": "M",
+      "source_cut": "blocks.admin_overhead.cuts.bhpf__all.scale_dividend_m",
+      "definition": "Recoverable from scale alone (consolidating 34 separate back-offices)."
+    },
+    {
+      "id": "ai_dividend",
+      "value": 29,
+      "unit": "M",
+      "source_cut": "blocks.admin_overhead.cuts.bhpf__all.ai_dividend_m",
+      "definition": "Recoverable on top of scale by layering AI (denial engine, AR automation, intake routing)."
+    },
+    {
+      "id": "vendor_validation_size",
+      "value": 500,
+      "unit": "M",
+      "source_cut": "blocks.vendor_pricing.cuts.vendor__validation_size_m.value",
+      "definition": "Org revenue size at which a vendor's standard 2:1 ROI math is validated."
+    },
+    {
+      "id": "bhpf_avg_org_revenue",
+      "value": 32,
+      "unit": "M",
+      "source_cut": "blocks.vendor_pricing.cuts.bhpf__avg_org_revenue_m.value",
+      "definition": "Average BHPF member org revenue in 2024."
+    },
+    {
+      "id": "fixed_cost_low",
+      "value": 50,
+      "unit": "%",
+      "source_cut": "blocks.vendor_pricing.cuts.fixed_cost_consumption_low_pct.value",
+      "definition": "Low end of fixed sales+integration cost as share of deal value at $32M org size."
+    },
+    {
+      "id": "fixed_cost_high",
+      "value": 68,
+      "unit": "%",
+      "source_cut": "blocks.vendor_pricing.cuts.fixed_cost_consumption_high_pct.value",
+      "definition": "High end of fixed sales+integration cost as share of deal value at $32M org size."
+    },
+    {
+      "id": "combined_revenue",
+      "value": 1.1,
+      "unit": "B",
+      "source_cut": "blocks.network_scale.cuts.bhpf__all.combined_revenue_b",
+      "definition": "Combined Medicaid revenue across all 34 BHPF member orgs in 2024."
+    },
+    {
+      "id": "n_orgs",
+      "value": 34,
+      "unit": "count",
+      "source_cut": "blocks.network_scale.cuts.bhpf__all.n_orgs",
+      "definition": "Count of CMHC member organizations in the BHPF network."
+    }
+  ],
+
+  "_meta": {
+    "module_id": "admin-s5",
+    "schema_version": 1,
+    "as_of": "2026-05-01",
+    "source_job": "manual extract from story.html inline admin-s5 panels"
+  }
+}

@@ -1,0 +1,100 @@
+/*
+  admin-s5 — Act II conclusion. Dark closing-themes treatment with
+  4-panel grid and stagger-in animation. Lifted from the inline
+  .adm-s5c-* classes in story.html and renamed .admin-s5-* to scope
+  per the slide-module convention.
+*/
+
+.admin-s5-shell {
+  background: #111;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2.5rem 1.5rem;
+  box-sizing: border-box;
+  gap: 1.25rem;
+}
+
+.admin-s5-eyebrow {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #4B5563;
+}
+
+.admin-s5-title {
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.admin-s5-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .875rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.admin-s5-panel {
+  background: #1A1A1A;
+  border: 1px solid #222;
+  border-left: 3px solid var(--s5-accent, #4B5563);
+  border-radius: 12px;
+  padding: 1.6rem 1.4rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .55s cubic-bezier(.22, 1, .36, 1),
+              transform .55s cubic-bezier(.22, 1, .36, 1);
+}
+
+.admin-s5-panel.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.admin-s5-num {
+  font-family: var(--mono);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #4B5563;
+}
+
+.admin-s5-head {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #F9FAFB;
+  line-height: 1.3;
+  margin-bottom: .5rem;
+}
+
+.admin-s5-body {
+  font-size: .78rem;
+  color: #9CA3AF;
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+.admin-s5-strip {
+  background: #1A1A1A;
+  border-top: 1px solid #222;
+  border-radius: 8px;
+  padding: .75rem 1rem;
+  font-size: .72rem;
+  color: #6B7280;
+  line-height: 1.55;
+  flex-shrink: 0;
+}
+
+.admin-s5-strip strong {
+  color: #9CA3AF;
+}
