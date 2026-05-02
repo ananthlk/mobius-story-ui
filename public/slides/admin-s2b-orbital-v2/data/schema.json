@@ -1,0 +1,5 @@
+{
+  "blocks": {
+    "orbital_8gates": {"description": "8 RCM gates × 4 vendors. See RCM8_GATES in story.html for current shape.", "kind": "scorecard"}
+  }
+}

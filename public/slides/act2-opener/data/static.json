@@ -1,0 +1,16 @@
+{
+  "blocks": {
+    "four_questions": {
+      "label": "CFO outcome metrics referenced in question 2",
+      "cuts": {
+        "bhpf__all": {"ar_days": 44, "denial_rate_pct": 18, "calls_per_fte_per_day": 30}
+      }
+    }
+  },
+  "narrative_anchors": [
+    {"id": "ar_days", "value": 44, "unit": "days", "source_cut": "blocks.four_questions.cuts.bhpf__all.ar_days", "definition": "BHPF median days in AR (CFO Survey 2025)."},
+    {"id": "denial_rate", "value": 18, "unit": "%", "source_cut": "blocks.four_questions.cuts.bhpf__all.denial_rate_pct", "definition": "BHPF initial-claim denial rate (ADS/SimiTree BH 2026 + CFO Survey)."},
+    {"id": "calls_per_fte", "value": 30, "unit": "calls/FTE/day", "source_cut": "blocks.four_questions.cuts.bhpf__all.calls_per_fte_per_day", "definition": "Calls per IT/IS FTE per day (CFO Survey 2025)."}
+  ],
+  "_meta": {"module_id": "act2-opener", "schema_version": 1, "as_of": "2026-05-02"}
+}

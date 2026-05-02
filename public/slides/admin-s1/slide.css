@@ -1,0 +1,67 @@
+/*
+  admin-s1 — diagnosis slide. Uses global .adm-* classes for shell
+  + adds .admin-s1-card-* for the 4 outcome cards.
+*/
+.admin-s1-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: .625rem .75rem;
+  border: 1px solid rgba(0,0,0,.07);
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  cursor: pointer;
+  min-height: 0;
+  transition: background .15s ease, border-color .15s ease;
+}
+.admin-s1-card:hover {
+  background: #FAFAF8;
+  border-color: rgba(0,0,0,.12);
+}
+.admin-s1-card-eyebrow {
+  font-size: .6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: #A09D98;
+}
+.admin-s1-card-desc {
+  font-size: .67rem;
+  color: #6B6860;
+  line-height: 1.35;
+}
+.admin-s1-card-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: .2rem;
+}
+.admin-s1-card-stat-bad {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #DC2626;
+}
+.admin-s1-card-stat-good {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #16A34A;
+}
+.admin-s1-card-labels {
+  display: flex;
+  justify-content: space-between;
+}
+.admin-s1-card-bad {
+  font-size: .6rem;
+  color: #991B1B;
+  font-weight: 600;
+}
+.admin-s1-card-good {
+  font-size: .6rem;
+  color: #16A34A;
+  font-weight: 600;
+}
+.admin-s1-card-note {
+  font-size: .6rem;
+  color: #A09D98;
+  margin-top: .1rem;
+}

@@ -1,0 +1,52 @@
+{
+  "blocks": {
+    "footprint": {
+      "label": "BHPF combined footprint (2024)",
+      "cuts": {
+        "bhpf__all": {
+          "combined_revenue_b": 1.1,
+          "n_orgs": 34,
+          "total_staff": 11700,
+          "patients_served_k": 310,
+          "source_table": "landing_medicaid_npi_dev.org_kpis_v2"
+        }
+      }
+    },
+    "metric_evidence": {
+      "label": "Today (fragmented) vs at network-scale per metric",
+      "cuts": {
+        "calls_per_fte": {"today": 107, "at_scale": 145, "delta_pct": 35},
+        "denial_rate": {"today_pct": 18, "benchmark_pct": 5.7, "delta_pct": -68},
+        "ar_days": {"today": 84, "benchmark": 34, "freed_cash_m": 140},
+        "admin_pct_revenue": {"today_pct": 11.7, "top_quartile_pct": 8.0, "delta_pp": -3.7, "savings_m": 41}
+      }
+    },
+    "fn_consolidation": {
+      "label": "Per-function consolidation: today FTE → CoE FTE, savings",
+      "cuts": {
+        "it_is":      {"today_fte": 217, "coe_fte": 85,  "reduction_fte": 132, "now": "3.4% of revenue", "target": "2.7% benchmark", "savings_m": 7},
+        "call_center":{"today_fte": 162, "coe_fte": 110, "reduction_fte": 52,  "now": "107 calls/FTE",   "target": "145+ calls/FTE", "savings_m": 4},
+        "billing_rcm":{"today_fte": 226, "coe_fte": 95,  "reduction_fte": 131, "now": "18% denial rate", "target": "5.7% target",    "savings_m": 14},
+        "hr_payroll": {"today_fte": 223, "coe_fte": 90,  "reduction_fte": 133, "now": "26% turnover",    "target": "16% target",    "savings_m": 4}
+      }
+    },
+    "ai_coe_total": {
+      "label": "Total CoE savings",
+      "cuts": {
+        "total":          {"savings_m": 66},
+        "scale_dividend": {"savings_m": 37},
+        "ai_dividend":    {"savings_m": 29}
+      }
+    }
+  },
+  "narrative_anchors": [
+    {"id": "combined_revenue", "value": 1.1, "unit": "B", "source_cut": "blocks.footprint.cuts.bhpf__all.combined_revenue_b", "definition": "BHPF combined revenue."},
+    {"id": "n_orgs", "value": 34, "unit": "count", "source_cut": "blocks.footprint.cuts.bhpf__all.n_orgs", "definition": "BHPF member count."},
+    {"id": "total_staff", "value": "11,700+", "unit": "", "source_cut": "blocks.footprint.cuts.bhpf__all.total_staff", "definition": "BHPF total staff."},
+    {"id": "patients_served", "value": "310K", "unit": "", "source_cut": "blocks.footprint.cuts.bhpf__all.patients_served_k", "definition": "BHPF patients served."},
+    {"id": "coe_total", "value": 66, "unit": "M", "source_cut": "blocks.ai_coe_total.cuts.total.savings_m", "definition": "Total AI CoE admin savings."},
+    {"id": "scale_dividend", "value": 37, "unit": "M", "source_cut": "blocks.ai_coe_total.cuts.scale_dividend.savings_m", "definition": "Scale-only dividend (consolidation)."},
+    {"id": "ai_dividend", "value": 29, "unit": "M", "source_cut": "blocks.ai_coe_total.cuts.ai_dividend.savings_m", "definition": "AI dividend on top of scale."}
+  ],
+  "_meta": {"module_id": "admin-s4", "schema_version": 1, "as_of": "2026-05-02"}
+}

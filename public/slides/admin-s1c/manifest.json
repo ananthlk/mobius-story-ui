@@ -1,0 +1,18 @@
+{
+  "module_id": "admin-s1c",
+  "kind": "slide",
+  "slug": "admin-s1c",
+  "title": "02 — the pricing trap",
+  "act": "II",
+  "sequence": 17,
+  "chapter": "Act II — Pricing trap",
+  "tags": ["pricing", "vendor", "ROI-curve", "deal-economics"],
+  "blocks": [
+    {"id": "roi_curve", "label": "Client ROI vs org revenue (10 dots, log-scale)", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "Per-tier vendor deal economics: AAR fee, implementation cost, vendor margin, client ROI verdict."}
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": ["admin-s2b-orbital-v2", "admin-s4", "admin-s5"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1}
+}

@@ -1,0 +1,2 @@
+/* admin-s1c uses globals (.adm-*, .adm-curve-*, .adm-cp-*) and SVG with id admCurveSvg.
+   Render JS lives in story.html as buildAdmCurve / admCurveClick. */

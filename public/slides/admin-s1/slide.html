@@ -1,0 +1,78 @@
+<div class="slide" data-id="admin-s1" style="height:100%;overflow:hidden">
+  <div class="adm-slide" style="padding-top:1.25rem;padding-bottom:1.25rem;gap:.75rem">
+    <div class="adm-eyebrow">01 — the diagnosis</div>
+    <div class="adm-title" style="font-size:clamp(1.15rem,2vw,1.6rem);margin-bottom:0">Over-invested. Worse outcomes.</div>
+    <div class="adm-lead" style="font-size:.78rem;line-height:1.45;margin-bottom:0;max-width:90ch">A $15M BHPF member and a $15M PCP practice look identical on staffing benchmarks — same FTE per department, same admin share. But outcomes are in different universes. The BHPF member is spending <em>more</em> and getting less, because 34 separate back-offices can't share intelligence, can't pool payer patterns, and can't negotiate from scale.</div>
+
+    <div style="flex:1;min-height:120px;max-height:160px;margin-top:2rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:.25rem">
+        <span style="font-size:.6rem;font-weight:600;color:#A09D98;text-transform:uppercase;letter-spacing:.07em">Avg FTE per org</span>
+        <div style="display:flex;align-items:center;gap:.3rem"><span style="width:8px;height:8px;border-radius:2px;background:#BA7517;flex-shrink:0"></span><span style="font-size:.62rem;color:#6B6860">BHPF</span></div>
+        <div style="display:flex;align-items:center;gap:.3rem"><span style="width:8px;height:8px;border-radius:2px;background:#1D9E75;flex-shrink:0"></span><span style="font-size:.62rem;color:#6B6860">PCP benchmark</span></div>
+      </div>
+      <div style="flex:1;position:relative;min-height:80px">
+        <canvas data-canvas="fte-bhpf-vs-pcp" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;flex:0 0 auto;margin-top:1rem">
+
+      <div class="admin-s1-card" data-block="ar_days" onclick="drillIn('adm-card-ar','What is BHPF's median days in AR, how does it compare to the MGMA benchmark, and what drives the gap?')">
+        <div class="admin-s1-card-eyebrow">Finance · days in AR ↗</div>
+        <div class="admin-s1-card-desc">How long before a claim becomes cash.</div>
+        <div class="admin-s1-card-row">
+          <span class="admin-s1-card-stat-bad" data-anchor="ar_bhpf">—</span>
+          <span class="admin-s1-card-stat-good" data-anchor="ar_benchmark">—</span>
+        </div>
+        <div class="admin-s1-card-labels">
+          <span class="admin-s1-card-bad">BHPF median</span>
+          <span class="admin-s1-card-good">MGMA</span>
+        </div>
+        <div class="admin-s1-card-note">+57% longer · ~$4–6M working capital locked</div>
+      </div>
+
+      <div class="admin-s1-card" data-block="calls_per_fte" onclick="drillIn('adm-card-it','What are BHPF call center calls per FTE/day, why does it vary so much by org size, and what does the benchmark look like?')">
+        <div class="admin-s1-card-eyebrow">IT / IS · calls per FTE/day ↗</div>
+        <div class="admin-s1-card-desc">Intake + support handled without specialisation.</div>
+        <div class="admin-s1-card-row">
+          <span class="admin-s1-card-stat-bad" data-anchor="calls_bhpf">—</span>
+          <span class="admin-s1-card-stat-good" data-anchor="calls_benchmark">—</span>
+        </div>
+        <div class="admin-s1-card-labels">
+          <span class="admin-s1-card-bad">BHPF avg</span>
+          <span class="admin-s1-card-good">Benchmark</span>
+        </div>
+        <div class="admin-s1-card-note">Small orgs avg 34/day — 4.7× below benchmark</div>
+      </div>
+
+      <div class="admin-s1-card" data-block="denial_rate" onclick="drillIn('adm-card-denial','What is BHPF's denial rate, how does 18% compare to the 5.7% benchmark, and what causes the gap?')">
+        <div class="admin-s1-card-eyebrow">Billing / RCM · denial rate ↗</div>
+        <div class="admin-s1-card-desc">No shared payer intelligence — patterns never pool across orgs.</div>
+        <div class="admin-s1-card-row">
+          <span class="admin-s1-card-stat-bad" data-anchor="denial_bhpf">—</span>
+          <span class="admin-s1-card-stat-good" data-anchor="denial_benchmark">—</span>
+        </div>
+        <div class="admin-s1-card-labels">
+          <span class="admin-s1-card-bad">BHPF avg</span>
+          <span class="admin-s1-card-good">ADS/SimiTree</span>
+        </div>
+        <div class="admin-s1-card-note">3× benchmark · ~$8–12M/yr in lost collections</div>
+      </div>
+
+      <div class="admin-s1-card" data-block="turnover" onclick="drillIn('adm-card-turnover','What is BHPF's HR turnover rate, how does 34% compare to health system benchmarks, and what is the revenue cost of each departure?')">
+        <div class="admin-s1-card-eyebrow">HR + Payroll · turnover ↗</div>
+        <div class="admin-s1-card-desc">Small HR teams can't run retention or structured onboarding.</div>
+        <div class="admin-s1-card-row">
+          <span class="admin-s1-card-stat-bad" data-anchor="turnover_bhpf">—</span>
+          <span class="admin-s1-card-stat-good" data-anchor="turnover_benchmark">—</span>
+        </div>
+        <div class="admin-s1-card-labels">
+          <span class="admin-s1-card-bad">BH sector avg</span>
+          <span class="admin-s1-card-good">Health systems</span>
+        </div>
+        <div class="admin-s1-card-note">~$6–8K replacement cost per role</div>
+      </div>
+
+    </div>
+  </div>
+</div>

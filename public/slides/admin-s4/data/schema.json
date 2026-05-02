@@ -1,0 +1,6 @@
+{"blocks": {
+  "footprint": {"description": "BHPF combined footprint.", "kind": "kpi"},
+  "metric_evidence": {"description": "Today vs network-scale per metric.", "kind": "comparison"},
+  "fn_consolidation": {"description": "Per-function FTE today → CoE.", "kind": "breakdown"},
+  "ai_coe_total": {"description": "Total CoE savings split into scale + AI dividends.", "kind": "kpi"}
+}}

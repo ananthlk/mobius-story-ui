@@ -1,0 +1,18 @@
+{
+  "module_id": "admin-s2b-score",
+  "kind": "slide",
+  "slug": "admin-s2b-score",
+  "title": "Where every platform falls short.",
+  "act": "II",
+  "sequence": 16,
+  "chapter": "Act II — Platform Intelligence (scorecard)",
+  "tags": ["platform", "scorecard", "vendors", "RCM"],
+  "blocks": [
+    {"id": "scorecard_table", "label": "8-gate × 4-vendor flat scorecard table", "data_mode": "live", "endpoint": "window.RCM8_GATES (global)", "chat_context": true, "chat_scope": "Per-gate per-vendor scores; total per vendor; sources."}
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": ["admin-s2b-orbital-v2", "admin-s4"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1}
+}

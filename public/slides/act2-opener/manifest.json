@@ -1,0 +1,18 @@
+{
+  "module_id": "act2-opener",
+  "kind": "slide",
+  "slug": "act2-opener",
+  "title": "Four CFO questions",
+  "act": "II",
+  "sequence": 12,
+  "chapter": "Act II — Administrative Infrastructure",
+  "tags": ["framing", "CFO", "questions"],
+  "blocks": [
+    {"id": "four_questions", "label": "The four CFO questions Act II answers", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "Each of the four CFO questions, what data answers it, and which slide carries the answer."}
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": ["admin-overview", "admin-s1", "admin-s4", "admin-s5"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1}
+}

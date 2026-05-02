@@ -1,0 +1,14 @@
+{
+  "blocks": {
+    "four_questions": {
+      "description": "BHPF outcome metrics quoted in CFO Question 2.",
+      "kind": "kpi",
+      "cut_keys": {"bhpf": "BHPF network", "all": "no further filter"},
+      "fields": {
+        "ar_days": {"type": "number", "unit": "days", "description": "Median days from billed claim to cash."},
+        "denial_rate_pct": {"type": "number", "unit": "%", "description": "Initial-claim denial rate."},
+        "calls_per_fte_per_day": {"type": "number", "unit": "calls/FTE/day", "description": "Average IT/IS support calls handled per FTE per day."}
+      }
+    }
+  }
+}

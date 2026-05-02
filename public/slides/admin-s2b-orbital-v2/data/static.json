@@ -1,0 +1,16 @@
+{
+  "_comment": "8-gate orbital data still lives in story.html as a JS constant (RCM8_GATES). Once that constant moves into this module, populate blocks here.",
+  "blocks": {
+    "orbital_8gates": {
+      "label": "Per-gate score per platform",
+      "cuts": {
+        "_note": {"value": "See window.RCM8_GATES in story.html until JS port lands."}
+      }
+    }
+  },
+  "narrative_anchors": [
+    {"id": "n_gates", "value": 8, "unit": "count", "source_cut": "blocks.orbital_8gates", "definition": "RCM gates evaluated."},
+    {"id": "n_vendors", "value": 4, "unit": "count", "source_cut": "blocks.orbital_8gates", "definition": "Vendors scored: Netsmart, Welligent, Qualifacts, Athena."}
+  ],
+  "_meta": {"module_id": "admin-s2b-orbital-v2", "schema_version": 1, "as_of": "2026-05-02"}
+}

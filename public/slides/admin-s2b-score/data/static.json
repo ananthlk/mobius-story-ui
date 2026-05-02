@@ -1,0 +1,8 @@
+{
+  "blocks": {"scorecard_table": {"label": "Gates × vendor totals (live source: window.RCM8_GATES)", "cuts": {}}},
+  "narrative_anchors": [
+    {"id": "n_gates", "value": 8, "unit": "count", "source_cut": "blocks.scorecard_table", "definition": "Gates assessed."},
+    {"id": "n_vendors", "value": 4, "unit": "count", "source_cut": "blocks.scorecard_table", "definition": "Vendors assessed."}
+  ],
+  "_meta": {"module_id": "admin-s2b-score", "schema_version": 1, "as_of": "2026-05-02"}
+}

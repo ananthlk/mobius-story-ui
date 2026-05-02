@@ -1,0 +1,35 @@
+{
+  "blocks": {
+    "fte_vs_pcp": {
+      "label": "Avg FTE per org by department — BHPF vs PCP benchmark",
+      "cuts": {
+        "bhpf__mid": {"finance": 5.2, "it": 4.8, "billing": 5.5, "hr": 3.4, "source": "CFO Survey 2025, mid tier"},
+        "pcp__benchmark": {"finance": 2.2, "it": 1.8, "billing": 2.5, "hr": 1.1, "source": "MGMA 2024 PCP benchmark"}
+      }
+    },
+    "outcomes": {
+      "label": "Four outcome metrics — BHPF vs benchmarks",
+      "cuts": {
+        "bhpf__ar": {"days": 44, "source": "CFO Survey 2025 median"},
+        "mgma__ar": {"days": 28, "source": "MGMA 2024"},
+        "bhpf__calls": {"per_fte_per_day": 107, "source": "CFO Survey 2025"},
+        "benchmark__calls": {"per_fte_per_day": 160, "source": "industry calls/FTE benchmark"},
+        "bhpf__denial": {"pct": 18, "source": "CFO Survey 2025"},
+        "ads__denial": {"pct": 5.7, "source": "ADS/SimiTree BH 2026"},
+        "bh_sector__turnover": {"pct": 34, "source": "NSI 2024 BH sector"},
+        "health_systems__turnover": {"pct": 18, "source": "Health-system sector benchmark"}
+      }
+    }
+  },
+  "narrative_anchors": [
+    {"id": "ar_bhpf", "value": 44, "unit": "days", "source_cut": "blocks.outcomes.cuts.bhpf__ar.days", "definition": "BHPF median days in AR."},
+    {"id": "ar_benchmark", "value": 28, "unit": "days", "source_cut": "blocks.outcomes.cuts.mgma__ar.days", "definition": "MGMA 2024 days-in-AR benchmark."},
+    {"id": "calls_bhpf", "value": 107, "unit": "calls/FTE/day", "source_cut": "blocks.outcomes.cuts.bhpf__calls.per_fte_per_day", "definition": "BHPF avg calls per IT/IS FTE per day."},
+    {"id": "calls_benchmark", "value": 160, "unit": "calls/FTE/day", "source_cut": "blocks.outcomes.cuts.benchmark__calls.per_fte_per_day", "definition": "Industry benchmark calls per FTE per day."},
+    {"id": "denial_bhpf", "value": 18, "unit": "%", "source_cut": "blocks.outcomes.cuts.bhpf__denial.pct", "definition": "BHPF initial-claim denial rate."},
+    {"id": "denial_benchmark", "value": 5.7, "unit": "%", "source_cut": "blocks.outcomes.cuts.ads__denial.pct", "definition": "ADS/SimiTree BH denial-rate benchmark."},
+    {"id": "turnover_bhpf", "value": 34, "unit": "%", "source_cut": "blocks.outcomes.cuts.bh_sector__turnover.pct", "definition": "BH sector turnover rate."},
+    {"id": "turnover_benchmark", "value": 18, "unit": "%", "source_cut": "blocks.outcomes.cuts.health_systems__turnover.pct", "definition": "Health-system turnover benchmark."}
+  ],
+  "_meta": {"module_id": "admin-s1", "schema_version": 1, "as_of": "2026-05-02"}
+}
