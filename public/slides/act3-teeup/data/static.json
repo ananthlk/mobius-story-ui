@@ -1,0 +1,10 @@
+{
+  "_comment": "Cold-start fallback for act3-teeup.",
+  "blocks": {},
+  "narrative_anchors": [],
+  "_meta": {
+    "module_id": "act3-teeup",
+    "schema_version": 1,
+    "as_of": "2026-05-02"
+  }
+}

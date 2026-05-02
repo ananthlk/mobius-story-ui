@@ -1,0 +1,39 @@
+{
+  "module_id": "act3-teeup",
+  "kind": "slide",
+  "slug": "act3-teeup",
+  "title": "Three approaches. One question.",
+  "act": "III",
+  "sequence": 21,
+  "chapter": "Act III \u2014 Three engagement tiers",
+  "tags": [
+    "tiers",
+    "A",
+    "B",
+    "C",
+    "engagement"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "Three approaches. One question.",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Total identified network opportunity $144M\u2013$217M across the 4-bucket gap. Three tiers (A: $5\u201320M point solutions, B: $20\u201360M network intelligence, C: $50\u2013150M virtual network) \u2014 each builds on the last."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "act3-evo-map",
+    "act4-opportunity",
+    "act5-approach",
+    "discussion"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

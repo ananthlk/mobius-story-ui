@@ -1,0 +1,38 @@
+{
+  "module_id": "act3-evo-map",
+  "kind": "slide",
+  "slug": "act3-evo-map",
+  "title": "Three unlocks",
+  "act": "III",
+  "sequence": 22,
+  "chapter": "Act III \u2014 Tier A/B/C deep dive",
+  "tags": [
+    "tiers",
+    "A",
+    "B",
+    "C",
+    "unlocks"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "Three unlocks",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Per-tier deep dive: standalone tools (A), network intelligence (B), virtual network (C). Each tier unlocks different value at a different governance threshold."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "act3-teeup",
+    "act4-opportunity",
+    "act5-approach"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}
