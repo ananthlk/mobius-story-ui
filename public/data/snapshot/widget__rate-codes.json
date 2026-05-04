@@ -22,7 +22,7 @@
       "rate_ratio": 0.921,
       "annual_gap": 2741220.0,
       "cmhc_claims": 300996,
-      "cmhc_paid": 32164078.170000013
+      "cmhc_paid": 32164078.17000001
     },
     {
       "hcpcs_code": "T1017",
@@ -33,7 +33,7 @@
       "rate_ratio": 0.893,
       "annual_gap": 2449147.0,
       "cmhc_claims": 353036,
-      "cmhc_paid": 20460597.950000007
+      "cmhc_paid": 20460597.950000003
     },
     {
       "hcpcs_code": "H0031",
@@ -44,7 +44,7 @@
       "rate_ratio": 0.663,
       "annual_gap": 1524815.0,
       "cmhc_claims": 81148,
-      "cmhc_paid": 3003003.43
+      "cmhc_paid": 3003003.430000001
     },
     {
       "hcpcs_code": "H0032",
@@ -55,7 +55,7 @@
       "rate_ratio": 0.948,
       "annual_gap": 257935.0,
       "cmhc_claims": 77027,
-      "cmhc_paid": 4745000.090000001
+      "cmhc_paid": 4745000.09
     },
     {
       "hcpcs_code": "90837",
@@ -110,7 +110,7 @@
       "rate_ratio": 0.591,
       "annual_gap": 31258.0,
       "cmhc_claims": 2952,
-      "cmhc_paid": 45215.340000000004
+      "cmhc_paid": 45215.34
     }
   ]
 }
