@@ -1,0 +1,41 @@
+{
+  "module_id": "ch2-evolution",
+  "kind": "slide",
+  "slug": "ch2-evolution",
+  "title": "FL BH market evolution \u00b7 2019\u20132024",
+  "act": "I",
+  "sequence": 7,
+  "chapter": "Act I \u2014 Market evolution radial",
+  "tags": [
+    "evolution",
+    "radial",
+    "2019-2024",
+    "provider-types"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "FL BH market evolution \u00b7 2019\u20132024",
+      "data_mode": "live",
+      "endpoint": "/proxy/skills/story/fact-pack",
+      "chat_context": true,
+      "chat_scope": "Each provider type shifted differently across 6 axes between 2019 and 2024. CMHCs declined on share + rate; new entrants gained on all six."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [
+    "story_fact_pack"
+  ],
+  "cross_slide_links": [
+    "ch1-profile",
+    "ch-finale",
+    "ch2-left-behind",
+    "act4-opportunity"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1,
+    "note": "Markup is verbatim from story.html. Interactive logic (renderEvoSlide, layoutEvoRadial, renderFinaleHeatMap, renderLeftBehindCascade) lives in story.html globals."
+  }
+}

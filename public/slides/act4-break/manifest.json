@@ -1,0 +1,25 @@
+{
+  "module_id": "act4-break",
+  "kind": "slide",
+  "slug": "act4-break",
+  "title": "Three acts of evidence. One number.",
+  "act": "IV",
+  "sequence": 26,
+  "chapter": "Act IV opener",
+  "tags": [
+    "act-break",
+    "total-opportunity"
+  ],
+  "blocks": [],
+  "chat_context": false,
+  "system_prompt_file": null,
+  "skills_available": [],
+  "cross_slide_links": [
+    "act4-opportunity",
+    "act5-approach"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

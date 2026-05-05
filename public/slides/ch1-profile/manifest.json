@@ -1,0 +1,11 @@
+{
+  "module_id":"ch1-profile","kind":"slide","slug":"ch1-profile","title":"The pre-COVID picture · 2019","act":"I","sequence":5,
+  "chapter":"Act I — Pre-COVID baseline","tags":["radial","baseline","2019","BHPF","FBHA","new-entrants"],
+  "blocks":[
+    {"id":"radial_six_nodes","label":"6 radial nodes: market, lives, service, lookalike, rate, churn","data_mode":"live","endpoint":"/proxy/skills/story/fact-pack?scope={entity}","chat_context":true,"chat_scope":"Per-entity 2019 baseline values for each of the 6 nodes."},
+    {"id":"profile_summary","label":"LLM-generated key takeaway","data_mode":"live","endpoint":"/proxy/skills/story/profile/summary/stream?entity={entity}","chat_context":false}
+  ],
+  "chat_context":true,"system_prompt_file":"system_prompt.md","skills_available":["story_fact_pack","profile_summary"],
+  "cross_slide_links":["ch1-backbone","ch2-evolution","ch-finale","ch2-left-behind"],
+  "_meta":{"authored_with":"slides/_template","schema_version":1,"note":"Interactive logic (setEntity, setProfileFilter, layoutRadial, drillIn, populateProfileLLM, renderProfile, showOrgList) lives in story.html globals. Markup modularized; full JS port deferred."}
+}

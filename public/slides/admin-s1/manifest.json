@@ -1,0 +1,22 @@
+{
+  "module_id": "admin-s1",
+  "kind": "slide",
+  "slug": "admin-s1",
+  "title": "Over-invested. Worse outcomes.",
+  "act": "II",
+  "sequence": 14,
+  "chapter": "Act II — The Diagnosis",
+  "tags": ["admin", "diagnosis", "outcomes", "AR-days", "denial-rate", "turnover"],
+  "blocks": [
+    {"id": "fte_vs_pcp", "label": "BHPF FTE per dept vs PCP benchmark (chart)", "data_mode": "static", "static_source": "data/static.json", "chat_context": false},
+    {"id": "ar_days", "label": "Finance · Days in AR (44 vs 28)", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "BHPF AR days, MGMA benchmark, gap drivers, working capital cost."},
+    {"id": "calls_per_fte", "label": "IT/IS · Calls per FTE/day (107 vs 160)", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "Why calls/FTE varies by org size; small-org load (34/day)."},
+    {"id": "denial_rate", "label": "Billing/RCM · Denial rate (18% vs 5.7%)", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "BHPF denial rate vs ADS/SimiTree benchmark, lost collections estimate."},
+    {"id": "turnover", "label": "HR · Turnover (34% vs 18%)", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "BH sector turnover, health-system benchmark, replacement cost."}
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": ["cfo_admin_benchmarks"],
+  "cross_slide_links": ["admin-overview", "admin-s4", "admin-s5", "act4-opportunity"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1}
+}

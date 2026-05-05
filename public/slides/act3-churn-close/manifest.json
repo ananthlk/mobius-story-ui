@@ -1,0 +1,36 @@
+{
+  "module_id": "act3-churn-close",
+  "kind": "slide",
+  "slug": "act3-churn-close",
+  "title": "Why churn is a structural cost",
+  "act": "III",
+  "sequence": 25,
+  "chapter": "Act III closer \u2014 churn cost establishes",
+  "tags": [
+    "churn",
+    "closer",
+    "cost"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "Why churn is a structural cost",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Closes the churn act with the per-departure cost math (replacement, blackout, lost panel) and the role of shared credentialing."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "act3-churn-break",
+    "act4-opportunity",
+    "admin-s4"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

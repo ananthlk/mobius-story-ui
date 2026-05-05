@@ -1,0 +1,25 @@
+{
+  "module_id": "act3-mobius-thesis",
+  "kind": "slide",
+  "slug": "act3-mobius-thesis",
+  "title": "The problem is structural. So is the fix.",
+  "act": "III",
+  "sequence": 20,
+  "chapter": "Act III \u2014 Mobius thesis bridge",
+  "tags": [
+    "thesis",
+    "transition"
+  ],
+  "blocks": [],
+  "chat_context": false,
+  "system_prompt_file": null,
+  "skills_available": [],
+  "cross_slide_links": [
+    "act3-teeup",
+    "act4-opportunity"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "module_id": "act5-break",
+  "kind": "slide",
+  "slug": "act5-break",
+  "title": "$144M identified.",
+  "act": "V",
+  "sequence": 28,
+  "chapter": "Act V opener",
+  "tags": [
+    "act-break",
+    "144M",
+    "phasing"
+  ],
+  "blocks": [],
+  "chat_context": false,
+  "system_prompt_file": null,
+  "skills_available": [],
+  "cross_slide_links": [
+    "act5-approach",
+    "act4-opportunity"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

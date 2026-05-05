@@ -1,0 +1,9 @@
+{
+  "module_id":"ch1-backbone","kind":"slide","slug":"ch1-backbone","title":"The backbone","act":"I","sequence":4,
+  "chapter":"Act I — Why CMHCs matter","tags":["intro","CMHC","backbone","framing"],
+  "blocks":[
+    {"id":"three_blocks","label":"Who you serve / Medicaid economics / What you prevent","data_mode":"static","static_source":"data/static.json","chat_context":true,"chat_scope":"1-in-4 Medicaid BH patients, 42¢ relative reimbursement, 8–12× cost-of-crisis."}
+  ],
+  "chat_context":true,"system_prompt_file":"system_prompt.md","skills_available":[],"cross_slide_links":["ch1-profile","ch2-evolution","ch-finale"],
+  "_meta":{"authored_with":"slides/_template","schema_version":1}
+}

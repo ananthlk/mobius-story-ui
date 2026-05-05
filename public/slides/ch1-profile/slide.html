@@ -1,0 +1,121 @@
+<div class="slide" data-id="ch1-profile" style="background:var(--bg);display:flex;flex-direction:column;height:100%;overflow:hidden">
+      
+              <!-- HEADER + FILTERS -->
+              <div style="padding:12px 24px 0;flex-shrink:0;border-bottom:1px solid var(--rule);padding-bottom:10px">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                  <div>
+                    <div class="eyebrow" style="margin-bottom:2px">Chapter 1 — Pre-COVID baseline</div>
+                    <h1 class="s-title" style="margin-bottom:0;font-size:clamp(18px,2vw,28px)">The pre-COVID picture · 2019</h1>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                    <!-- Entity -->
+                    <div style="display:flex;align-items:center;gap:5px">
+                      <span class="pf-key">Entity</span>
+                      <div style="display:flex;gap:3px" id="entity-group">
+                        <button class="pf-pill active" data-entity="bhpf"      onclick="setEntity('bhpf')">BHPF</button>
+                        <button class="pf-pill"         data-entity="fbha"      onclick="setEntity('fbha')">FBHA</button>
+                        <button class="pf-pill"         data-entity="lookalike" onclick="setEntity('lookalike')">New entrants</button>
+                      </div>
+                    </div>
+                    <div style="width:1px;height:18px;background:var(--rule)"></div>
+                    <!-- View by -->
+                    <div style="display:flex;align-items:center;gap:5px">
+                      <span class="pf-key">View by</span>
+                      <div style="display:flex;gap:3px" id="profile-filter-group">
+                        <button class="pf-pill active" data-filter="all"     onclick="setProfileFilter('all')">All FL</button>
+                        <button class="pf-pill"        data-filter="msa"     onclick="setProfileFilter('msa')">MSA</button>
+                        <button class="pf-pill"        data-filter="service" onclick="setProfileFilter('service')">Service line</button>
+                      </div>
+                      <select id="profile-filter-select" style="display:none;font-size:11px;padding:3px 8px;border:1px solid var(--rule);border-radius:6px;background:#fff;color:var(--ink);font-family:var(--sans)" onchange="applyProfileFilter()"></select>
+                    </div>
+                    <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="profile-filter-label">BHPF · All FL · 2019</div>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- BODY: radial left + takeaway right -->
+              <div style="flex:1;display:grid;grid-template-columns:1fr 280px;overflow:hidden;min-height:0">
+      
+                <!-- RADIAL CANVAS -->
+                <div style="position:relative;overflow:hidden" id="backbone-canvas">
+                  <svg id="backbone-svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></svg>
+      
+                  <!-- CENTER HUB — fixed at 50/50 -->
+                  <div id="hub-center" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100px;height:100px;border-radius:50%;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 0 0 7px rgba(29,158,117,.15),0 4px 24px rgba(0,0,0,.22);z-index:2">
+                    <div style="font-family:var(--serif);font-size:16px;font-weight:700;color:#f8f7f4;line-height:1.1" id="hub-name">BHPF</div>
+                    <div id="hub-count" onclick="showOrgList(event,'hub')" style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2);margin-top:2px;font-family:var(--mono);cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px">24 orgs</div>
+                    <div style="font-size:8px;color:var(--ink3);margin-top:1px;font-family:var(--mono)">2019</div>
+                  </div>
+      
+                  <!-- ORG POPOVER -->
+                  <div id="org-popover" style="display:none;position:absolute;z-index:20;background:#fff;border:1px solid var(--rule);border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.14);padding:10px 12px;width:220px;max-height:240px;overflow-y:auto">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)" id="org-popover-label">Organizations</div>
+                      <button onclick="closeOrgPopover()" style="border:none;background:none;cursor:pointer;font-size:14px;color:var(--ink3);padding:0;line-height:1">×</button>
+                    </div>
+                    <div id="org-popover-list"></div>
+                  </div>
+      
+                  <!-- 6 NODES — uniform color, % positioned, no JS needed for placement -->
+                  <!-- top (12 o'clock) -->
+                  <div class="rad-node" id="rn-market" style="left:50%;top:17%" onclick="drillIn('rn-market','What was BHPF market share in 2019 and how did it compare across MSAs and service lines?')">
+                    <div class="rn-node-header"><div class="rn-label">Market share</div><span class="rn-pip" id="pip-market" title="estimated">●</span></div>
+                    <div class="rn-stat loading-stat" id="rn-market-stat"></div>
+                    <div class="rn-sub">of FL Medicaid BH revenue · 2019</div>
+                    <div class="rn-tooltip" id="rn-market-llm">…</div>
+                  </div>
+                  <!-- top-right (2 o'clock) -->
+                  <div class="rad-node" id="rn-benes" style="left:79%;top:30%" onclick="drillIn('rn-benes','How many Medicaid BH beneficiaries did BHPF serve in 2019 and how does that compare to other provider types?')">
+                    <div class="rn-node-header"><div class="rn-label">Lives touched</div><span class="rn-pip" id="pip-benes" title="estimated">●</span></div>
+                    <div class="rn-stat loading-stat" id="rn-benes-stat"></div>
+                    <div class="rn-sub">unique Medicaid BH beneficiaries · 2019</div>
+                    <div class="rn-tooltip" id="rn-benes-llm">…</div>
+                  </div>
+                  <!-- bottom-right (4 o'clock) -->
+                  <div class="rad-node" id="rn-service" style="left:79%;top:70%" onclick="drillIn('rn-service','What was BHPF\'s service mix ratio in 2019 — ongoing revenue relative to crisis, intake and ACT — and how did it compare across entity types?')">
+                    <div class="rn-node-header"><div class="rn-label">Service mix</div><span class="rn-pip" id="pip-service" title="estimated">●</span></div>
+                    <div class="rn-stat loading-stat" id="rn-service-stat"></div>
+                    <div class="rn-sub" id="rn-service-sub">ongoing per $1 of crisis · intake · ACT</div>
+                    <div class="rn-tooltip" id="rn-service-llm">…</div>
+                  </div>
+                  <!-- bottom (6 o'clock) -->
+                  <div class="rad-node" id="rn-lookalike" style="left:50%;top:83%" onclick="drillIn('rn-lookalike','Who were the new entrant providers active in 2019 and what service lines did they focus on?')">
+                    <div class="rn-node-header"><div class="rn-label">New entrants</div><span class="rn-pip" id="pip-lookalike" title="estimated">●</span></div>
+                    <div class="rn-stat loading-stat" id="rn-lookalike-stat"></div>
+                    <div class="rn-sub" id="rn-lookalike-sub">specialty BH orgs in FL · 2019</div>
+                    <div class="rn-tooltip" id="rn-lookalike-llm">…</div>
+                  </div>
+                  <!-- bottom-left (8 o'clock) -->
+                  <div class="rad-node" id="rn-rate" style="left:21%;top:70%" onclick="drillIn('rn-rate','What was BHPF\'s rate position on ongoing fee-schedule services in 2019 relative to the FL market, and which service lines showed the largest gaps?')">
+                    <div class="rn-node-header"><div class="rn-label">Rate position</div><span class="rn-pip" id="pip-rate" title="estimated">●</span></div>
+                    <div class="rn-stat loading-stat" id="rn-rate-stat"></div>
+                    <div class="rn-sub">revenue per beneficiary vs FL market · 2019</div>
+                    <div class="rn-tooltip" id="rn-rate-llm">…</div>
+                  </div>
+                  <!-- top-left (10 o'clock) -->
+                  <div class="rad-node" id="rn-churn" style="left:21%;top:30%" onclick="drillIn('rn-churn','How does BHPF Medicaid billing continuity compare to the FL BH market in 2019? Are BHPF clinicians more or less likely to keep billing Medicaid month after month compared to clinicians at new entrants and specialty practices?')">
+                    <div class="rn-node-header"><div class="rn-label">Panel commitment</div><span class="rn-pip" id="pip-churn" title="estimated">●</span></div>
+                    <div class="rn-stat loading-stat" id="rn-churn-stat"></div>
+                    <div class="rn-sub" id="rn-churn-sub">clinicians billing Medicaid continuously · vs market · 2019</div>
+                    <div class="rn-tooltip" id="rn-churn-llm">…</div>
+                  </div>
+                </div>
+      
+                <!-- RIGHT: key takeaway — no border, no panel, just text -->
+                <div style="padding:20px 24px 20px 20px;display:flex;flex-direction:column;justify-content:center;overflow:hidden">
+                  <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:10px">Key takeaway</div>
+                  <div id="profile-summary" style="font-family:var(--serif);font-size:15px;color:var(--ink);line-height:1.6;font-weight:300;border-left:3px solid var(--teal2);padding-left:14px">
+                    <span style="color:var(--ink4);font-style:italic;font-family:var(--sans);font-size:12px">Generating…</span>
+                  </div>
+                </div>
+      
+              </div><!-- end body grid -->
+      
+              <!-- FOOTNOTE -->
+              <div style="padding:3px 24px 5px;flex-shrink:0;border-top:1px solid var(--rule);display:flex;justify-content:space-between">
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS claims data 2018–2024 · Mobius analysis · <span id="profile-live-count">0 of 6</span> nodes live · click any node to explore</div>
+                <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="profile-filter-label2">BHPF · All FL · 2019</div>
+              </div>
+            </div>
+
+      

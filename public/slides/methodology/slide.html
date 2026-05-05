@@ -1,0 +1,81 @@
+<div class="slide" data-id="methodology" style="background:var(--bg);display:flex;flex-direction:column;height:100%;overflow:hidden;position:relative" onclick="methParadeAdvance()">
+      
+              <!-- ── Underlying reference grid (revealed after parade) ── -->
+              <div id="meth-grid-shell" style="display:flex;flex-direction:column;height:100%;opacity:0;pointer-events:none;transition:opacity .5s ease">
+      
+                <div style="padding:12px 24px 10px;flex-shrink:0;border-bottom:1px solid var(--rule)">
+                  <div class="eyebrow" style="margin-bottom:2px">Reference</div>
+                  <h1 class="s-title" style="margin-bottom:0;font-size:clamp(18px,2vw,28px)">How to read this analysis</h1>
+                </div>
+      
+                <!-- About this analysis — spans full width above the 3-col grid -->
+                <div class="meth-card-settle" style="padding:16px 24px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:4px">
+                  <div style="background:var(--ink);border-radius:8px;padding:12px 16px;grid-column:1/4;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+                    <div style="border-right:1px solid rgba(255,255,255,.1);padding-right:16px">
+                      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:6px">About BHPF</div>
+                      <div style="font-size:12px;color:#f8f7f4;font-weight:400;line-height:1.55">Behavioral Health Partners of Florida is a coalition of <strong style="color:var(--teal2)">25 community mental health centers</strong> — the providers carrying the hardest patients on Medicaid rates, in communities others left behind.</div>
+                    </div>
+                    <div style="border-right:1px solid rgba(255,255,255,.1);padding-right:16px">
+                      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,200,100,.7);margin-bottom:6px">⚠ Data scope</div>
+                      <div style="font-size:12px;color:rgba(255,255,255,.65);font-weight:300;line-height:1.55">CMS DOGE captures fee-for-service claims only. Managed care encounters, non-Medicaid revenue, and grant-funded services are not visible. Every insight is directionally strong — not the full financial picture.</div>
+                    </div>
+                    <div>
+                      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:6px">Qualitative layer</div>
+                      <div style="font-size:12px;color:rgba(255,255,255,.65);font-weight:300;line-height:1.55">Where claims data couldn't answer the question, we went to the source. Conversations with BHPF member CMHCs helped validate what the numbers suggested — and surface what they couldn't show.</div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div style="flex:1;overflow:auto;padding:0 24px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-content:start">
+                  <div>
+                    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:10px">Data foundation</div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title">Source</div><div class="meth-card-body">CMS DOGE — Medicaid fee-for-service claims, Florida only, 2018–2024. The full FL behavioral health market (~$1.1B baseline in 2019).</div></div>
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title">81 procedure codes</div><div class="meth-card-body">Filtered to BH codes reimbursed under the FL Medicaid fee schedule. Excludes per-diem residential and medical crossover claims.</div></div>
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title">Org classification</div><div class="meth-card-body">Segments — CMHC, FQHC, Specialty BH, Ind. BH, SUD — derived from NPPES taxonomy, FL licensure, and Medicaid enrollment records.</div></div>
+                      <div class="meth-card meth-card-warn meth-card-settle"><div class="meth-card-title">⚠ 2024 note</div><div class="meth-card-body">2024 covers 12 months. A small share of late claims may not yet be adjudicated. Use directionally.</div></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:10px">What each metric means</div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title">Market share</div><div class="meth-card-body">Segment's share of total FL Medicaid BH revenue. Numerator and denominator from the same claims universe.</div></div>
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title">Revenue per beneficiary (RPB)</div><div class="meth-card-body">Total paid ÷ unique benes. Captures rate and utilization together. Shown as $ + % vs FL market average.</div></div>
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title">Service mix ratio</div><div class="meth-card-body">Ongoing community care ÷ front-end care (intake, crisis, ACT). Higher = more sustained treatment relative to acute episodes.</div></div>
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title">Panel commitment</div><div class="meth-card-body">Share of clinicians billing Medicaid in month M who bill again in M+1. Medicaid panel continuity — not employment retention.</div></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:10px">Reading the signals</div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title"><span style="color:var(--teal);font-weight:600">Green / above market</span></div><div class="meth-card-body">Above the FL volume-weighted average. Not automatically good — a high RPB on a small panel may reflect selective intake, not higher rates.</div></div>
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title"><span style="color:var(--coral);font-weight:600">Red / below market</span></div><div class="meth-card-body">Below FL average. Often structural — orgs with broad, lower-acuity panels will show lower RPB even when running efficiently.</div></div>
+                      <div class="meth-card meth-card-settle"><div class="meth-card-title">The market average</div><div class="meth-card-body">Volume-weighted across all FL BH orgs. Large orgs with flat rates pull it down. A floor — not a target.</div></div>
+                      <div class="meth-card meth-card-note meth-card-settle"><div class="meth-card-title">Ask anything</div><div class="meth-card-body">Every metric node is clickable. Opens a live AI analyst pre-loaded with that data. Plain language — no SQL required.</div></div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div style="padding:3px 24px 5px;flex-shrink:0;border-top:1px solid var(--rule);display:flex;justify-content:space-between">
+                  <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">CMS DOGE 2018–2024 · Florida Medicaid fee-for-service · 81 BH procedure codes</div>
+                  <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">Click any node in the analysis to drill in →</div>
+                </div>
+              </div>
+      
+              <!-- ── Parade overlay ── -->
+              <div id="meth-parade" style="position:absolute;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;z-index:5;cursor:pointer;transition:opacity .45s ease,transform .45s ease">
+      
+                <div id="meth-pc" style="text-align:center;max-width:580px;width:100%">
+                  <div id="meth-pc-label" style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:18px;opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease"></div>
+                  <div id="meth-pc-title" style="font-family:var(--serif);font-size:clamp(28px,4.5vw,52px);font-weight:700;line-height:1.08;color:var(--ink);margin-bottom:20px;opacity:0;transform:translateY(14px);transition:opacity .4s ease .07s,transform .4s ease .07s"></div>
+                  <div id="meth-pc-body" style="font-size:clamp(14px,1.5vw,17px);color:var(--ink2);font-weight:300;line-height:1.7;opacity:0;transform:translateY(14px);transition:opacity .4s ease .14s,transform .4s ease .14s"></div>
+                </div>
+      
+                <!-- Progress dots -->
+                <div id="meth-parade-dots" style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:7px;align-items:center"></div>
+      
+                <!-- Skip hint -->
+                <div style="position:absolute;bottom:28px;right:28px;font-family:var(--mono);font-size:9px;color:var(--ink4);letter-spacing:.08em" id="meth-skip-hint">click to skip →</div>
+              </div>
+      
+            </div>

@@ -1,0 +1,28 @@
+{
+  "blocks": {
+    "roi_curve": {
+      "label": "10 org-tier dots: revenue, ROI multiple, deal economics",
+      "cuts": {
+        "tier__10M":   {"rev_m": 10,   "roi": -0.8, "verdict": "No deal economics"},
+        "tier__18M":   {"rev_m": 18,   "roi": -0.4, "verdict": "Deep deficit"},
+        "tier__25M":   {"rev_m": 25,   "roi": -0.1, "verdict": "Break-even risk"},
+        "tier__32M":   {"rev_m": 32,   "roi":  0.18, "verdict": "Marginal", "note": "BHPF avg"},
+        "tier__50M":   {"rev_m": 50,   "roi":  0.55, "verdict": "Works — barely"},
+        "tier__80M":   {"rev_m": 80,   "roi":  0.95, "verdict": "Viable"},
+        "tier__150M":  {"rev_m": 150,  "roi":  1.35, "verdict": "Good deal"},
+        "tier__300M":  {"rev_m": 300,  "roi":  1.72, "verdict": "Strong ROI"},
+        "tier__500M":  {"rev_m": 500,  "roi":  2.05, "verdict": "Sweet spot"},
+        "tier__1500M": {"rev_m": 1500, "roi":  2.4,  "verdict": "Designed for this"}
+      }
+    }
+  },
+  "narrative_anchors": [
+    {"id": "vendor_promise", "value": 2.0, "unit": "x", "source_cut": "literal", "definition": "Vendor 2:1 ROI promise."},
+    {"id": "validated_at_m", "value": 500, "unit": "M", "source_cut": "blocks.roi_curve.cuts.tier__500M.rev_m", "definition": "Org revenue size where 2:1 deck math is validated."},
+    {"id": "bhpf_avg_m", "value": 32, "unit": "M", "source_cut": "blocks.roi_curve.cuts.tier__32M.rev_m", "definition": "BHPF avg member revenue."},
+    {"id": "fixed_cost_k", "value": 150, "unit": "K", "source_cut": "literal", "definition": "Sales + integration fixed cost per deal."},
+    {"id": "fixed_pct_low", "value": 50, "unit": "%", "source_cut": "literal", "definition": "Low end of fixed-cost share at $25M deal."},
+    {"id": "fixed_pct_high", "value": 68, "unit": "%", "source_cut": "literal", "definition": "High end of fixed-cost share at smallest tiers."}
+  ],
+  "_meta": {"module_id": "admin-s1c", "schema_version": 1, "as_of": "2026-05-02"}
+}

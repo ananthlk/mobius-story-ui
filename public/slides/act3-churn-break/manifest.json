@@ -1,0 +1,36 @@
+{
+  "module_id": "act3-churn-break",
+  "kind": "slide",
+  "slug": "act3-churn-break",
+  "title": "The clinician you lose costs more than the one you hired.",
+  "act": "III",
+  "sequence": 19,
+  "chapter": "Act III \u2014 Employee Churn opener",
+  "tags": [
+    "act-break",
+    "churn",
+    "credentialing",
+    "panel"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "The clinician you lose costs more than the one you hired.",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "BHPF runs 35% turnover vs 21% peer; each departure triggers a 90-day Medicaid blackout, panel goes dark, backfill costs compound to $10\u201318M/yr."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "act4-opportunity",
+    "admin-s4"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

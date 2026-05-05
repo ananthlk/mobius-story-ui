@@ -1,0 +1,44 @@
+{
+  "_comment": "Slide module identity. Lives forever — fields here are the contract with the loader, the chat backend, and the briefing.modules row in Postgres.",
+
+  "module_id": "{{slug}}",
+  "kind": "slide",
+  "slug": "{{slug}}",
+  "title": "{{Title — what shows in the breadcrumb and progress dot tooltip}}",
+
+  "act": "{{intro|I|II|III|IV|V|discussion|appendix}}",
+  "sequence": 0,
+  "chapter": "{{Optional human-readable chapter label, e.g. 'The Diagnosis'}}",
+  "tags": ["{{tag1}}", "{{tag2}}"],
+
+  "blocks": [
+    {
+      "_comment": "One entry per addressable content block on the slide. data_mode determines how the block is populated at render time.",
+      "id": "{{block-id}}",
+      "label": "{{Human label for this block}}",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "live_source": null,
+      "endpoint": null,
+      "chat_context": true,
+      "chat_scope": "{{One-sentence description of what chat is prepared to answer about this specific block.}}"
+    }
+  ],
+
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "rag_corpus": [],
+
+  "skills_available": [
+    "{{e.g. medicaid_rate_lookup, code_definition, org_peer_compare}}"
+  ],
+
+  "cross_slide_links": [
+    "{{another-module-id}}"
+  ],
+
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

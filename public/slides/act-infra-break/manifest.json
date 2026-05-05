@@ -1,0 +1,15 @@
+{
+  "module_id": "act-infra-break",
+  "kind": "slide",
+  "slug": "act-infra-break",
+  "title": "Chapter III — The Operational Review",
+  "act": "II",
+  "sequence": 11,
+  "chapter": "Act II opener",
+  "tags": ["transition", "act-break"],
+  "blocks": [],
+  "chat_context": false,
+  "skills_available": [],
+  "cross_slide_links": ["act2-opener", "admin-overview"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1}
+}

@@ -1,0 +1,56 @@
+<div class="slide" data-id="admin-s2b-orbital-v2" style="height:100%;overflow:hidden">
+  <div class="adm-slide" style="padding:1rem 1.5rem .75rem;gap:0">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0;margin-bottom:.625rem">
+      <div>
+        <div class="adm-eyebrow">Admin — Platform Intelligence</div>
+        <div class="adm-title" style="font-size:1.35rem;line-height:1.2;margin:0">The gap isn't effort.<br>It's the platform.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;flex-shrink:0">
+        <span style="font-size:.67rem;color:#9C9890;margin-right:2px">Platform:</span>
+        <button class="rcm-ptab adm-tab" data-p="netsmart"   onclick="rcm8Select('netsmart',this)">Netsmart</button>
+        <button class="rcm-ptab adm-tab" data-p="welligent"  onclick="rcm8Select('welligent',this)">Welligent</button>
+        <button class="rcm-ptab adm-tab" data-p="qualifacts" onclick="rcm8Select('qualifacts',this)">Qualifacts</button>
+        <button class="rcm-ptab adm-tab" data-p="athena"     onclick="rcm8Select('athena',this)">Athena</button>
+        <button id="rcm8-play-btn" onclick="rcm8Play()" style="padding:.3rem .85rem;border-radius:20px;border:1px solid #1A1917;font-size:.72rem;cursor:pointer;background:#1A1917;color:#fff;font-weight:600;transition:all .15s">▶ Play</button>
+      </div>
+    </div>
+
+    <div style="flex:1;display:grid;grid-template-columns:1fr 270px;gap:0;min-height:0;border:1px solid rgba(0,0,0,.08);border-radius:10px;overflow:hidden">
+
+      <div style="position:relative;overflow:hidden;background:#F7F6F2" id="r8-canvas">
+        <svg id="r8-svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1"></svg>
+        <div id="r8-ai-ring-label" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:170px;height:170px;border-radius:50%;pointer-events:none;z-index:2"></div>
+        <div id="r8-hub" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:126px;height:126px;border-radius:50%;background:#fff;border:2.5px solid #1A1917;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.12);z-index:3">
+          <div id="r8-hub-icon" style="font-size:20px;line-height:1;margin-bottom:2px">🧠</div>
+          <div id="r8-hub-label" style="font-size:10px;font-weight:700;color:#1A1917;line-height:1.2">Shared<br>Intelligence</div>
+          <div id="r8-hub-grade" style="font-size:7.5px;font-weight:700;margin-top:6px;padding:2px 6px;border-radius:4px;background:#fef2f2;color:#E24B4A">No network intel</div>
+          <div id="r8-hub-ai" style="font-size:7.5px;font-weight:700;margin-top:3px;padding:1px 6px;border-radius:4px;background:#fef2f2;color:#E24B4A">Architecturally limited</div>
+        </div>
+
+        <div class="r8-gate" id="r8g-0" style="left:50%;top:12%"><div class="r8-gate-icon">📅</div><div class="r8-gate-label">Patient Engagement</div><div class="r8-gate-sub">Scheduling · intake · reminders</div><div class="r8-gate-score" id="r8s-0"></div></div>
+        <div class="r8-gate" id="r8g-1" style="left:82%;top:24%"><div class="r8-gate-icon">✅</div><div class="r8-gate-label">Eligibility Verification</div><div class="r8-gate-sub">Real-time 270/271 · MCO coverage</div><div class="r8-gate-score" id="r8s-1"></div></div>
+        <div class="r8-gate" id="r8g-2" style="left:87%;top:50%"><div class="r8-gate-icon">📄</div><div class="r8-gate-label">Payor Policies & Benefits</div><div class="r8-gate-sub">Fee schedules · payer rules engine</div><div class="r8-gate-score" id="r8s-2"></div></div>
+        <div class="r8-gate r8-new" id="r8g-3" style="left:82%;top:76%"><div class="r8-gate-icon">🪪</div><div class="r8-gate-label">Credentialing</div><div class="r8-gate-sub">Enrollment · taxonomy · blackout detection</div><div class="r8-gate-score" id="r8s-3"></div></div>
+        <div class="r8-gate" id="r8g-4" style="left:50%;top:88%"><div class="r8-gate-icon">📋</div><div class="r8-gate-label">Authorization</div><div class="r8-gate-sub">PA tracking · prior auth workflow</div><div class="r8-gate-score" id="r8s-4"></div></div>
+        <div class="r8-gate" id="r8g-5" style="left:18%;top:76%"><div class="r8-gate-icon">💻</div><div class="r8-gate-label">Coding & Claims</div><div class="r8-gate-sub">HCPCS/CPT rules · clean claim rate</div><div class="r8-gate-score" id="r8s-5"></div></div>
+        <div class="r8-gate" id="r8g-6" style="left:13%;top:50%"><div class="r8-gate-icon">🚫</div><div class="r8-gate-label">Denial Mgmt</div><div class="r8-gate-sub">AR follow-up · appeal workflows</div><div class="r8-gate-score" id="r8s-6"></div></div>
+        <div class="r8-gate" id="r8g-7" style="left:18%;top:24%"><div class="r8-gate-icon">🔐</div><div class="r8-gate-label">Claim Closure</div><div class="r8-gate-sub">835 auto-post · AR days</div><div class="r8-gate-score" id="r8s-7"></div></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;background:#fff;border-left:1px solid rgba(0,0,0,.08);min-height:0;overflow:hidden">
+        <div style="padding:10px 12px 6px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,.06);flex-shrink:0">
+          <span style="font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9C9890">Score card</span>
+          <span id="r8-running-score" style="font-family:var(--mono);font-size:.72rem;font-weight:700;color:#6B6966">0 / 32</span>
+        </div>
+        <div id="r8-scorecard" style="flex:1;min-height:0;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:4px"></div>
+        <div id="r8-caption" class="rcm-caption" style="display:none"></div>
+        <div id="r8-verdict" style="display:none;padding:10px 12px;border-top:1px solid rgba(0,0,0,.08);font-size:.67rem;line-height:1.55;flex-shrink:0;background:#FAFAF8;color:#6B6966"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;margin-top:.4rem;flex-shrink:0">
+      <div style="font-size:10px;color:var(--ink4);font-family:var(--mono)">Sources: G2, Capterra, SoftwareAdvice, vendor product pages — verified reviews only</div>
+      <div id="r8-footnote" style="font-size:10px;color:var(--ink4);font-family:var(--mono)">Netsmart · 8 gates + shared intelligence · 2025</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+/* admin-s2b-orbital-v2 uses global .r8-*, .rcm-*, .adm-* classes from story.html.
+   Interactive logic (rcm8Select, rcm8Play) lives in story.html globals
+   until a future migration ports the orbital-v2 JS into this module. */

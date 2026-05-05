@@ -1,0 +1,21 @@
+{
+  "module_id": "admin-s4",
+  "kind": "slide",
+  "slug": "admin-s4",
+  "title": "Collective scale. Local fragmentation.",
+  "act": "II",
+  "sequence": 18,
+  "chapter": "Act II — AI CoE consolidation",
+  "tags": ["admin", "AI-CoE", "consolidation", "scale", "FTE-reduction"],
+  "blocks": [
+    {"id": "footprint", "label": "BHPF combined footprint", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "Combined revenue, member orgs, total staff, patients."},
+    {"id": "metric_evidence", "label": "Today vs network-scale evidence (calls, denial, AR, admin %)", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "Per-metric improvement at network scale: calls/FTE, denial rate, AR days, admin %."},
+    {"id": "fn_consolidation", "label": "Per-function FTE reduction (IT, Call Center, Billing, HR)", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "FTE reduction per consolidated function with target metric and savings estimate."},
+    {"id": "ai_coe_total", "label": "AI CoE total savings ($66M = $37M scale + $29M AI)", "data_mode": "static", "static_source": "data/static.json", "chat_context": true, "chat_scope": "Total CoE savings, scale-vs-AI decomposition, and exclusions."}
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": ["cfo_admin_benchmarks"],
+  "cross_slide_links": ["admin-overview", "admin-s1", "admin-s5", "act4-opportunity", "act5-approach"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1}
+}

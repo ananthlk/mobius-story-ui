@@ -1,0 +1,41 @@
+{
+  "module_id": "ch2-left-behind",
+  "kind": "slide",
+  "slug": "ch2-left-behind",
+  "title": "Left behind",
+  "act": "I",
+  "sequence": 9,
+  "chapter": "Act I \u2014 CMHC displacement",
+  "tags": [
+    "displacement",
+    "left-behind",
+    "cascade",
+    "2020-2024"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "Left behind",
+      "data_mode": "live",
+      "endpoint": "/proxy/skills/story/fact-pack",
+      "chat_context": true,
+      "chat_scope": "CMHCs lost market share, revenue growth, and beneficiary count to new entrants between 2020 and 2024 \u2014 structural displacement."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [
+    "story_fact_pack"
+  ],
+  "cross_slide_links": [
+    "ch-finale",
+    "ch2-evolution",
+    "act4-opportunity",
+    "admin-overview"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1,
+    "note": "Markup is verbatim from story.html. Interactive logic (renderEvoSlide, layoutEvoRadial, renderFinaleHeatMap, renderLeftBehindCascade) lives in story.html globals."
+  }
+}

@@ -1,0 +1,54 @@
+<!--
+  Slide markup. NO inline JS, NO hardcoded numbers.
+
+  Replace every .tpl- prefix with .{slug}- when copying.
+
+  Structure (from outermost to innermost):
+    .slide                — the deck-level wrapper, owned by the loader
+    .{slug}-shell         — slide background + padding + flex layout
+    .{slug}-header        — eyebrow + title + lead
+    .{slug}-body          — main content area (charts, blocks, drill-in nodes)
+    .{slug}-footer        — optional "what comes next" strip
+
+  Numbers come in via data-anchor attributes; slide.js fills them at mount().
+-->
+<div class="slide" data-id="{{slug}}">
+  <div class="tpl-shell">
+
+    <!-- ── Header ────────────────────────────────────────────── -->
+    <div class="tpl-header">
+      <div class="tpl-eyebrow">{{act-label}} — {{section}}</div>
+      <h2 class="tpl-title">{{Slide title}}</h2>
+      <p class="tpl-lead">{{One- or two-sentence framing}}</p>
+    </div>
+
+    <!-- ── Body: addressable blocks ──────────────────────────── -->
+    <div class="tpl-body">
+
+      <!-- Each block is independently mountable. Anchor-driven numbers
+           use data-anchor="{anchor_id}"; slide.js looks them up in
+           data/static.json > narrative_anchors. -->
+      <div class="tpl-block" data-block="{{block-id}}">
+        <div class="tpl-block-label">{{Block label}}</div>
+        <div class="tpl-stat" data-anchor="{{anchor_id}}">—</div>
+        <div class="tpl-block-detail">{{Optional sub-text}}</div>
+      </div>
+
+      <!-- Drill-in node: clicking opens chat with this node's context. -->
+      <div class="tpl-node"
+           id="{{slug}}-node-1"
+           data-block="{{block-id}}"
+           onclick="drillIn('{{slug}}-node-1')">
+        <div class="tpl-node-label">{{Drill-in label}}</div>
+        <div class="tpl-node-stat" data-anchor="{{anchor_id}}">—</div>
+      </div>
+
+    </div>
+
+    <!-- ── Footer ───────────────────────────────────────────── -->
+    <div class="tpl-footer">
+      <strong>What comes next:</strong> {{Bridge to the next slide}}
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,6 @@
+{
+  "blocks": {
+    "fte_vs_pcp": {"description": "BHPF mid-tier FTE per dept vs MGMA PCP benchmark.", "kind": "comparison"},
+    "outcomes": {"description": "Four outcome metrics with paired BHPF vs benchmark values.", "kind": "scorecard"}
+  }
+}

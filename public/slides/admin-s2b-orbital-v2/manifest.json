@@ -1,0 +1,18 @@
+{
+  "module_id": "admin-s2b-orbital-v2",
+  "kind": "slide",
+  "slug": "admin-s2b-orbital-v2",
+  "title": "The gap isn't effort — 8 gates",
+  "act": "II",
+  "sequence": 15,
+  "chapter": "Act II — Platform Intelligence",
+  "tags": ["platform", "RCM", "orbital", "scorecard", "vendors"],
+  "blocks": [
+    {"id": "orbital_8gates", "label": "8-gate orbital — vendor scorecard per gate", "data_mode": "live", "endpoint": "window.RCM8_GATES (global from story.html for now)", "chat_context": true, "chat_scope": "Per-gate vendor scores (Netsmart/Welligent/Qualifacts/Athena), what each gate measures."}
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": ["admin-s1c", "admin-s2b-score", "admin-s4"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1, "note": "Interactive logic still resides in story.html's global rcm8Select/rcm8Play. Markup is now modular; full JS port is a follow-up."}
+}

@@ -1,0 +1,22 @@
+{
+  "blocks": {
+    "headline": {
+      "label": "Total opportunity — 4 buckets",
+      "cuts": {
+        "leakage":     {"low_m": 60, "high_m": 125, "source_table": "BHPF intake/conversion analysis"},
+        "admin":       {"value_m": 66, "source": "CFO Survey 2025 + APQC benchmark"},
+        "churn":       {"low_m": 10, "high_m": 18, "source": "NSI 2024 + 90-day Medicaid blackout math"},
+        "rate":        {"value_m": 7.8, "source": "FL Medicaid HCPCS rate-gap analysis"}
+      }
+    }
+  },
+  "narrative_anchors": [
+    {"id": "floor",   "value": "144M+", "unit": "", "source_cut": "derived: sum of bucket lows ≈ $143.8M", "definition": "Identified floor of total opportunity."},
+    {"id": "ceiling", "value": 217,     "unit": "M", "source_cut": "derived: sum of bucket highs ≈ $216.8M", "definition": "Upper band of total opportunity."},
+    {"id": "leakage", "value": "60–125M", "unit": "", "source_cut": "blocks.headline.cuts.leakage", "definition": "Patient leakage range (intake → therapy conversion gap)."},
+    {"id": "admin",   "value": 66,      "unit": "M", "source_cut": "blocks.headline.cuts.admin.value_m", "definition": "Admin overspend ($37M scale + $29M AI)."},
+    {"id": "churn",   "value": "10–18M", "unit": "", "source_cut": "blocks.headline.cuts.churn", "definition": "Employee churn cost range."},
+    {"id": "rate",    "value": "7.8M",  "unit": "", "source_cut": "blocks.headline.cuts.rate.value_m", "definition": "Rate gap (FL Medicaid HCPCS underpayment)."}
+  ],
+  "_meta": {"module_id": "cover", "schema_version": 1, "as_of": "2026-05-02"}
+}

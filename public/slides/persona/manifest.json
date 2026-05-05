@@ -1,0 +1,15 @@
+{
+  "module_id": "persona",
+  "kind": "slide",
+  "slug": "persona",
+  "title": "persona",
+  "act": "intro",
+  "sequence": 0,
+  "chapter": "Briefing cover",
+  "tags": ["intro", "persona", "branding"],
+  "blocks": [],
+  "chat_context": false,
+  "skills_available": [],
+  "cross_slide_links": ["cover", "exec-summary"],
+  "_meta": {"authored_with": "slides/_template", "schema_version": 1}
+}

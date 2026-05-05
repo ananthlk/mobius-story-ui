@@ -1,0 +1,54 @@
+{
+  "blocks": {
+    "phasing": {
+      "label": "3-phase capture",
+      "cuts": {
+        "phase1": {
+          "months": "0\u201312",
+          "capture_m": 22,
+          "focus": "Govern & credential"
+        },
+        "phase2": {
+          "months": "12\u201324",
+          "capture_m": 41,
+          "focus": "Consolidate & automate (AI CoE goes live)",
+          "note": "cumulative"
+        },
+        "phase3": {
+          "months": "24\u201336",
+          "capture_m": 69,
+          "focus": "Scale & capture (network compounding)",
+          "note": "run-rate; +"
+        }
+      }
+    }
+  },
+  "narrative_anchors": [
+    {
+      "id": "phase1_capture",
+      "value": 22,
+      "unit": "M",
+      "source_cut": "blocks.phasing.cuts.phase1.capture_m",
+      "definition": "Phase 1 Year-1 capture."
+    },
+    {
+      "id": "phase2_capture",
+      "value": 41,
+      "unit": "M",
+      "source_cut": "blocks.phasing.cuts.phase2.capture_m",
+      "definition": "Phase 2 cumulative through Year 2."
+    },
+    {
+      "id": "phase3_capture",
+      "value": "69M+",
+      "unit": "",
+      "source_cut": "blocks.phasing.cuts.phase3.capture_m",
+      "definition": "Phase 3 run-rate at Year 3, with continued ramp toward $144M+."
+    }
+  ],
+  "_meta": {
+    "module_id": "act5-approach",
+    "schema_version": 1,
+    "as_of": "2026-05-02"
+  }
+}

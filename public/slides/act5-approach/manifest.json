@@ -1,0 +1,38 @@
+{
+  "module_id": "act5-approach",
+  "kind": "slide",
+  "slug": "act5-approach",
+  "title": "$144M identified. Here's how much is real, and in what order to go get it.",
+  "act": "V",
+  "sequence": 29,
+  "chapter": "Act V \u2014 Capture sequencing",
+  "tags": [
+    "phasing",
+    "phase-1",
+    "phase-2",
+    "phase-3",
+    "governance"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "$144M identified. Here's how much is real, and in what order to go get it.",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Three phases over 36 months. Phase 1 (months 0\u201312, govern + credentialing): ~$22M. Phase 2 (12\u201324, AI CoE goes live): ~$41M cumulative. Phase 3 (24\u201336, scale): ~$69M+ run-rate, ramping toward the full $144M+."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "act4-opportunity",
+    "admin-s4",
+    "discussion"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

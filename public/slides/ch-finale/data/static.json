@@ -1,0 +1,19 @@
+{
+  "_comment": "Cold-start fallback for ch-finale. Live data from /story/fact-pack.",
+  "blocks": {
+    "main": {
+      "label": "Market outcomes \u00b7 2019\u20132024",
+      "cuts": {
+        "_note": {
+          "value": "see live skill response"
+        }
+      }
+    }
+  },
+  "narrative_anchors": [],
+  "_meta": {
+    "module_id": "ch-finale",
+    "schema_version": 1,
+    "as_of": "2026-05-02"
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "generated": "2026-05-01T01:08:22.217245Z",
-  "skills_api": "https://mobius-provider-roster-credentialing-ortabkknqa-uc.a.run.app",
+  "generated": "2026-05-04T14:00:32.795615Z",
+  "skills_api": "http://localhost:8011",
   "snapshots": [
     "fact-pack__bhpf__all",
     "fact-pack__fbha__all",

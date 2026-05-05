@@ -1,0 +1,36 @@
+{
+  "module_id": "methodology",
+  "kind": "slide",
+  "slug": "methodology",
+  "title": "How to read this analysis \u00b7 Source",
+  "act": "appendix",
+  "sequence": 30,
+  "chapter": "Appendix \u2014 methodology",
+  "tags": [
+    "appendix",
+    "methodology",
+    "reference"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "How to read this analysis \u00b7 Source",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Reference card for how the deck reads. Sources, scope, methodology, caveats."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "cover",
+    "act4-opportunity",
+    "admin-s4"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "module_id": "admin-s5",
+  "kind": "slide",
+  "slug": "admin-s5",
+  "title": "What the admin evidence establishes",
+
+  "act": "II",
+  "sequence": 18,
+  "chapter": "Act II — Four conclusions",
+  "tags": ["admin", "benchmarking", "FTE", "AI-CoE", "structural"],
+
+  "blocks": [
+    {
+      "id": "admin_tax_structural",
+      "label": "01 — The admin tax is structural, not accidental",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Why 345 excess FTE and $66M overhead are a scale problem, not a management failure."
+    },
+    {
+      "id": "vendor_priced_for_others",
+      "label": "02 — Vendor technology is priced for someone else",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Why vendor 2:1 ROI math validated at $500M consumes 50–68% of fixed costs at BHPF's $32M average."
+    },
+    {
+      "id": "ai_alone_insufficient",
+      "label": "03 — AI alone can't fix fragmentation",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Why deploying AI on 34 separate orgs gives 34 slightly faster broken processes, not network intelligence."
+    },
+    {
+      "id": "scale_already_present",
+      "label": "04 — The network already has the scale — the decision is governance",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "How $1.1B combined puts BHPF in the vendor sweet spot, with $66M ($37M scale + $29M AI) recoverable."
+    }
+  ],
+
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "rag_corpus": [],
+
+  "skills_available": [],
+
+  "cross_slide_links": [
+    "admin-overview",
+    "admin-s1",
+    "admin-s1c",
+    "admin-s4",
+    "act4-opportunity"
+  ],
+
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}

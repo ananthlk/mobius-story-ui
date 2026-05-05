@@ -1,0 +1,104 @@
+<div class="slide" data-id="capabilities" style="background:var(--ink);display:flex;flex-direction:column;height:100%;overflow:hidden">
+      
+              <div style="padding:12px 24px 10px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)">
+                <div class="eyebrow light" style="margin-bottom:2px">What this platform does</div>
+                <h1 class="s-title light" style="margin-bottom:0;font-size:clamp(18px,2vw,28px)">Built for the questions you actually have</h1>
+              </div>
+      
+              <div style="flex:1;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:0">
+      
+                <!-- LEFT: capability cards -->
+                <div style="padding:20px 24px;border-right:1px solid rgba(255,255,255,.08);overflow-y:auto;display:flex;flex-direction:column;gap:10px">
+                  <div class="cap-card">
+                    <div class="cap-icon">📊</div>
+                    <div>
+                      <div class="cap-title">Market intelligence</div>
+                      <div class="cap-body">Revenue share, beneficiary counts, and org counts — for any segment, any year, sliced any way. Sourced directly from CMS claims.</div>
+                    </div>
+                  </div>
+                  <div class="cap-card">
+                    <div class="cap-icon">🔍</div>
+                    <div>
+                      <div class="cap-title">Org-level benchmarking</div>
+                      <div class="cap-body">Compare any org's RPB, service mix, and panel commitment against its peer group. Works for CMHCs, FQHCs, specialty BH, SUD providers.</div>
+                    </div>
+                  </div>
+                  <div class="cap-card">
+                    <div class="cap-icon">📋</div>
+                    <div>
+                      <div class="cap-title">Credentialing & enrollment</div>
+                      <div class="cap-body">NPI validation, Medicaid enrollment status, taxonomy alignment, and readiness gap reports — for any provider or location in Florida.</div>
+                    </div>
+                  </div>
+                  <div class="cap-card">
+                    <div class="cap-icon">💬</div>
+                    <div>
+                      <div class="cap-title">Plain-language analysis</div>
+                      <div class="cap-body">Every metric is backed by a live AI analyst. Ask follow-up questions in plain English and get cited, sourced answers — not generic summaries.</div>
+                    </div>
+                  </div>
+                  <div class="cap-card">
+                    <div class="cap-icon">⚡</div>
+                    <div>
+                      <div class="cap-title">Revenue gap quantification</div>
+                      <div class="cap-body">See exactly how much your org diverges from market on each code and service line — and which gaps have grown or narrowed over time.</div>
+                    </div>
+                  </div>
+                </div>
+      
+                <!-- RIGHT: realistic node-click → chat drawer demo -->
+                <div style="position:relative;overflow:hidden;display:flex;flex-direction:column">
+      
+                  <!-- Stage: mini radial mock showing a node being clicked -->
+                  <div id="demo-stage" style="flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:0">
+                    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);position:absolute;top:16px;left:20px">Try it — click any node</div>
+      
+                    <!-- Fake radial nodes -->
+                    <div style="position:relative;width:200px;height:200px">
+                      <!-- Center label -->
+                      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center">
+                        <div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center">
+                          <span style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.05em">ORG</span>
+                        </div>
+                      </div>
+                      <!-- Nodes positioned around center -->
+                      <div class="demo-node" id="demo-node-rpb"   style="top:10px;left:50%;transform:translateX(-50%)"    data-label="RPB" data-q="What drives this org's revenue per beneficiary gap vs market?"></div>
+                      <div class="demo-node" id="demo-node-share" style="top:50%;right:4px;transform:translateY(-50%)"     data-label="Share" data-q="How has this org's market share shifted since 2019?"></div>
+                      <div class="demo-node" id="demo-node-panel" style="bottom:10px;left:50%;transform:translateX(-50%)" data-label="Panel" data-q="What does panel commitment tell us about clinician behavior here?"></div>
+                      <div class="demo-node" id="demo-node-mix"   style="top:50%;left:4px;transform:translateY(-50%)"     data-label="Mix" data-q="How does service mix compare to peer CMHCs?"></div>
+                    </div>
+      
+                    <!-- Click ripple (shown on node click) -->
+                    <div id="demo-ripple" style="position:absolute;width:32px;height:32px;border-radius:50%;border:2px solid var(--teal2);opacity:0;pointer-events:none;transform:scale(0);transition:transform .4s ease,opacity .4s ease"></div>
+                  </div>
+      
+                  <!-- Chat drawer — slides up from bottom -->
+                  <div id="demo-drawer" style="position:absolute;left:0;right:0;bottom:0;height:0;overflow:hidden;transition:height .4s cubic-bezier(.4,0,.2,1);background:var(--ink);border-top:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column">
+      
+                    <!-- Drawer header -->
+                    <div style="padding:10px 14px 8px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+                      <div>
+                        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2)" id="demo-drawer-label">Revenue per beneficiary</div>
+                        <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:1px">AI analyst · pre-loaded with this metric's data</div>
+                      </div>
+                      <div style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,255,255,.4);cursor:pointer" id="demo-close-btn">✕</div>
+                    </div>
+      
+                    <!-- Chat messages -->
+                    <div id="demo-chat" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:10px 14px;min-height:0"></div>
+      
+                    <!-- Input bar -->
+                    <div style="padding:8px 14px 10px;flex-shrink:0;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(255,255,255,.06)">
+                      <div style="flex:1;font-family:var(--sans);font-size:11px;color:rgba(255,255,255,.25)" id="demo-input-placeholder">Ask a follow-up…</div>
+                      <div style="width:24px;height:24px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                        <span style="color:#fff;font-size:11px">↑</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <div style="padding:3px 24px 5px;flex-shrink:0;border-top:1px solid rgba(255,255,255,.08)">
+                <div style="font-size:10px;color:rgba(255,255,255,.3);font-family:var(--mono)">Analysis loads in the background · proceed through the slides while data populates</div>
+              </div>
+            </div>

@@ -1,0 +1,72 @@
+{
+  "blocks": {
+    "opportunity": {
+      "label": "4-bucket gap",
+      "cuts": {
+        "leakage": {
+          "low_m": 60,
+          "high_m": 125
+        },
+        "admin": {
+          "value_m": 66
+        },
+        "churn": {
+          "low_m": 10,
+          "high_m": 18
+        },
+        "rate": {
+          "value_m": 7.8
+        }
+      }
+    }
+  },
+  "narrative_anchors": [
+    {
+      "id": "floor",
+      "value": "144M+",
+      "unit": "",
+      "source_cut": "derived: sum of bucket lows",
+      "definition": "Identified floor of total opportunity."
+    },
+    {
+      "id": "ceiling",
+      "value": 217,
+      "unit": "M",
+      "source_cut": "derived: sum of bucket highs",
+      "definition": "Upper band of total opportunity."
+    },
+    {
+      "id": "leakage",
+      "value": "60\u2013125M",
+      "unit": "",
+      "source_cut": "blocks.opportunity.cuts.leakage",
+      "definition": "Patient leakage range."
+    },
+    {
+      "id": "admin",
+      "value": 66,
+      "unit": "M",
+      "source_cut": "blocks.opportunity.cuts.admin.value_m",
+      "definition": "Admin overspend."
+    },
+    {
+      "id": "churn",
+      "value": "10\u201318M",
+      "unit": "",
+      "source_cut": "blocks.opportunity.cuts.churn",
+      "definition": "Employee churn cost range."
+    },
+    {
+      "id": "rate",
+      "value": 7.8,
+      "unit": "M",
+      "source_cut": "blocks.opportunity.cuts.rate.value_m",
+      "definition": "Rate gap."
+    }
+  ],
+  "_meta": {
+    "module_id": "act4-opportunity",
+    "schema_version": 1,
+    "as_of": "2026-05-02"
+  }
+}

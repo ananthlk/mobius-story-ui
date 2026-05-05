@@ -1,0 +1,37 @@
+{
+  "module_id": "discussion",
+  "kind": "slide",
+  "slug": "discussion",
+  "title": "Where do we go from here?",
+  "act": "III",
+  "sequence": 23,
+  "chapter": "Discussion \u00b7 pause before Acts IV\u2013V",
+  "tags": [
+    "discussion",
+    "questions",
+    "pause"
+  ],
+  "blocks": [
+    {
+      "id": "main",
+      "label": "Where do we go from here?",
+      "data_mode": "static",
+      "static_source": "data/static.json",
+      "chat_context": true,
+      "chat_scope": "Four open prompts: Resonance / Reality test / Excitement & skepticism / Path forward (Tier A/B/C)."
+    }
+  ],
+  "chat_context": true,
+  "system_prompt_file": "system_prompt.md",
+  "skills_available": [],
+  "cross_slide_links": [
+    "act3-evo-map",
+    "appendix-break",
+    "act4-opportunity",
+    "act5-approach"
+  ],
+  "_meta": {
+    "authored_with": "slides/_template",
+    "schema_version": 1
+  }
+}
