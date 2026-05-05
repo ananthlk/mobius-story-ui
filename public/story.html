@@ -1015,6 +1015,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
     </div>
     <div id="counter" class="tb-counter">1 / 20</div>
     <div class="tb-nav">
+      <button class="tb-btn" id="slide-chat-btn" onclick="openSlideChat()" title="Ask about this slide (press A)">💬</button>
       <button class="tb-btn" id="btn-prev" onclick="prev()" disabled title="Previous (←)">‹</button>
       <button class="tb-btn" id="btn-next" onclick="next()" title="Next (→)">›</button>
     </div>
@@ -3583,14 +3584,25 @@ function goTo(idx){
   if(appYrMatch){
     setTimeout(()=>{ renderAppendixSlideNow(appYrMatch[1]); }, 30);
   }
+  // Warm slide-level chat context in background — makes first 💬 click instant
+  setTimeout(_prefetchCurrentSlidePrompt, 100);
 }
 function next(){ goTo(currentIdx + 1); }
 function prev(){ goTo(currentIdx - 1); }
+
+// Prefetch system_prompt.md for the current slide in the background on every navigation.
+// First call fires immediately after initial goTo(startSlide) at page load.
+// Result is cached in _slidePromptCache — subsequent openSlideChat() calls are instant.
+function _prefetchCurrentSlidePrompt(){
+  const id = SLIDES[currentIdx]?.id;
+  if(id) _fetchSlidePrompt(id);
+}
 
 document.addEventListener('keydown', e => {
   if (e.target.tagName === 'INPUT') return;
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prev();
+  if (e.key === 'a' || e.key === 'A') openSlideChat();
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -4136,6 +4148,56 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
 });
 
 // ═══════════════════════════════════════════════════════════════
+// SLIDE-LEVEL CHAT — per-slide system_prompt.md context
+// ═══════════════════════════════════════════════════════════════
+// Fetch and cache the system_prompt.md for a given slide.
+// Returns null when the file is missing (transition/break slides).
+const _slidePromptCache = {};
+
+async function _fetchSlidePrompt(slideId) {
+  if (_slidePromptCache[slideId] !== undefined) return _slidePromptCache[slideId];
+  try {
+    const r = await fetch(`/slides/${slideId}/system_prompt.md`);
+    _slidePromptCache[slideId] = r.ok ? await r.text() : null;
+  } catch {
+    _slidePromptCache[slideId] = null;
+  }
+  return _slidePromptCache[slideId];
+}
+
+// Open the panel in slide-level mode (toolbar button or 'A' key).
+function openSlideChat() {
+  const slide = SLIDES[currentIdx];
+  if (!slide) return;
+  const slideId  = slide.id;
+  const threadId = `slide::${slideId}`;
+
+  if (threadId !== _storyThread) {
+    _storyThread = threadId;
+    STATE.activeNode = null;
+    STATE.activeSlot = `slide::${slideId}`;
+    // Reset panel body — clear previous thread
+    const body = document.getElementById('panelBody');
+    body.innerHTML = `<div class="suggested"><div class="suggested-label">Ask about this slide</div><div class="suggested-list" id="suggestedList"></div></div>`;
+    // Always surface a methodology chip
+    const mb = document.createElement('button');
+    mb.className = 'suggested-btn';
+    mb.textContent = '📐 How is this computed?';
+    mb.onclick = () => submitQuestion('How are these numbers computed? Walk me through the methodology.');
+    document.getElementById('suggestedList').appendChild(mb);
+  }
+
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('panelEyebrow').textContent = 'Ask about this slide';
+  document.getElementById('panelTitle').textContent = slide.title;
+  document.getElementById('questionInput').focus();
+
+  // Warm the cache in background so first question is instant
+  _fetchSlidePrompt(slideId);
+}
+
+// ═══════════════════════════════════════════════════════════════
 // ENVELOPE BUILDER
 // Works for both profile radial nodes ('rn-market') and
 // legacy chapter slots ('stat_1').
@@ -4303,6 +4365,12 @@ async function submitQuestion(question){
     // Build envelope per system_context PRD contract
     const { systemContext, threadId } = _buildEnvelope(STATE.activeNode || STATE.activeSlot || '');
 
+    // Fetch per-slide system_prompt.md (cached after first hit) and prepend to context.
+    // This gives the model a grounded, slide-specific briefing before any numeric data.
+    const slideId    = SLIDES[currentIdx]?.id || '';
+    const slidePrompt = await _fetchSlidePrompt(slideId);
+    const fullContext = [slidePrompt, systemContext].filter(Boolean).join('\n\n---\n\n') || null;
+
     // Map internal mode to API-valid values: agentic | copilot | quick
     const _modeMap = { extended: 'agentic', normal: 'copilot', agentic: 'agentic', copilot: 'copilot', quick: 'quick' };
     const chatMode = _modeMap[_chatMode] || 'agentic';
@@ -4311,8 +4379,8 @@ async function submitQuestion(question){
       message:   question,                              // plain question only — no inline context
       thread_id: _storyThread || threadId || undefined,
     };
-    if(systemContext) payload.system_context = systemContext; // omit entirely when null
-    if(chatMode)      payload.chat_mode      = chatMode;
+    if(fullContext) payload.system_context = fullContext; // slide prompt + numeric data context
+    if(chatMode)    payload.chat_mode      = chatMode;
 
     // POST to main chat worker (Redis-backed, SSE streaming)
     const r = await fetch(`${CHAT_API}/chat`, {
