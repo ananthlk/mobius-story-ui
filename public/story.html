@@ -4676,8 +4676,27 @@ function renderAnswer(raw, container){
     let body = '';
 
     // Detect chart-able data: rows with numeric values
-    const rows = sec.rows || sec.table_rows || sec.data;
-    const bullets = sec.bullets || sec.items || sec.list;
+    // ui_blocks is the format MCP data tools return; unwrap it first.
+    const uiBlocks = sec.ui_blocks || [];
+    const _tbBlock = uiBlocks.find(b => b.type === 'table' && b.rows && b.rows.length);
+    // Normalise rows: ui_blocks uses array rows + headers; other paths use object rows.
+    let rows = sec.rows || sec.table_rows || sec.data;
+    let tableHeaders = null;
+    if(!rows && _tbBlock){
+      // Convert array-of-arrays to array-of-objects using the headers as keys
+      tableHeaders = _tbBlock.headers || [];
+      if(tableHeaders.length){
+        rows = _tbBlock.rows.map(r =>
+          Array.isArray(r)
+            ? Object.fromEntries(tableHeaders.map((h,i) => [h, r[i] ?? '']))
+            : r
+        );
+      } else {
+        rows = _tbBlock.rows;  // already objects
+      }
+    }
+    const bullets = sec.bullets || sec.items || sec.list
+      || uiBlocks.filter(b => b.type === 'bullet_list').flatMap(b => b.items || []);
     const text = sec.content || sec.text || sec.body;
 
     if(rows && rows.length){
@@ -4738,6 +4757,13 @@ function renderAnswer(raw, container){
       body += `<dl class="ra-kv">`;
       Object.entries(kv).forEach(([k,v]) => body += `<dt>${escapeHtml(k)}</dt><dd>${escapeHtml(String(v))}</dd>`);
       body += `</dl>`;
+    } else if(uiBlocks.length){
+      // Remaining ui_blocks: render text/markdown blocks we haven't handled yet
+      uiBlocks.forEach(blk => {
+        if(blk.type === 'text' || blk.type === 'markdown'){
+          body += mdToHtml(blk.content || blk.text || '');
+        }
+      });
     }
 
     if(title || body){
