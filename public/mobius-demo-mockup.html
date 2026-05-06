@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobius Demo — Mockup</title>
+<style>
+  :root {
+    --ink:    #1A1917;
+    --ink2:   #3D3B38;
+    --ink3:   #6B6966;
+    --ink4:   #A09D98;
+    --bg:     #F5F3F0;
+    --bg2:    #ECEAE6;
+    --rule:   rgba(0,0,0,.08);
+    --teal:   #0d6b52;
+    --teal2:  #1a9070;
+    --coral:  #E24B4A;
+    --gold:   #BA7517;
+    --sans:   'Inter', system-ui, sans-serif;
+    --mono:   'JetBrains Mono', 'Fira Code', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: #fff; color: var(--ink); }
+
+  /* ─── TAB NAV ─── */
+  .tab-bar {
+    display: flex; border-bottom: 2px solid var(--rule);
+    background: #fff; position: sticky; top: 0; z-index: 100; padding: 0 24px;
+  }
+  .tab-btn {
+    padding: 13px 20px; font-size: 13px; font-weight: 500;
+    border: none; background: none; cursor: pointer; color: var(--ink3);
+    border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .15s;
+  }
+  .tab-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* ════════════════════════════════════════
+     ATHENA SLIDE
+  ════════════════════════════════════════ */
+  .a-slide {
+    height: calc(100vh - 41px);
+    display: grid; grid-template-rows: auto 1fr auto;
+    background: #FAFAF8; overflow: hidden;
+  }
+  .a-header {
+    padding: 14px 24px 10px; border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+  }
+  .a-eyebrow { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink4); }
+  .a-title   { font-size: 18px; font-weight: 600; color: var(--ink); line-height: 1.2; }
+  .a-ptabs   { display: flex; gap: 6px; }
+  .a-ptab    {
+    padding: 5px 14px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,.15);
+    font-size: 11px; font-weight: 500; cursor: pointer; background: #fff;
+    color: var(--ink3); transition: all .15s; font-family: var(--sans);
+  }
+  .a-ptab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .a-ptab.play-btn {
+    background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 700;
+  }
+
+  .a-body {
+    display: grid; grid-template-columns: 1fr 240px; min-height: 0; overflow: hidden;
+  }
+
+  /* Orbital canvas */
+  .a-canvas {
+    position: relative; overflow: hidden; background: #FAFAF8;
+  }
+  .a-arm-svg {
+    position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
+  }
+  .a-hub {
+    position: absolute; left: 50%; top: calc(50% - 10px);
+    transform: translate(-50%, -50%);
+    width: 80px; height: 80px; border-radius: 50%;
+    background: #fff; border: 2px solid var(--ink);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,.12); z-index: 3;
+  }
+  .a-hub-name  { font-size: 10px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+  .a-hub-sub   { font-size: 6px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink4); margin-top: 2px; }
+  .a-hub-grade { font-size: 9px; font-weight: 700; margin-top: 3px; color: var(--coral); }
+
+  .a-gate {
+    position: absolute; transform: translate(-50%, -50%);
+    width: 102px; border-radius: 10px; padding: 8px 9px; text-align: center;
+    background: #fff; border: 1.5px solid var(--rule); z-index: 2;
+    transition: border-color .25s, box-shadow .25s, background .25s;
+    cursor: default;
+  }
+  .a-gate.new-gate {
+    border-color: var(--teal2);
+    background: #f0faf7;
+    box-shadow: 0 0 0 2px rgba(26,144,112,.18), 0 4px 16px rgba(0,0,0,.08);
+  }
+  .a-gate-new-badge {
+    display: none; font-size: 7.5px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; background: var(--teal2); color: #fff;
+    padding: 1px 5px; border-radius: 3px; margin-bottom: 3px;
+  }
+  .new-gate .a-gate-new-badge { display: inline-block; }
+  .a-gate-icon  { font-size: 15px; margin-bottom: 3px; line-height: 1; }
+  .a-gate-label { font-size: 9px; font-weight: 500; color: var(--ink2); line-height: 1.3; }
+  .new-gate .a-gate-label { color: var(--teal); }
+  .a-gate-score { margin-top: 4px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+  .s-hi  { color: var(--teal); }
+  .s-mid { color: var(--gold); }
+  .s-lo  { color: var(--coral); }
+
+  /* Scorecard panel */
+  .a-scorecard {
+    border-left: 1px solid var(--rule); background: #fff;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .a-sc-header {
+    padding: 9px 12px 6px; border-bottom: 1px solid var(--rule); flex-shrink: 0;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .a-sc-label  { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink4); }
+  .a-sc-total  { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ink3); }
+  .a-sc-rows   { flex: 1; overflow-y: auto; padding: 7px 10px; display: flex; flex-direction: column; gap: 4px; }
+  .a-sc-row    {
+    padding: 6px 9px; border-radius: 7px; border-left: 3px solid; background: #fff;
+    display: flex; justify-content: space-between; align-items: center; font-size: 11px;
+  }
+  .a-sc-row.new-row {
+    border-left-color: var(--teal2) !important; background: #f0faf7;
+    box-shadow: 0 0 0 1px rgba(26,144,112,.12);
+  }
+  .a-sc-row-label { color: var(--ink2); flex: 1; padding-right: 6px; font-size: 10px; }
+  .new-row .a-sc-row-label { color: var(--teal); font-weight: 500; }
+  .a-sc-row-val  { font-family: var(--mono); font-size: 12px; font-weight: 700; }
+  .a-new-tag {
+    font-size: 7px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    background: var(--teal2); color: #fff; padding: 1px 4px; border-radius: 3px; margin-left: 4px;
+  }
+  .a-sc-verdict {
+    padding: 10px 12px; border-top: 1px solid var(--rule); background: #FAFAF8;
+    font-size: 10px; line-height: 1.55; color: var(--ink3); flex-shrink: 0;
+  }
+
+  .a-footnote {
+    padding: 4px 24px; border-top: 1px solid var(--rule); display: flex;
+    justify-content: space-between; font-family: var(--mono); font-size: 9px; color: var(--ink4);
+    flex-shrink: 0;
+  }
+
+  /* ════════════════════════════════════════
+     MOBIUS DEMO SLIDE
+  ════════════════════════════════════════ */
+  .m-slide {
+    height: calc(100vh - 41px);
+    background: #0d1117; color: #fff;
+    display: grid; grid-template-rows: auto 1fr auto; overflow: hidden;
+  }
+  .m-header { padding: 20px 40px 0; flex-shrink: 0; }
+  .m-eyebrow {
+    font-family: var(--mono); font-size: 9px; letter-spacing: .14em;
+    text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 6px;
+  }
+  .m-title  { font-size: 22px; font-weight: 600; line-height: 1.25; max-width: 580px; }
+  .m-title em { font-style: normal; color: #34d399; }
+  .m-sub    { margin-top: 6px; font-size: 13px; font-weight: 300; color: rgba(255,255,255,.5); max-width: 520px; line-height: 1.6; }
+
+  .m-body { display: grid; grid-template-columns: 1fr 300px; padding: 20px 40px; gap: 28px; min-height: 0; overflow: hidden; }
+
+  /* Demo radial */
+  .m-canvas { position: relative; min-height: 0; }
+  .m-arm-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .m-hub {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 88px; height: 88px; border-radius: 50%;
+    background: linear-gradient(135deg, #1a9070, #0d6b52); color: #fff;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; text-align: center;
+    box-shadow: 0 0 0 12px rgba(26,144,112,.12), 0 0 36px rgba(52,211,153,.18);
+    z-index: 10;
+  }
+  .m-hub-sub  { font-size: 8px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; opacity: .7; }
+  .m-hub-name { font-size: 12px; font-weight: 700; line-height: 1.2; }
+
+  .m-node {
+    position: absolute; transform: translate(-50%, -50%);
+    width: 104px; border-radius: 11px; padding: 8px 9px; text-align: center;
+    transition: all .3s; z-index: 5;
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09);
+    color: rgba(255,255,255,.35);
+  }
+  .m-node.mn-active {
+    background: rgba(255,255,255,.94); border-color: rgba(255,255,255,.9); color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(52,211,153,.45), 0 8px 28px rgba(0,0,0,.4);
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+  .m-node.mn-partial {
+    background: rgba(255,255,255,.10); border: 1.5px solid rgba(52,211,153,.5);
+    color: rgba(255,255,255,.85);
+    box-shadow: 0 0 0 1px rgba(52,211,153,.2);
+  }
+  .m-node.mn-dim { opacity: .22; }
+  .m-node-icon  { font-size: 14px; margin-bottom: 3px; line-height: 1; }
+  .m-node-label { font-size: 9px; font-weight: 500; line-height: 1.3; }
+  .m-node-tag {
+    margin-top: 4px; font-size: 7.5px; font-weight: 700; letter-spacing: .05em;
+    text-transform: uppercase; padding: 2px 6px; border-radius: 10px;
+    display: inline-block;
+  }
+  .tag-full    { background: #0d6b52; color: #fff; }
+  .tag-partial { background: rgba(52,211,153,.2); color: #34d399; }
+  .tag-hide    { display: none; }
+
+  /* Steps panel */
+  .m-steps { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+  .m-step {
+    border-radius: 10px; padding: 13px 15px;
+    border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.03);
+    transition: all .3s;
+  }
+  .m-step.s-active {
+    border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.06);
+    box-shadow: 0 0 0 1px rgba(52,211,153,.2);
+  }
+  .m-step.s-done { opacity: .55; }
+  .m-step.s-dim  { opacity: .2; }
+  .m-step-num   { font-family: var(--mono); font-size: 8px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 4px; }
+  .s-active .m-step-num { color: #34d399; }
+  .m-step-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.7); margin-bottom: 4px; }
+  .s-active .m-step-title { color: #fff; }
+  .m-step-body  { font-size: 10.5px; font-weight: 300; color: rgba(255,255,255,.4); line-height: 1.55; }
+  .s-active .m-step-body { color: rgba(255,255,255,.7); }
+  .m-step-pills { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+  .m-pill { font-size: 8.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 2px 7px; border-radius: 10px; background: rgba(255,255,255,.06); color: rgba(255,255,255,.4); }
+  .s-active .m-pill { background: rgba(52,211,153,.15); color: #34d399; }
+
+  /* Nav */
+  .m-nav {
+    padding: 12px 40px; border-top: 1px solid rgba(255,255,255,.06);
+    display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+  }
+  .m-nav-btn {
+    padding: 7px 18px; border-radius: 7px; border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.05); color: rgba(255,255,255,.65);
+    font-size: 11px; font-weight: 500; cursor: pointer; transition: all .15s; font-family: var(--sans);
+  }
+  .m-nav-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+  .m-nav-btn.primary { background: #0d6b52; border-color: #1a9070; color: #fff; }
+  .m-nav-btn.primary:hover { background: #1a9070; }
+  .m-dots { display: flex; gap: 5px; margin-left: auto; }
+  .m-dot  { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.18); cursor: pointer; transition: all .2s; }
+  .m-dot.active { background: #34d399; transform: scale(1.4); }
+</style>
+</head>
+<body>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('athena')">Athena Slide (updated)</button>
+  <button class="tab-btn" onclick="showTab('mobius')">Mobius Demo Page</button>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     ATHENA SLIDE — 8 gates orbiting Shared Intelligence
+════════════════════════════════════════════════ -->
+<div id="tab-athena" class="tab-pane active">
+<div class="a-slide">
+
+  <div class="a-header">
+    <div>
+      <div class="a-eyebrow">Act II · Platform Intelligence</div>
+      <div class="a-title">The gap isn't effort. It's the platform.</div>
+    </div>
+    <div class="a-ptabs">
+      <span style="font-size:10px;color:var(--ink4);margin-right:2px">Platform:</span>
+      <button class="a-ptab" onclick="aSelectPlatform('netsmart',this)">Netsmart</button>
+      <button class="a-ptab" onclick="aSelectPlatform('welligent',this)">Welligent</button>
+      <button class="a-ptab" onclick="aSelectPlatform('qualifacts',this)">Qualifacts</button>
+      <button class="a-ptab active" onclick="aSelectPlatform('athena',this)">Athena</button>
+      <button class="a-ptab play-btn" onclick="aPlay()">▶ Play</button>
+    </div>
+  </div>
+
+  <div class="a-body">
+    <!-- Orbital canvas -->
+    <div class="a-canvas" id="a-canvas">
+      <svg class="a-arm-svg" id="a-svg"></svg>
+
+      <!-- Hub: Shared Intelligence -->
+      <div class="a-hub">
+        <div class="a-hub-name">Shared<br>Intelligence</div>
+        <div id="a-hub-grade" class="a-hub-grade">Broken</div>
+      </div>
+
+      <!-- 8 gate nodes — evenly spaced around the hub -->
+      <!-- top -->
+      <div class="a-gate" id="ag-0" style="left:50%;top:9%">
+        <div class="a-gate-new-badge"></div>
+        <div class="a-gate-icon">📅</div>
+        <div class="a-gate-label">Patient Engagement &amp; Appointment</div>
+        <div class="a-gate-score" id="as-0"></div>
+      </div>
+      <!-- top-right -->
+      <div class="a-gate" id="ag-1" style="left:80%;top:21%">
+        <div class="a-gate-new-badge"></div>
+        <div class="a-gate-icon">✅</div>
+        <div class="a-gate-label">Eligibility Verification</div>
+        <div class="a-gate-score" id="as-1"></div>
+      </div>
+      <!-- right -->
+      <div class="a-gate" id="ag-2" style="left:90%;top:50%">
+        <div class="a-gate-new-badge"></div>
+        <div class="a-gate-icon">📄</div>
+        <div class="a-gate-label">Payor Benefits &amp; Policies</div>
+        <div class="a-gate-score" id="as-2"></div>
+      </div>
+      <!-- bottom-right -->
+      <div class="a-gate" id="ag-3" style="left:80%;top:79%">
+        <div class="a-gate-new-badge"></div>
+        <div class="a-gate-icon">🪪</div>
+        <div class="a-gate-label">Provider Credentialing</div>
+        <div class="a-gate-score" id="as-3"></div>
+      </div>
+      <!-- bottom -->
+      <div class="a-gate" id="ag-4" style="left:50%;top:91%">
+        <div class="a-gate-new-badge"></div>
+        <div class="a-gate-icon">📋</div>
+        <div class="a-gate-label">Authorization</div>
+        <div class="a-gate-score" id="as-4"></div>
+      </div>
+      <!-- bottom-left -->
+      <div class="a-gate" id="ag-5" style="left:20%;top:79%">
+        <div class="a-gate-new-badge"></div>
+        <div class="a-gate-icon">💻</div>
+        <div class="a-gate-label">Coding &amp; Claim Submission</div>
+        <div class="a-gate-score" id="as-5"></div>
+      </div>
+      <!-- left -->
+      <div class="a-gate" id="ag-6" style="left:10%;top:50%">
+        <div class="a-gate-new-badge"></div>
+        <div class="a-gate-icon">🚫</div>
+        <div class="a-gate-label">Denial Mgmt / Reconciliation</div>
+        <div class="a-gate-score" id="as-6"></div>
+      </div>
+      <!-- top-left (NEW) -->
+      <div class="a-gate new-gate" id="ag-7" style="left:20%;top:21%">
+        <div class="a-gate-new-badge">NEW</div>
+        <div class="a-gate-icon">🔐</div>
+        <div class="a-gate-label">Claim Closure &amp; Posting</div>
+        <div class="a-gate-score" id="as-7"></div>
+      </div>
+    </div>
+
+    <!-- Scorecard -->
+    <div class="a-scorecard">
+      <div class="a-sc-header">
+        <span class="a-sc-label">Score Card</span>
+        <span class="a-sc-total" id="a-sc-total">0 / 32</span>
+      </div>
+      <div class="a-sc-rows" id="a-sc-rows"></div>
+      <div class="a-sc-verdict" id="a-sc-verdict"></div>
+    </div>
+  </div>
+
+  <div class="a-footnote">
+    <span>Sources: G2, Capterra, SoftwareAdvice, vendor product pages — verified reviews only</span>
+    <span id="a-footnote-r">Athena · 8 gates + shared intelligence · 2025</span>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     MOBIUS DEMO — same 8-node structure, Mobius highlights
+════════════════════════════════════════════════ -->
+<div id="tab-mobius" class="tab-pane">
+<div class="m-slide">
+
+  <div class="m-header">
+    <div class="m-eyebrow">Mobius · Platform Overview</div>
+    <div class="m-title">We prepare what <em>Shared Intelligence</em> needs — before Athena asks</div>
+    <div class="m-sub">Four places where a credential gap, a policy blind spot, or a missed appeal costs you money before the claim closes.</div>
+  </div>
+
+  <div class="m-body">
+    <div class="m-canvas" id="m-canvas">
+      <svg class="m-arm-svg" id="m-svg"></svg>
+
+      <div class="m-hub">
+        <div class="m-hub-sub">Mobius</div>
+        <div class="m-hub-name">Shared<br>Intelligence</div>
+      </div>
+
+      <!-- Same 8 positions -->
+      <div class="m-node mn-dim" id="mn-0" style="left:50%;top:9%">
+        <div class="m-node-icon">📅</div>
+        <div class="m-node-label">Patient Engagement &amp; Appointment</div>
+        <div class="m-node-tag tag-hide" id="mn-0-tag"></div>
+      </div>
+      <div class="m-node mn-dim" id="mn-1" style="left:80%;top:21%">
+        <div class="m-node-icon">✅</div>
+        <div class="m-node-label">Eligibility Verification</div>
+        <div class="m-node-tag tag-hide" id="mn-1-tag"></div>
+      </div>
+      <div class="m-node mn-dim" id="mn-2" style="left:90%;top:50%">
+        <div class="m-node-icon">📄</div>
+        <div class="m-node-label">Payor Benefits &amp; Policies</div>
+        <div class="m-node-tag tag-hide" id="mn-2-tag"></div>
+      </div>
+      <div class="m-node mn-dim" id="mn-3" style="left:80%;top:79%">
+        <div class="m-node-icon">🪪</div>
+        <div class="m-node-label">Provider Credentialed for Service</div>
+        <div class="m-node-tag tag-hide" id="mn-3-tag"></div>
+      </div>
+      <div class="m-node mn-dim" id="mn-4" style="left:50%;top:91%">
+        <div class="m-node-icon">📋</div>
+        <div class="m-node-label">Authorization</div>
+        <div class="m-node-tag tag-hide" id="mn-4-tag"></div>
+      </div>
+      <div class="m-node mn-dim" id="mn-5" style="left:20%;top:79%">
+        <div class="m-node-icon">💻</div>
+        <div class="m-node-label">Coding &amp; Claim Submission</div>
+        <div class="m-node-tag tag-hide" id="mn-5-tag"></div>
+      </div>
+      <div class="m-node mn-dim" id="mn-6" style="left:10%;top:50%">
+        <div class="m-node-icon">🚫</div>
+        <div class="m-node-label">Denial Mgmt / Reconciliation</div>
+        <div class="m-node-tag tag-hide" id="mn-6-tag"></div>
+      </div>
+      <div class="m-node mn-dim" id="mn-7" style="left:20%;top:21%">
+        <div class="m-node-icon">🔐</div>
+        <div class="m-node-label">Claim Closure &amp; Posting</div>
+        <div class="m-node-tag tag-hide" id="mn-7-tag"></div>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="m-steps">
+      <div class="m-step s-dim" id="ms-0">
+        <div class="m-step-num">Step 01 · Payor Policy Layer</div>
+        <div class="m-step-title">We read the policy before you bill</div>
+        <div class="m-step-body">Mobius ingests FL Medicaid fee schedules, AHCA coverage rules, and payor-specific BH policies. Every code is matched against the active policy — not last year's manual update.</div>
+        <div class="m-step-pills">
+          <span class="m-pill">FL Medicaid schedule</span>
+          <span class="m-pill">AHCA coverage rules</span>
+          <span class="m-pill">Code-level match</span>
+        </div>
+      </div>
+      <div class="m-step s-dim" id="ms-1">
+        <div class="m-step-num">Step 02 · Provider Credentialing</div>
+        <div class="m-step-title">Close the 90-day billing blackout</div>
+        <div class="m-step-body">We track every provider's Medicaid enrollment, scope-of-practice, and taxonomy alignment in real time. When a new hire joins, Mobius flags the gap before it becomes a denial. Credentialed once — valid across the entire BHPF network.</div>
+        <div class="m-step-pills">
+          <span class="m-pill">CAQH integration</span>
+          <span class="m-pill">Taxonomy validation</span>
+          <span class="m-pill">90-day blackout alert</span>
+        </div>
+      </div>
+      <div class="m-step s-dim" id="ms-2">
+        <div class="m-step-num">Step 03 · Denial Management</div>
+        <div class="m-step-title">Appeal strategy + rate benchmark confirmation</div>
+        <div class="m-step-body">When a claim denies, Mobius surfaces the denial reason, the appeal pathway, and whether the paid rate is above or below the FL Medicaid market median. Recover the claim and know if the rate needs negotiation.</div>
+        <div class="m-step-pills">
+          <span class="m-pill">AI appeal engine</span>
+          <span class="m-pill">Rate benchmark P50</span>
+          <span class="m-pill">18% → &lt;8% denial target</span>
+        </div>
+      </div>
+      <div class="m-step s-dim" id="ms-3">
+        <div class="m-step-num">Step 04 · Shared Network Intelligence</div>
+        <div class="m-step-title">Strategy module — rate negotiation with data</div>
+        <div class="m-step-body">Shared across all BHPF members: every code, every org, every year. Network benchmarking surfaces where you're underpaid by code and service line — arming your rate negotiation with the same data Athena uses to adjudicate.</div>
+        <div class="m-step-pills">
+          <span class="m-pill">FL market rate benchmarks</span>
+          <span class="m-pill">Network rate strategy</span>
+          <span class="m-pill">$1.1B claims base</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-nav">
+    <button class="m-nav-btn" onclick="mStep(-1)">← Back</button>
+    <button class="m-nav-btn primary" onclick="mStep(1)">Next →</button>
+    <div class="m-dots" id="m-dots">
+      <div class="m-dot" onclick="mGoTo(0)"></div>
+      <div class="m-dot" onclick="mGoTo(1)"></div>
+      <div class="m-dot" onclick="mGoTo(2)"></div>
+      <div class="m-dot" onclick="mGoTo(3)"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+// ── Tab switching ──
+function showTab(name){
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelector(`.tab-btn[onclick="showTab('${name}')"]`).classList.add('active');
+  if(name === 'athena') { aSelectPlatform('athena', document.querySelector('.a-ptab.active')); drawALines(); }
+  if(name === 'mobius') { mGoTo(0); drawMLines(); }
+}
+
+// ═══════ ATHENA DATA ═══════
+// 4 scores per gate (netsmart, welligent, qualifacts, athena)
+// Scale: 1=Broken · 2=Partial · 3=Works · 4=Automated
+const A_GATES = [
+  { label: 'Patient Engagement & Appt',   icon: '📅', scores: { netsmart:3, welligent:2, qualifacts:3, athena:3 } },
+  { label: 'Eligibility Verification',     icon: '✅', scores: { netsmart:3, welligent:2, qualifacts:3, athena:4 } },
+  { label: 'Payor Benefits & Policies',    icon: '📄', scores: { netsmart:2, welligent:2, qualifacts:2, athena:4 } },
+  { label: 'Provider Credentialing',       icon: '🪪', scores: { netsmart:2, welligent:1, qualifacts:2, athena:2 }, isNew: true },
+  { label: 'Authorization',                icon: '📋', scores: { netsmart:3, welligent:2, qualifacts:3, athena:3 } },
+  { label: 'Coding & Claim Submission',    icon: '💻', scores: { netsmart:4, welligent:3, qualifacts:4, athena:3 } },
+  { label: 'Denial Mgmt / Reconciliation', icon: '🚫', scores: { netsmart:2, welligent:2, qualifacts:2, athena:3 } },
+  { label: 'Claim Closure & Posting',      icon: '🔐', scores: { netsmart:3, welligent:2, qualifacts:3, athena:4 } },
+];
+
+const A_VERDICTS = {
+  netsmart:   'Netsmart leads on BH workflow (coding + submission) but has minimal network intelligence. No shared credentialing pool, no cross-org denial learning. Network intelligence is broken — each org runs in isolation.',
+  welligent:  'Welligent is functional on core EHR workflows but scores weakest on RCM automation. Lowest total score across all gates. Credentialing and denial management are manual processes.',
+  qualifacts: 'Qualifacts matches Netsmart on workflow gates. Provider credentialing sits at partial — the system tracks status but cannot detect 90-day blackout windows or cross-org taxonomy gaps.',
+  athena:     'Athena leads on eligibility, payor policy, and claim lifecycle. Provider credentialing is the critical gap — it validates enrollment but has no BH scope-of-practice or taxonomy validation. Shared intelligence only works within a single org.',
+};
+
+const A_SI_GRADES = {
+  netsmart:   { label: 'Broken',   cls: 'color:var(--coral)' },
+  welligent:  { label: 'Broken',   cls: 'color:var(--coral)' },
+  qualifacts: { label: 'Partial',  cls: 'color:var(--gold)'  },
+  athena:     { label: 'Partial',  cls: 'color:var(--gold)'  },
+};
+
+const SCORE_COLORS = { 1: 'var(--coral)', 2: 'var(--gold)', 3: 'var(--teal)', 4: '#0a5a3f' };
+const SCORE_LABELS = { 1: '1 · Broken', 2: '2 · Partial', 3: '3 · Works', 4: '4 · Automated' };
+
+let _aPlatform = 'athena';
+let _aPlayTimer = null;
+const PLATFORM_ORDER = ['netsmart','welligent','qualifacts','athena'];
+
+function aSelectPlatform(p, btn){
+  _aPlatform = p;
+  document.querySelectorAll('.a-ptab:not(.play-btn)').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+
+  const scores = A_GATES.map(g => g.scores[p]);
+  const total  = scores.reduce((a,b) => a+b, 0);
+  const maxTotal = A_GATES.length * 4;
+
+  // Update hub
+  const grade = A_SI_GRADES[p];
+  const gradeEl = document.getElementById('a-hub-grade');
+  gradeEl.textContent = grade.label;
+  gradeEl.style.cssText = grade.cls;
+
+  // Update gate nodes
+  A_GATES.forEach((g, i) => {
+    const el   = document.getElementById('ag-' + i);
+    const scEl = document.getElementById('as-' + i);
+    const s    = scores[i];
+    scEl.textContent = SCORE_LABELS[s];
+    scEl.style.color = SCORE_COLORS[s];
+
+    // New-gate visual: Provider Credentialing always flagged
+    if(g.isNew){
+      el.classList.add('new-gate');
+    } else {
+      el.classList.remove('new-gate');
+    }
+  });
+
+  // Update total
+  document.getElementById('a-sc-total').textContent = `${total} / ${maxTotal}`;
+
+  // Update scorecard rows
+  const rows = document.getElementById('a-sc-rows');
+  rows.innerHTML = A_GATES.map((g, i) => {
+    const s = scores[i];
+    const isNew = g.isNew;
+    return `<div class="a-sc-row${isNew?' new-row':''}" style="border-left-color:${isNew?'var(--teal2)':SCORE_COLORS[s]}">
+      <span class="a-sc-row-label">${g.label}${isNew?'<span class="a-new-tag">Mobius gap</span>':''}</span>
+      <span class="a-sc-row-val" style="color:${SCORE_COLORS[s]}">${s}</span>
+    </div>`;
+  }).join('');
+
+  // Verdict
+  document.getElementById('a-sc-verdict').textContent = A_VERDICTS[p];
+
+  // Footnote
+  document.getElementById('a-footnote-r').textContent = `${p.charAt(0).toUpperCase()+p.slice(1)} · 8 gates + shared intelligence · 2025`;
+
+  drawALines();
+}
+
+function aPlay(){
+  if(_aPlayTimer) { clearInterval(_aPlayTimer); _aPlayTimer = null; return; }
+  let idx = PLATFORM_ORDER.indexOf(_aPlatform);
+  _aPlayTimer = setInterval(() => {
+    idx = (idx + 1) % PLATFORM_ORDER.length;
+    const p = PLATFORM_ORDER[idx];
+    aSelectPlatform(p, document.querySelector(`.a-ptab[onclick="aSelectPlatform('${p}',this)"]`));
+    if(idx === PLATFORM_ORDER.length - 1){ clearInterval(_aPlayTimer); _aPlayTimer = null; }
+  }, 1800);
+}
+
+function drawALines(){
+  setTimeout(() => {
+    const svg    = document.getElementById('a-svg');
+    const canvas = document.getElementById('a-canvas');
+    const hub    = document.querySelector('.a-hub');
+    if(!svg || !canvas || !hub) return;
+    const cr = canvas.getBoundingClientRect();
+    const hr = hub.getBoundingClientRect();
+    const cx = hr.left - cr.left + hr.width/2;
+    const cy = hr.top  - cr.top  + hr.height/2;
+    svg.setAttribute('viewBox', `0 0 ${cr.width} ${cr.height}`);
+    const lines = Array.from({length:8}, (_,i) => {
+      const el = document.getElementById('ag-'+i);
+      if(!el) return '';
+      const nr = el.getBoundingClientRect();
+      const nx = nr.left - cr.left + nr.width/2;
+      const ny = nr.top  - cr.top  + nr.height/2;
+      const isNew = A_GATES[i].isNew;
+      return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}"
+        stroke="${isNew ? 'rgba(26,144,112,.4)' : 'rgba(0,0,0,.08)'}"
+        stroke-width="${isNew ? 1.5 : 1}" stroke-dasharray="5 4"/>`;
+    }).join('');
+    svg.innerHTML = lines;
+  }, 50);
+}
+
+// ═══════ MOBIUS DEMO ═══════
+// Step → which nodes are active/partial/dim
+const M_STEPS_MAP = [
+  // Step 0: Payor Benefits & Policies highlighted
+  { active:[2], partial:[], dim:[0,1,3,4,5,6,7] },
+  // Step 1: Provider Credentialing (partial — Mobius closes the gap)
+  { active:[], partial:[3], dim:[0,1,2,4,5,6,7] },
+  // Step 2: Denial Management active, credentialing stays partial
+  { active:[6], partial:[3], dim:[0,1,2,4,5,7] },
+  // Step 3: Shared Intelligence — Strategy module, all Mobius nodes lit
+  { active:[2,6,7], partial:[3], dim:[0,1,4,5] },
+];
+
+const M_NODE_LABELS = {
+  2: 'Policy Intelligence',
+  3: 'Credentialing Module',
+  6: 'Denial + Rate Recovery',
+  7: 'Strategy Module',
+};
+
+let _mStep = -1;
+
+function mGoTo(step){
+  _mStep = Math.max(0, Math.min(3, step));
+  const map = M_STEPS_MAP[_mStep];
+
+  // Update nodes
+  for(let i=0; i<8; i++){
+    const el = document.getElementById('mn-'+i);
+    const tg = document.getElementById('mn-'+i+'-tag');
+    if(!el) continue;
+    el.classList.remove('mn-active','mn-partial','mn-dim');
+    if(map.active.includes(i)){
+      el.classList.add('mn-active');
+      if(tg){ tg.className='m-node-tag tag-full'; tg.textContent=M_NODE_LABELS[i]||''; }
+    } else if(map.partial.includes(i)){
+      el.classList.add('mn-partial');
+      if(tg){ tg.className='m-node-tag tag-partial'; tg.textContent=M_NODE_LABELS[i]||''; }
+    } else {
+      el.classList.add('mn-dim');
+      if(tg){ tg.className='m-node-tag tag-hide'; }
+    }
+  }
+
+  // Update steps
+  for(let i=0; i<4; i++){
+    const el = document.getElementById('ms-'+i);
+    if(!el) continue;
+    el.classList.remove('s-active','s-done','s-dim');
+    if(i === _mStep)      el.classList.add('s-active');
+    else if(i < _mStep)   el.classList.add('s-done');
+    else                  el.classList.add('s-dim');
+  }
+
+  // Dots
+  document.querySelectorAll('.m-dot').forEach((d,i) => d.classList.toggle('active', i===_mStep));
+  drawMLines();
+}
+
+function mStep(dir){ mGoTo(_mStep + dir); }
+
+function drawMLines(){
+  setTimeout(() => {
+    const svg    = document.getElementById('m-svg');
+    const canvas = document.getElementById('m-canvas');
+    const hub    = document.querySelector('.m-hub');
+    if(!svg || !canvas || !hub) return;
+    const cr = canvas.getBoundingClientRect();
+    const hr = hub.getBoundingClientRect();
+    const cx = hr.left - cr.left + hr.width/2;
+    const cy = hr.top  - cr.top  + hr.height/2;
+    svg.setAttribute('viewBox', `0 0 ${cr.width} ${cr.height}`);
+    const map = M_STEPS_MAP[_mStep] || { active:[], partial:[], dim:[] };
+    const lines = Array.from({length:8}, (_,i) => {
+      const el = document.getElementById('mn-'+i);
+      if(!el) return '';
+      const nr = el.getBoundingClientRect();
+      const nx = nr.left - cr.left + nr.width/2;
+      const ny = nr.top  - cr.top  + nr.height/2;
+      const isActive  = map.active.includes(i);
+      const isPartial = map.partial.includes(i);
+      return `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}"
+        stroke="${isActive ? 'rgba(52,211,153,.45)' : isPartial ? 'rgba(52,211,153,.25)' : 'rgba(255,255,255,.05)'}"
+        stroke-width="${isActive ? 1.5 : 1}" stroke-dasharray="5 4"/>`;
+    }).join('');
+    svg.innerHTML = lines;
+  }, 50);
+}
+
+// Init
+window.addEventListener('load', () => {
+  aSelectPlatform('athena', document.querySelector('.a-ptab.active'));
+  mGoTo(0);
+});
+window.addEventListener('resize', () => {
+  drawALines();
+  if(document.getElementById('tab-mobius').classList.contains('active')) drawMLines();
+});
+</script>
+</body>
+</html>
