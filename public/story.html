@@ -999,6 +999,72 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
 .adm-cp-compare{font-size:.7rem;color:#6b6860;line-height:1.55;padding:.45rem .6rem;
   background:#f0ede8;border-radius:7px;border-left:3px solid #BA7517}
 
+/* ═══════════════════════════════════════════════════════════
+   PRINT / PDF EXPORT
+   Browser: File → Print → Save as PDF, orientation Landscape.
+   Enable "Background graphics" in Chrome for dark slides.
+   ═══════════════════════════════════════════════════════════ */
+@media print {
+  @page { size: landscape; margin: 0; }
+
+  *, *::before, *::after {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  html, body { height: auto; overflow: visible; background: #18181A; }
+
+  /* hide all chrome */
+  .topbar, .bottombar, .panel, .overlay,
+  .no-print { display: none !important; }
+
+  /* shell → normal block flow */
+  .shell { height: auto !important; display: block !important; }
+
+  /* viewport + track → reset flex/transform */
+  .viewport { overflow: visible !important; height: auto !important; flex: none !important; }
+  .track {
+    display: block !important;
+    transform: none !important;
+    height: auto !important;
+    transition: none !important;
+  }
+
+  /* each slide = exactly one landscape page */
+  .slide {
+    width: 100% !important;
+    height: 100vh !important;
+    page-break-after: always;
+    break-after: page;
+    overflow: hidden !important;
+    flex-shrink: unset !important;
+    position: relative !important;
+  }
+  .slide:last-child { page-break-after: avoid; break-after: avoid; }
+
+  /* force all fly-in / animated elements to their final visible state */
+  .exec-line { opacity: 1 !important; transform: none !important; }
+  .rcm-gate-card { opacity: 1 !important; transform: none !important; }
+  .rcm-score-row { opacity: 1 !important; }
+  [style*="opacity:0"] { opacity: 1 !important; }
+  [style*="opacity: 0"] { opacity: 1 !important; }
+
+  /* ch-forces: four force cards */
+  .force-card { opacity: 1 !important; transform: none !important; }
+
+  /* ch2-left-behind: cascade rows */
+  .cascade-row { opacity: 1 !important; transform: none !important; }
+
+  /* admin-s5: four conclusion panels */
+  .adm-s5c-panel { opacity: 1 !important; transform: none !important; }
+
+  /* methodology: hide the click-through parade overlay, show the reference grid */
+  #meth-parade { display: none !important; }
+  #meth-grid-shell { opacity: 1 !important; pointer-events: none; }
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
@@ -1015,6 +1081,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--sans);background:#000}
     </div>
     <div id="counter" class="tb-counter">1 / 20</div>
     <div class="tb-nav">
+      <button class="tb-btn no-print" onclick="window.print()" title="Export PDF — use landscape + background graphics in print dialog" style="font-size:10px;letter-spacing:.04em;padding:0 8px;width:auto">⎙ PDF</button>
       <button class="tb-btn" id="slide-chat-btn" onclick="openSlideChat()" title="Ask about this slide (press A)">💬</button>
       <button class="tb-btn" id="btn-prev" onclick="prev()" disabled title="Previous (←)">‹</button>
       <button class="tb-btn" id="btn-next" onclick="next()" title="Next (→)">›</button>
@@ -8285,6 +8352,23 @@ function rcmCloseModal() {
   const ov = document.getElementById('rcm-modal-overlay');
   if (ov) ov.classList.remove('open');
 }
+
+// ── Print / PDF preparation ──────────────────────────────────────────────────
+window.addEventListener('beforeprint', function () {
+  // Populate the RCM scorecard table (static data, not nav-triggered)
+  if (typeof renderScoreTable === 'function') renderScoreTable();
+
+  // Re-render any Chart.js charts that are already built but may need re-draw
+  // (canvas elements can go blank when the slide isn't active)
+  if (window._charts) {
+    Object.values(window._charts).forEach(c => { try { c.resize(); c.update('none'); } catch(e){} });
+  }
+
+  // If admin-overview data is available, build the charts
+  if (window._admBenchData && typeof buildAdmOverview === 'function') {
+    buildAdmOverview('all');
+  }
+});
 </script>
 
 <!-- Evidence / Rubric Modal -->
