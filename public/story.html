@@ -5,6 +5,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>The Market Built Around Them — BHPF 2025</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+(function() {
+  var USER_URL = 'https://mobius-user-ortabkknqa-uc.a.run.app';
+  var CHAT_URL = 'https://mobius-chat-ortabkknqa-uc.a.run.app';
+  var TOKEN_KEY = 'mobius_token';
+
+  function tokenValid(tok) {
+    try {
+      var payload = JSON.parse(atob(tok.split('.')[1]));
+      return payload.exp > Date.now() / 1000;
+    } catch (e) { return false; }
+  }
+
+  function beacon(tok) {
+    fetch(USER_URL + '/api/v1/access-beacon', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok},
+      body: JSON.stringify({surface: 'story'}),
+    }).catch(function() {});
+  }
+
+  // Step 1: redeem handoff code
+  var hMatch = window.location.hash.match(/[#&]h=([^&]+)/);
+  if (hMatch) {
+    var code = decodeURIComponent(hMatch[1]);
+    fetch(USER_URL + '/api/v1/auth/handoff/redeem', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({code: code}),
+    }).then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function(data) {
+        localStorage.setItem(TOKEN_KEY, data.access_token);
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+        beacon(data.access_token);
+      })
+      .catch(function(e) {
+        console.warn('Story: handoff redeem failed', e);
+        // Bounce to chat on redeem failure (stale/invalid code)
+        window.location = CHAT_URL + '/signin?return=' + encodeURIComponent(window.location.href.replace(window.location.hash, ''));
+      });
+    return; // redeem is async; page continues to render
+  }
+
+  // Step 2: valid stored token
+  var stored = localStorage.getItem(TOKEN_KEY);
+  if (stored && tokenValid(stored)) {
+    beacon(stored);
+    return;
+  }
+
+  // Step 3: bounce to chat signin
+  window.location = CHAT_URL + '/signin?return=' + encodeURIComponent(window.location.href);
+})();
+</script>
 <style>
 :root{
   --ink:#18181A;--ink2:#3a3a3d;--ink3:#6b6b70;--ink4:#9d9da3;
