@@ -9,7 +9,7 @@
 (function() {
   var USER_URL = 'https://mobius-user-ortabkknqa-uc.a.run.app';
   var CHAT_URL = 'https://mobius-chat-ortabkknqa-uc.a.run.app';
-  var TOKEN_KEY = 'mobius_token';
+  var TOKEN_KEY = 'mobius.auth.accessToken';
 
   function tokenValid(tok) {
     try {
@@ -42,8 +42,7 @@
       })
       .catch(function(e) {
         console.warn('Story: handoff redeem failed', e);
-        // Bounce to chat on redeem failure (stale/invalid code)
-        window.location = CHAT_URL + '/signin?return=' + encodeURIComponent(window.location.href.replace(window.location.hash, ''));
+        location.replace(CHAT_URL + '/signin?return=' + encodeURIComponent(window.location.href.replace(window.location.hash, '')));
       });
     return; // redeem is async; page continues to render
   }
@@ -56,7 +55,7 @@
   }
 
   // Step 3: bounce to chat signin
-  window.location = CHAT_URL + '/signin?return=' + encodeURIComponent(window.location.href);
+  location.replace(CHAT_URL + '/signin?return=' + encodeURIComponent(location.href));
 })();
 </script>
 <style>
